@@ -9,6 +9,7 @@ use Stancl\Tenancy\Database\Models\Tenant;
 class School extends Tenant implements TenantWithDatabase
 {
     use HasDatabase;
+    protected $table = 'schools';
     protected static function booted(): void
     {
         static::creating(function (School $school) {
