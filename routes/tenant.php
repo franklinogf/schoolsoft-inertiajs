@@ -21,9 +21,11 @@ use Stancl\Tenancy\Resolvers\PathTenantResolver;
 */
 
 Route::middleware('tenant')->prefix("{" . PathTenantResolver::$tenantParameterName . "}")->group(function () {
-
     Route::get('/', function () {
-        return Inertia::render('Home', ['school', tenant()]);
+        $school = DB::table('colegio')->where('usuario', 'administrador')->first();
+        return Inertia::render('Main/Home', [
+            'school' => $school
+        ]);
     });
 
 });
