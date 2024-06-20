@@ -195,10 +195,18 @@ export interface School {
     hora7: string;
 }
 
-export type PageProps<
+export type PagePropsWithUser<
     T extends Record<string, unknown> = Record<string, unknown>
 > = T & {
     auth: {
         user: User;
     };
 };
+export type PagePropsWithSchool<
+    T extends Record<string, unknown> = Record<string, unknown>
+> = T & {
+    school: School;
+};
+
+export type PagePropsWithSchoolAndUser = PagePropsWithSchool &
+    PagePropsWithUser;
