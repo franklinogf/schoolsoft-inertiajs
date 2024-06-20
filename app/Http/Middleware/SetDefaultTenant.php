@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use Stancl\Tenancy\Resolvers\PathTenantResolver;
 use Symfony\Component\HttpFoundation\Response;
 
 class SetDefaultTenant
@@ -16,7 +17,8 @@ class SetDefaultTenant
      */
     public function handle(Request $request, Closure $next): Response
     {
-        URL::defaults(['tenant' => $request->route()->originalParameter('tenant')]);
+        $tenantPrefix = PathTenantResolver::$tenantParameterName;
+        URL::defaults([$tenantPrefix => $request->route()->originalParameter($tenantPrefix)]);
         return $next($request);
     }
 }

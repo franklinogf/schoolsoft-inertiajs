@@ -16,6 +16,12 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
+        $middleware->group('tenant', [
+            \App\Http\Middleware\HandleInertiaRequests::class,
+            \Stancl\Tenancy\Middleware\InitializeTenancyByPath::class,
+            \App\Http\Middleware\SetDefaultTenant::class
+        ]);
+
         $middleware->priority([
             \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
             \Illuminate\Cookie\Middleware\EncryptCookies::class,

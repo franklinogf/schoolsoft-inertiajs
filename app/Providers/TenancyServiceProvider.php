@@ -14,6 +14,7 @@ use Stancl\Tenancy\Jobs;
 use Stancl\Tenancy\Listeners;
 use Stancl\Tenancy\Middleware;
 use Stancl\Tenancy\Middleware\InitializeTenancyByPath;
+use Stancl\Tenancy\Resolvers\PathTenantResolver;
 use Symfony\Component\HttpFoundation\Response;
 
 class TenancyServiceProvider extends ServiceProvider
@@ -102,16 +103,19 @@ class TenancyServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->bootEvents();
-        $this->mapRoutes();
-
-        $this->makeTenancyMiddlewareHighestPriority();
-
         InitializeTenancyByPath::$onFail = function ($exception, $request, $next) {
             return abort(Response::HTTP_NOT_FOUND);
         };
 
         TenantAssetsController::$tenancyMiddleware = InitializeTenancyByPath::class;
+        PathTenantResolver::$tenantParameterName = 'school';
+
+        $this->bootEvents();
+        $this->mapRoutes();
+
+        $this->makeTenancyMiddlewareHighestPriority();
+
+
     }
 
     protected function bootEvents()
