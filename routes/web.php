@@ -7,7 +7,7 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     // School::create([
-    //     'id' => 'cbl'
+    //     'id' => 'demo'
     // ]);
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
