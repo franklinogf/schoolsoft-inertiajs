@@ -1,3 +1,70 @@
+type Char =
+  | "a"
+  | "b"
+  | "c"
+  | "d"
+  | "e"
+  | "f"
+  | "g"
+  | "h"
+  | "i"
+  | "j"
+  | "k"
+  | "l"
+  | "m"
+  | "n"
+  | "o"
+  | "p"
+  | "q"
+  | "r"
+  | "s"
+  | "t"
+  | "u"
+  | "v"
+  | "w"
+  | "x"
+  | "y"
+  | "z"
+  | "A"
+  | "B"
+  | "C"
+  | "D"
+  | "E"
+  | "F"
+  | "G"
+  | "H"
+  | "I"
+  | "J"
+  | "K"
+  | "L"
+  | "M"
+  | "N"
+  | "O"
+  | "P"
+  | "Q"
+  | "R"
+  | "S"
+  | "T"
+  | "U"
+  | "V"
+  | "W"
+  | "X"
+  | "Y"
+  | "Z";
+type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+type Hour = `${0 | 1}${Digit}` | `2${0 | 1 | 2 | 3}`;
+type Minute = `${0 | 1 | 2 | 3 | 4 | 5}${Digit}`;
+type Time = `${Hour}:${Minute}`;
+
+type Year = `19${Exclude<Digit, 0 | 1 | 2 | 3>}${Digit}` | `${19 | 20}${Digit}${Digit}`;
+type Month = `0${Exclude<Digit, 0>}` | `1${0 | 1 | 2}`;
+type Day = `${0 | 1 | 2}${Exclude<Digit, 0>}` | `3${0 | 1}`;
+
+type Date_ = `${Year}-${Month}-${Day}`;
+
+type Grade = `${Digit}${Digit}` | `${Char}${Char}` | `${Digit}${Char}` | `${Char}${Digit}`;
+type FullGrade = `${Digit}${Exclude<Digit, 0>}-${Digit}${Exclude<Digit, 0>}`;
+
 export interface User {
   id: number;
   name: string;
@@ -35,19 +102,19 @@ export interface School {
   filetype: string;
   filetype2: string;
   description: string;
-  ft1: Date;
-  ft2: Date;
-  ft3: Date;
-  ft4: Date;
-  ft5: Date;
-  ft6: Date;
-  ft7: Date;
-  ft8: Date;
+  ft1: Date_;
+  ft2: Date_;
+  ft3: Date_;
+  ft4: Date_;
+  ft5: Date_;
+  ft6: Date_;
+  ft7: Date_;
+  ft8: Date_;
   men_ini: string;
   men_nota: string;
   grupo: string;
   activo: string;
-  ufecha: Date;
+  ufecha: Date_;
   id: string;
   year: string;
   Colegio2: string;
@@ -100,8 +167,8 @@ export interface School {
   forzar: string;
   clavepadre: string;
   nivel: string;
-  fechav1: Date;
-  fechav2: Date;
+  fechav1: Date_;
+  fechav2: Date_;
   nota: string;
   prom: string;
   cant: string;
@@ -150,21 +217,21 @@ export interface School {
   costo: number;
   caja: number;
   rec: string;
-  asis1: Date;
-  asis2: Date;
-  asis3: Date;
-  asis4: Date;
-  asis5: Date;
-  asis6: Date;
-  asis7: Date;
-  asis8: Date;
+  asis1: Date_;
+  asis2: Date_;
+  asis3: Date_;
+  asis4: Date_;
+  asis5: Date_;
+  asis6: Date_;
+  asis7: Date_;
+  asis8: Date_;
   clave_email: string;
   host_smtp: string;
   port: number;
   email_smtp: string;
   host: string;
   tri: number;
-  fec_t: Date;
+  fec_t: Date_;
   se1: string;
   se2: string;
   fin: string;
@@ -194,14 +261,31 @@ export interface School {
   fecha7: string;
   hora7: string;
 }
-
-export type PagePropsWithUser<T extends Record<string, unknown> = Record<string, unknown>> = T & {
-  auth: {
-    user: User;
+export interface Document {
+  id: number;
+  categoria: string;
+  titulo: string;
+  descripcion: string;
+  fecha_desde: string;
+  fecha_hasta: string;
+  archivo: string;
+  grado_desde: Grade;
+  grado_hasta: Grade;
+}
+export type PageProps = {
+  flash?: {
+    message: string | null;
   };
 };
-export type PagePropsWithSchool<T extends Record<string, unknown> = Record<string, unknown>> = T & {
-  school: School;
-};
+export type PagePropsWithUser<T extends Record<string, unknown> = Record<string, unknown>> = T &
+  PageProps & {
+    auth: {
+      user: User;
+    };
+  };
+export type PagePropsWithSchool<T extends Record<string, unknown> = Record<string, unknown>> = T &
+  PageProps & {
+    school: School;
+  };
 
 export type PagePropsWithSchoolAndUser = PagePropsWithSchool & PagePropsWithUser;
