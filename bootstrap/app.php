@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->group('tenant', [
-            \App\Http\Middleware\HandleInertiaRequests::class,
+            'web',
             \Stancl\Tenancy\Middleware\InitializeTenancyByPath::class,
             \App\Http\Middleware\SetDefaultTenant::class
         ]);

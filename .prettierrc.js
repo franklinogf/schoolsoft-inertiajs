@@ -11,6 +11,8 @@ const config = {
   printWidth: 100,
   plugins: ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
   tailwindFunctions: ["clsx", "cn"],
+  bracketSpacing: true,
+  proseWrap: "always",
 };
 
 export default config;

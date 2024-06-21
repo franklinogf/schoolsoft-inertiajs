@@ -5,10 +5,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import { MainLayout } from "@/Layouts/MainLayout";
+import { HomeLayout } from "@/Layouts/HomeLayout";
 import type { PagePropsWithSchool } from "@/types";
 import { Link } from "@inertiajs/react";
-import { ArrowDown } from "lucide-react";
 
 const buttons = [
   {
@@ -40,7 +39,7 @@ const buttons = [
   },
   {
     label: "Documentos",
-    route: "#",
+    route: route("home.documents"),
   },
   {
     label: "Cafetería",
@@ -53,44 +52,34 @@ const buttons = [
 
 export default function HomePage({ school }: PagePropsWithSchool) {
   return (
-    <MainLayout school={school} title={school.colegio}>
-      <section className="grid min-h-96 items-center justify-center bg-primary/90 p-10 text-primary-foreground">
-        <div className="max-w-2xl">
-          <h1 className="text-balance text-3xl font-bold md:text-6xl">{school.colegio}</h1>
-          <p className="text-pretty py-6 text-muted">{school.men_ini}</p>
-        </div>
-        <div className="flex justify-center self-end">
-          <Button size="icon" asChild>
-            <Link href="#buttons">
-              <ArrowDown />
-            </Link>
-          </Button>
-        </div>
-      </section>
+    <HomeLayout school={school} title={school.colegio}>
       <section className="flex min-h-80 items-center justify-center" id="buttons">
-        <div className="grid max-w-xl grid-cols-2 gap-x-5 gap-y-2 md:grid-cols-4">
-          {buttons.map((button) => {
-            if (!button.children) {
-              return <Button key={button.label}>{button.label}</Button>;
-            }
-            return (
-              <DropdownMenu key={button.label}>
-                <DropdownMenuTrigger asChild>
-                  <Button>{button.label}</Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {button.children.map((child) => (
-                    <DropdownMenuItem key={child.label} asChild>
-                      <Link className="cursor-pointer" href={child.route}>
-                        {child.label}
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            );
-          })}
-        </div>
+        <ul className="grid max-w-xl grid-cols-2 gap-x-5 gap-y-2 md:grid-cols-4">
+          {buttons.map((button) => (
+            <li key={button.label}>
+              {!button.children ? (
+                <Button className="w-full" asChild>
+                  <Link href={button.route ?? ""}>{button.label}</Link>
+                </Button>
+              ) : (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button className="w-full">{button.label}</Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {button.children.map((child) => (
+                      <DropdownMenuItem key={child.label} asChild>
+                        <Link className="cursor-pointer" href={child.route}>
+                          {child.label}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </li>
+          ))}
+        </ul>
       </section>
       {/* <section
                             className="min-h-80 flex flex-col items-center justify-evenly gap-5 bg-base-200/90 p-10 md:flex-row md:p-5">
@@ -107,6 +96,6 @@ export default function HomePage({ school }: PagePropsWithSchool) {
                             </div>
                         </div>
                     </section> */}
-    </MainLayout>
+    </HomeLayout>
   );
 }
