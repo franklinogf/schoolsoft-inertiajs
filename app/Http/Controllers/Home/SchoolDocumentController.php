@@ -10,9 +10,8 @@ use Illuminate\Support\Facades\Storage;
 
 class SchoolDocumentController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-
         $school = DB::table('colegio')->where('usuario', 'administrador')->first();
         $date = now()->format('Y-m-d');
         $documents = DB::table('T_ing')->get();
@@ -25,12 +24,13 @@ class SchoolDocumentController extends Controller
     }
     public function download(string $id)
     {
+
         $document = DB::table('T_ing')->where('id', $id)->first();
 
         if (Storage::fileExists($document->archivo)) {
             return Storage::download($document->archivo);
         }
 
-        return to_route('home.documents')->with('message', 'El archivo no exite o ha sido borrado');
+        return to_route('home.documents')->with('message', __('El archivo no exite o ha sido borrado'));
     }
 }
