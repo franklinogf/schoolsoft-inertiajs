@@ -272,20 +272,18 @@ export interface Document {
   grado_desde: Grade;
   grado_hasta: Grade;
 }
-export type PageProps = {
+export type PagePropsWithFlashMessage = {
   flash?: {
     message: string | null;
   };
 };
-export type PagePropsWithUser<T extends Record<string, unknown> = Record<string, unknown>> = T &
-  PageProps & {
-    auth: {
-      user: User;
-    };
+export type PagePropsWithUser = PagePropsWithFlashMessage & {
+  auth: {
+    user: User;
   };
-export type PagePropsWithSchool<T extends Record<string, unknown> = Record<string, unknown>> = T &
-  PageProps & {
-    school: School;
-  };
+};
+export type PagePropsWithSchool = PagePropsWithFlashMessage & {
+  school: School;
+};
 
 export type PagePropsWithSchoolAndUser = PagePropsWithSchool & PagePropsWithUser;

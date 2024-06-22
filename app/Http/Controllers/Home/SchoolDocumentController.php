@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ class SchoolDocumentController extends Controller
 {
     public function index()
     {
-        $school = DB::table('colegio')->where('usuario', 'administrador')->first();
+        $school = Admin::primary();
         $date = now()->format('Y-m-d');
         $documents = DB::table('T_ing')->get();
         // $documents = DB::table('T_ing')

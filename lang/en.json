@@ -20,5 +20,10 @@
   "Estudiante": "Student",
   "Profesor": "Teacher",
   "Caja registradora": "Cash register",
-  "Auto servicio": "Self Service"
+  "Auto servicio": "Self Service",
+  "Iniciar sesión": "Sign in",
+  "Usuario": "Username",
+  "Contraseña": "Password",
+  "Acceder": "Log in",
+  "Volver atrás": "Go back"
 }
