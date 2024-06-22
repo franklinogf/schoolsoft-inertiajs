@@ -5,7 +5,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
 }
-export default function FormInput({ label, value, onChange, error, ...props }: FormInputProps) {
+export function FormInput({ label, value, onChange, error, ...props }: FormInputProps) {
   const id = useId();
   return (
     <div className="space-y-0.5">

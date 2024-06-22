@@ -10,7 +10,7 @@ export default function AdminLoginPage({ flash }: PagePropsWithFlashMessage) {
         <div className="grid w-full max-w-6xl items-center gap-4 md:grid-cols-2">
           <LoginForm
             errorMessage={flash?.message}
-            submitRoute={route("admin.login")}
+            submitRoute={route("regiweb.login")}
             className="order-2 space-y-4 md:order-1"
           />
           <div className="order-1 max-md:mt-8 md:order-2 md:h-[300px] lg:h-[400px]">

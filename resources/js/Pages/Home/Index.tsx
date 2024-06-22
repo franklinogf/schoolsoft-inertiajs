@@ -17,17 +17,17 @@ const buttons = [
   },
   {
     label: "Regiweb",
-    route: "",
+    route: route("regiweb.login.index"),
   },
   {
     label: "Padres",
-    route: "",
+    route: route("parents.login.index"),
   },
   {
     label: "Foro",
     children: [
-      { label: "Estudiante", route: "" },
-      { label: "Profesor", route: "" },
+      { label: "Estudiante", route: route("foro.student.login.index") },
+      { label: "Profesor", route: route("foro.teacher.login.index") },
     ],
   },
   {
