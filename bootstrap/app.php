@@ -3,11 +3,13 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__ . '/../routes/web.php',
-        commands: __DIR__ . '/../routes/console.php',
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
@@ -15,11 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
-
         $middleware->group('tenant', [
             'web',
             \Stancl\Tenancy\Middleware\InitializeTenancyByPath::class,
-            \App\Http\Middleware\SetDefaultTenant::class
+            \App\Http\Middleware\SetDefaultTenant::class,
         ]);
 
         $middleware->priority([
@@ -38,7 +39,14 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Auth\Middleware\Authorize::class,
         ]);
 
-        //
+        $middleware->redirectGuestsTo(fn () => route('home.index'));
+        $middleware->redirectUsersTo(function (Request $request) {
+            $path = $request->route()->getPrefix();
+            $subPath = Str::replace('/', '.', Str::after($path, '/'));
+
+            return route($subPath.'.index');
+
+        });
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

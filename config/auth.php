@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
+        'guard' => env('AUTH_GUARD', 'admin'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -80,18 +80,18 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
-        // 'teacher' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\Teacher::class,
-        // ],
-        // 'parents' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\Parents::class,
-        // ],
-        // 'student' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\Student::class,
-        // ],        
+        'teacher' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Teacher::class,
+        ],
+        'parents' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Parents::class,
+        ],
+        'student' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Student::class,
+        ],
     ],
 
     /*

@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { HomeLayout } from "@/Layouts/HomeLayout";
-import type { PagePropsWithSchoolAndUser } from "@/types";
+import type { PagePropsWithSchool } from "@/types";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 
@@ -51,9 +51,8 @@ const buttons = [
   },
 ];
 
-export default function HomePage({ auth, school }: PagePropsWithSchoolAndUser) {
+export default function HomePage({ school }: PagePropsWithSchool) {
   const { t } = useTranslation();
-  console.log(auth.user);
   return (
     <HomeLayout school={school} title={school.colegio}>
       <section className="flex min-h-80 items-center justify-center" id="buttons">
