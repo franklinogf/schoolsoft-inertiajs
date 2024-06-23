@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -17,7 +18,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      */
-    public function version(Request $request): string|null
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -29,14 +30,26 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+
+        $path = $request->route()->getPrefix();
+        $subPath = Str::afterLast($path, '/');
+
+        $guard = match ($subPath) {
+            'admin' => 'admin',
+            'regiweb' => 'teacher',
+            'teacher' => 'teacher',
+            'student' => 'student',
+            default => null
+        };
+
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user($guard),
             ],
             'flash' => [
-                'message' => $request->session()->get('message')
-            ]
+                'message' => $request->session()->get('message'),
+            ],
         ];
     }
 }
