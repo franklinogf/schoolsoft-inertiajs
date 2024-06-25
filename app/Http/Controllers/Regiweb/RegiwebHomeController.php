@@ -11,7 +11,9 @@ class RegiwebHomeController extends Controller
 {
     public function index(Request $request)
     {
-        // Auth::guard('teacher')->loginUsingId('5226');
+        $user = $request->user();
+        $user->ufecha = now()->format('Y-m-d');
+        $user->save();
 
         return Inertia::render('Regiweb/Index', ['ip' => $request->ip()]);
     }
