@@ -18,7 +18,7 @@ export default function IndexPage({ auth: { user }, ip }: IndexPageProps) {
         <div className="flex justify-center">
           <img
             className="my-4 h-auto max-w-[400px]"
-            src="/assets/logo-schoolsoft.gif"
+            src="/assets/logo-regiweb.gif"
             alt="School logo"
           />
         </div>
