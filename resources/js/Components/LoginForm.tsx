@@ -43,6 +43,7 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
 
             <FormInput
               label={t("Contraseña")}
+              type="password"
               value={data.password}
               error={errors.password}
               onChange={(e) => setData("password", e.target.value)}
