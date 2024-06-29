@@ -26,7 +26,6 @@ interface HeaderProps {
 export default function Header({ user }: HeaderProps) {
   const { url } = usePage();
   const { t } = useTranslation();
-  console.log(url);
   return (
     <header className="flex h-14 items-center bg-secondary px-4 shadow">
       <div className="mr-8">
@@ -55,7 +54,7 @@ export default function Header({ user }: HeaderProps) {
           avatarFallback={`${user.nombre[0]}${user.apellidos[0]}`}
         >
           <DropdownMenuItem>
-            <Link href="/profile" className="flex items-center">
+            <Link href={route("regiweb.profile.show")} className="flex items-center">
               <UserCircle className="mr-1 size-4" />
               {t("Perfil")}
             </Link>
