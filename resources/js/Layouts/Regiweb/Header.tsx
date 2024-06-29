@@ -1,4 +1,6 @@
+import { UserProfileDropdownButton } from "@/Components/UserProfileDropdownButton";
 import { Button } from "@/Components/ui/button";
+import { DropdownMenuItem } from "@/Components/ui/dropdown-menu";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -10,8 +12,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/Co
 import { cn } from "@/lib/utils";
 import { Teacher } from "@/types/auth";
 import { Link, usePage } from "@inertiajs/react";
-import { Menu } from "lucide-react";
+import { Menu, UserCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
+
 const menuItems = [
   { label: "Notas", href: "/" },
   { label: "Opciones", href: "/" },
@@ -46,6 +49,24 @@ export default function Header({ user }: HeaderProps) {
           ))}
         </NavigationMenuList>
       </NavigationMenu>
+      <nav className="ml-auto hidden md:flex md:items-center">
+        <UserProfileDropdownButton
+          avatar={user.tipo}
+          avatarFallback={`${user.nombre[0]}${user.apellidos[0]}`}
+        >
+          <DropdownMenuItem>
+            <Link href="/profile" className="flex items-center">
+              <UserCircle className="mr-1 size-4" />
+              {t("Perfil")}
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link method="delete" as="button" href={route("regiweb.logout")}>
+              {t("Cerrar sesión")}
+            </Link>
+          </DropdownMenuItem>
+        </UserProfileDropdownButton>
+      </nav>
       <div className="ml-auto block md:hidden">
         <Sheet>
           <SheetTrigger asChild>
@@ -78,30 +99,28 @@ export default function Header({ user }: HeaderProps) {
                   </Button>
                 ))}
               </div>
-              <div className="mt-auto flex flex-col">
-                <Button className="text-lg font-bold" variant="ghost" asChild>
-                  <Link href="/profile">{t("Perfil")}</Link>
-                </Button>
-                <Button className="text-lg font-bold" variant="ghost" asChild>
-                  <Link as="button" method="delete" href={route("regiweb.logout")}>
-                    {t("Cerrar sesión")}
-                  </Link>
-                </Button>
+              <div className="mt-auto flex flex-col items-end">
+                <UserProfileDropdownButton
+                  avatar={user.tipo}
+                  avatarFallback={`${user.nombre[0]}${user.apellidos[0]}`}
+                >
+                  <DropdownMenuItem>
+                    <Link href="/profile" className="flex items-center">
+                      <UserCircle className="mr-1 size-4" />
+                      {t("Perfil")}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link method="delete" as="button" href={route("regiweb.logout")}>
+                      {t("Cerrar sesión")}
+                    </Link>
+                  </DropdownMenuItem>
+                </UserProfileDropdownButton>
               </div>
             </nav>
           </SheetContent>
         </Sheet>
       </div>
-      <nav className="ml-auto hidden md:flex">
-        <Button variant="ghost" asChild>
-          <Link href="/profile">{t("Perfil")}</Link>
-        </Button>
-        <Button variant="ghost" asChild>
-          <Link method="delete" as="button" href={route("regiweb.logout")}>
-            {t("Cerrar sesión")}
-          </Link>
-        </Button>
-      </nav>
     </header>
   );
 }
