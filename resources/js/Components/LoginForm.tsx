@@ -35,14 +35,14 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
         <CardContent>
           <div className="space-y-2">
             <FormInput
-              label={t("Usuario")}
+              label="Usuario"
               value={data.username}
               onChange={(e) => setData("username", e.target.value)}
               error={errors.username}
             />
 
             <FormInput
-              label={t("Contraseña")}
+              label="Contraseña"
               type="password"
               value={data.password}
               error={errors.password}

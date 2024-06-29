@@ -25,5 +25,7 @@
   "Usuario": "Username",
   "Contraseña": "Password",
   "Acceder": "Log in",
-  "Volver atrás": "Go back"
+  "Volver atrás": "Go back",
+  "Femenino": "Female",
+  "Masculino": "Male"
 }
