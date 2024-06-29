@@ -19,7 +19,7 @@ export default function IndexPage({ auth: { user }, ip }: IndexPageProps) {
           <img
             className="my-4 h-auto max-w-[400px]"
             src="/assets/logo-regiweb.gif"
-            alt="School logo"
+            alt="Regiweb logo"
           />
         </div>
         <div className="rounded-md bg-secondary/50 p-4 shadow">
