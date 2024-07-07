@@ -17,13 +17,13 @@
       --primary-foreground: 210 40% 98%;
 
       --secondary: 211 12% 48%;
-      --secondary-foreground: 212 100% 50%;
+      --secondary-foreground: 0 0% 100%;
 
       --muted: 210 40% 96.1%;
       --muted-foreground: 215.4 16.3% 46.9%;
 
-      --accent: 210 40% 96.1%;
-      --accent-foreground: 212 100% 50%;
+      --accent: 188 78% 41%;
+      --accent-foreground: 0 0% 100%;
 
       --destructive: 0 84.2% 60.2%;
       --destructive-foreground: 210 40% 98%;
@@ -74,3 +74,15 @@
       @apply bg-background text-foreground;
     }
   }
+.filepond--panel-root {
+    @apply !bg-background;
+}
+.filepond--drop-label {
+  @apply !text-foreground;
+}
+.input-phone {
+  @apply h-10 rounded-md px-3 text-sm border bg-background placeholder:text-foreground border-input !important;
+  input{
+    @apply border-0 h-9 focus:ring-0
+  }
+}

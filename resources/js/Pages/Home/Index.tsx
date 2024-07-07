@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import { HomeLayout } from "@/Layouts/HomeLayout";
+import { HomeLayout } from "@/Layouts/Home/HomeLayout";
 import type { PagePropsWithSchool } from "@/types";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";

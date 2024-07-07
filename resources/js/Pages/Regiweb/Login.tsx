@@ -1,4 +1,5 @@
 import { LoginForm } from "@/Components/LoginForm";
+import { LOGIN_REGIWEB_PICTURE } from "@/Constants";
 import { PagePropsWithFlashMessage } from "@/types";
 import { Head } from "@inertiajs/react";
 
@@ -15,9 +16,9 @@ export default function AdminLoginPage({ flash }: PagePropsWithFlashMessage) {
           />
           <div className="order-1 max-md:mt-8 md:order-2 md:h-[300px] lg:h-[400px]">
             <img
-              src="https://readymadeui.com/login-image.webp"
-              className="mx-auto block h-full w-full object-cover max-md:w-4/5"
-              alt="Dining Experience"
+              src={LOGIN_REGIWEB_PICTURE}
+              className="mx-auto block h-full w-full object-contain max-md:w-4/5"
+              alt="Logo regiweb"
             />
           </div>
         </div>

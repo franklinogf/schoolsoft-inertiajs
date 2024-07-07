@@ -1,4 +1,3 @@
-import { FormInput } from "@/Components/FormInput";
 import { Button } from "@/Components/ui/button";
 import {
   Card,
@@ -8,8 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/Components/ui/card";
+import { Teacher } from "@/types/auth";
 import { Link, useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
+import { CustomFormField, FormFieldType } from "./CustomFormField";
 interface LoginFormProps {
   submitRoute: string;
   className?: string;
@@ -17,9 +18,9 @@ interface LoginFormProps {
 }
 export function LoginForm({ className, submitRoute, errorMessage }: LoginFormProps) {
   const { t } = useTranslation();
-  const { data, setData, post, errors, processing } = useForm({
-    username: "",
-    password: "",
+  const { data, setData, post, errors, processing } = useForm<Pick<Teacher, "usuario" | "clave">>({
+    usuario: "",
+    clave: "",
   });
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,19 +35,22 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            <FormInput
-              label="Usuario"
-              value={data.username}
-              onChange={(e) => setData("username", e.target.value)}
-              error={errors.username}
+            <CustomFormField
+              label={t("Usuario")}
+              data={data}
+              setData={setData}
+              name="usuario"
+              fieldType={FormFieldType.INPUT}
+              error={errors.usuario}
             />
-
-            <FormInput
-              label="Contraseña"
+            <CustomFormField
+              label={t("Contraseña")}
+              data={data}
+              setData={setData}
+              name="clave"
+              fieldType={FormFieldType.INPUT}
+              error={errors.clave}
               type="password"
-              value={data.password}
-              error={errors.password}
-              onChange={(e) => setData("password", e.target.value)}
             />
           </div>
         </CardContent>

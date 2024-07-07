@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 interface InfoBadgeProps extends BadgeProps {
   label: string;
-  value: string | number;
+  value: string | number | undefined;
 }
 export function InfoBadge({ label, value, className, ...props }: InfoBadgeProps) {
   return (
