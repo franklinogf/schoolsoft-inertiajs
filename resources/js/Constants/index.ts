@@ -1,26 +1,12 @@
-import { SelectItemType } from "@/Components/FormSelect";
-import { GenderEnum, PhoneCompaniesEnum, TeacherLevelEnum } from "@/Enums";
+export const NO_PICTURE_BOY = "/assets/no-picture-boy.png";
+export const NO_PICTURE_GIRL = "/assets/no-picture-girl.png";
+export const NO_PICTURE_TEACHER = "/assets/no-picture-teacher.png";
+export const LOGO_REGIWEB = "/assets/logo-regiweb.gif";
+export const LOGO_SCHOOLSOFT = "/assets/logo-schoolsoft.gif";
+export const GLOBE_PICTURE = "/assets/globe.gif";
 
-export const GENDERS_SELECT: SelectItemType = Object.entries(GenderEnum).map(([key, value]) => ({
-  key,
-  value,
-}));
-
-export const PHONE_COMPANIES_SELECT: SelectItemType = Object.keys(PhoneCompaniesEnum).map(
-  (company) => ({
-    key: company,
-    value: company,
-  }),
-);
-
-export const TEACHER_LEVEL_SELECT: SelectItemType = Object.entries(TeacherLevelEnum).map(
-  ([key, value]) => ({
-    key,
-    value,
-  }),
-);
-
-export const YES_NO_SELECT: SelectItemType = Object.entries(GenderEnum).map(([key, value]) => ({
-  key,
-  value,
-}));
+/* --------------------------------- Logins --------------------------------- */
+export const LOGIN_REGIWEB_PICTURE = LOGO_REGIWEB;
+export const LOGIN_ADMIN_PICTURE = LOGO_SCHOOLSOFT;
+export const LOGIN_FORO_TEACHER_PICTURE = LOGO_SCHOOLSOFT;
+export const LOGIN_FORO_STUDENT_PICTURE = LOGO_SCHOOLSOFT;

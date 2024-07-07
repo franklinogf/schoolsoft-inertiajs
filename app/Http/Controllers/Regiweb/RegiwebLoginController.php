@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Regiweb;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Regiweb\PasswordUpdateRequest;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,10 +19,10 @@ class RegiwebLoginController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'username' => ['required', 'min:2'],
-            'password' => ['required', 'min:6'],
+            'usuario' => ['required', 'min:2'],
+            'clave' => ['required', 'min:6'],
         ]);
-        $user = Teacher::where('usuario', $validated['username'])->where('clave', $validated['password'])->first();
+        $user = Teacher::where('usuario', $validated['usuario'])->where('clave', $validated['clave'])->first();
         if ($user) {
             Auth::guard('teacher')->login($user);
             $request->session()->regenerate();
@@ -41,5 +42,13 @@ class RegiwebLoginController extends Controller
         $request->session()->regenerateToken();
 
         return to_route('regiweb.login');
+    }
+
+    public function changePassword(PasswordUpdateRequest $request)
+    {
+        $request->user()->fill($request->validated());
+        $request->user()->save();
+        return back();
+
     }
 }

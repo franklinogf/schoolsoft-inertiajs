@@ -14,6 +14,7 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
 
     Route::middleware('auth:teacher')->group(function () {
         Route::delete('logout', [RegiwebLoginController::class, 'destroy'])->name('logout');
+        Route::patch('/password-update', [RegiwebLoginController::class, 'changePassword'])->name('password');
         Route::get('/', [RegiwebHomeController::class, 'index'])->name('index');
         Route::get('/home', [RegiwebHomeController::class, 'home'])->name('home');
         Route::get('/profile', [RegiwebProfileController::class, 'show'])->name('profile.show');

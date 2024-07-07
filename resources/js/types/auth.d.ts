@@ -106,7 +106,7 @@ export interface Teacher {
   cbarra: string | null;
 }
 
-export interface School {
+export interface Admin {
   colegio: string;
   dir1: string;
   dir2: string;

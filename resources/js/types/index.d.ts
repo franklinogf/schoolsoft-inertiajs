@@ -1,4 +1,4 @@
-import { School } from "./auth";
+import { Admin } from "./auth";
 
 type Char =
   | "a"
@@ -88,7 +88,7 @@ export type PagePropsWithUser<T> = PagePropsWithFlashMessage & {
   };
 };
 export type PagePropsWithSchool = PagePropsWithFlashMessage & {
-  school: School;
+  school: Admin;
 };
 
 export type PagePropsWithSchoolAndUser<T> = PagePropsWithSchool & PagePropsWithUser<T>;

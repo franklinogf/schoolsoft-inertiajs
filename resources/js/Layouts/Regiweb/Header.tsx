@@ -9,6 +9,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/Components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/ui/sheet";
+import { LOGO_REGIWEB } from "@/Constants";
 import { cn } from "@/lib/utils";
 import { Teacher } from "@/types/auth";
 import { Link, usePage } from "@inertiajs/react";
@@ -29,7 +30,7 @@ export default function Header({ user }: HeaderProps) {
   return (
     <header className="flex h-14 items-center bg-secondary px-4 shadow">
       <div className="mr-8">
-        <img className="h-auto max-w-[100px]" src="/assets/logo-regiweb.gif" alt="Regiweb logo" />
+        <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt="Logo regiweb" />
       </div>
       <NavigationMenu className="hidden md:flex">
         <NavigationMenuList>
@@ -54,7 +55,7 @@ export default function Header({ user }: HeaderProps) {
           avatarFallback={`${user.nombre[0]}${user.apellidos[0]}`}
         >
           <DropdownMenuItem>
-            <Link href={route("regiweb.profile.show")} className="flex items-center">
+            <Link href={route("regiweb.profile.show")} className="flex w-full grow items-center">
               <UserCircle className="mr-1 size-4" />
               {t("Perfil")}
             </Link>
@@ -76,11 +77,7 @@ export default function Header({ user }: HeaderProps) {
           <SheetContent className="flex flex-col">
             <SheetHeader>
               <SheetTitle>
-                <img
-                  className="h-auto max-w-[100px]"
-                  src="/assets/logo-regiweb.gif"
-                  alt="Regiweb logo"
-                />
+                <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt="Logo regiweb" />
               </SheetTitle>
             </SheetHeader>
             <nav className="mt-4 flex flex-1 flex-col justify-start">
@@ -104,7 +101,10 @@ export default function Header({ user }: HeaderProps) {
                   avatarFallback={`${user.nombre[0]}${user.apellidos[0]}`}
                 >
                   <DropdownMenuItem>
-                    <Link href="/profile" className="flex items-center">
+                    <Link
+                      href={route("regiweb.profile.show")}
+                      className="flex w-full grow items-center"
+                    >
                       <UserCircle className="mr-1 size-4" />
                       {t("Perfil")}
                     </Link>
