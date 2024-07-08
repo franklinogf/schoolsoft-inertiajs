@@ -26,7 +26,7 @@ export enum FormFieldType {
 }
 type DefaultCustomFormFieldProps = {
   data: any;
-  setData: (key: string, value: string | Date | null) => void;
+  setData: (key: string, value: any) => void;
   name: string;
   error?: string;
   label?: string;

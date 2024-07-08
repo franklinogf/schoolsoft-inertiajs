@@ -35,15 +35,16 @@ class HandleInertiaRequests extends Middleware
         $subPath = Str::afterLast($path, '/');
 
         $guard = match ($subPath) {
-            'admin' => 'admin',
+            'admin'   => 'admin',
             'regiweb' => 'teacher',
             'teacher' => 'teacher',
             'student' => 'student',
-            default => null
+            default   => null
         };
 
         return [
             ...parent::share($request),
+            'csrf_token' => csrf_token(),
             'auth' => [
                 'user' => $request->user($guard),
             ],

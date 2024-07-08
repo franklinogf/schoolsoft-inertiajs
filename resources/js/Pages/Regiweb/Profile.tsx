@@ -32,12 +32,19 @@ import { InfoBadge } from "@/Components/InfoBadge";
 import { YesNoEnum } from "@/Enums";
 import { toast } from "sonner";
 
-export default function ProfilePage({ auth: { user } }: PagePropsWithUser<Teacher>) {
+export default function ProfilePage({
+  auth: { user },
+  profile_picture,
+}: PagePropsWithUser<Teacher> & { profile_picture: string }) {
+  console.log({ profile_picture });
   const [sameAddress, setSameAddress] = useState(false);
+
   const { t } = useTranslation();
-  const { data, setData, patch, errors, processing } = useForm<Partial<Teacher>>({
+  const { data, setData, post, errors, processing, progress } = useForm<
+    Partial<Teacher> & { picture: null }
+  >({
+    picture: null,
     fecha_nac: user.fecha_nac,
-    foto_name: user.foto_name,
     nombre: user.nombre,
     apellidos: user.apellidos,
     genero: user.genero,
@@ -118,9 +125,8 @@ export default function ProfilePage({ auth: { user } }: PagePropsWithUser<Teache
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    patch(route("regiweb.profile.update"), {
+    post(route("regiweb.profile.update"), {
       onSuccess: () => {
-        console.log("guardado");
         toast.success(t("Perfil guardado"));
       },
     });
@@ -134,14 +140,26 @@ export default function ProfilePage({ auth: { user } }: PagePropsWithUser<Teache
             <User2 className="size-8" />
           </h1>
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
-            <FormProfilePicture />
+            {progress && (
+              <progress value={progress.percentage} max="100">
+                {progress.percentage}%
+              </progress>
+            )}
+            <FormProfilePicture
+              initialFile={profile_picture}
+              data={data}
+              name="picture"
+              setData={setData}
+              error={errors.picture}
+            />
+
             <div className="hidden md:flex md:items-center md:justify-center">
               <Card className="border-accent bg-accent">
-                <CardHeader>
-                  <CardTitle className="text-lg">{t("Información importante")}</CardTitle>
+                <CardHeader className="p-2">
+                  <CardTitle className="text-lg">{t("Información")}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2 rounded-b-md bg-background pt-2">
-                  <InfoBadge label={t("ID")} value={user.id} />
+                  <InfoBadge label={t("Id")} value={user.id} />
                   <InfoBadge label={t("User")} value={user.usuario} />
                   {user.grado && <InfoBadge label={t("Salón hogar")} value={user.grado} />}
                 </CardContent>
@@ -401,8 +419,8 @@ export default function ProfilePage({ auth: { user } }: PagePropsWithUser<Teache
                         data={data}
                         setData={setData}
                         label={t("Nivel")}
-                        name="posicion"
-                        error={errors.posicion}
+                        name="nivel"
+                        error={errors.nivel}
                         items={TEACHER_LEVEL_SELECT}
                       />
                     </InputsGrid>
