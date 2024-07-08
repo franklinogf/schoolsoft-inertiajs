@@ -18,6 +18,6 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
         Route::get('/', [RegiwebHomeController::class, 'index'])->name('index');
         Route::get('/home', [RegiwebHomeController::class, 'home'])->name('home');
         Route::get('/profile', [RegiwebProfileController::class, 'show'])->name('profile.show');
-        Route::patch('/profile', [RegiwebProfileController::class, 'update'])->name('profile.update');
+        Route::post('/profile/update', [RegiwebProfileController::class, 'update'])->name('profile.update');
     });
 });

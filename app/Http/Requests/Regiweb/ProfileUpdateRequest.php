@@ -4,6 +4,7 @@ namespace App\Http\Requests\Regiweb;
 
 use App\Models\Teacher;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProfileUpdateRequest extends FormRequest
@@ -15,7 +16,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return true;
     }
-    private function checkDate(string $date)
+    private function checkDate(?string $date)
     {
         return $date === '0000-00-00' ? null : $date;
     }
@@ -62,8 +63,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "picture" => ['required_without:foto_name', 'image', 'nullable', 'exclude'],
-            "foto_name" => ['nullable', 'string'],
+            "picture" => ['exclude', Rule::requiredIf(fn() => $this->user()->foto_name === null), 'nullable', 'image'],
             "nombre" => ['required', 'min:2', 'string'],
             "apellidos" => ['required', 'min:2', 'string'],
             "tel_res" => ['nullable'],

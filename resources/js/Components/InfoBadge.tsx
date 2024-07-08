@@ -8,10 +8,10 @@ interface InfoBadgeProps extends BadgeProps {
 export function InfoBadge({ label, value, className, ...props }: InfoBadgeProps) {
   return (
     <div className="flex gap-2">
-      <Badge {...props} className={cn("rounded-sm", className)}>
+      <Badge {...props} className={cn("rounded-sm text-xs", className)}>
         {label}
       </Badge>
-      <span>{value}</span>
+      <span className={cn("text-sm", className)}>{value}</span>
     </div>
   );
 }
