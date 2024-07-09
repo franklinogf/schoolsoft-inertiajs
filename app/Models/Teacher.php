@@ -2,18 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Casts\Date;
+use App\Casts\Gender;
+use App\Casts\NullToEmptyString;
+use App\Casts\ProfilePicture;
+use App\Casts\YesNo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Model;
-use Illuminate\Support\Facades\Storage;
 
 class Teacher extends Model
 {
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
+
     public $timestamps = false;
 
     protected $table = 'profesor';
@@ -22,24 +21,35 @@ class Teacher extends Model
         'clave',
     ];
 
-    protected $guarded = [];
 
-    public function getFullNameAttribute()
-    {
-        return "$this->nombre, $this->apellidos";
-    }
+    protected $guarded = [];
 
     public function students(): HasMany
     {
         return $this->hasMany(Student::class, 'grado', 'grado');
     }
 
-    public function fotoName(): Attribute
+    protected function casts(): array
     {
-        return Attribute::make(
-            get: function (string $value): string|null {
-                return $value !== '' && Storage::exists($value) ? $value : null;
-            }
-        );
+        return [
+            'fecha_daja' => Date::class,
+            'fecha_nac' => Date::class,
+            'fecha_ini' => Date::class,
+            'fex1' => Date::class,
+            'fex2' => Date::class,
+            'fex3' => Date::class,
+            'fex4' => Date::class,
+            'genero' => Gender::class,
+            'foto_name' => ProfilePicture::class,
+            'lp1' => YesNo::class,
+            'lp2' => YesNo::class,
+            'lp3' => YesNo::class,
+            'lp4' => YesNo::class,
+            'email2' => NullToEmptyString::class,
+            'pueblo2' => NullToEmptyString::class,
+            'esta2' => NullToEmptyString::class,
+            'zip2' => NullToEmptyString::class,
+            'alias' => NullToEmptyString::class,
+        ];
     }
 }
