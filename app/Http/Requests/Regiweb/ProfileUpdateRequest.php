@@ -4,7 +4,6 @@ namespace App\Http\Requests\Regiweb;
 
 use App\Models\Teacher;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProfileUpdateRequest extends FormRequest
@@ -16,45 +15,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return true;
     }
-    private function checkDate(?string $date)
-    {
-        return $date === '0000-00-00' ? null : $date;
-    }
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'fecha_daja' => $this->checkDate($this->fecha_daja),
-            'fecha_nac' => $this->checkDate($this->fecha_nac),
-            'fecha_ini' => $this->checkDate($this->fecha_ini),
-            'fex1' => $this->checkDate($this->fex1),
-            'fex2' => $this->checkDate($this->fex2),
-            'fex3' => $this->checkDate($this->fex3),
-            'fex4' => $this->checkDate($this->fex4),
-            'genero' => $this->genero === 'Masculino' ? 'm' : ($this->genero === 'Femenino' ? 'f' : $this->genero),
-            'lp1' => !$this->lp1 ? 'NO' : $this->lp1,
-            'lp2' => !$this->lp2 ? 'NO' : $this->lp2,
-            'lp3' => !$this->lp3 ? 'NO' : $this->lp3,
-            'lp4' => !$this->lp4 ? 'NO' : $this->lp4,
-        ]);
-    }
 
-    protected function passedValidation()
-    {
-        $this->merge([
-            'email2' => $this->email2 ?? '',
-            'pueblo2' => $this->pueblo2 ?? '',
-            'esta2' => $this->esta2 ?? '',
-            'zip2' => $this->zip2 ?? '',
-            'alias' => $this->alias ?? '',
-            'fecha_daja' => $this->fecha_daja ?? '0000-00-00',
-            'fecha_nac' => $this->fecha_nac ?? '0000-00-00',
-            'fecha_ini' => $this->fecha_ini ?? '0000-00-00',
-            'fex1' => $this->fex1 ?? '0000-00-00',
-            'fex2' => $this->fex2 ?? '0000-00-00',
-            'fex3' => $this->fex3 ?? '0000-00-00',
-            'fex4' => $this->fex4 ?? '0000-00-00',
-        ]);
-    }
     /**
      * Get the validation rules that apply to the request.
      *

@@ -17,7 +17,7 @@ export interface Teacher {
   preparacion2: string;
   grado: string | null;
   email1: string;
-  email2: string;
+  email2: string | null;
   dir1: string;
   dir2: string;
   pueblo1: string;
@@ -44,7 +44,7 @@ export interface Teacher {
   re_e: string;
   year: string;
   cel_com: string;
-  alias: string;
+  alias: string | null;
   baja: string;
   pre1: string | null;
   pre2: string | null;
@@ -115,9 +115,9 @@ export interface Admin {
   zip1: string;
   dir3: string;
   dir4: string;
-  pueblo2: string;
-  esta2: string;
-  zip2: string;
+  pueblo2: string | null;
+  esta2: string | null;
+  zip2: string | null;
   correo: string;
   telefono: string;
   fax: string;

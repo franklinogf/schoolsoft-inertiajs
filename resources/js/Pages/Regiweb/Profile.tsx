@@ -131,6 +131,7 @@ export default function ProfilePage({
       },
     });
   }
+  console.log(user);
   return (
     <RegiwebLayout user={user} title={t("Perfil")}>
       <form onSubmit={handleSubmit}>
