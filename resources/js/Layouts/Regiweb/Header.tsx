@@ -17,7 +17,7 @@ import { Menu, UserCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const menuItems = [
-  { label: "Notas", href: "/" },
+  { label: "Notas", href: route("regiweb.notes") },
   { label: "Opciones", href: "/" },
   { label: "Informes", href: "/" },
 ];
@@ -30,20 +30,22 @@ export default function Header({ user }: HeaderProps) {
   return (
     <header className="flex h-14 items-center bg-secondary px-4 shadow">
       <div className="mr-8">
-        <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt="Logo regiweb" />
+        <Link href={route("regiweb.home")}>
+          <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt={t("Logo regiweb")} />
+        </Link>
       </div>
       <NavigationMenu className="hidden md:flex">
         <NavigationMenuList>
           {menuItems.map((item) => (
             <NavigationMenuItem key={item.label}>
               <NavigationMenuLink
-                active={url === item.href}
-                href={item.href}
+                asChild
+                active={item.href.includes(url)}
                 className={navigationMenuTriggerStyle({
                   className: "bg-transparent font-bold",
                 })}
               >
-                {t(item.label)}
+                <Link href={item.href}>{t(item.label)}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           ))}
@@ -85,7 +87,7 @@ export default function Header({ user }: HeaderProps) {
                 {menuItems.map((item) => (
                   <Button
                     className={cn("text-lg font-bold", {
-                      "bg-accent/80": url === item.href,
+                      "bg-accent/80": item.href.includes(url),
                     })}
                     variant="ghost"
                     key={item.label}

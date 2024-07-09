@@ -29,6 +29,7 @@ import { ChangePasswordForm } from "@/Components/ChangePasswordForm";
 import { CustomFormField, FormFieldType } from "@/Components/CustomFormField";
 import { FormProfilePicture } from "@/Components/FormProfilePicture";
 import { InfoBadge } from "@/Components/InfoBadge";
+import PagePrimaryTitle from "@/Components/PagePrimaryTitle";
 import { YesNoEnum } from "@/Enums";
 import { toast } from "sonner";
 
@@ -136,10 +137,10 @@ export default function ProfilePage({
     <RegiwebLayout user={user} title={t("Perfil")}>
       <form onSubmit={handleSubmit}>
         <div className="flex grow flex-col gap-8 px-2 pb-10 pt-5">
-          <h1 className="mx-auto flex max-w-2xl items-center gap-2 text-balance text-center text-4xl font-bold">
+          <PagePrimaryTitle className="flex items-center gap-2">
             {t("Mi perfil")}
             <User2 className="size-8" />
-          </h1>
+          </PagePrimaryTitle>
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
             {progress && (
               <progress value={progress.percentage} max="100">

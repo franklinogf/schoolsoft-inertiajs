@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import { useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { useTranslation } from "react-i18next";
-export type SelectItemType = { key: string; value: string }[];
 interface FormProfilePictureProps {
   label?: string;
   error?: string;
