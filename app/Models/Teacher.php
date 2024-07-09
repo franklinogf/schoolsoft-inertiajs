@@ -29,6 +29,7 @@ class Teacher extends Model
         return $this->hasMany(Student::class, 'grado', 'grado');
     }
 
+
     protected function casts(): array
     {
         return [
