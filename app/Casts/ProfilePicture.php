@@ -15,7 +15,7 @@ class ProfilePicture implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value !== '' && Storage::exists($value) ? $value : null;
+        return $value !== '' ? $value : null;
     }
 
     /**
