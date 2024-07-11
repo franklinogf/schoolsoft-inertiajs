@@ -8,7 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/Components/ui/card";
-import { HomeLayout } from "@/Layouts/HomeLayout";
+import { HomeLayout } from "@/Layouts/Home/HomeLayout";
+
 import type { Document, PagePropsWithSchool } from "@/types";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
