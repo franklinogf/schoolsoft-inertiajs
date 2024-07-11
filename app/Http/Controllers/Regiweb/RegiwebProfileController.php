@@ -16,7 +16,8 @@ class RegiwebProfileController extends Controller
      */
     public function show(Request $request)
     {
-        return Inertia::render('Regiweb/Profile', ['profile_picture' => Storage::path($request->user()->foto_name)]);
+        $picture = $request->user()->foto_name ? Storage::path($request->user()->foto_name) : null;
+        return Inertia::render('Regiweb/Profile', ['profile_picture' => $picture]);
     }
 
 
@@ -25,17 +26,16 @@ class RegiwebProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
+        $request->user()->fill($data);
         if ($request->hasFile('picture')) {
             if ($request->user()->foto_name !== null) {
                 Storage::delete($request->user()->foto_name);
             }
             $picturePath = $request->file('picture')->store('teacher/profile_picture');
-            $data['foto_name'] = $picturePath;
-
+            $request->user()->foto_name = $picturePath;
         }
-        unset($data['picture']);
-        $request->user()->fill($data);
+
         $request->user()->save();
         return to_route('regiweb.profile.show');
 
