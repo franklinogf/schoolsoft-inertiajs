@@ -33,6 +33,7 @@ class RegiwebProfileController extends Controller
                 Storage::delete($request->user()->foto_name);
             }
             $picturePath = $request->file('picture')->store('teacher/profile_picture');
+            dd($picturePath);
             $request->user()->foto_name = $picturePath;
         }
 
