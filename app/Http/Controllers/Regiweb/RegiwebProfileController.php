@@ -16,7 +16,7 @@ class RegiwebProfileController extends Controller
      */
     public function show(Request $request)
     {
-        $picture = $request->user()->foto_name ? Storage::path($request->user()->foto_name) : null;
+        $picture = $request->user()->foto_name ? tenant_asset($request->user()->foto_name) : null;
         return Inertia::render('Regiweb/Profile', ['profile_picture' => $picture]);
     }
 
