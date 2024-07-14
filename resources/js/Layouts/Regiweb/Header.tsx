@@ -17,7 +17,7 @@ import { Menu, UserCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const menuItems = [
-  { label: "Notas", href: route("regiweb.notes") },
+  { label: "Notas", href: route("regiweb.notes.index") },
   { label: "Opciones", href: "/" },
   { label: "Informes", href: "/" },
 ];

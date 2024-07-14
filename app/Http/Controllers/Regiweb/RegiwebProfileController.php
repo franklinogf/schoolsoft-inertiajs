@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Regiweb\ProfileUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class RegiwebProfileController extends Controller
@@ -16,8 +17,9 @@ class RegiwebProfileController extends Controller
      */
     public function show(Request $request)
     {
-        $picture = $request->user()->foto_name ? tenant_asset($request->user()->foto_name) : null;
-        return Inertia::render('Regiweb/Profile', ['profile_picture' => $picture]);
+
+
+        return Inertia::render('Regiweb/Profile', ['profile_picture' => $request->user()->foto_name]);
     }
 
 
@@ -30,11 +32,11 @@ class RegiwebProfileController extends Controller
         $request->user()->fill($data);
         if ($request->hasFile('picture')) {
             if ($request->user()->foto_name !== null) {
-                Storage::delete($request->user()->foto_name);
+                Storage::delete(get_tenant_uploaded_file_path($request->user()->foto_name));
             }
-            $picturePath = $request->file('picture')->store('teacher/profile_picture');
-            dd($picturePath);
-            $request->user()->foto_name = $picturePath;
+            $picturePath = $request->file('picture')->storePublicly('profile_pictures/teacher');
+
+            $request->user()->foto_name = create_tenant_file_url($picturePath);
         }
 
         $request->user()->save();

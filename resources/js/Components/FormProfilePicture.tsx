@@ -24,16 +24,18 @@ export function FormProfilePicture({
   const { t } = useTranslation();
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
-    Object.assign(file, {
-      preview: URL.createObjectURL(file),
-    });
-
-    setData(name, file);
+    if (file) {
+      Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      });
+      setData(name, file);
+    }
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
     onDrop,
     maxFiles: 1,
     disabled,
+    multiple: false,
     accept: { "image/*": [] },
   });
   useEffect(() => {
@@ -44,7 +46,7 @@ export function FormProfilePicture({
       }
     };
   }, []);
-
+  console.log(isDragReject);
   return (
     <div className="flex flex-col items-center justify-center">
       <div
@@ -52,9 +54,10 @@ export function FormProfilePicture({
         className={cn(
           "relative flex aspect-square size-[250px] items-center justify-center overflow-hidden rounded-full border-2 border-dashed px-2 shadow-sm",
           disabled ? "cursor-not-allowed bg-muted" : "cursor-pointer bg-background",
+          { "cursor-not-allowed border-destructive": isDragReject },
         )}
       >
-        <input {...getInputProps()} maxLength={1} />
+        <input {...getInputProps()} />
         <p
           className={cn(
             "absolute z-20 text-balance text-center font-serif text-sm font-medium text-input",
@@ -78,7 +81,6 @@ export function FormProfilePicture({
           </div>
         ) : null}
       </div>
-
       {label && <p className="mt-1 text-sm font-medium leading-none">{t(label)}</p>}
       {error && <small className="text-red-500">{error}</small>}
     </div>
