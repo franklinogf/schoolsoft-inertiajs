@@ -6,6 +6,7 @@ use App\Filament\Resources\SchoolResource\Pages;
 use App\Models\Enviroment;
 use App\Models\Feature;
 use App\Models\School;
+use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Tabs;
@@ -44,11 +45,10 @@ class SchoolResource extends Resource
                         Group::make([
                             TextInput::make('id')->label('School ID')->disabledOn('edit')->unique(ignoreRecord: true)
                                 ->required()
-                                ->debounce(800)
-                                ->live()->afterStateUpdated(function ($state, Set $set) {
-                                    $set('tenancy_db_username', $state);
-                                    $set('tenancy_db_name', $state);
-
+                                ->live(onBlur: true)->afterStateUpdated(function (TextInput $component, $state, Set $set) {
+                                    $set('tenancy_db_username', strtolower($state));
+                                    $set('tenancy_db_name', strtolower($state));
+                                    $component->state(strtolower($state));
                                 }),
                             TextInput::make('name')->label('Name')->required(),
                         ])->columns(2),
@@ -57,12 +57,14 @@ class SchoolResource extends Resource
                                 TextInput::make('tenancy_db_name')
                                     ->label('Database name (auto filled)')
                                     ->prefix(env('TENANT_DB_PREFIX'))
-                                    ->formatStateUsing(fn(string $state): string => $state ? str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state) : "")
-                                    ->dehydrateStateUsing(fn(string $state): string => env('TENANT_DB_PREFIX') . $state)
+                                    ->formatStateUsing(fn(string|null $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state))
+                                    ->dehydrateStateUsing(fn(string $state): string => env('TENANT_DB_PREFIX') . strtolower($state))
                                     ->required(),
-                                TextInput::make('tenancy_db_username')->label('Database user (auto filled)')->prefix(env('TENANT_DB_PREFIX'))
-                                    ->formatStateUsing(fn(string $state): string => $state ? str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state) : "")
-                                    ->dehydrateStateUsing(fn(string $state): string => env('TENANT_DB_PREFIX') . $state)
+                                TextInput::make('tenancy_db_username')
+                                    ->label('Database user (auto filled)')
+                                    ->prefix(env('TENANT_DB_PREFIX'))
+                                    ->formatStateUsing(fn(string|null $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state))
+                                    ->dehydrateStateUsing(fn(string $state): string => env('TENANT_DB_PREFIX') . strtolower($state))
                                     ->required(),
                                 TextInput::make('tenancy_db_password')->label('Database password (auto filled)')->default(env('TENANT_DB_PASSWORD'))->required(),
 
