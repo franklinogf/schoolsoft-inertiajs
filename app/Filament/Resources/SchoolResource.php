@@ -57,11 +57,11 @@ class SchoolResource extends Resource
                                 TextInput::make('tenancy_db_name')
                                     ->label('Database name (auto filled)')
                                     ->prefix(env('TENANT_DB_PREFIX'))
-                                    ->formatStateUsing(fn(string $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state))
+                                    ->formatStateUsing(fn(string $state): string => $state ? str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state) : $state)
                                     ->dehydrateStateUsing(fn(string $state): string => env('TENANT_DB_PREFIX') . $state)
                                     ->required(),
                                 TextInput::make('tenancy_db_username')->label('Database user (auto filled)')->prefix(env('TENANT_DB_PREFIX'))
-                                    ->formatStateUsing(fn(string $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state))
+                                    ->formatStateUsing(fn(string $state): string => $state ? str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state) : $state)
                                     ->dehydrateStateUsing(fn(string $state): string => env('TENANT_DB_PREFIX') . $state)
                                     ->required(),
                                 TextInput::make('tenancy_db_password')->label('Database password (auto filled)')->default(env('TENANT_DB_PASSWORD'))->required(),
