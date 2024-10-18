@@ -6,7 +6,6 @@ use App\Filament\Resources\SchoolResource\Pages;
 use App\Models\Enviroment;
 use App\Models\Feature;
 use App\Models\School;
-use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Tabs;
@@ -16,6 +15,8 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
+use Filament\Support\Colors\Color;
+use Filament\Support\Facades\FilamentColor;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -43,7 +44,7 @@ class SchoolResource extends Resource
                 Tabs::make('Tabs')->tabs([
                     Tab::make('Main')->schema([
                         Group::make([
-                            TextInput::make('id')->label('School ID')->disabledOn('edit')->unique(ignoreRecord: true)
+                            TextInput::make('id')->label('School ID')->unique(ignoreRecord: true)
                                 ->required()
                                 ->live(onBlur: true)->afterStateUpdated(function (TextInput $component, $state, Set $set) {
                                     $set('tenancy_db_username', strtolower($state));
@@ -108,6 +109,17 @@ class SchoolResource extends Resource
                 //
             ])
             ->actions([
+                /* ------------------------------ /old website ------------------------------ */
+                Tables\Actions\Action::make('school_website')
+                    ->label('Go to school')
+                    ->color(Color::Blue)
+                    ->url(fn(School $record): string => "https://schoolsoftpr.org/" . $record->id)
+                    ->openUrlInNewTab(),
+                /* ------------------------------- new website ------------------------------ */
+                // Tables\Actions\Action::make('school_website')
+                //     ->label('Go to school')
+                //     ->url(fn(School $record): string => route('home.index', ['school' => $record->id]))
+                //     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
