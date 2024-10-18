@@ -9,6 +9,7 @@ use Stancl\Tenancy\Database\Models\Tenant;
 class School extends Tenant implements TenantWithDatabase
 {
     use HasDatabase;
+    protected $guarded = [];
     protected $table = 'schools';
     protected static function booted(): void
     {
@@ -18,5 +19,16 @@ class School extends Tenant implements TenantWithDatabase
             }
             $school->tenancy_db_password = env('TENANT_DB_PASSWORD', '');
         });
+    }
+    public static function getCustomColumns(): array
+    {
+        return [
+            'id',
+            'name',
+            'enviroments',
+            'features',
+            'created_at',
+            'updated_at',
+        ];
     }
 }
