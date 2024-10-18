@@ -20,7 +20,12 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
         Route::get('/home', [RegiwebHomeController::class, 'home'])->name('home');
         Route::get('/profile', [RegiwebProfileController::class, 'show'])->name('profile.show');
         Route::post('/profile', [RegiwebProfileController::class, 'update'])->name('profile.update');
-        Route::get('/notes', [RegiwebNotesController::class, 'index'])->name('notes');
+
+        Route::name('notes.')->prefix('notes')->controller(RegiwebNotesController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'submit')->name('index.submit');
+            Route::get('/enter-grades', 'show')->name('show');
+        });
 
     });
 });

@@ -13,10 +13,14 @@ type PageProps = PagePropsWithUser<Teacher> & {
 };
 export default function IndexPage({ auth, teacherGrades }: PageProps) {
   const { t } = useTranslation();
-  const { data, setData, get, processing } = useForm({ grade: "", trimester: "", page: "" });
+  const { data, setData, post, processing, errors } = useForm({
+    grade: "",
+    trimester: "",
+    page: "",
+  });
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    get(route("regiweb.home"));
+    post(route("regiweb.notes.index.submit"));
   }
   return (
     <RegiwebLayout user={auth.user} title={t("Inicio")}>
@@ -25,16 +29,16 @@ export default function IndexPage({ auth, teacherGrades }: PageProps) {
         <div className="w-full max-w-xl rounded-md bg-secondary p-4">
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
             <Button className="bg-transparent text-secondary-foreground" variant="outline">
-              Entrada de asistencia
+              {t("Entrada de asistencia")}
             </Button>
             <Button className="bg-transparent text-secondary-foreground" variant="outline">
-              Reporte de asistencia diaria
+              {t("Reporte de asistencia diaria")}
             </Button>
             <Button className="bg-transparent text-secondary-foreground" variant="outline">
-              Reporte de asistencias
+              {t("Reporte de asistencias")}
             </Button>
             <Button className="bg-transparent text-secondary-foreground" variant="outline">
-              Pre escuela
+              {t("Pre escuela")}
             </Button>
           </div>
         </div>
@@ -49,6 +53,7 @@ export default function IndexPage({ auth, teacherGrades }: PageProps) {
                 name="grade"
                 label={t("Grado")}
                 items={teacherGrades}
+                error={errors.grade}
               />
               <CustomFormField
                 placeholder="Selecciona el trimestre"
@@ -58,6 +63,7 @@ export default function IndexPage({ auth, teacherGrades }: PageProps) {
                 name="trimester"
                 label={t("Trimestre")}
                 items={TRIMESTER_SELECT}
+                error={errors.trimester}
               />
               <CustomFormField
                 placeholder="Selecciona la pagína"
@@ -67,10 +73,11 @@ export default function IndexPage({ auth, teacherGrades }: PageProps) {
                 name="page"
                 label={t("Pagína")}
                 items={PAGES_SELECT}
+                error={errors.page}
               />
               <div className="flex justify-center">
                 <Button disabled={processing} type="submit">
-                  Continuar
+                  {t("Continuar")}
                 </Button>
               </div>
             </div>
