@@ -2,8 +2,8 @@ import { InfoBadge } from "@/Components/InfoBadge";
 import { Button } from "@/Components/ui/button";
 import { LOGO_REGIWEB } from "@/Constants";
 import { formatDate } from "@/lib/utils";
-import { PagePropsWithUser } from "@/types";
-import { Teacher } from "@/types/auth";
+import { type PagePropsWithUser } from "@/types";
+import { type Teacher } from "@/types/auth";
 import { Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 

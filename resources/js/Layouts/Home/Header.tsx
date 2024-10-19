@@ -1,9 +1,9 @@
 import { Button } from "@/Components/ui/button";
-import { PagePropsWithSchool } from "@/types";
+import { type Admin } from "@/types/auth";
 import { Link, usePage } from "@inertiajs/react";
 import { ArrowDown } from "lucide-react";
 
-export default function Header({ school }: PagePropsWithSchool) {
+export default function Header({ school }: { school: Admin }) {
   const { url } = usePage();
   return (
     <section className="grid min-h-40 items-center justify-center bg-primary/90 p-10 text-primary-foreground md:min-h-80">
