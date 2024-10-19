@@ -28,7 +28,7 @@ export default function DocumentsPage({ school, documents, flash }: DocumentsPag
           <Button asChild variant="ghost">
             <Link href={route("home.index")}>{t("Ir a la pagina principal")}</Link>
           </Button>
-          {flash?.message && (
+          {flash.message && (
             <div className="mt-2 flex items-center justify-center">
               <Alert className="max-w-xl" variant="destructive">
                 <AlertTitle>{t("Error")}!</AlertTitle>

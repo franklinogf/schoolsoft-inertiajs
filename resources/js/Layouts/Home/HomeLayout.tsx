@@ -1,9 +1,10 @@
 import { Footer } from "@/Layouts/Home/Footer";
 import Header from "@/Layouts/Home/Header";
-import { PagePropsWithSchool } from "@/types";
+import { type Admin } from "@/types/auth";
 import { Head } from "@inertiajs/react";
 
-interface MainLayoutProps extends PagePropsWithSchool {
+interface MainLayoutProps {
+  school: Admin;
   children: React.ReactNode;
   title: string;
 }
