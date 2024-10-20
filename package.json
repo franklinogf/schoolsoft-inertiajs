@@ -4,15 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "format": "npx prettier ./resources/js --write"
-  },
-  "huksy": {
-    "hooks": {
-      "applypatch-msg": "echo \"[Husky] applypatch-msg\"",
-      "pre-applypatch": "echo \"[Husky] pre-applypatch\"",
-      "post-applypatch": "echo \"[Husky] post-applypatch\"",
-      "pre-commit": "npm run format && git add -A ."
-    }
+    "format": "npx prettier ./resources/js --write",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@headlessui/react": "^2.0.0",
@@ -24,6 +17,7 @@
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.12",
     "axios": "^1.6.4",
+    "husky": "^9.1.6",
     "laravel-vite-plugin": "^1.0",
     "postcss": "^8.4.31",
     "prettier": "^3.3.2",
@@ -50,7 +44,6 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
-    "husky": "^9.1.6",
     "i18next": "^23.11.5",
     "lucide-react": "^0.395.0",
     "next-themes": "^0.3.0",
