@@ -6,6 +6,11 @@
     "build": "tsc && vite build",
     "format": "npx prettier ./resources/js --write"
   },
+  "huksy": {
+    "hooks": {
+      "pre-commit": "npm run format && git add -A ."
+    }
+  },
   "devDependencies": {
     "@headlessui/react": "^2.0.0",
     "@inertiajs/react": "^1.0.0",
