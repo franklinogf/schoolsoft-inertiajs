@@ -4,8 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { OTHER_SERVICES, SERVICES } from "@/Constants/root";
 import RootLayout from "@/Layouts/Root/RootLayout";
 import { Head, Link } from "@inertiajs/react";
-import { type Variants } from "framer-motion";
-import * as motion from "framer-motion/client";
+import { motion, type Variants } from "framer-motion";
 import { CircleCheckBig } from "lucide-react";
 const listVariants: Variants = {
   offScreen: {

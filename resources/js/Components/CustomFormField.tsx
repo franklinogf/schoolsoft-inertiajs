@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { YesNoEnum } from "@/Enums";
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "./ui/checkbox";
+import { Textarea } from "./ui/textarea";
 export type SelectItemType = { key: string; value: string };
 export enum FormFieldType {
   INPUT,
@@ -38,6 +39,10 @@ type FormFieldSelectType = {
   fieldType: FormFieldType.SELECT;
   items: SelectItemType[];
 };
+type FormFieldTextAreaType = {
+  fieldType: FormFieldType.TEXTAREA;
+};
+
 type FormFieldInputType = {
   fieldType: FormFieldType.INPUT;
   type?: React.HTMLInputTypeAttribute;
@@ -60,6 +65,7 @@ type CustomFormFieldProps = DefaultCustomFormFieldProps &
     | FormFieldDatePickerType
     | FormFieldPhoneType
     | FormFieldCheckboxType
+    | FormFieldTextAreaType
   );
 
 function RenderInput({ props, id }: { props: CustomFormFieldProps; id: string }) {
@@ -75,6 +81,22 @@ function RenderInput({ props, id }: { props: CustomFormFieldProps; id: string })
               props.error,
           })}
           type={props.type ?? "text"}
+          value={props.data[props.name]}
+          onChange={(e) => {
+            props.setData(props.name, e.target.value);
+          }}
+          placeholder={props.placeholder}
+        />
+      );
+    case FormFieldType.TEXTAREA:
+      return (
+        <Textarea
+          disabled={props.disabled}
+          id={id}
+          className={cn({
+            "border-destructive ring-offset-destructive focus-visible:ring-destructive":
+              props.error,
+          })}
           value={props.data[props.name]}
           onChange={(e) => {
             props.setData(props.name, e.target.value);
@@ -152,6 +174,7 @@ function RenderInput({ props, id }: { props: CustomFormFieldProps; id: string })
     case FormFieldType.PHONE_INPUT:
       return (
         <PhoneInput
+          numberInputProps={{ id }}
           international
           countries={["US", "PR"]}
           countryCallingCodeEditable={false}
