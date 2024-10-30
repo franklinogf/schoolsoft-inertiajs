@@ -1,8 +1,7 @@
-import { MaxWidthSection } from "@/Components/root/MaxWidthSection";
-import { Head } from "@inertiajs/react";
-
 import { List } from "@/Components/root/List";
+import { MaxWidthSection } from "@/Components/root/MaxWidthSection";
 import RootLayout from "@/Layouts/Root/RootLayout";
+import { Head } from "@inertiajs/react";
 import { CalendarClock, Globe, School, Users } from "lucide-react";
 const regiweb = [
   {

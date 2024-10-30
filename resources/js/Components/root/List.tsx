@@ -1,5 +1,4 @@
-import { Variants } from "framer-motion";
-import * as motion from "framer-motion/client";
+import { motion, type Variants } from "framer-motion";
 interface ListProps {
   items: {
     title: string;
