@@ -1,0 +1,1 @@
+import{j as a}from"./app-C6NOOriA.js";import{c as r}from"./button-__a2_-m9.js";function m({children:t,className:e}){return a.jsx("h1",{className:r("mx-auto max-w-2xl text-balance text-center text-4xl font-bold",e),children:t})}export{m as P};
