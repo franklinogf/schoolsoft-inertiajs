@@ -16,9 +16,9 @@ class RegiwebNotesController extends Controller
     public function index()
     {
 
-        $disctinctGrades = DB::table('padres')
-            ->select(['curso', 'descripcion'])
-            ->where([['id', auth()->id()], ['year', Admin::primary()->year]])
+        $disctinctGrades = DB::table('cursos')
+            ->select(['curso', 'desc1 as descripcion'])
+            ->where([['id', auth()->id()], ['year', Admin::primary()->year2]])
             ->distinct()
             ->get();
         $grades = $disctinctGrades->map(function ($grade) {

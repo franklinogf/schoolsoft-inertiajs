@@ -30,6 +30,7 @@ import { CustomFormField, FormFieldType } from "@/Components/CustomFormField";
 import { FormProfilePicture } from "@/Components/FormProfilePicture";
 import { InfoBadge } from "@/Components/InfoBadge";
 import PagePrimaryTitle from "@/Components/PagePrimaryTitle";
+import SubmitButton from "@/Components/SubmitButton";
 import { YesNoEnum } from "@/Enums";
 import { toast } from "sonner";
 
@@ -569,9 +570,9 @@ export default function ProfilePage({
               </AccordionItem>
             </Accordion>
           </section>
-          <Button type="submit" disabled={processing} size="lg">
+          <SubmitButton disabled={processing} size="lg">
             {t("Guardar")}
-          </Button>
+          </SubmitButton>
         </div>
       </form>
     </RegiwebLayout>

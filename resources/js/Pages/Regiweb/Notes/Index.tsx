@@ -1,5 +1,6 @@
 import { CustomFormField, FormFieldType, SelectItemType } from "@/Components/CustomFormField";
 import PagePrimaryTitle from "@/Components/PagePrimaryTitle";
+import SubmitButton from "@/Components/SubmitButton";
 import { Button } from "@/Components/ui/button";
 import { PAGES_SELECT, TRIMESTER_SELECT } from "@/Constants/FormSelects";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
@@ -76,9 +77,7 @@ export default function IndexPage({ auth, teacherGrades }: PageProps) {
                 error={errors.page}
               />
               <div className="flex justify-center">
-                <Button disabled={processing} type="submit">
-                  {t("Continuar")}
-                </Button>
+                <SubmitButton disabled={processing}>{t("Continuar")}</SubmitButton>
               </div>
             </div>
           </form>
