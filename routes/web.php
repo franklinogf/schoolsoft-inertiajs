@@ -1,15 +1,14 @@
 <?php
 
-use App\Models\School;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
-Route::get('/', function () {
+Route::get('/', fn() => Inertia::render('Root/Index'))->name('home');
 
-    // dd(tenant());
-    // School::create([
-    //     'id' => 'cbl'
-    // ]);
+Route::get('/contact', fn() => Inertia::render('Root/Contact'))->name('contact');
+
+Route::get('/modules', fn() => Inertia::render('Root/Modules'))->name('modules');
+
+Route::get('/regiweb', fn() => Inertia::render('Root/Regiweb'))->name('regiweb');
 
 
-
-});
