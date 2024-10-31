@@ -25,8 +25,6 @@ class RegiwebNotesController extends Controller
             return ['key' => $grade->curso, 'value' => "$grade->curso - $grade->descripcion"];
         });
 
-
-
         return Inertia::render('Regiweb/Notes/Index', ['teacherGrades' => $grades]);
     }
 
@@ -35,42 +33,43 @@ class RegiwebNotesController extends Controller
         $validated = $request->validate([
             'grade' => [
                 'required',
-                'string'
+                'string',
             ],
             'page' => [
                 'required',
                 'string',
-                Rule::enum(PagesEnum::class)
+                Rule::enum(PagesEnum::class),
             ],
             'trimester' => [
                 'required',
                 'string',
-                Rule::enum(TrimesterEnum::class)
+                Rule::enum(TrimesterEnum::class),
 
-            ]
+            ],
         ]);
+
         return to_route('regiweb.notes.show', $validated);
     }
+
     public function show(Request $request)
     {
         $validated = $request->validate([
             'grade' => [
                 'required',
-                'string'
+                'string',
             ],
             'page' => [
                 'required',
                 'string',
-                Rule::enum(PagesEnum::class)
+                Rule::enum(PagesEnum::class),
             ],
             'trimester' => [
                 'required',
                 'string',
-                Rule::enum(TrimesterEnum::class)
+                Rule::enum(TrimesterEnum::class),
 
-            ]
+            ],
         ]);
-
 
         return Inertia::render('Regiweb/Notes/Show', $validated);
     }

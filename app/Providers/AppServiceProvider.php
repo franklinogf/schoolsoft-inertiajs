@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->environment('local')) {
             Mail::alwaysTo('franklinomarflores@gmail.com');
-            Mail::alwaysFrom("onboarding@resend.dev", "Franklin Omar Flores");
+            Mail::alwaysFrom('onboarding@resend.dev', 'Franklin Omar Flores');
         }
         Model::unguard();
     }

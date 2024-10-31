@@ -19,6 +19,7 @@ class SetDefaultTenant
     {
         $tenantPrefix = PathTenantResolver::$tenantParameterName;
         URL::defaults([$tenantPrefix => $request->route()->originalParameter($tenantPrefix)]);
+
         return $next($request);
     }
 }

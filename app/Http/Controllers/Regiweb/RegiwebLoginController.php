@@ -48,6 +48,7 @@ class RegiwebLoginController extends Controller
     {
         $request->user()->fill($request->validated());
         $request->user()->save();
+
         return back();
 
     }

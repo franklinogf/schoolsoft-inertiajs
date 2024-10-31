@@ -16,7 +16,6 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
-use Filament\Support\Facades\FilamentColor;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -29,7 +28,7 @@ class SchoolResource extends Resource
     public static function form(Form $form): Form
     {
         $featuresToggles = Feature::all()
-            ->map(fn(Feature $feature) => Toggle::make(name: $feature->name)->default(false))->toArray();
+            ->map(fn (Feature $feature) => Toggle::make(name: $feature->name)->default(false))->toArray();
         $enviroments = Enviroment::all()->map(
             function (Enviroment $enviroment) {
                 return FieldSet::make($enviroment->name)
@@ -58,14 +57,14 @@ class SchoolResource extends Resource
                                 TextInput::make('tenancy_db_name')
                                     ->label('Database name (auto filled)')
                                     ->prefix(env('TENANT_DB_PREFIX'))
-                                    ->formatStateUsing(fn(string|null $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state))
-                                    ->dehydrateStateUsing(fn(string $state): string => env('TENANT_DB_PREFIX') . strtolower($state))
+                                    ->formatStateUsing(fn (?string $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX').$state))
+                                    ->dehydrateStateUsing(fn (string $state): string => env('TENANT_DB_PREFIX').strtolower($state))
                                     ->required(),
                                 TextInput::make('tenancy_db_username')
                                     ->label('Database user (auto filled)')
                                     ->prefix(env('TENANT_DB_PREFIX'))
-                                    ->formatStateUsing(fn(string|null $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX') . $state))
-                                    ->dehydrateStateUsing(fn(string $state): string => env('TENANT_DB_PREFIX') . strtolower($state))
+                                    ->formatStateUsing(fn (?string $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX').$state))
+                                    ->dehydrateStateUsing(fn (string $state): string => env('TENANT_DB_PREFIX').strtolower($state))
                                     ->required(),
                                 TextInput::make('tenancy_db_password')->label('Database password (auto filled)')->default(env('TENANT_DB_PASSWORD'))->required(),
 
@@ -113,7 +112,7 @@ class SchoolResource extends Resource
                 Tables\Actions\Action::make('school_website')
                     ->label('Go to school')
                     ->color(Color::Blue)
-                    ->url(fn(School $record): string => "https://schoolsoftpr.org/" . $record->id)
+                    ->url(fn (School $record): string => 'https://schoolsoftpr.org/'.$record->id)
                     ->openUrlInNewTab(),
                 /* ------------------------------- new website ------------------------------ */
                 // Tables\Actions\Action::make('school_website')

@@ -6,22 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Regiweb\ProfileUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class RegiwebProfileController extends Controller
 {
-
     /**
      * Display the resource.
      */
     public function show(Request $request)
     {
 
-
         return Inertia::render('Regiweb/Profile', ['profile_picture' => $request->user()->foto_name]);
     }
-
 
     /**
      * Update the resource in storage.
@@ -40,8 +36,8 @@ class RegiwebProfileController extends Controller
         }
 
         $request->user()->save();
+
         return to_route('regiweb.profile.show');
 
     }
-
 }

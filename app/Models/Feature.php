@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Feature extends Model
 {
     use HasFactory;
-
     use HasFactory;
+
     protected $primaryKey = 'name';
 
     public $incrementing = false;
@@ -18,10 +18,11 @@ class Feature extends Model
     protected $keyType = 'string';
 
     public $timestamps = false;
+
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn(string $value) => strtolower($value),
+            set: fn (string $value) => strtolower($value),
         );
     }
 }

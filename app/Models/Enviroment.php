@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Enviroment extends Model
 {
     use HasFactory;
+
     protected $primaryKey = 'name';
 
     public $incrementing = false;
@@ -16,10 +17,11 @@ class Enviroment extends Model
     protected $keyType = 'string';
 
     public $timestamps = false;
+
     protected function name(): Attribute
     {
         return Attribute::make(
-            set: fn(string $value) => strtolower($value),
+            set: fn (string $value) => strtolower($value),
         );
     }
 }

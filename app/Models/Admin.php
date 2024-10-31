@@ -13,10 +13,13 @@ class Admin extends Model
      * @var bool
      */
     public $timestamps = false;
+
     protected $table = 'colegio';
+
     protected $hidden = [
         'clave',
     ];
+
     protected $guarded = [];
 
     /**
