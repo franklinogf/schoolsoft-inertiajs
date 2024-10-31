@@ -1,6 +1,5 @@
 import { List } from "@/Components/root/List";
 import { MaxWidthSection } from "@/Components/root/MaxWidthSection";
-import RootLayout from "@/Layouts/Root/RootLayout";
 import { Head } from "@inertiajs/react";
 import { BadgeInfo, BriefcaseBusiness, FileCheck, NotebookPen, PieChart } from "lucide-react";
 const modules = [
@@ -44,7 +43,7 @@ const modules = [
 ];
 export default function Page() {
   return (
-    <RootLayout>
+    <>
       <Head title="Modulos" />
       <MaxWidthSection>
         <div className="cointainer mx-auto max-w-4xl">
@@ -52,6 +51,6 @@ export default function Page() {
           <List items={modules} />
         </div>
       </MaxWidthSection>
-    </RootLayout>
+    </>
   );
 }

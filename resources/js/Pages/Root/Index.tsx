@@ -2,7 +2,6 @@ import { MaxWidthSection } from "@/Components/root/MaxWidthSection";
 import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { OTHER_SERVICES, SERVICES } from "@/Constants/root";
-import RootLayout from "@/Layouts/Root/RootLayout";
 import { Head, Link } from "@inertiajs/react";
 import { motion, type Variants } from "framer-motion";
 import { CircleCheckBig } from "lucide-react";
@@ -24,7 +23,7 @@ const listVariants: Variants = {
 
 export default function Page() {
   return (
-    <RootLayout>
+    <>
       <Head title="Inicio" />
       <div className="absolute top-0 z-[-2] h-full w-full bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
       <MaxWidthSection className="relative">
@@ -137,7 +136,7 @@ export default function Page() {
           </div>
         </div>
       </MaxWidthSection>
-    </RootLayout>
+    </>
   );
 }
 interface ServiceCardProps {
