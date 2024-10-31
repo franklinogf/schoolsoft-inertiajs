@@ -3,9 +3,7 @@
 namespace App\Mail\Root;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -23,8 +21,7 @@ class Contact extends Mailable
         public string $email,
         public string $message,
         public string $phone
-    ) {
-    }
+    ) {}
 
     /**
      * Get the message envelope.
