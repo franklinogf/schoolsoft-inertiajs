@@ -1,5 +1,4 @@
 import { CustomFormField, FormFieldType, SelectItemType } from "@/Components/CustomFormField";
-import PagePrimaryTitle from "@/Components/PagePrimaryTitle";
 import SubmitButton from "@/Components/SubmitButton";
 import { Button } from "@/Components/ui/button";
 import { PAGES_SELECT, TRIMESTER_SELECT } from "@/Constants/FormSelects";
@@ -25,7 +24,7 @@ export default function IndexPage({ auth, teacherGrades }: PageProps) {
   }
   return (
     <RegiwebLayout user={auth.user} title={t("Inicio")}>
-      <PagePrimaryTitle className="mt-4">{t("Notas")}</PagePrimaryTitle>
+      <h1 className="page-primary-title mt-4">{t("Notas")}</h1>
       <div className="mt-2 flex flex-col items-center gap-8 px-2 pb-10">
         <div className="w-full max-w-xl rounded-md bg-secondary p-4">
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
