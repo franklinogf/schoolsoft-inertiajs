@@ -32,7 +32,6 @@ class Contact extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address("onboarding@resend.dev", "Franklin Omar Flores"),
             subject: 'Contact',
         );
     }
