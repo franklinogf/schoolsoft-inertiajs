@@ -15,7 +15,7 @@
     "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.9",
     "propaganistas/laravel-phone": "^5.3",
-    "resend/resend-laravel": "*",
+    "resend/resend-laravel": "^0.14.0",
     "stancl/tenancy": "^3.8",
     "tightenco/ziggy": "^2.0"
   },
