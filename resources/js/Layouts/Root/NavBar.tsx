@@ -58,7 +58,9 @@ export function NavBar() {
       </div>
 
       <div>
-        <Logo />
+        <Link href={route("home")}>
+          <Logo />
+        </Link>
       </div>
 
       <NavLinks />
