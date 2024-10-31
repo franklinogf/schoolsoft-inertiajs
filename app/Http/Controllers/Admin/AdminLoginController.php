@@ -28,6 +28,7 @@ class AdminLoginController extends Controller
         ]);
         if (Auth::guard('admin')->attempt(['usuario' => $validated['username'], 'clave' => $validated['password']])) {
             $request->session()->regenerate();
+
             return redirect()->intended(route('home.index'));
         }
 

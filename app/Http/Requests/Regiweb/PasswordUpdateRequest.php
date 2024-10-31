@@ -22,8 +22,8 @@ class PasswordUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "clave" => ['required', 'min:6', 'confirmed'],
-            "clave_confirmation" => ['required', 'exclude'],
+            'clave' => ['required', 'min:6', 'confirmed'],
+            'clave_confirmation' => ['required', 'exclude'],
         ];
     }
 }

@@ -35,11 +35,11 @@ class HandleInertiaRequests extends Middleware
         $subPath = Str::afterLast($path, '/');
 
         $guard = match ($subPath) {
-            'admin'   => 'admin',
+            'admin' => 'admin',
             'regiweb' => 'teacher',
             'teacher' => 'teacher',
             'student' => 'student',
-            default   => null
+            default => null
         };
 
         return [

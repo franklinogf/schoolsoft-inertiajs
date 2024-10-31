@@ -31,6 +31,7 @@ class ContactController extends Controller
             $validated['message'],
             $validated['phone'],
         ));
+
         return redirect()->back()->with('success', 'Your message has been sent successfully.');
     }
 }

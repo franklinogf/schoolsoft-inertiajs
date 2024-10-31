@@ -9,18 +9,21 @@ use Stancl\Tenancy\Database\Models\Tenant;
 class School extends Tenant implements TenantWithDatabase
 {
     use HasDatabase;
+
     protected $guarded = [];
+
     protected $table = 'schools';
 
     protected static function booted(): void
     {
         static::creating(function (School $school) {
-            if (!$school->tenancy_db_username) {
-                $school->tenancy_db_username = config('tenancy.database.prefix') . $school->id;
+            if (! $school->tenancy_db_username) {
+                $school->tenancy_db_username = config('tenancy.database.prefix').$school->id;
             }
             $school->tenancy_db_password = env('TENANT_DB_PASSWORD', '');
         });
     }
+
     public static function getCustomColumns(): array
     {
         return [
@@ -32,6 +35,7 @@ class School extends Tenant implements TenantWithDatabase
             'updated_at',
         ];
     }
+
     /**
      * Get the attributes that should be cast.
      *

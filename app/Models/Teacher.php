@@ -12,7 +12,6 @@ use Illuminate\Foundation\Auth\User as Model;
 
 class Teacher extends Model
 {
-
     public $timestamps = false;
 
     protected $table = 'profesor';
@@ -21,14 +20,12 @@ class Teacher extends Model
         'clave',
     ];
 
-
     protected $guarded = [];
 
     public function students(): HasMany
     {
         return $this->hasMany(Student::class, 'grado', 'grado');
     }
-
 
     protected function casts(): array
     {

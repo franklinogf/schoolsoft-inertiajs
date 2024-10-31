@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class SchoolDocumentController extends Controller
 {
@@ -16,6 +15,7 @@ class SchoolDocumentController extends Controller
         $school = Admin::primary();
         $date = now()->format('Y-m-d');
         $documents = DB::table('T_ing')->get();
+
         // $documents = DB::table('T_ing')
         //     ->whereRaw("fecha_desde <= '$date' and fecha_hasta >= '$date' and categoria='E' or fecha_desde <= '$date' and fecha_hasta >= '$date' and categoria='T'")->get();
         return Inertia::render('Home/Documents', [
@@ -23,6 +23,7 @@ class SchoolDocumentController extends Controller
             'documents' => $documents,
         ]);
     }
+
     public function download(string $id)
     {
 

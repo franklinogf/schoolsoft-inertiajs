@@ -12,10 +12,12 @@ class Parents extends Model
      * @var bool
      */
     public $timestamps = false;
+
     protected $table = 'madre';
+
     protected $hidden = [
         'clave',
     ];
+
     protected $guarded = [];
-    
 }
