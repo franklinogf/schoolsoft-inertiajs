@@ -1,4 +1,3 @@
-import { Toaster } from "@/Components/ui/sonner";
 import Header from "@/Layouts/Regiweb/Header";
 import { Teacher } from "@/types/auth";
 import { Head } from "@inertiajs/react";
@@ -15,7 +14,6 @@ export function RegiwebLayout({ children, title, user }: MainLayoutProps) {
       <div className="flex min-h-dvh flex-col">
         <Header user={user} />
         {children}
-        <Toaster richColors theme="light" pauseWhenPageIsHidden position="top-center" />
       </div>
     </>
   );
