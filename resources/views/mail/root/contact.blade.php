@@ -1,10 +1,8 @@
 <x-mail::message>
-# Schoolsoft Contact Form
-## Name: {{ $name }}
-## Email: {{ $email }}
-## Message: {{ $message }}
-## Phone: {{ $phone }}
-<br />
-Thanks,<br />
-{{ config('app.name') }}
+# {{ __('mail/contact.title') }}
+## {{ __('mail/contact.name') }}: {{ $name }}
+## {{ __('mail/contact.email') }}: {{ $email }}
+## {{ __('mail/contact.message') }}: {{ $message }}
+## {{ __('mail/contact.phone') }}: {{ $phone }}
+
 </x-mail::message>
