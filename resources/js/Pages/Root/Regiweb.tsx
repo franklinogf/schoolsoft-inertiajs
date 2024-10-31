@@ -1,6 +1,5 @@
 import { List } from "@/Components/root/List";
 import { MaxWidthSection } from "@/Components/root/MaxWidthSection";
-import RootLayout from "@/Layouts/Root/RootLayout";
 import { Head } from "@inertiajs/react";
 import { CalendarClock, Globe, School, Users } from "lucide-react";
 const regiweb = [
@@ -37,7 +36,7 @@ const regiweb = [
 ];
 export default function Page() {
   return (
-    <RootLayout>
+    <>
       <Head title="Regiweb" />
       <MaxWidthSection>
         <div className="cointainer mx-auto max-w-4xl">
@@ -45,6 +44,6 @@ export default function Page() {
           <List items={regiweb} />
         </div>
       </MaxWidthSection>
-    </RootLayout>
+    </>
   );
 }
