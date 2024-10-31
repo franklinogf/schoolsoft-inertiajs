@@ -1,5 +1,7 @@
 import "../css/app.css";
 import "./bootstrap";
+import MainLayout from "./Layouts/MainLayout";
+import RootLayout from "./Layouts/Root/RootLayout";
 import "./lib/i18next";
 
 import { createInertiaApp } from "@inertiajs/react";
@@ -10,8 +12,17 @@ const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
 createInertiaApp({
   title: (title) => `${title} - ${appName}`,
-  resolve: (name) =>
-    resolvePageComponent(`./Pages/${name}.tsx`, import.meta.glob("./Pages/**/*.tsx")),
+  resolve: async (name) => {
+    const page = await resolvePageComponent(
+      `./Pages/${name}.tsx`,
+      import.meta.glob("./Pages/**/*.tsx"),
+    );
+    // @ts-ignore
+    page.default.layout = (page) => (
+      <MainLayout>{name.startsWith("Root") ? <RootLayout children={page} /> : page}</MainLayout>
+    );
+    return page;
+  },
   setup({ el, App, props }) {
     const root = createRoot(el);
 
