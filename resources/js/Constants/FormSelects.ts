@@ -8,37 +8,36 @@ import {
   YesNoEnum,
 } from "@/Enums";
 
-export const GENDERS_SELECT: SelectItemType[] = Object.entries(GenderEnum).map(([key, value]) => ({
-  key,
-  value,
-}));
-
-export const PHONE_COMPANIES_SELECT: SelectItemType[] = Object.keys(PhoneCompaniesEnum).map(
-  (company) => ({
-    key: company,
-    value: company,
-  }),
-);
-
-export const TEACHER_LEVEL_SELECT: SelectItemType[] = Object.entries(TeacherLevelEnum).map(
-  ([key, value]) => ({
+export function createSelectItemsFromArrayOfObjects(
+  array: Record<string, string>[] | undefined,
+  { key, values, separator = "-" }: { key: string; values: string[] | string; separator?: string },
+): SelectItemType[] {
+  if (!array) return [];
+  return array.map((item) => ({
+    key: item[key],
+    value:
+      values instanceof Array ? values.map((value) => item[value]).join(separator) : item[values],
+  }));
+}
+export function createSelectItemsFromEnum(
+  enumObject: Record<string, string>,
+  { onlyKey }: { onlyKey: boolean } = { onlyKey: false },
+): SelectItemType[] {
+  return Object.entries(enumObject).map(([key, value]) => ({
     key,
-    value,
-  }),
-);
+    value: onlyKey ? key : value,
+  }));
+}
 
-export const YES_NO_SELECT: SelectItemType[] = Object.entries(YesNoEnum).map(([key, value]) => ({
-  key,
-  value,
-}));
+export const GENDERS_SELECT = createSelectItemsFromEnum(GenderEnum);
 
-export const TRIMESTER_SELECT: SelectItemType[] = Object.entries(TrimesterEnum).map(
-  ([key, value]) => ({
-    key,
-    value,
-  }),
-);
-export const PAGES_SELECT: SelectItemType[] = Object.entries(PagesEnum).map(([key, value]) => ({
-  key,
-  value,
-}));
+export const PHONE_COMPANIES_SELECT = createSelectItemsFromEnum(PhoneCompaniesEnum, {
+  onlyKey: true,
+});
+
+export const TEACHER_LEVEL_SELECT = createSelectItemsFromEnum(TeacherLevelEnum);
+
+export const YES_NO_SELECT = createSelectItemsFromEnum(YesNoEnum);
+
+export const TRIMESTER_SELECT = createSelectItemsFromEnum(TrimesterEnum);
+export const PAGES_SELECT = createSelectItemsFromEnum(PagesEnum);
