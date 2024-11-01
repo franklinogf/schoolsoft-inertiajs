@@ -131,11 +131,11 @@ function RenderInput({ props, id }: { props: CustomFormFieldProps; id: string })
           }}
         >
           <SelectTrigger
+            id={id}
             className={cn({
               "border-destructive ring-offset-destructive focus-visible:ring-destructive":
                 props.error,
             })}
-            id={id}
           >
             <SelectValue placeholder={props.placeholder} />
           </SelectTrigger>
@@ -178,6 +178,7 @@ function RenderInput({ props, id }: { props: CustomFormFieldProps; id: string })
     case FormFieldType.PHONE_INPUT:
       return (
         <PhoneInput
+          countrySelectProps={{ id: `${id}-country` }}
           numberInputProps={{ id }}
           international
           countries={["US", "PR"]}
