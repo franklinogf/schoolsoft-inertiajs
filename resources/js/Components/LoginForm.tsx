@@ -10,11 +10,12 @@ import {
 import { Teacher } from "@/types/auth";
 import { Link, useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
+import { AlertDestructive } from "./AlertDesctructive";
 import { CustomFormField, FormFieldType } from "./CustomFormField";
 interface LoginFormProps {
   submitRoute: string;
   className?: string;
-  errorMessage?: string | null;
+  errorMessage: string | null;
 }
 export function LoginForm({ className, submitRoute, errorMessage }: LoginFormProps) {
   const { t } = useTranslation();
@@ -31,7 +32,9 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
       <Card className="max-w-md shadow-lg max-md:mx-auto">
         <CardHeader>
           <CardTitle>{t("Iniciar sesión")}</CardTitle>
-          <CardDescription className="text-red-600">{errorMessage}</CardDescription>
+          <CardDescription>
+            <AlertDestructive message={errorMessage} />
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
