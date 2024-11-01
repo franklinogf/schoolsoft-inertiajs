@@ -3,11 +3,11 @@ import { Button } from "@/Components/ui/button";
 import { LOGO_REGIWEB } from "@/Constants";
 import { formatDate } from "@/lib/utils";
 import { type PagePropsWithUser } from "@/types";
-import { type Teacher } from "@/types/auth";
+import { type TeacherAuth } from "@/types/auth";
 import { Head, Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 
-interface IndexPageProps extends PagePropsWithUser<Teacher> {
+interface IndexPageProps extends PagePropsWithUser<TeacherAuth> {
   ip: string;
 }
 export default function IndexPage({ auth: { user }, ip }: IndexPageProps) {
