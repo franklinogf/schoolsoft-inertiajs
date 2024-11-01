@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\FlashMessageKey;
 use App\Http\Resources\Teacher\TeacherResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -52,9 +53,9 @@ class HandleInertiaRequests extends Middleware
                     : null,
             ],
             'flash' => [
-                'success' => $request->session()->get('success') ?? null,
-                'error' => $request->session()->get('error') ?? null,
-                'errors' => $request->session()->get('errors') ?? null,
+                FlashMessageKey::SUCCESS->value => $request->session()->get(FlashMessageKey::SUCCESS->value) ?? null,
+                FlashMessageKey::ERROR->value => $request->session()->get(FlashMessageKey::ERROR->value) ?? null,
+                FlashMessageKey::ERROR_LIST->value => $request->session()->get(FlashMessageKey::ERROR_LIST->value) ?? null,
             ],
         ];
     }
