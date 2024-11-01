@@ -151,6 +151,7 @@ function RenderInput({ props, id }: { props: CustomFormFieldProps; id: string })
     case FormFieldType.DATE_PICKER:
       return (
         <DateTimePicker
+          id={id}
           yearRange={80}
           locale={language === "es" ? es : enUS}
           displayFormat={{ hour24: "PPP" }}
