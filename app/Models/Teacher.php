@@ -28,6 +28,11 @@ class Teacher extends Model
         return $this->hasMany(Student::class, 'grado', 'grado');
     }
 
+    public function grades(): HasMany
+    {
+        return $this->hasMany(Grade::class, 'id', 'id')->where('year', Admin::primary()->year2);
+    }
+
     protected function casts(): array
     {
         $nullToEmptyStringColumns = [
