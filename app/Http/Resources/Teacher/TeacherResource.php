@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Teacher;
 
+use App\Http\Resources\GradeResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +20,7 @@ class TeacherResource extends JsonResource
             "id" => $this->id,
             "nombre" => $this->nombre,
             "apellidos" => $this->apellidos,
+            "grades" => GradeResource::collection($this->whenLoaded('grades')),
             "ss" => $this->ss,
             "tel_res" => $this->tel_res,
             "tel_emer" => $this->tel_emer,
@@ -32,6 +34,7 @@ class TeacherResource extends JsonResource
             "preparacion1" => $this->preparacion1,
             "preparacion2" => $this->preparacion2,
             "grado" => $this->grado,
+
             "email1" => $this->email1,
             "email2" => $this->email2,
             "dir1" => $this->dir1,
