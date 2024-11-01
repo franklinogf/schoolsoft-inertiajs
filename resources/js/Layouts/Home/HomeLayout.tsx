@@ -1,10 +1,10 @@
 import { Footer } from "@/Layouts/Home/Footer";
 import Header from "@/Layouts/Home/Header";
-import { type Admin } from "@/types/auth";
+import { type AdminAuth } from "@/types/auth";
 import { Head } from "@inertiajs/react";
 
 interface MainLayoutProps {
-  school: Admin;
+  school: AdminAuth;
   children: React.ReactNode;
   title: string;
 }
