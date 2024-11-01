@@ -615,6 +615,7 @@ TimePicker.displayName = "TimePicker";
 type Granularity = "day" | "hour" | "minute" | "second";
 
 type DateTimePickerProps = {
+  id?: string;
   value?: Date;
   onChange?: (date: Date | undefined) => void;
   disabled?: boolean;
@@ -648,6 +649,7 @@ type DateTimePickerRef = {
 const DateTimePicker = React.forwardRef<Partial<DateTimePickerRef>, DateTimePickerProps>(
   (
     {
+      id,
       locale = enUS,
       value,
       onChange,
@@ -715,6 +717,7 @@ const DateTimePicker = React.forwardRef<Partial<DateTimePickerRef>, DateTimePick
       <Popover>
         <PopoverTrigger asChild disabled={disabled}>
           <Button
+            id={id}
             variant="outline"
             className={cn(
               "w-full justify-start text-left font-normal",
