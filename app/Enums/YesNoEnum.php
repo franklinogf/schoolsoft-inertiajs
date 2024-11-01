@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum YesNoEnum
+enum YesNoEnum: string
 {
     case YES = 'SI';
 
