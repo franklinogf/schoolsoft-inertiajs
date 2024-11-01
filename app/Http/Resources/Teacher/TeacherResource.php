@@ -20,7 +20,7 @@ class TeacherResource extends JsonResource
             "id" => $this->id,
             "nombre" => $this->nombre,
             "apellidos" => $this->apellidos,
-            "grades" => GradeResource::collection($this->whenLoaded('grades')),
+            "grados" => GradeResource::collection($this->whenLoaded('grades')),
             "ss" => $this->ss,
             "tel_res" => $this->tel_res,
             "tel_emer" => $this->tel_emer,
