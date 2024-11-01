@@ -21,6 +21,7 @@ class Teacher extends Model
     ];
 
     protected $guarded = [];
+    // protected $authPasswordName = 'clave';
 
     public function students(): HasMany
     {
@@ -29,28 +30,57 @@ class Teacher extends Model
 
     protected function casts(): array
     {
-        return [
-            'fecha_daja' => Date::class,
-            'fecha_nac' => Date::class,
-            'fecha_ini' => Date::class,
-            'fex1' => Date::class,
-            'fex2' => Date::class,
-            'fex3' => Date::class,
-            'fex4' => Date::class,
+        $nullToEmptyStringColumns = [
+            'email2',
+            'preparacion1',
+            'preparacion2',
+            'pueblo2',
+            'dir2',
+            'dir3',
+            'dir4',
+            'esta2',
+            'zip2',
+            'alias',
+            'pe1',
+            'pe2',
+            'pe3',
+            'pe4',
+            'pe5',
+            'pe6',
+            'pe7',
+            'pe8',
+            'pe9',
+            'pe10',
+            'pe11',
+            'pe12',
+            'pe13',
+            'pe14',
+            'pe15',
+            'pe16',
+        ];
+        $datesColumns = [
+            'fecha_daja',
+            'fecha_nac',
+            'fecha_ini',
+            'fex1',
+            'fex2',
+            'fex3',
+            'fex4',
+        ];
+        $array = [
             'genero' => Gender::class,
             'foto_name' => ProfilePicture::class,
             'lp1' => YesNo::class,
             'lp2' => YesNo::class,
             'lp3' => YesNo::class,
             'lp4' => YesNo::class,
-            'email2' => NullToEmptyString::class,
-            'pueblo2' => NullToEmptyString::class,
-            'dir2' => NullToEmptyString::class,
-            'dir3' => NullToEmptyString::class,
-            'dir4' => NullToEmptyString::class,
-            'esta2' => NullToEmptyString::class,
-            'zip2' => NullToEmptyString::class,
-            'alias' => NullToEmptyString::class,
         ];
+        foreach ($datesColumns as $column) {
+            $array[$column] = Date::class;
+        }
+        foreach ($nullToEmptyStringColumns as $column) {
+            $array[$column] = NullToEmptyString::class;
+        }
+        return $array;
     }
 }
