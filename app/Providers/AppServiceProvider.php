@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
             Mail::alwaysFrom('onboarding@resend.dev', 'Franklin Omar Flores');
         }
         Model::unguard();
+        JsonResource::withoutWrapping();
     }
 }
