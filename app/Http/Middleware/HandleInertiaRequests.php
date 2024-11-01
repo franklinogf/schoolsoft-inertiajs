@@ -35,11 +35,11 @@ class HandleInertiaRequests extends Middleware
         $subPath = Str::afterLast($path, '/');
 
         $guard = match ($subPath) {
-            'admin' => 'admin',
+            'admin'   => 'admin',
             'regiweb' => 'teacher',
             'teacher' => 'teacher',
             'student' => 'student',
-            default => null
+            default   => null
         };
 
         return [
@@ -49,7 +49,9 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user($guard),
             ],
             'flash' => [
-                'message' => $request->session()->get('message'),
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
+                'errors' => $request->session()->get('errors'),
             ],
         ];
     }
