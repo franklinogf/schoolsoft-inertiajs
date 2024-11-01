@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Regiweb;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Regiweb\ProfileUpdateRequest;
-use App\Http\Resources\Teacher\TeacherResource;
-use App\Models\Admin;
-use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -16,7 +13,7 @@ class RegiwebProfileController extends Controller
     /**
      * Display the resource.
      */
-    public function show(Request $request)
+    public function show()
     {
         return Inertia::render('Regiweb/Profile');
     }
