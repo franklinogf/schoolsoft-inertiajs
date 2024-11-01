@@ -13,8 +13,8 @@ export interface Teacher {
   fecha_ini: string;
   fecha_daja: string;
   nivel: string | null;
-  preparacion1: string;
-  preparacion2: string;
+  preparacion1: string | null;
+  preparacion2: string | null;
   grado: string | null;
   email1: string;
   email2: string | null;
@@ -74,14 +74,14 @@ export interface Teacher {
   fex2: string | null;
   fex3: string | null;
   fex4: string | null;
-  pe1: string;
-  pe2: string;
-  pe3: string;
-  pe4: string;
-  pe5: string;
-  pe6: string;
-  pe7: string;
-  pe8: string;
+  pe1: string | null;
+  pe2: string | null;
+  pe3: string | null;
+  pe4: string | null;
+  pe5: string | null;
+  pe6: string | null;
+  pe7: string | null;
+  pe8: string | null;
   dep: number;
   dep_des: string;
   docente: string;
@@ -95,14 +95,14 @@ export interface Teacher {
   avatar: string;
   fechas: number;
   tri: number | null;
-  pe9: string;
-  pe10: string;
-  pe11: string;
-  pe12: string;
-  pe13: string;
-  pe14: string;
-  pe15: string;
-  pe16: string;
+  pe9: string | null;
+  pe10: string | null;
+  pe11: string | null;
+  pe12: string | null;
+  pe13: string | null;
+  pe14: string | null;
+  pe15: string | null;
+  pe16: string | null;
   cbarra: string | null;
 }
 
