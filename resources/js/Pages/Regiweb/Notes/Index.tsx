@@ -39,7 +39,7 @@ export default function Page({ auth, teacherGrades, flash }: PageProps) {
         <form className="w-full max-w-lg" onSubmit={submit}>
           <Card>
             <CardHeader>
-              <AlertDestructive message={flash.errors} />
+              <AlertDestructive message={flash.errorList} />
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
