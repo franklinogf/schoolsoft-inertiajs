@@ -1,11 +1,11 @@
 import Header from "@/Layouts/Regiweb/Header";
-import { Teacher } from "@/types/auth";
+import { TeacherAuth } from "@/types/auth";
 import { Head } from "@inertiajs/react";
 
 interface MainLayoutProps {
   children: React.ReactNode;
   title: string;
-  user: Teacher;
+  user: TeacherAuth;
 }
 export function RegiwebLayout({ children, title, user }: MainLayoutProps) {
   return (
