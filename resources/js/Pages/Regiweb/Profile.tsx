@@ -37,7 +37,6 @@ export default function ProfilePage({
   auth: { user },
   profile_picture,
 }: PagePropsWithUser<Teacher> & { profile_picture: string }) {
-  console.log({ profile_picture });
   const [sameAddress, setSameAddress] = useState(false);
 
   const { t } = useTranslation();
@@ -132,7 +131,7 @@ export default function ProfilePage({
       },
     });
   }
-  console.log(user);
+
   return (
     <RegiwebLayout user={user} title={t("Perfil")}>
       <form onSubmit={handleSubmit}>
