@@ -16,7 +16,7 @@ export type PageProps = {
   flash: {
     success: string | null;
     error: string | null;
-    errors: Errors | null;
+    errorList: Errors | null;
   };
   errors: Errors;
 };
