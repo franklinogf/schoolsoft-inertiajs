@@ -4,8 +4,7 @@ interface Grade {
   id: string;
   curso: string;
   year: string;
-  desc1: string;
-  desc2: string;
+  descripcion: string;
   credito: number;
   peso: number;
   entrada: string;
