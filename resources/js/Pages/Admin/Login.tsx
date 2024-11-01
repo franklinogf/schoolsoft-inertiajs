@@ -1,8 +1,8 @@
 import { LoginForm } from "@/Components/LoginForm";
-import { PagePropsWithFlashMessage } from "@/types";
+import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 
-export default function AdminLoginPage({ flash }: PagePropsWithFlashMessage) {
+export default function AdminLoginPage({ flash }: PageProps) {
   return (
     <>
       <Head title="Login" />
