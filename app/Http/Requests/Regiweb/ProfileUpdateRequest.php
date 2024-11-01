@@ -24,7 +24,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'picture' => ['exclude', Rule::requiredIf(fn () => $this->user()->foto_name === null), 'nullable', 'image'],
+            'picture' => ['exclude', Rule::requiredIf(fn() => $this->user()->foto_name === null), 'nullable', 'image'],
             'nombre' => ['required', 'min:2', 'string'],
             'apellidos' => ['required', 'min:2', 'string'],
             'tel_res' => ['nullable', 'phone:US,PR'],
