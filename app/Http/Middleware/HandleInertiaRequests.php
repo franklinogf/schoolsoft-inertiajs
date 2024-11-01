@@ -47,7 +47,9 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'csrf_token' => csrf_token(),
             'auth' => [
-                'user' => $guard === 'teacher' ? TeacherResource::make($request->user($guard)) : $request->user($guard),
+                'user' => $request->user($guard)
+                    ? $guard === 'teacher' ? TeacherResource::make($request->user($guard)) : $request->user($guard)
+                    : null,
             ],
             'flash' => [
                 'success' => $request->session()->get('success'),
