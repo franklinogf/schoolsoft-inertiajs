@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Regiweb;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Regiweb\ProfileUpdateRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
