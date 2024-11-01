@@ -1,4 +1,4 @@
-interface Grade {
+interface Grade extends Record<string, string> {
   id: string;
   curso: string;
   year: string;
