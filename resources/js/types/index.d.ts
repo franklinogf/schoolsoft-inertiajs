@@ -11,17 +11,21 @@ export interface Document {
   grado_desde: string;
   grado_hasta: string;
 }
-export type PagePropsWithFlashMessage = {
+export type Errors = { [key: string]: string };
+export type PageProps = {
   flash: {
-    message: string | null;
+    success: string | null;
+    error: string | null;
+    errors: Errors | null;
   };
+  errors: Errors;
 };
-export type PagePropsWithUser<T> = PagePropsWithFlashMessage & {
+export type PagePropsWithUser<T> = PageProps & {
   auth: {
     user: T;
   };
 };
-export type PagePropsWithSchool = PagePropsWithFlashMessage & {
+export type PagePropsWithSchool = PageProps & {
   school: Admin;
 };
 
