@@ -6,11 +6,11 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/Components/ui/card"
 import { PAGES_SELECT, TRIMESTER_SELECT } from "@/Constants/FormSelects";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
-import { Teacher } from "@/types/auth";
+import { TeacherAuth } from "@/types/auth";
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 
-type PageProps = PagePropsWithUser<Teacher> & {
+type PageProps = PagePropsWithUser<TeacherAuth> & {
   teacherGrades: SelectItemType[];
 };
 export default function Page({ auth, teacherGrades, flash }: PageProps) {
@@ -24,6 +24,7 @@ export default function Page({ auth, teacherGrades, flash }: PageProps) {
     e.preventDefault();
     post(route("regiweb.notes.index.submit"));
   }
+  console.log(auth.user);
   return (
     <RegiwebLayout user={auth.user} title={t("Inicio")}>
       <h1 className="page-primary-title mt-4">{t("Notas")}</h1>
