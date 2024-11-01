@@ -512,6 +512,7 @@ const TimePickerInput = React.forwardRef<HTMLInputElement, TimePickerInputProps>
 TimePickerInput.displayName = "TimePickerInput";
 
 interface TimePickerProps {
+  id?: string;
   date?: Date | null;
   onChange?: (date: Date | undefined) => void;
   hourCycle?: 12 | 24;
@@ -529,7 +530,7 @@ interface TimePickerRef {
 }
 
 const TimePicker = React.forwardRef<TimePickerRef, TimePickerProps>(
-  ({ date, onChange, hourCycle = 24, granularity = "second" }, ref) => {
+  ({ date, onChange, hourCycle = 24, granularity = "second", id }, ref) => {
     const minuteRef = React.useRef<HTMLInputElement>(null);
     const hourRef = React.useRef<HTMLInputElement>(null);
     const secondRef = React.useRef<HTMLInputElement>(null);
@@ -565,6 +566,7 @@ const TimePicker = React.forwardRef<TimePickerRef, TimePickerProps>(
           <>
             :
             <TimePickerInput
+              id={id}
               picker="minutes"
               date={date}
               onDateChange={onChange}
