@@ -14,7 +14,7 @@ class NullToEmptyString implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value === '' ? null : $value;
+        return $value;
     }
 
     /**
