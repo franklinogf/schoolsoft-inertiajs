@@ -1,4 +1,4 @@
-import { type AdminAuth } from "@/types/auth";
+import { type Admin } from "@/types/auth";
 
 export interface Document {
   id: number;
@@ -26,7 +26,7 @@ export type PagePropsWithUser<T> = PageProps & {
   };
 };
 export type PagePropsWithSchool = PageProps & {
-  school: AdminAuth;
+  school: Admin;
 };
 
 export type PagePropsWithSchoolAndUser<T> = PagePropsWithSchool & PagePropsWithUser<T>;

@@ -11,7 +11,7 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/ui/sheet";
 import { LOGO_REGIWEB } from "@/Constants";
 import { cn } from "@/lib/utils";
-import { TeacherAuth } from "@/types/auth";
+import { Teacher } from "@/types/Teacher";
 import { Link, usePage } from "@inertiajs/react";
 import { Menu, UserCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -22,7 +22,7 @@ const menuItems = [
   { label: "Informes", href: "/" },
 ];
 interface HeaderProps {
-  user: TeacherAuth;
+  user: Teacher;
 }
 export default function Header({ user }: HeaderProps) {
   const { url } = usePage();

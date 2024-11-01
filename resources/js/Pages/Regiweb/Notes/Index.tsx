@@ -6,11 +6,11 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/Components/ui/card"
 import { PAGES_SELECT, TRIMESTER_SELECT } from "@/Constants/FormSelects";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
-import { TeacherAuth } from "@/types/auth";
+import { Teacher } from "@/types/Teacher";
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 
-type PageProps = PagePropsWithUser<TeacherAuth> & {
+type PageProps = PagePropsWithUser<Teacher> & {
   teacherGrades: SelectItemType[];
 };
 export default function Page({ auth, teacherGrades, flash }: PageProps) {

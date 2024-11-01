@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/Components/ui/card";
-import { TeacherAuth } from "@/types/auth";
+import { Teacher } from "@/types/Teacher";
 import { Link, useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import { AlertDestructive } from "./AlertDesctructive";
@@ -19,9 +19,7 @@ interface LoginFormProps {
 }
 export function LoginForm({ className, submitRoute, errorMessage }: LoginFormProps) {
   const { t } = useTranslation();
-  const { data, setData, post, errors, processing } = useForm<
-    Pick<TeacherAuth, "usuario" | "clave">
-  >({
+  const { data, setData, post, errors, processing } = useForm<Pick<Teacher, "usuario" | "clave">>({
     usuario: "",
     clave: "",
   });
