@@ -30,7 +30,7 @@ class RegiwebLoginController extends Controller
             return redirect()->intended(route('regiweb.index'));
         }
 
-        return to_route('regiweb.login.index')->with('message', 'Error al intentar iniciar sesión');
+        return to_route('regiweb.login.index')->with('error', 'Error al intentar iniciar sesión');
     }
 
     public function destroy(Request $request)
