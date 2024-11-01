@@ -22,11 +22,7 @@ class RegiwebNotesController extends Controller
     }
     public function index()
     {
-        $grades = $this->user->grades->map(function ($grade) {
-            return ['key' => $grade->curso, 'value' => "$grade->curso - $grade->descripcion"];
-        });
-
-        return Inertia::render('Regiweb/Notes/Index', ['teacherGrades' => $grades]);
+        return Inertia::render('Regiweb/Notes/Index');
     }
 
     public function submit(Request $request)
