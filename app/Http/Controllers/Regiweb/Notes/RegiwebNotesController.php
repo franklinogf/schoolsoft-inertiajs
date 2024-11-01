@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -53,7 +54,24 @@ class RegiwebNotesController extends Controller
 
     public function show(Request $request)
     {
-        $validated = $request->validate([
+        // $validated = $request->validate([
+        //     'grade' => [
+        //         'required',
+        //         'string',
+        //     ],
+        //     'page' => [
+        //         'required',
+        //         'string',
+        //         Rule::enum(PagesEnum::class),
+        //     ],
+        //     'trimester' => [
+        //         'required',
+        //         'string',
+        //         Rule::enum(TrimesterEnum::class),
+
+        //     ],
+        // ]);
+        $validator = Validator::make($request->all(), [
             'grade' => [
                 'required',
                 'string',
@@ -70,6 +88,10 @@ class RegiwebNotesController extends Controller
 
             ],
         ]);
+        if ($validator->fails()) {
+            return redirect()->route('regiweb.notes.index')->with('errors', $validator->errors());
+        }
+        $validated = $validator->validated();
 
         return Inertia::render('Regiweb/Notes/Show', $validated);
     }
