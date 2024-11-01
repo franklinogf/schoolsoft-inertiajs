@@ -122,6 +122,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     post(route("regiweb.profile.update"), {
+      preserveScroll: true,
       onSuccess: () => {
         toast.success(t("Perfil guardado"));
       },
