@@ -1,9 +1,9 @@
 import { Button } from "@/Components/ui/button";
-import { type Admin } from "@/types/auth";
+import { type AdminAuth } from "@/types/auth";
 import { Link, usePage } from "@inertiajs/react";
 import { ArrowDown } from "lucide-react";
 
-export default function Header({ school }: { school: Admin }) {
+export default function Header({ school }: { school: AdminAuth }) {
   const { url } = usePage();
   return (
     <section className="grid min-h-40 items-center justify-center bg-primary/90 p-10 text-primary-foreground md:min-h-80">
