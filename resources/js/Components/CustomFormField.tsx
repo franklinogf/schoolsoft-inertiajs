@@ -1,18 +1,22 @@
-import { cn, formatDate, formatDateToString, formatStringToDate } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
+import {
+  cn,
+  formatDateToString,
+  formatStringToDate,
+  formatStringToTime,
+  formatTimeToString,
+} from "@/lib/utils";
 import { useId } from "react";
 import PhoneInput, { type Value as E164Number } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
-import { Button } from "./ui/button";
-import { Calendar } from "./ui/calendar";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 import { YesNoEnum } from "@/Enums";
+import { enUS, es } from "date-fns/locale";
 import { useTranslation } from "react-i18next";
+import { DateTimePicker, TimePicker } from "./custom-ui/DateTimePicker";
 import { Checkbox } from "./ui/checkbox";
 import { Textarea } from "./ui/textarea";
 export type SelectItemType = { key: string; value: string };
@@ -22,6 +26,7 @@ export enum FormFieldType {
   PHONE_INPUT,
   CHECKBOX,
   DATE_PICKER,
+  TIME_PICKER,
   SELECT,
   SKELETON,
 }
@@ -31,27 +36,35 @@ type DefaultCustomFormFieldProps = {
   name: string;
   error?: string;
   label?: string;
-  placeholder?: string;
   disabled?: boolean;
   className?: string;
 };
 type FormFieldSelectType = {
   fieldType: FormFieldType.SELECT;
   items: SelectItemType[];
+  placeholder?: string;
 };
 type FormFieldTextAreaType = {
   fieldType: FormFieldType.TEXTAREA;
+  placeholder?: string;
 };
 
 type FormFieldInputType = {
   fieldType: FormFieldType.INPUT;
   type?: React.HTMLInputTypeAttribute;
+  placeholder?: string;
 };
 type FormFieldDatePickerType = {
   fieldType: FormFieldType.DATE_PICKER;
+  placeholder?: string;
+};
+type FormFieldTimePickerType = {
+  fieldType: FormFieldType.TIME_PICKER;
+  granularity?: "hour" | "minute" | "second";
 };
 type FormFieldPhoneType = {
   fieldType: FormFieldType.PHONE_INPUT;
+  placeholder?: string;
 };
 type FormFieldCheckboxType = {
   fieldType: FormFieldType.CHECKBOX;
@@ -66,10 +79,14 @@ type CustomFormFieldProps = DefaultCustomFormFieldProps &
     | FormFieldPhoneType
     | FormFieldCheckboxType
     | FormFieldTextAreaType
+    | FormFieldTimePickerType
   );
 
 function RenderInput({ props, id }: { props: CustomFormFieldProps; id: string }) {
-  const { t } = useTranslation();
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
   switch (props.fieldType) {
     case FormFieldType.INPUT:
       return (
@@ -132,44 +149,29 @@ function RenderInput({ props, id }: { props: CustomFormFieldProps; id: string })
         </Select>
       );
     case FormFieldType.DATE_PICKER:
-      const selected = props.data[props.name];
       return (
-        <Popover>
-          <PopoverTrigger className="w-full" asChild>
-            <Button
-              disabled={props.disabled ? true : false}
-              id={id}
-              variant="outline"
-              className={cn(
-                "justify-start text-left font-normal",
-                {
-                  "border-destructive ring-offset-destructive focus-visible:ring-destructive":
-                    props.error,
-                },
-                { "hover:bg-background hover:text-foreground": props.disabled },
-                !selected && "text-muted-foreground",
-              )}
-            >
-              <CalendarIcon className="mr-2 size-4" />
-              {selected ? (
-                formatDate(selected)
-              ) : (
-                <span>{props.placeholder ?? t("Selecciona una fecha")}</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar
-              selected={formatStringToDate(selected)}
-              onSelect={(value) => {
-                props.setData(props.name, formatDateToString(value));
-              }}
-              mode="single"
-              initialFocus
-              disabled={props.disabled}
-            />
-          </PopoverContent>
-        </Popover>
+        <DateTimePicker
+          locale={language === "es" ? es : enUS}
+          displayFormat={{ hour24: "PPP" }}
+          granularity="day"
+          placeholder={props.placeholder ?? t("Selecciona una fecha")}
+          value={formatStringToDate(props.data[props.name])}
+          onChange={(value) => {
+            props.setData(props.name, formatDateToString(value));
+          }}
+        />
+      );
+    case FormFieldType.TIME_PICKER:
+      return (
+        <div className={props.className}>
+          <TimePicker
+            granularity={props.granularity ?? "minute"}
+            date={formatStringToTime(props.data[props.name])}
+            onChange={(value) => {
+              props.setData(props.name, formatTimeToString(value));
+            }}
+          />
+        </div>
       );
     case FormFieldType.PHONE_INPUT:
       return (
