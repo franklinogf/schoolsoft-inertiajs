@@ -1,6 +1,6 @@
-import { type AdminAuth } from "@/types/auth";
+import { type Admin } from "@/types/auth";
 
-export function Footer({ school }: { school: AdminAuth }) {
+export function Footer({ school }: { school: Admin }) {
   return (
     <footer className="flex place-items-center bg-primary/90 p-10 text-primary-foreground">
       {school.dir1 && (

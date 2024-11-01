@@ -1,9 +1,9 @@
 import { PagesEnum, TrimesterEnum } from "@/Enums";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import type { PagePropsWithUser } from "@/types";
-import type { TeacherAuth } from "@/types/auth";
+import type { Teacher } from "@/types/Teacher";
 import { useTranslation } from "react-i18next";
-interface PageProps extends PagePropsWithUser<TeacherAuth> {
+interface PageProps extends PagePropsWithUser<Teacher> {
   grade: string;
   page: PagesEnum;
   trimester: TrimesterEnum;

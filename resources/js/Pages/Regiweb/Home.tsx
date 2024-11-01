@@ -1,10 +1,10 @@
 import { GLOBE_PICTURE } from "@/Constants";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
-import { TeacherAuth } from "@/types/auth";
+import { Teacher } from "@/types/Teacher";
 import { useTranslation } from "react-i18next";
 
-export default function HomePage({ auth }: PagePropsWithUser<TeacherAuth>) {
+export default function HomePage({ auth }: PagePropsWithUser<Teacher>) {
   const { t } = useTranslation();
   return (
     <RegiwebLayout user={auth.user} title={t("Inicio")}>
