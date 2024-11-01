@@ -33,12 +33,8 @@ import SubmitButton from "@/Components/SubmitButton";
 import { YesNoEnum } from "@/Enums";
 import { toast } from "sonner";
 
-export default function ProfilePage({
-  auth: { user },
-  profile_picture,
-}: PagePropsWithUser<Teacher> & { profile_picture: string }) {
+export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   const [sameAddress, setSameAddress] = useState(false);
-
   const { t } = useTranslation();
   const { data, setData, post, errors, processing } = useForm<Partial<Teacher> & { picture: null }>(
     {
@@ -142,7 +138,7 @@ export default function ProfilePage({
           </h1>
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
             <FormProfilePicture
-              initialFile={profile_picture}
+              initialFile={user.foto_name}
               data={data}
               name="picture"
               setData={setData}
