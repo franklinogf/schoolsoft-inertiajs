@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers\Regiweb\Notes;
 
+use App\Enums\FlashMessageKey;
 use App\Enums\PagesEnum;
 use App\Enums\TrimesterEnum;
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
+use App\Models\Teacher;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class RegiwebNotesController extends Controller
 {
+    public function __construct(
+        #[CurrentUser()] protected Teacher $user
+    ) {
+        $user->load('grades');
+    }
     public function index()
     {
-
-        $disctinctGrades = DB::table('cursos')
-            ->select(['curso', 'desc1 as descripcion'])
-            ->where([['id', auth()->id()], ['year', Admin::primary()->year2]])
-            ->distinct()
-            ->get();
-        $grades = $disctinctGrades->map(function ($grade) {
+        $grades = $this->user->grades->map(function ($grade) {
             return ['key' => $grade->curso, 'value' => "$grade->curso - $grade->descripcion"];
         });
 
@@ -35,6 +35,7 @@ class RegiwebNotesController extends Controller
             'grade' => [
                 'required',
                 'string',
+                Rule::in($this->getGradesArray()),
             ],
             'page' => [
                 'required',
@@ -52,29 +53,15 @@ class RegiwebNotesController extends Controller
         return to_route('regiweb.notes.show', $validated);
     }
 
+
     public function show(Request $request)
     {
-        // $validated = $request->validate([
-        //     'grade' => [
-        //         'required',
-        //         'string',
-        //     ],
-        //     'page' => [
-        //         'required',
-        //         'string',
-        //         Rule::enum(PagesEnum::class),
-        //     ],
-        //     'trimester' => [
-        //         'required',
-        //         'string',
-        //         Rule::enum(TrimesterEnum::class),
 
-        //     ],
-        // ]);
         $validator = Validator::make($request->all(), [
             'grade' => [
                 'required',
                 'string',
+                Rule::in($this->getGradesArray()),
             ],
             'page' => [
                 'required',
@@ -89,10 +76,15 @@ class RegiwebNotesController extends Controller
             ],
         ]);
         if ($validator->fails()) {
-            return redirect()->route('regiweb.notes.index')->with('errors', $validator->errors());
+            return redirect()->route('regiweb.notes.index')->with(FlashMessageKey::ERROR_LIST->value, $validator->errors());
         }
         $validated = $validator->validated();
 
         return Inertia::render('Regiweb/Notes/Show', $validated);
+    }
+    private function getGradesArray(): array
+    {
+        $gradesArray = $this->user->grades()->pluck('curso')->toArray();
+        return $gradesArray;
     }
 }
