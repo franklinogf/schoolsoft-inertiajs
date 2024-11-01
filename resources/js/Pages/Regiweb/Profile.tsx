@@ -1,4 +1,9 @@
+import { ChangePasswordForm } from "@/Components/ChangePasswordForm";
+import { CustomFormField, FormFieldType } from "@/Components/CustomFormField";
+import { FormProfilePicture } from "@/Components/FormProfilePicture";
+import { InfoBadge } from "@/Components/InfoBadge";
 import { InputsGrid } from "@/Components/InputsGrid";
+import SubmitButton from "@/Components/SubmitButton";
 import {
   Accordion,
   AccordionContent,
@@ -14,23 +19,14 @@ import {
   TEACHER_LEVEL_SELECT,
   YES_NO_SELECT,
 } from "@/Constants/FormSelects";
+import { YesNoEnum } from "@/Enums";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
 import { Teacher } from "@/types/auth";
 import { useForm } from "@inertiajs/react";
-
 import { ArrowUpDown, User2 } from "lucide-react";
 import { useState } from "react";
-
 import { useTranslation } from "react-i18next";
-
-// Import FilePond styles
-import { ChangePasswordForm } from "@/Components/ChangePasswordForm";
-import { CustomFormField, FormFieldType } from "@/Components/CustomFormField";
-import { FormProfilePicture } from "@/Components/FormProfilePicture";
-import { InfoBadge } from "@/Components/InfoBadge";
-import SubmitButton from "@/Components/SubmitButton";
-import { YesNoEnum } from "@/Enums";
 import { toast } from "sonner";
 
 export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
