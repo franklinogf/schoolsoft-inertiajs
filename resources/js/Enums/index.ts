@@ -29,10 +29,10 @@ export enum TrimesterEnum {
   "Trimestre-2" = "Trimestre 2",
   "Trimestre-3" = "Trimestre 3",
   "Trimestre-4" = "Trimestre 4",
-  Verano = "Verano",
+  "Verano" = "Verano",
 }
 export enum PagesEnum {
-  Notas = "Notas",
+  "Notas" = "Notas",
   "Pruebas-Cortas" = "Pruebas cortas",
   "Trab-Diarios" = "Trabajos diarios",
   "Trab-Libreta" = "Trabajos de libreta",
