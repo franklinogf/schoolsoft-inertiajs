@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\Teacher\TeacherResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Middleware;
@@ -46,7 +47,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'csrf_token' => csrf_token(),
             'auth' => [
-                'user' => $request->user($guard),
+                'user' => $guard === 'teacher' ? TeacherResource::make($request->user($guard)) : $request->user($guard),
             ],
             'flash' => [
                 'success' => $request->session()->get('success'),
