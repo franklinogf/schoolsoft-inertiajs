@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Regiweb;
 
+use App\Enums\GenderEnum;
+use App\Enums\YesNoEnum;
 use App\Models\Teacher;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -33,7 +35,7 @@ class ProfileUpdateRequest extends FormRequest
             'cel_com' => ['required'],
             'alias' => ['nullable', 'string'],
             'posicion' => ['required', 'string'],
-            'genero' => ['required', Rule::in(['m', 'f'])],
+            'genero' => ['required', Rule::in(GenderEnum::class)],
             'fecha_nac' => ['required', 'date'],
             'fecha_ini' => ['required', 'date'],
             'fecha_daja' => ['nullable', 'date', 'after:fecha_ini'],
@@ -42,7 +44,7 @@ class ProfileUpdateRequest extends FormRequest
             'preparacion2' => ['nullable', 'string'],
             'email1' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(Teacher::class)->ignore($this->user()->id)],
             'email2' => ['nullable', 'string', 'lowercase', 'email', 'max:255', Rule::unique(Teacher::class)->ignore($this->user()->id)],
-            're_e' => ['required', Rule::in(['SI', 'NO'])],
+            're_e' => ['required', Rule::in(YesNoEnum::class)],
             'dir1' => ['required', 'string'],
             'dir2' => ['nullable', 'string'],
             'pueblo1' => ['required', 'string'],
@@ -77,10 +79,10 @@ class ProfileUpdateRequest extends FormRequest
             'lic2' => ['nullable', 'string'],
             'lic3' => ['nullable', 'string'],
             'lic4' => ['nullable', 'string'],
-            'lp1' => ['nullable', Rule::in(['SI', 'NO'])],
-            'lp2' => ['nullable', Rule::in(['SI', 'NO'])],
-            'lp3' => ['nullable', Rule::in(['SI', 'NO'])],
-            'lp4' => ['nullable', Rule::in(['SI', 'NO'])],
+            'lp1' => ['nullable', Rule::in(YesNoEnum::class)],
+            'lp2' => ['nullable', Rule::in(YesNoEnum::class)],
+            'lp3' => ['nullable', Rule::in(YesNoEnum::class)],
+            'lp4' => ['nullable', Rule::in(YesNoEnum::class)],
             'fex1' => ['nullable', 'date'],
             'fex2' => ['nullable', 'date'],
             'fex3' => ['nullable', 'date'],
