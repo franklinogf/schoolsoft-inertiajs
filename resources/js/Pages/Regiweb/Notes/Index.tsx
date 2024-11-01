@@ -3,7 +3,11 @@ import { CustomFormField, FormFieldType, SelectItemType } from "@/Components/Cus
 import SubmitButton from "@/Components/SubmitButton";
 import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/Components/ui/card";
-import { PAGES_SELECT, TRIMESTER_SELECT } from "@/Constants/FormSelects";
+import {
+  createSelectItemsFromArrayOfObjects,
+  PAGES_SELECT,
+  TRIMESTER_SELECT,
+} from "@/Constants/FormSelects";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
 import { Teacher } from "@/types/Teacher";
@@ -24,7 +28,6 @@ export default function Page({ auth, teacherGrades, flash }: PageProps) {
     e.preventDefault();
     post(route("regiweb.notes.index.submit"));
   }
-  console.log(auth.user);
   return (
     <RegiwebLayout user={auth.user} title={t("Inicio")}>
       <h1 className="page-primary-title mt-4">{t("Notas")}</h1>
@@ -51,7 +54,11 @@ export default function Page({ auth, teacherGrades, flash }: PageProps) {
                   setData={setData}
                   name="grade"
                   label={t("Grado")}
-                  items={teacherGrades}
+                  items={createSelectItemsFromArrayOfObjects(auth.user.grados, {
+                    separator: " - ",
+                    key: "curso",
+                    values: ["curso", "descripcion"],
+                  })}
                   error={errors.grade}
                 />
                 <CustomFormField

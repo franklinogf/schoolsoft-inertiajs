@@ -12,7 +12,6 @@ interface IndexPageProps extends PagePropsWithUser<Teacher> {
 }
 export default function IndexPage({ auth: { user }, ip }: IndexPageProps) {
   const { t } = useTranslation();
-
   return (
     <>
       <Head title={t("Inicio")} />
