@@ -1,8 +1,12 @@
 import { ChangePasswordForm } from "@/Components/ChangePasswordForm";
-import { CustomFormField, FormFieldType } from "@/Components/CustomFormField";
-import { FormProfilePicture } from "@/Components/FormProfilePicture";
+import { CheckboxField } from "@/Components/forms/inputs/CheckboxField";
+import { DateField } from "@/Components/forms/inputs/DateField";
+import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
+import { FormProfilePicture } from "@/Components/forms/inputs/FormProfilePicture";
+import { InputField } from "@/Components/forms/inputs/InputField";
+import { PhoneField } from "@/Components/forms/inputs/PhoneField";
+import { SelectField } from "@/Components/forms/inputs/SelectField";
 import { InfoBadge } from "@/Components/InfoBadge";
-import { InputsGrid } from "@/Components/InputsGrid";
 import SubmitButton from "@/Components/SubmitButton";
 import {
   Accordion,
@@ -163,27 +167,24 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col gap-4">
-                  <InputsGrid>
-                    <CustomFormField
-                      fieldType={FormFieldType.INPUT}
+                  <FieldsGrid>
+                    <InputField
                       data={data}
                       setData={setData}
                       label={t("Nombre")}
                       name="nombre"
                       error={errors.nombre}
                     />
-                    <CustomFormField
-                      fieldType={FormFieldType.INPUT}
+                    <InputField
                       data={data}
                       setData={setData}
                       label={t("Apellidos")}
                       name="apellidos"
                       error={errors.apellidos}
                     />
-                  </InputsGrid>
-                  <InputsGrid>
-                    <CustomFormField
-                      fieldType={FormFieldType.SELECT}
+                  </FieldsGrid>
+                  <FieldsGrid>
+                    <SelectField
                       data={data}
                       setData={setData}
                       label={t("Genero")}
@@ -191,18 +192,15 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       error={errors.genero}
                       items={GENDERS_SELECT}
                     />
-
-                    <CustomFormField
-                      fieldType={FormFieldType.DATE_PICKER}
+                    <DateField
                       data={data}
                       setData={setData}
                       label={t("Fecha de nacimiento")}
                       name="fecha_nac"
                       error={errors.fecha_nac}
                     />
-                  </InputsGrid>
-                  <CustomFormField
-                    fieldType={FormFieldType.INPUT}
+                  </FieldsGrid>
+                  <InputField
                     data={data}
                     setData={setData}
                     label={t("Correo principal")}
@@ -210,8 +208,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     type="email"
                     error={errors.email1}
                   />
-                  <CustomFormField
-                    fieldType={FormFieldType.INPUT}
+                  <InputField
                     data={data}
                     setData={setData}
                     label={t("Correo secundario")}
@@ -219,43 +216,39 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     type="email"
                     error={errors.email2}
                   />
-                  <InputsGrid>
-                    <CustomFormField
-                      fieldType={FormFieldType.PHONE_INPUT}
+                  <FieldsGrid>
+                    <PhoneField
                       data={data}
                       setData={setData}
                       label={t("Telefono residencial")}
                       name="tel_res"
                       error={errors.tel_res}
                     />
-                    <CustomFormField
-                      fieldType={FormFieldType.PHONE_INPUT}
+                    <PhoneField
                       data={data}
                       setData={setData}
                       label={t("Contacto de emergencia")}
                       name="tel_emer"
                       error={errors.tel_emer}
                     />
-                  </InputsGrid>
-                  <InputsGrid>
-                    <CustomFormField
-                      fieldType={FormFieldType.PHONE_INPUT}
+                  </FieldsGrid>
+                  <FieldsGrid>
+                    <PhoneField
                       data={data}
                       setData={setData}
                       label={t("Celular")}
                       name="cel"
                       error={errors.cel}
                     />
-                    <CustomFormField
+                    <SelectField
                       name="cel_com"
-                      fieldType={FormFieldType.SELECT}
                       data={data}
                       setData={setData}
                       label={t("Compañia del celular")}
                       error={errors.cel_com}
                       items={PHONE_COMPANIES_SELECT}
                     />
-                  </InputsGrid>
+                  </FieldsGrid>
                   <div className="mt-5">
                     <ChangePasswordForm route={route("regiweb.password")} />
                   </div>
@@ -271,48 +264,43 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                   <div className="flex flex-col gap-4">
                     <div className="space-y-1">
                       <h2 className="font-semibold">{t("Dirección residencial")}</h2>
-                      <CustomFormField
-                        fieldType={FormFieldType.INPUT}
+                      <InputField
                         data={data}
                         setData={setData}
                         placeholder={`${t("Dirección")} 1`}
                         name="dir1"
                         error={errors.dir1}
                       />
-                      <CustomFormField
-                        fieldType={FormFieldType.INPUT}
+                      <InputField
                         data={data}
                         setData={setData}
                         placeholder={`${t("Dirección")} 2`}
                         name="dir2"
                         error={errors.dir2}
                       />
-                      <InputsGrid cols={3}>
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                      <FieldsGrid cols={3}>
+                        <InputField
                           data={data}
                           setData={setData}
                           placeholder={t("Ciudad")}
                           name="pueblo1"
                           error={errors.pueblo1}
                         />
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                        <InputField
                           data={data}
                           setData={setData}
                           placeholder={t("País")}
                           name="esta1"
                           error={errors.esta1}
                         />
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                        <InputField
                           data={data}
                           setData={setData}
                           placeholder={t("Código postal")}
                           name="zip1"
                           error={errors.zip1}
                         />
-                      </InputsGrid>
+                      </FieldsGrid>
                     </div>
                     <Separator />
 
@@ -334,48 +322,43 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
 
                       <h2 className="font-semibold">{t("Dirección postal")}</h2>
 
-                      <CustomFormField
-                        fieldType={FormFieldType.INPUT}
+                      <InputField
                         data={data}
                         setData={setData}
                         placeholder={`${t("Dirección")} 1`}
                         name="dir3"
                         error={errors.dir3}
                       />
-                      <CustomFormField
-                        fieldType={FormFieldType.INPUT}
+                      <InputField
                         data={data}
                         setData={setData}
                         placeholder={`${t("Dirección")} 2`}
                         name="dir4"
                         error={errors.dir4}
                       />
-                      <InputsGrid cols={3}>
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                      <FieldsGrid cols={3}>
+                        <InputField
                           data={data}
                           setData={setData}
                           placeholder={t("Ciudad")}
                           name="pueblo2"
                           error={errors.pueblo2}
                         />
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                        <InputField
                           data={data}
                           setData={setData}
                           placeholder={t("País")}
                           name="esta2"
                           error={errors.esta2}
                         />
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                        <InputField
                           data={data}
                           setData={setData}
                           placeholder={t("Código postal")}
                           name="zip2"
                           error={errors.zip2}
                         />
-                      </InputsGrid>
+                      </FieldsGrid>
                     </div>
                   </div>
                 </CardContent>
@@ -386,25 +369,22 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col gap-4">
-                    <CustomFormField
-                      fieldType={FormFieldType.INPUT}
+                    <InputField
                       data={data}
                       setData={setData}
                       label={t("Alias")}
                       name="alias"
                       error={errors.alias}
                     />
-                    <InputsGrid>
-                      <CustomFormField
-                        fieldType={FormFieldType.INPUT}
+                    <FieldsGrid>
+                      <InputField
                         data={data}
                         setData={setData}
                         label={t("Posición")}
                         name="posicion"
                         error={errors.posicion}
                       />
-                      <CustomFormField
-                        fieldType={FormFieldType.SELECT}
+                      <SelectField
                         data={data}
                         setData={setData}
                         label={t("Nivel")}
@@ -412,20 +392,18 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                         error={errors.nivel}
                         items={TEACHER_LEVEL_SELECT}
                       />
-                    </InputsGrid>
+                    </FieldsGrid>
                     <div>
                       <h2 className="text-sm font-medium">{t("Preparación")}</h2>
                       <div className="space-y-1">
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                        <InputField
                           data={data}
                           setData={setData}
                           placeholder={`${t("Preparación")} 2`}
                           name="preparacion1"
                           error={errors.preparacion1}
                         />
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                        <InputField
                           data={data}
                           setData={setData}
                           placeholder={`${t("Preparación")} 2`}
@@ -435,26 +413,23 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       </div>
                     </div>
                     <Separator />
-                    <InputsGrid>
-                      <CustomFormField
-                        fieldType={FormFieldType.DATE_PICKER}
+                    <FieldsGrid>
+                      <DateField
                         data={data}
                         setData={setData}
                         label={t("Fecha de inicio")}
                         name="fecha_ini"
                         error={errors.fecha_ini}
                       />
-                      <CustomFormField
-                        fieldType={FormFieldType.DATE_PICKER}
+                      <DateField
                         data={data}
                         setData={setData}
                         label={t("Fecha de baja")}
                         name="fecha_daja"
                         error={errors.fecha_daja}
                       />
-                    </InputsGrid>
-                    <CustomFormField
-                      fieldType={FormFieldType.SELECT}
+                    </FieldsGrid>
+                    <SelectField
                       data={data}
                       setData={setData}
                       label={t("Recibir email")}
@@ -479,40 +454,36 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     const vi = `vi${number}` as "vi1";
                     const se = `se${number}` as "se1";
                     return (
-                      <InputsGrid key={number} className="md:grid-cols-4">
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                      <FieldsGrid key={number} className="md:grid-cols-4">
+                        <InputField
                           data={data}
                           setData={setData}
                           label={t("Nombre")}
                           name={club}
                           error={errors[club]}
                         />
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                        <InputField
                           data={data}
                           setData={setData}
                           label={t("Presidente")}
                           name={pre}
                           error={errors[pre]}
                         />
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                        <InputField
                           data={data}
                           setData={setData}
                           label={t("Vice presidente")}
                           name={vi}
                           error={errors[vi]}
                         />
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
+                        <InputField
                           data={data}
                           setData={setData}
                           label={t("Secretario")}
                           name={se}
                           error={errors[se]}
                         />
-                      </InputsGrid>
+                      </FieldsGrid>
                     );
                   })}
                 </AccordionContent>
@@ -525,36 +496,28 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     const lp = `lp${number}` as "lp1";
                     const fex = `fex${number}` as "fex1";
                     return (
-                      <InputsGrid key={number}>
-                        <CustomFormField
-                          fieldType={FormFieldType.INPUT}
-                          data={data}
-                          setData={setData}
-                          name={lic}
-                          error={errors[lic]}
-                        />
+                      <FieldsGrid key={number}>
+                        <InputField data={data} setData={setData} name={lic} error={errors[lic]} />
 
-                        <div className="flex items-center gap-2">
-                          {data.lp1}
-                          <CustomFormField
-                            fieldType={FormFieldType.CHECKBOX}
+                        <div className="grid grid-flow-col items-center gap-2">
+                          <CheckboxField
+                            className="grow"
                             label="Expira"
                             data={data}
                             setData={setData}
                             name={lp}
                             error={errors[lp]}
                           />
-                          <CustomFormField
+                          <DateField
                             disabled={data[lp] !== YesNoEnum.SI}
-                            className="min-w-[300px]"
-                            fieldType={FormFieldType.DATE_PICKER}
+                            className="max-w-[300px]"
                             data={data}
                             setData={setData}
                             name={fex}
                             error={errors[fex]}
                           />
                         </div>
-                      </InputsGrid>
+                      </FieldsGrid>
                     );
                   })}
                 </AccordionContent>

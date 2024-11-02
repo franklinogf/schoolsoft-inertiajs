@@ -1,5 +1,6 @@
 import { AlertDestructive } from "@/Components/AlertDesctructive";
-import { CustomFormField, FormFieldType, SelectItemType } from "@/Components/CustomFormField";
+import { SelectField } from "@/Components/forms/inputs/SelectField";
+
 import SubmitButton from "@/Components/SubmitButton";
 import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/Components/ui/card";
@@ -14,10 +15,8 @@ import { Teacher } from "@/types/Teacher";
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 
-type PageProps = PagePropsWithUser<Teacher> & {
-  teacherGrades: SelectItemType[];
-};
-export default function Page({ auth, teacherGrades, flash }: PageProps) {
+type PageProps = PagePropsWithUser<Teacher>;
+export default function Page({ auth, flash }: PageProps) {
   const { t } = useTranslation();
   const { data, setData, post, processing, errors } = useForm({
     grade: "",
@@ -47,9 +46,8 @@ export default function Page({ auth, teacherGrades, flash }: PageProps) {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <CustomFormField
+                <SelectField
                   placeholder="Selecciona el grado"
-                  fieldType={FormFieldType.SELECT}
                   data={data}
                   setData={setData}
                   name="grade"
@@ -61,9 +59,8 @@ export default function Page({ auth, teacherGrades, flash }: PageProps) {
                   })}
                   error={errors.grade}
                 />
-                <CustomFormField
+                <SelectField
                   placeholder="Selecciona el trimestre"
-                  fieldType={FormFieldType.SELECT}
                   data={data}
                   setData={setData}
                   name="trimester"
@@ -71,9 +68,8 @@ export default function Page({ auth, teacherGrades, flash }: PageProps) {
                   items={TRIMESTER_SELECT}
                   error={errors.trimester}
                 />
-                <CustomFormField
+                <SelectField
                   placeholder="Selecciona la pagína"
-                  fieldType={FormFieldType.SELECT}
                   data={data}
                   setData={setData}
                   name="page"

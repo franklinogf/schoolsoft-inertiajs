@@ -1,3 +1,4 @@
+import { AlertDestructive } from "@/Components/AlertDesctructive";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 import { Button } from "@/Components/ui/button";
 import {
@@ -28,14 +29,7 @@ export default function DocumentsPage({ school, documents, flash }: DocumentsPag
           <Button asChild variant="ghost">
             <Link href={route("home.index")}>{t("Ir a la pagina principal")}</Link>
           </Button>
-          {flash.message && (
-            <div className="mt-2 flex items-center justify-center">
-              <Alert className="max-w-xl" variant="destructive">
-                <AlertTitle>{t("Error")}!</AlertTitle>
-                <AlertDescription>{flash.message}</AlertDescription>
-              </Alert>
-            </div>
-          )}
+          <AlertDestructive className="mt-2" message={flash.error} />
         </section>
         {documents.length > 0 ? (
           <div className="g-2 mt-8 grid grid-cols-2 justify-center gap-2 md:grid-cols-3">
