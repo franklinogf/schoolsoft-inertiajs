@@ -716,7 +716,7 @@ const DateTimePicker = React.forwardRef<Partial<DateTimePickerRef>, DateTimePick
     }
 
     return (
-      <Popover>
+      <Popover modal>
         <PopoverTrigger asChild disabled={disabled}>
           <Button
             id={id}
@@ -768,4 +768,4 @@ const DateTimePicker = React.forwardRef<Partial<DateTimePickerRef>, DateTimePick
 DateTimePicker.displayName = "DateTimePicker";
 
 export { DateTimePicker, TimePicker, TimePickerInput };
-export type { DateTimePickerProps, DateTimePickerRef, TimePickerType };
+export type { DateTimePickerProps, DateTimePickerRef, TimePickerProps, TimePickerType };
