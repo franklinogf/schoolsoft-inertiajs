@@ -1,15 +1,15 @@
-import { LoginForm } from "@/Components/LoginForm";
-import { PagePropsWithFlashMessage } from "@/types";
+import { LoginForm } from "@/Components/forms/LoginForm";
+import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 
-export default function AdminLoginPage({ flash }: PagePropsWithFlashMessage) {
+export default function AdminLoginPage({ flash }: PageProps) {
   return (
     <>
       <Head title="Login" />
       <div className="fle-col flex min-h-dvh items-center justify-center px-4 py-6">
         <div className="grid w-full max-w-6xl items-center gap-4 md:grid-cols-2">
           <LoginForm
-            errorMessage={flash?.message}
+            errorMessage={flash.error}
             submitRoute={route("foro.student.login")}
             className="order-2 space-y-4 md:order-1"
           />

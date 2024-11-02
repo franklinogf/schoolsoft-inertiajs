@@ -1,4 +1,4 @@
-import { LoginForm } from "@/Components/LoginForm";
+import { LoginForm } from "@/Components/forms/LoginForm";
 import { LOGIN_REGIWEB_PICTURE } from "@/Constants";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
