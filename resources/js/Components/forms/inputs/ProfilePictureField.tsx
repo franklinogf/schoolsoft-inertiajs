@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { useTranslation } from "react-i18next";
-interface FormProfilePictureProps {
+interface ProfilePictureFieldProps {
   label?: string;
   error?: string;
   data: any;
@@ -12,7 +12,7 @@ interface FormProfilePictureProps {
   disabled?: boolean;
 }
 type FileWithPreview = File & { preview: string };
-export function FormProfilePicture({
+export function ProfilePictureField({
   label = "Foto de perfil",
   data,
   initialFile,
@@ -20,7 +20,7 @@ export function FormProfilePicture({
   error,
   name,
   disabled,
-}: FormProfilePictureProps) {
+}: ProfilePictureFieldProps) {
   const { t } = useTranslation();
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
