@@ -16,10 +16,5 @@
     },
     "skipLibCheck": true
   },
-  "include": [
-    "resources/js/**/*.ts",
-    "resources/js/**/*.tsx",
-    "resources/js/**/*.d.ts",
-    "emails/**/*.tsx"
-  ]
+  "include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "resources/js/**/*.d.ts"]
 }
