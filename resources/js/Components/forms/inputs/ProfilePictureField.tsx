@@ -83,7 +83,7 @@ export function ProfilePictureField({
           </div>
         ) : null}
       </div>
-      <FieldLabel className="mt-1" id={id} label={label} error={error} />
+      <FieldLabel className="mt-1" id={id} label={t(label)} error={error} />
       <FieldError error={error} />
     </div>
   );
