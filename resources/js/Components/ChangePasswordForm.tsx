@@ -1,7 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import { CustomFormField, FormFieldType } from "./CustomFormField";
+import { InputField } from "./forms/inputs/InputField";
 import { Button } from "./ui/button";
 
 export function ChangePasswordForm({ route }: { route: string }) {
@@ -15,8 +15,7 @@ export function ChangePasswordForm({ route }: { route: string }) {
       <h3 className="text-2xl font-semibold leading-none tracking-tight">
         {t("Cambiar contraseña")}
       </h3>
-      <CustomFormField
-        fieldType={FormFieldType.INPUT}
+      <InputField
         data={data}
         setData={setData}
         label={t("Nueva contraseña")}
@@ -24,8 +23,7 @@ export function ChangePasswordForm({ route }: { route: string }) {
         error={errors.clave}
         type="password"
       />
-      <CustomFormField
-        fieldType={FormFieldType.INPUT}
+      <InputField
         data={data}
         setData={setData}
         label={t("Confirmar nueva contraseña")}

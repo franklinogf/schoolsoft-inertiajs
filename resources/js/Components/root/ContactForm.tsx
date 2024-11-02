@@ -1,11 +1,12 @@
-// import { sendContactEmail } from "@/actions";
+import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
+import { InputField } from "@/Components/forms/inputs/InputField";
+import { PhoneField } from "@/Components/forms/inputs/PhoneField";
+import { TextareaField } from "@/Components/forms/inputs/TextareaField";
+import SubmitButton from "@/Components/SubmitButton";
 import { Card, CardContent } from "@/Components/ui/card";
 import { useForm } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { CustomFormField, FormFieldType } from "../CustomFormField";
-import { InputsGrid } from "../InputsGrid";
-import SubmitButton from "../SubmitButton";
 
 export function ContactForm() {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -34,44 +35,39 @@ export function ContactForm() {
       <Card className="mx-auto mt-4 max-w-xl">
         <CardContent className="py-4">
           <form onSubmit={onSubmit} className="space-y-6">
-            <InputsGrid>
-              <CustomFormField
+            <FieldsGrid>
+              <InputField
                 label="Nombre"
-                fieldType={FormFieldType.INPUT}
                 data={data}
                 setData={setData}
                 name="name"
                 error={errors.name}
               />
-              <CustomFormField
+              <InputField
                 label="Apellido"
-                fieldType={FormFieldType.INPUT}
                 data={data}
                 setData={setData}
                 name="lastname"
                 error={errors.lastname}
               />
-            </InputsGrid>
-            <CustomFormField
+            </FieldsGrid>
+            <InputField
               label="Correo Electrónico"
-              fieldType={FormFieldType.INPUT}
               type="email"
               data={data}
               setData={setData}
               name="email"
               error={errors.email}
             />
-            <CustomFormField
+            <PhoneField
               label="Teléfono"
-              fieldType={FormFieldType.PHONE_INPUT}
               data={data}
               setData={setData}
               name="phone"
               error={errors.phone}
             />
-            <CustomFormField
+            <TextareaField
               label="Mensaje"
-              fieldType={FormFieldType.TEXTAREA}
               data={data}
               setData={setData}
               name="message"
