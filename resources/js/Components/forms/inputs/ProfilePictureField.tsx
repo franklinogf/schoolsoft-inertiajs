@@ -1,12 +1,14 @@
+import { FieldError } from "@/Components/forms/inputs/FieldError";
+import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
 import { cn } from "@/lib/utils";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useId } from "react";
 import { useDropzone } from "react-dropzone";
 import { useTranslation } from "react-i18next";
 interface ProfilePictureFieldProps {
   label?: string;
   error?: string;
   data: any;
-  initialFile: string;
+  initialFile?: string;
   name: string;
   setData: (key: string, value: any) => void;
   disabled?: boolean;
@@ -22,6 +24,7 @@ export function ProfilePictureField({
   disabled,
 }: ProfilePictureFieldProps) {
   const { t } = useTranslation();
+  const id = useId();
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
@@ -56,17 +59,17 @@ export function ProfilePictureField({
           { "cursor-not-allowed border-destructive": isDragReject },
         )}
       >
-        <input {...getInputProps()} />
+        <input id={id} {...getInputProps()} />
         <p
           className={cn(
             "absolute z-20 text-balance text-center font-serif text-sm font-medium text-input",
           )}
         >
           {isDragActive
-            ? "Drop an image here..."
+            ? t("Drop an image here...")
             : data[name]
-              ? "Drag and drop, or click to change the image"
-              : "Drag and drop, or click to select an image"}
+              ? t("Drag and drop, or click to change the image")
+              : t("Drag and drop, or click to select an image")}
         </p>
         {data[name] || initialFile ? (
           <div className="absolute">
@@ -80,8 +83,8 @@ export function ProfilePictureField({
           </div>
         ) : null}
       </div>
-      {label && <p className="mt-1 text-sm font-medium leading-none">{t(label)}</p>}
-      {error && <small className="text-red-500">{error}</small>}
+      <FieldLabel className="mt-1" id={id} label={label} error={error} />
+      <FieldError error={error} />
     </div>
   );
 }
