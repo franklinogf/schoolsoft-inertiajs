@@ -2,9 +2,9 @@ import { ChangePasswordForm } from "@/Components/ChangePasswordForm";
 import { CheckboxField } from "@/Components/forms/inputs/CheckboxField";
 import { DateField } from "@/Components/forms/inputs/DateField";
 import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
-import { FormProfilePicture } from "@/Components/forms/inputs/FormProfilePicture";
 import { InputField } from "@/Components/forms/inputs/InputField";
 import { PhoneField } from "@/Components/forms/inputs/PhoneField";
+import { ProfilePictureField } from "@/Components/forms/inputs/ProfilePictureField";
 import { SelectField } from "@/Components/forms/inputs/SelectField";
 import { InfoBadge } from "@/Components/InfoBadge";
 import SubmitButton from "@/Components/SubmitButton";
@@ -138,7 +138,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             <User2 className="size-8" />
           </h1>
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
-            <FormProfilePicture
+            <ProfilePictureField
               initialFile={user.foto_name}
               data={data}
               name="picture"
