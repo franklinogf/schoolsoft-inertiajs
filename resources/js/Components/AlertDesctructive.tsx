@@ -3,12 +3,18 @@ import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 import { type Errors } from "@/types";
 
-export function AlertDestructive({ message }: { message: string | null | Errors }) {
+export function AlertDestructive({
+  message,
+  className,
+}: {
+  message: string | null | Errors;
+  className?: string;
+}) {
   if (message === null) {
     return null;
   }
   return (
-    <Alert variant="destructive">
+    <Alert className={className} variant="destructive">
       <AlertCircle className="size-4" />
       <AlertTitle>{typeof message === "string" ? "Error" : "Errors"}</AlertTitle>
       <AlertDescription>
