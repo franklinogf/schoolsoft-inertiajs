@@ -1,4 +1,4 @@
-import { SelectItemType } from "@/Components/CustomFormField";
+import { SelectItemType } from "@/Components/forms/inputs/SelectField";
 import {
   GenderEnum,
   PagesEnum,
