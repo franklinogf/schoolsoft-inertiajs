@@ -28,9 +28,9 @@ class Teacher extends Model
         return $this->hasMany(Student::class, 'grado', 'grado');
     }
 
-    public function grades(): HasMany
+    public function courses(): HasMany
     {
-        return $this->hasMany(Grade::class, 'id', 'id')->where('year', Admin::primary()->year2);
+        return $this->hasMany(Course::class, 'id', 'id')->where('year', Admin::primary()->year2);
     }
 
     protected function casts(): array

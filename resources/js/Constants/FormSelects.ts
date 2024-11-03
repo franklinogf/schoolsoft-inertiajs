@@ -10,7 +10,7 @@ import {
 
 export function createSelectItemsFromArrayOfObjects(
   array: Record<string, string>[] | undefined,
-  { key, values, separator = "-" }: { key: string; values: string[] | string; separator?: string },
+  { key, values, separator = " " }: { key: string; values: string[] | string; separator?: string },
 ): SelectItemType[] {
   if (!array) return [];
   return array.map((item) => ({

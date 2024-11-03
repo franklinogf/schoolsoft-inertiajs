@@ -1,4 +1,4 @@
-interface Grade extends Record<string, string> {
+interface Course extends Record<string, string> {
   id: string;
   curso: string;
   year: string;
@@ -18,7 +18,7 @@ interface Grade extends Record<string, string> {
   mt: number;
 }
 export interface Teacher {
-  grados?: Grade[];
+  cursos?: Course[];
   id: number;
   nombre: string;
   apellidos: string;

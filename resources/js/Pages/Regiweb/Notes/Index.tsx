@@ -18,14 +18,14 @@ import { useTranslation } from "react-i18next";
 type PageProps = PagePropsWithUser<Teacher>;
 export default function Page({ auth, flash }: PageProps) {
   const { t } = useTranslation();
-  const { data, setData, post, processing, errors } = useForm({
-    grade: "",
+  const { data, setData, get, processing, errors } = useForm({
+    course: "",
     trimester: "",
     page: "",
   });
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    post(route("regiweb.notes.index.submit"));
+    get(route("regiweb.notes.show"));
   }
   return (
     <RegiwebLayout user={auth.user} title={t("Inicio")}>
@@ -47,17 +47,17 @@ export default function Page({ auth, flash }: PageProps) {
             <CardContent>
               <div className="space-y-4">
                 <SelectField
-                  placeholder="Selecciona el grado"
+                  placeholder="Selecciona el curso"
                   data={data}
                   setData={setData}
-                  name="grade"
-                  label={t("Grado")}
-                  items={createSelectItemsFromArrayOfObjects(auth.user.grados, {
+                  name="course"
+                  label={t("Curso")}
+                  items={createSelectItemsFromArrayOfObjects(auth.user.cursos, {
                     separator: " - ",
                     key: "curso",
                     values: ["curso", "descripcion"],
                   })}
-                  error={errors.grade}
+                  error={errors.course}
                 />
                 <SelectField
                   placeholder="Selecciona el trimestre"
