@@ -23,7 +23,7 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
 
         Route::name('notes.')->prefix('notes')->controller(RegiwebNotesController::class)->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::post('/', 'submit')->name('index.submit');
+            // Route::post('/', 'submit')->name('index.submit');
             Route::get('/enter-grades', 'show')->name('show');
         });
 

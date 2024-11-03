@@ -18,46 +18,46 @@ class RegiwebNotesController extends Controller
     public function __construct(
         #[CurrentUser()] protected Teacher $user
     ) {
-        $user->load('grades');
+        $user->load('courses');
     }
     public function index()
     {
         return Inertia::render('Regiweb/Notes/Index');
     }
 
-    public function submit(Request $request)
-    {
-        $validated = $request->validate([
-            'grade' => [
-                'required',
-                'string',
-                Rule::in($this->getGradesArray()),
-            ],
-            'page' => [
-                'required',
-                'string',
-                Rule::enum(PagesEnum::class),
-            ],
-            'trimester' => [
-                'required',
-                'string',
-                Rule::enum(TrimesterEnum::class),
+    // public function submit(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'course' => [
+    //             'required',
+    //             'string',
+    //             Rule::in($this->getCoursesArray()),
+    //         ],
+    //         'page' => [
+    //             'required',
+    //             'string',
+    //             Rule::enum(PagesEnum::class),
+    //         ],
+    //         'trimester' => [
+    //             'required',
+    //             'string',
+    //             Rule::enum(TrimesterEnum::class),
 
-            ],
-        ]);
+    //         ],
+    //     ]);
 
-        return to_route('regiweb.notes.show', $validated);
-    }
+    //     return to_route('regiweb.notes.show', $validated);
+    // }
 
 
     public function show(Request $request)
     {
 
         $validator = Validator::make($request->all(), [
-            'grade' => [
+            'course' => [
                 'required',
                 'string',
-                Rule::in($this->getGradesArray()),
+                Rule::in($this->getCoursesArray()),
             ],
             'page' => [
                 'required',
@@ -78,9 +78,9 @@ class RegiwebNotesController extends Controller
 
         return Inertia::render('Regiweb/Notes/Show', $validated);
     }
-    private function getGradesArray(): array
+    private function getCoursesArray(): array
     {
-        $gradesArray = $this->user->grades()->pluck('curso')->toArray();
-        return $gradesArray;
+        $coursesArray = $this->user->courses()->pluck('curso')->toArray();
+        return $coursesArray;
     }
 }
