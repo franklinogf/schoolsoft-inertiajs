@@ -1,4 +1,6 @@
+import i18n from "@/lib/i18next";
 import { Computer, Globe, MonitorSpeaker, Origami, Wrench } from "lucide-react";
+
 export const MENU_LINKS = [
   {
     label: "Inicio",
@@ -13,13 +15,12 @@ export const MENU_LINKS = [
     path: "regiweb",
   },
 ] as const;
+i18n.setDefaultNamespace("home");
+const { t } = i18n;
 export const SERVICES = [
   {
-    title: "Servicio de Implementación",
-    description: `Esto incluye la coordinación para las etapas de adiestramientos con sus fechas de implementación.
-              Material (manuales, etc.) para el adiestramiento de personal. Seguimiento para que se
-              realicen los trabajos requeridos para completar la implementación del sistema School
-              Soft para el beneficio de la institución.`,
+    title: t("services.items.0.title"),
+    description: t("services.items.0.description"),
     Icon: Origami,
   },
   {
