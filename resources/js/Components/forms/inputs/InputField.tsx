@@ -12,6 +12,7 @@ interface InputFieldProps extends InputProps {
   label?: string;
   disabled?: boolean;
   className?: string;
+  removeArrows?: boolean;
 }
 export function InputField({
   error,
@@ -21,6 +22,7 @@ export function InputField({
   data,
   setData,
   name,
+  removeArrows,
   ...props
 }: InputFieldProps) {
   const id = useId();
@@ -30,9 +32,12 @@ export function InputField({
       <Input
         disabled={disabled}
         id={id}
-        className={cn({
-          "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
-        })}
+        className={cn(
+          {
+            "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
+          },
+          { "remove-arrows": removeArrows },
+        )}
         value={data[name]}
         onChange={(e) => {
           setData(name, e.target.value);
