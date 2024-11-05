@@ -1,6 +1,6 @@
 import { DateField } from "@/Components/forms/inputs/DateField";
 import { InputField } from "@/Components/forms/inputs/InputField";
-import SubmitButton from "@/Components/SubmitButton";
+import SubmitButton from "@/Components/forms/SubmitButton";
 import {
   Card,
   CardContent,

@@ -6,8 +6,8 @@ import { InputField } from "@/Components/forms/inputs/InputField";
 import { PhoneField } from "@/Components/forms/inputs/PhoneField";
 import { ProfilePictureField } from "@/Components/forms/inputs/ProfilePictureField";
 import { SelectField } from "@/Components/forms/inputs/SelectField";
+import SubmitButton from "@/Components/forms/SubmitButton";
 import { InfoBadge } from "@/Components/InfoBadge";
-import SubmitButton from "@/Components/SubmitButton";
 import {
   Accordion,
   AccordionContent,
