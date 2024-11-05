@@ -21,23 +21,19 @@ import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 export type GradesValues = {
-  tema: string;
-  valor: string;
-  fecha: string;
+  [x: string]: string;
 };
 
-export default function ValuesForm({ values, id }: { values: GradesValues[]; id: number }) {
+interface ValuesFormProps {
+  values: GradesValues[];
+  id: number;
+  amoutOfGrades: number;
+  onValueChange: (valueKey: string, value: string) => void;
+}
+
+export default function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesFormProps) {
   const { t } = useTranslation();
-  const initialValue = values.reduce((acc, curr, i) => {
-    const index = i + 1;
-    return {
-      ...acc,
-      [`tema${index}`]: curr.tema,
-      [`val${index}`]: curr.valor,
-      [`fec${index}`]: curr.fecha,
-    };
-  }, {});
-  const { put, processing, errors, data, setData } = useForm(initialValue);
+  const { put, processing, errors, data, setData } = useForm(values);
   function handleValuesSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     put(route("regiweb.notes.values.save", id), {
@@ -65,7 +61,7 @@ export default function ValuesForm({ values, id }: { values: GradesValues[]; id:
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {values.map((_, i) => {
+                {Array.from({ length: amoutOfGrades }).map((_, i) => {
                   const index = i + 1;
                   return (
                     <TableRow className="[&>td]:text-center" key={i}>
@@ -88,7 +84,7 @@ export default function ValuesForm({ values, id }: { values: GradesValues[]; id:
                           type="number"
                           error={errors[`val${index}` as keyof typeof errors]}
                           onBlur={(e) => {
-                            console.log(e.target.value);
+                            onValueChange("val" + index, e.target.value);
                           }}
                         />
                       </TableCell>
