@@ -2,7 +2,7 @@ import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
 import { InputField } from "@/Components/forms/inputs/InputField";
 import { PhoneField } from "@/Components/forms/inputs/PhoneField";
 import { TextareaField } from "@/Components/forms/inputs/TextareaField";
-import SubmitButton from "@/Components/SubmitButton";
+import SubmitButton from "@/Components/forms/SubmitButton";
 import { Card, CardContent } from "@/Components/ui/card";
 import { useForm } from "@inertiajs/react";
 import { motion } from "framer-motion";

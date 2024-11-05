@@ -1,7 +1,7 @@
 import { AlertDestructive } from "@/Components/AlertDesctructive";
 import { SelectField } from "@/Components/forms/inputs/SelectField";
 
-import SubmitButton from "@/Components/SubmitButton";
+import SubmitButton from "@/Components/forms/SubmitButton";
 import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/Components/ui/card";
 import {
