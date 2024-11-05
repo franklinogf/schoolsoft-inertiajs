@@ -94,4 +94,13 @@
       @apply h-9 border-0 focus:ring-0;
     }
   }
+  input[type="number"].remove-arrows::-webkit-inner-spin-button,
+  input[type="number"].remove-arrows::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"].remove-arrows {
+    appearance: textfield;
+  }
 }
