@@ -25,6 +25,7 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
             Route::get('/', 'index')->name('index');
             // Route::post('/', 'submit')->name('index.submit');
             Route::get('/enter-grades', 'show')->name('show');
+            Route::put('/enter-grades/values/{id}', 'saveValues')->name('values.save');
         });
 
     });
