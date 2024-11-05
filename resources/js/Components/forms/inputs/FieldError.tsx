@@ -3,7 +3,7 @@ interface FieldErrorProps {
 }
 export function FieldError({ error }: FieldErrorProps) {
   if (error) {
-    return <div className="text-destructive">{error}</div>;
+    return <div className="text-xs text-destructive">{error}</div>;
   }
   return null;
 }
