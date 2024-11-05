@@ -5,6 +5,7 @@ import { OTHER_SERVICES, SERVICES } from "@/Constants/root";
 import { Head, Link } from "@inertiajs/react";
 import { motion, type Variants } from "framer-motion";
 import { CircleCheckBig } from "lucide-react";
+import { useTranslation } from "react-i18next";
 const listVariants: Variants = {
   offScreen: {
     y: 50,
@@ -22,6 +23,7 @@ const listVariants: Variants = {
 };
 
 export default function Page() {
+  const { t } = useTranslation("home");
   return (
     <>
       <Head title="Inicio" />
@@ -35,7 +37,7 @@ export default function Page() {
               transition={{ delay: 0.3 }}
               className="mb-4 max-w-2xl text-center text-4xl font-extrabold leading-none tracking-tight md:mb-6 md:text-4xl xl:text-5xl"
             >
-              Sistema administrativo para colegios
+              {t("hero.title")}
             </motion.h1>
             <motion.p
               transition={{ delay: 0.5 }}
@@ -43,10 +45,7 @@ export default function Page() {
               animate={{ opacity: 1, scale: 1 }}
               className="mb-6 max-w-prose text-pretty font-light text-muted-foreground lg:mb-8"
             >
-              Programa diseñado en español e inglés con un sistema sofisticado de seguridad para
-              control de acceso. Este sistema administrativo facilita las labores administrativas
-              aumentando la eficiencia de los trabajos proveyendo mas tiempo para concentrarse en la
-              fase de supervisión de los procesos educativos.
+              {t("hero.description")}
             </motion.p>
             <motion.div
               initial={{ y: 50, opacity: 0 }}
@@ -55,7 +54,7 @@ export default function Page() {
               className="flex justify-center"
             >
               <Button asChild>
-                <Link href="/">Solicita una demostración</Link>
+                <Link href="/">{t("hero.button")}</Link>
               </Button>
             </motion.div>
           </div>
@@ -83,9 +82,9 @@ export default function Page() {
             Servicios
           </motion.h2>
           <div className="space-y-8 md:grid md:grid-cols-2 md:gap-10 md:space-y-0 lg:grid-cols-3">
-            {SERVICES.map(({ title, description, Icon }) => (
+            {SERVICES.map(({ title, description, Icon }, i) => (
               <motion.div
-                key={title}
+                key={i}
                 initial="offScreen"
                 whileInView="onScreen"
                 viewport={{ once: true, amount: 0.8 }}
