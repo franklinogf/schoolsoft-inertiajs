@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Foundation\Auth\User as Model;
 
 class Admin extends Model
@@ -28,5 +29,12 @@ class Admin extends Model
     public function scopePrimary(Builder $query)
     {
         return $query->where('usuario', 'administrador')->first();
+    }
+
+    public function getYear(): Attribute
+    {
+        return Attribute::make(
+            get: fn(mixed $value, array $attributes) => $attributes['year'],
+        );
     }
 }
