@@ -1,0 +1,17 @@
+{
+  "hero": {
+    "title": "Sistema administrativo para colegios",
+    "description": "Programa diseñado en español e inglés con un sistema sofisticado de seguridad para control de acceso. Este sistema administrativo facilita las labores administrativas aumentando la eficiencia de los trabajos proveyendo mas tiempo para concentrarse en la fase de supervisión de los procesos educativos.",
+    "button": "Solicita una demostración"
+  },
+  "services": {
+    "title": "Servicios",
+    "items": [
+      {
+        "title": "Servicio de Implementación",
+        "description": "Esto incluye la coordinación para las etapas de adiestramientos con sus fechas de implementación. Material (manuales, etc.) para el adiestramiento de personal. Seguimiento para que se realicen los trabajos requeridos para completar la implementación del sistema SchoolSoft para el beneficio de la institución."
+      }
+    ]
+  },
+  "otherServices": {}
+}
