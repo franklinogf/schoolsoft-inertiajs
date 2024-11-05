@@ -60,8 +60,8 @@ export default function Show({
 }: PageProps) {
   const [convert, setConvert] = useState(false);
   const [studentGrades, setStudentsGrades] = useState(initialStudents);
+  const [values, setValues] = useState<GradesValues[]>(gradesValues);
   const { t } = useTranslation();
-
   function handleGradeChange(id: number, grade: string, value: string) {
     console.log(Number(value) < 0);
     const updatedStudents = studentGrades.map((student) => {
@@ -74,6 +74,18 @@ export default function Show({
       return student;
     });
     setStudentsGrades(updatedStudents);
+  }
+
+  function handleValueChange(valueKey: string, value: string) {
+    //@ts-ignore
+    const updatedValues = Object.entries(values).reduce((acc, [key, val]) => {
+      if (key === valueKey) {
+        return { ...acc, [key]: value };
+      }
+      return { ...acc, [key]: val };
+    }, {}) as GradesValues[];
+
+    setValues(updatedValues);
   }
 
   return (
@@ -184,7 +196,7 @@ export default function Show({
 
                   return (
                     <TableRow key={i}>
-                      <TableHead>{student.id}</TableHead>
+                      <TableHead>{i + 1}</TableHead>
                       <TableCell className="text-nowrap">{`${student.apellidos} ${student.nombre}`}</TableCell>
                       {Object.entries(grades).map(([key, value], i) => (
                         <TableCell className="text-nowrap px-1" key={i}>
@@ -217,7 +229,12 @@ export default function Show({
           </div>
         </section>
         <section className="mt-8">
-          <ValuesForm values={gradesValues} id={gradesValuesId} />
+          <ValuesForm
+            values={values}
+            id={gradesValuesId}
+            amoutOfGrades={amountOfGrades}
+            onValueChange={handleValueChange}
+          />
         </section>
       </RegiwebLayout>
     </>
