@@ -521,31 +521,7 @@ class RegiwebNotesController extends Controller
             ->get();
         $amountOfValues = $page === PagesEnum::FINAL_EXAM ? 1 : $amountOfGrades;
 
-        $gradesValuesData = DB::table('valores')->where([
-            ['curso', $course],
-            ['year', $this->admin->getYear],
-            ['trimestre', $trimester],
-            ['nivel', $page],
-        ])->first();
-        if (!$gradesValuesData) {
-            $id = DB::table('valores')->insertGetId([
-                'curso' => $course,
-                'year' => $this->admin->getYear,
-                'trimestre' => $trimester,
-                'nivel' => $page,
-            ]);
-            $gradesValuesData = DB::table('valores')->where('id', $id)->first();
-        }
-        $gradesValuesId = $gradesValuesData->id;
-        $gradesValues = [];
-        for ($i = 1; $i <= $amountOfValues; $i++) {
-            $gradesValues[] = [
-                'tema' => $gradesValuesData->{"tema$i"} ?? '',
-                'valor' => $gradesValuesData->{"val$i"} ?? '',
-                'fecha' => $gradesValuesData->{"fec$i"} === '0000-00-00' ? '' : ($gradesValuesData->{"fec$i"} ?? ''),
-            ];
-        }
-
+        [$gradesValues, $gradesValuesId] = $this->getGradesValues($course, $trimester, $page, $amountOfValues);
 
         return Inertia::render('Regiweb/Notes/Show', [
             'course' => $course,
@@ -590,4 +566,30 @@ class RegiwebNotesController extends Controller
 
     }
 
+    private function getGradesValues($course, $trimester, $page, $amountOfValues)
+    {
+        $gradesValuesData = DB::table('valores')->where([
+            ['curso', $course],
+            ['year', $this->admin->getYear],
+            ['trimestre', $trimester],
+            ['nivel', $page],
+        ])->first();
+        if (!$gradesValuesData) {
+            $id = DB::table('valores')->insertGetId([
+                'curso' => $course,
+                'year' => $this->admin->getYear,
+                'trimestre' => $trimester,
+                'nivel' => $page,
+            ]);
+            $gradesValuesData = DB::table('valores')->where('id', $id)->first();
+        }
+        $gradesValuesId = $gradesValuesData->id;
+        $gradesValues = [];
+        for ($i = 1; $i <= $amountOfValues; $i++) {
+            $gradesValues["tema$i"] = $gradesValuesData->{"tema$i"} ?? '';
+            $gradesValues["val$i"] = $gradesValuesData->{"val$i"} ?? '';
+            $gradesValues["fec$i"] = $gradesValuesData->{"fec$i"} === '0000-00-00' ? '' : ($gradesValuesData->{"fec$i"} ?? '');
+        }
+        return [$gradesValues, $gradesValuesId];
+    }
 }
