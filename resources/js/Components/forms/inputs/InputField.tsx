@@ -4,7 +4,8 @@ import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
 import { Input, type InputProps } from "@/Components/ui/input";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
-interface InputFieldProps extends InputProps {
+interface InputFieldProps
+  extends Omit<InputProps, "value" | "onChange" | "id" | "disabled" | "name"> {
   data: any;
   setData: (key: string, value: any) => void;
   name: string;
