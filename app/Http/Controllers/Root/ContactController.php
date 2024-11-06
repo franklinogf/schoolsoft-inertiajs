@@ -10,6 +10,7 @@ class ContactController extends Controller
 {
     public function index()
     {
+
         return inertia('Root/Contact');
     }
 
@@ -23,7 +24,6 @@ class ContactController extends Controller
             'phone' => ['phone:US,INTERNATIONAL'],
         ]);
 
-        // TODO: Send email
         Mail::to('franklinomarflores@gmail.com')->send(new \App\Mail\Root\Contact(
             $validated['name'],
             $validated['lastname'],
