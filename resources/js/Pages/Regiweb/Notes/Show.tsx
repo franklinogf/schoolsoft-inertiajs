@@ -16,18 +16,46 @@ import { PagesEnum, TrimesterEnum } from "@/Enums";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { formatDate } from "@/lib/utils";
 import type { PagePropsWithUser } from "@/types";
-import { StudentGrade } from "@/types/Student";
 import type { Teacher } from "@/types/Teacher";
 import { Head } from "@inertiajs/react";
 import { useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ValuesForm, { GradesValues } from "./_components/ValuesForm";
-
+type Grade = {
+  value: string;
+};
+type StudentsGrades = {
+  id: number;
+  nombre: string;
+  apellidos: string;
+  notas: {
+    [key: string]: Grade;
+    nota1: Grade;
+    nota2: Grade;
+    nota3: Grade;
+    nota4: Grade;
+    nota5: Grade;
+    nota6: Grade;
+    nota7: Grade;
+    nota8: Grade;
+    nota9: Grade;
+    nota10: Grade;
+  };
+  total: string;
+  tdia: string;
+  tlib: string;
+  pcor: string;
+  tpa: string;
+  tdp: string;
+  tdiaTdp: string;
+  tlibTdp: string;
+  pcorTdp: string;
+};
 interface PageProps extends PagePropsWithUser<Teacher> {
   course: string;
   page: PagesEnum;
   trimester: TrimesterEnum;
-  students: StudentGrade[];
+  studentsGrades: StudentsGrades[];
   initialDate: string;
   finalDate: string;
   isLetter: boolean;
@@ -36,8 +64,7 @@ interface PageProps extends PagePropsWithUser<Teacher> {
   hasEnded: boolean;
   amountOfGrades: number;
   columns: string[] | null;
-  gradesNumbers: [number, number];
-  gradesValues: GradesValues[];
+  gradesValues: GradesValues;
   gradesValuesId: number;
 }
 export default function Show({
@@ -45,7 +72,7 @@ export default function Show({
   course,
   page,
   trimester,
-  students: initialStudents,
+  studentsGrades: initialStudents,
   initialDate,
   finalDate,
   isLetter,
@@ -54,40 +81,99 @@ export default function Show({
   hasEnded,
   amountOfGrades,
   columns,
-  gradesNumbers,
   gradesValues,
   gradesValuesId,
 }: PageProps) {
   const [convert, setConvert] = useState(false);
   const [studentGrades, setStudentsGrades] = useState(initialStudents);
-  const [values, setValues] = useState<GradesValues[]>(gradesValues);
+  const [values, setValues] = useState<GradesValues>(gradesValues);
   const { t } = useTranslation();
-  function handleGradeChange(id: number, grade: string, value: string) {
-    console.log(Number(value) < 0);
-    const updatedStudents = studentGrades.map((student) => {
-      if (student.aa === id) {
-        return {
-          ...student,
-          [grade]: Number(value) < 0 ? 0 : value,
-        };
-      }
-      return student;
+
+  function calculateLocalTdp(id: number) {
+    setStudentsGrades((prev) => {
+      const student = prev.find((student) => student.id === id);
+      if (!student) return prev;
+      let tdp = Number(student.tdiaTdp) + Number(student.tlibTdp) + Number(student.pcorTdp);
+      Array.from({ length: amountOfGrades }).forEach((_, i) => {
+        const number = i + 1;
+        const val = values[`val${number}`];
+        const grade = student.notas[`nota${number}`].value;
+
+        if (grade === "") return;
+        if (val === "") return;
+        tdp += Number(val);
+      });
+      return prev.map((student) => {
+        if (student.id === id) {
+          const updatedStudent = {
+            ...student,
+            tdp: String(tdp),
+          };
+          return updatedStudent;
+        }
+        return student;
+      });
     });
-    setStudentsGrades(updatedStudents);
+  }
+  function calculateLocalTpa(id: number) {
+    setStudentsGrades((prev) => {
+      const student = prev.find((student) => student.id === id);
+      if (!student) return prev;
+      let tpa = Number(student.tdia) + Number(student.tlib) + Number(student.pcor);
+      Array.from({ length: amountOfGrades }).forEach((_, i) => {
+        const number = i + 1;
+        const grade = student.notas[`nota${number}`].value;
+        tpa += Number(grade);
+      });
+
+      return prev.map((student) => {
+        if (student.id === id) {
+          const updatedStudent = {
+            ...student,
+            tpa: String(tpa),
+          };
+          return updatedStudent;
+        }
+        return student;
+      });
+    });
+  }
+  function handleGradeChange(id: number, gradeKey: string, value: string) {
+    const gradeNumber = gradeKey.slice(-1);
+    const val = values[`val${gradeNumber}`];
+    if (val === "") return;
+    if (Number(value) > Number(val)) {
+      value = val;
+    }
+    setStudentsGrades((prev) => {
+      return prev.map((student) => {
+        if (student.id === id) {
+          const updatedGrade = {
+            ...student,
+            notas: {
+              ...student.notas,
+              [gradeKey]: { value },
+            },
+          };
+          return updatedGrade;
+        }
+        return student;
+      });
+    });
+    calculateLocalTpa(id);
+    calculateLocalTdp(id);
   }
 
   function handleValueChange(valueKey: string, value: string) {
-    //@ts-ignore
     const updatedValues = Object.entries(values).reduce((acc, [key, val]) => {
       if (key === valueKey) {
         return { ...acc, [key]: value };
       }
       return { ...acc, [key]: val };
-    }, {}) as GradesValues[];
+    }, {});
 
     setValues(updatedValues);
   }
-
   return (
     <>
       <Head title={t("Entrada de notas")} />
@@ -180,50 +266,45 @@ export default function Show({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {studentGrades.map((student, i) => {
-                  let total = 0;
-                  let amount = 0;
-                  const grades = {};
-                  for (let i = gradesNumbers[0]; i <= gradesNumbers[1]; i++) {
-                    const grade = student[`not${i}` as keyof StudentGrade];
-                    if (grade !== "") {
-                      amount++;
-                      total += Number(student[`not${i}` as keyof StudentGrade]);
-                    }
-                    Object.assign(grades, { [`not${i}`]: grade });
-                  }
-                  const gradeTotal = amount === 0 ? 0 : total / amount;
-
-                  return (
-                    <TableRow key={i}>
-                      <TableHead>{i + 1}</TableHead>
-                      <TableCell className="text-nowrap">{`${student.apellidos} ${student.nombre}`}</TableCell>
-                      {Object.entries(grades).map(([key, value], i) => (
-                        <TableCell className="text-nowrap px-1" key={i}>
-                          <Input
-                            onChange={(e) => handleGradeChange(student.aa, key, e.target.value)}
-                            className="remove-arrows px-1 text-center"
-                            type={convert ? "text" : "number"}
-                            value={value as string}
-                          />
-                        </TableCell>
-                      ))}
-                      {columns?.map((column, i) => <TableCell key={i}></TableCell>)}
-                      {/* <TableCell>{student.tpa}</TableCell>
-                      <TableCell>{student.tdp}</TableCell>
-                      <TableCell>{student.grade}</TableCell>
-                      {page === PagesEnum["V-Nota"] && (
-                        <>
-                          <TableCell>{student.conduct}</TableCell>
-                          <TableCell>{student.absences}</TableCell>
-                          <TableCell>{student.tardiness}</TableCell>
-                        </>
-                      )} */}
-                      <TableCell></TableCell>
-                      <TableCell>{gradeTotal === 0 ? "" : gradeTotal}</TableCell>
-                    </TableRow>
-                  );
-                })}
+                {studentGrades.map(
+                  ({ id, apellidos, nombre, notas, total, pcor, tdia, tlib, tpa, tdp }, i) => {
+                    return (
+                      <TableRow key={id}>
+                        <TableHead>{i + 1}</TableHead>
+                        <TableCell className="text-nowrap">{`${apellidos} ${nombre}`}</TableCell>
+                        {Array.from({ length: amountOfGrades + 1 }).map((_, i) => {
+                          const number = i + 1;
+                          return (
+                            <TableCell className="text-nowrap px-1" key={i}>
+                              <Input
+                                disabled={values[`val${number}`] === ""}
+                                onChange={(e) => {
+                                  handleGradeChange(id, `nota${number}`, e.target.value);
+                                }}
+                                className="remove-arrows px-1 text-center"
+                                type={convert ? "text" : "number"}
+                                value={notas[`nota${number}`].value}
+                              />
+                            </TableCell>
+                          );
+                        })}
+                        <TableHead>{tdia}</TableHead>
+                        <TableHead>{tlib}</TableHead>
+                        <TableHead>{pcor}</TableHead>
+                        <TableCell>{tpa}</TableCell>
+                        <TableCell>{tdp}</TableCell>
+                        {/* {page === PagesEnum["V-Nota"] && (
+                          <>
+                            <TableCell>{student.conduct}</TableCell>
+                            <TableCell>{student.absences}</TableCell>
+                            <TableCell>{student.tardiness}</TableCell>
+                          </>
+                        )} */}
+                        <TableCell>{total}</TableCell>
+                      </TableRow>
+                    );
+                  },
+                )}
               </TableBody>
             </Table>
           </div>
