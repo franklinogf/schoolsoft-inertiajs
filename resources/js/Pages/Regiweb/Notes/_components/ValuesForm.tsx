@@ -25,7 +25,7 @@ export type GradesValues = {
 };
 
 interface ValuesFormProps {
-  values: GradesValues[];
+  values: GradesValues;
   id: number;
   amoutOfGrades: number;
   onValueChange: (valueKey: string, value: string) => void;
@@ -34,6 +34,7 @@ interface ValuesFormProps {
 export default function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesFormProps) {
   const { t } = useTranslation();
   const { put, processing, errors, data, setData } = useForm(values);
+
   function handleValuesSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     put(route("regiweb.notes.values.save", id), {
