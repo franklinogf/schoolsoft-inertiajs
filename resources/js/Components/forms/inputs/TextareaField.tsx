@@ -23,7 +23,6 @@ export function TextareaField({
   name,
   ...props
 }: TextareaFieldProps) {
-  console.log(label);
   const id = useId();
   return (
     <FieldContainer className={className}>
