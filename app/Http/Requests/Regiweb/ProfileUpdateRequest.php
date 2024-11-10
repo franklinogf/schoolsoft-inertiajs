@@ -83,10 +83,10 @@ class ProfileUpdateRequest extends FormRequest
             'lp2' => ['nullable', Rule::enum(YesNoEnum::class)],
             'lp3' => ['nullable', Rule::enum(YesNoEnum::class)],
             'lp4' => ['nullable', Rule::enum(YesNoEnum::class)],
-            'fex1' => ['nullable', 'date'],
-            'fex2' => ['nullable', 'date'],
-            'fex3' => ['nullable', 'date'],
-            'fex4' => ['nullable', 'date'],
+            'fex1' => ['nullable', Rule::requiredIf(fn() => $this->request->get('lp1') === YesNoEnum::YES->value), 'date'],
+            'fex2' => ['nullable', Rule::requiredIf(fn() => $this->request->get('lp2') === YesNoEnum::YES->value), 'date'],
+            'fex3' => ['nullable', Rule::requiredIf(fn() => $this->request->get('lp3') === YesNoEnum::YES->value), 'date'],
+            'fex4' => ['nullable', Rule::requiredIf(fn() => $this->request->get('lp4') === YesNoEnum::YES->value), 'date'],
 
         ];
     }
