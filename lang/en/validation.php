@@ -176,6 +176,7 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+
     ],
 
     /*
@@ -189,6 +190,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        "fex1" => "date",
+        "fex2" => "date",
+        "fex3" => "date",
+        "fex4" => "date",
+    ],
 
 ];
