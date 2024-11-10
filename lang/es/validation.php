@@ -189,6 +189,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        "fex1" => "fecha",
+        "fex2" => "fecha",
+        "fex3" => "fecha",
+        "fex4" => "fecha",
+    ],
+    ,
 
 ];
