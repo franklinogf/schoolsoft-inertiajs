@@ -92,6 +92,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class,
         ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
     ],
 
     /*
