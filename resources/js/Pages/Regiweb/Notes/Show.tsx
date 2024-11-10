@@ -89,7 +89,7 @@ export default function Show({
   const [values, setValues] = useState<GradesValues>(gradesValues);
   const { t } = useTranslation();
 
-  function calculateLocalTdp(id: number) {
+  function calculateStudentTdp(id: number) {
     setStudentsGrades((prev) => {
       const student = prev.find((student) => student.id === id);
       if (!student) return prev;
@@ -115,7 +115,7 @@ export default function Show({
       });
     });
   }
-  function calculateLocalTpa(id: number) {
+  function calculateStudentTpa(id: number) {
     setStudentsGrades((prev) => {
       const student = prev.find((student) => student.id === id);
       if (!student) return prev;
@@ -138,10 +138,27 @@ export default function Show({
       });
     });
   }
+  function calculateStudentTotalGrade(id: number) {
+    setStudentsGrades((prev) => {
+      const student = prev.find((student) => student.id === id);
+      if (!student) return prev;
+      let total = Math.round((Number(student.tpa) / Number(student.tdp)) * 100);
+      return prev.map((student) => {
+        if (student.id === id) {
+          const updatedStudent = {
+            ...student,
+            total: String(total),
+          };
+          return updatedStudent;
+        }
+        return student;
+      });
+    });
+  }
   function handleGradeChange(id: number, gradeKey: string, value: string) {
     const gradeNumber = gradeKey.slice(-1);
     const val = values[`val${gradeNumber}`];
-    if (val === "") return;
+    if (val === "" || !val) return;
     if (Number(value) > Number(val)) {
       value = val;
     }
@@ -160,8 +177,9 @@ export default function Show({
         return student;
       });
     });
-    calculateLocalTpa(id);
-    calculateLocalTdp(id);
+    calculateStudentTpa(id);
+    calculateStudentTdp(id);
+    calculateStudentTotalGrade(id);
   }
 
   function handleValueChange(valueKey: string, value: string) {
