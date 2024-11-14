@@ -6,8 +6,7 @@ interface SubmitButtonProps extends ButtonProps {
 export default function SubmitButton({ children, disabled, ...props }: SubmitButtonProps) {
   return (
     <Button disabled={disabled} {...props} type="submit">
-      {disabled && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-      {children}
+      {disabled ? <Loader2 className="size-4 animate-spin" /> : children}
     </Button>
   );
 }
