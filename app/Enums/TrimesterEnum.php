@@ -10,7 +10,7 @@ enum TrimesterEnum: string
 
     case THIRD_TRIMESTER = 'Trimestre-3';
 
-    case FOURTH_TRIMESTER = 'Trimestre- 4';
+    case FOURTH_TRIMESTER = 'Trimestre-4';
 
     case SUMMER = 'Verano';
 
