@@ -23,6 +23,7 @@ class StudentGrade extends Model
     public function scopeFromTable(Builder $builder, string $tableName): void
     {
         $builder->from($tableName);
+        $this->table = $tableName;
     }
 
     public function student(): BelongsTo
