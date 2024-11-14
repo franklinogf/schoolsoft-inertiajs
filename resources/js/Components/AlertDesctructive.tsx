@@ -10,7 +10,11 @@ export function AlertDestructive({
   message: string | null | Errors;
   className?: string;
 }) {
-  if (message === null) {
+  if (
+    message === null ||
+    message === "" ||
+    (typeof message === "object" && Object.keys(message).length === 0)
+  ) {
     return null;
   }
   return (
