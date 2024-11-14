@@ -1,6 +1,6 @@
 export enum GenderEnum {
-  m = "Masculino",
-  f = "Femenino",
+  MALE = "m",
+  FEMALE = "f",
 }
 export enum PhoneCompaniesEnum {
   "AT&T" = "@txt.att.net",
@@ -20,23 +20,24 @@ export enum TeacherLevelEnum {
 }
 
 export enum YesNoEnum {
-  SI = "SI",
+  YES = "SI",
   NO = "NO",
 }
 
 export enum TrimesterEnum {
-  "Trimestre-1" = "Trimestre 1",
-  "Trimestre-2" = "Trimestre 2",
-  "Trimestre-3" = "Trimestre 3",
-  "Trimestre-4" = "Trimestre 4",
-  "Verano" = "Verano",
+  FIRST_TRIMESTER = "Trimestre-1",
+  SECOND_TRIMESTER = "Trimestre-2",
+  THIRD_TRIMESTER = "Trimestre-3",
+  FOURTH_TRIMESTER = "Trimestre-4",
+  SUMMER = "Verano",
 }
 export enum PagesEnum {
-  "Notas" = "Notas",
-  "Pruebas-Cortas" = "Pruebas cortas",
-  "Trab-Diarios" = "Trabajos diarios",
-  "Trab-Libreta" = "Trabajos de libreta",
-  "Cond-Asis" = "Conducta y asistencia",
-  "Ex-Final" = "Examén final",
-  "V-Nota" = "Notas de verano",
+  GRADES = "Notas",
+  GRADES2 = "Notas2",
+  SHORT_TESTS = "Pruebas-Cortas",
+  DAILY_WORKS = "Trab-Diarios",
+  NOTEBOOKS_WORKS = "Trab-Libreta",
+  CONDUCT_ATTENDANCE = "Cond-Asis",
+  FINAL_EXAM = "Ex-Final",
+  SUMMER_GRADES = "V-Nota",
 }
