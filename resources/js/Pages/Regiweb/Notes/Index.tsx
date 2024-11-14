@@ -16,15 +16,17 @@ import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 
 type PageProps = PagePropsWithUser<Teacher>;
-export default function Page({ auth, flash }: PageProps) {
+
+export default function Page({ auth, errors }: PageProps) {
   const { t } = useTranslation();
-  const { data, setData, get, processing, errors } = useForm({
+  const { data, setData, get, processing } = useForm({
     course: "",
     trimester: "",
     page: "",
   });
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     get(route("regiweb.notes.show"));
   }
   return (
@@ -42,7 +44,7 @@ export default function Page({ auth, flash }: PageProps) {
         <form className="w-full max-w-lg" onSubmit={submit}>
           <Card>
             <CardHeader>
-              <AlertDestructive message={flash.errorList} />
+              <AlertDestructive message={errors} />
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -57,7 +59,6 @@ export default function Page({ auth, flash }: PageProps) {
                     key: "curso",
                     values: ["curso", "descripcion"],
                   })}
-                  error={errors.course}
                 />
                 <SelectField
                   placeholder="Selecciona el trimestre"
@@ -66,7 +67,6 @@ export default function Page({ auth, flash }: PageProps) {
                   name="trimester"
                   label={t("Trimestre")}
                   items={TRIMESTER_SELECT}
-                  error={errors.trimester}
                 />
                 <SelectField
                   placeholder="Selecciona la pagína"
@@ -75,7 +75,6 @@ export default function Page({ auth, flash }: PageProps) {
                   name="page"
                   label={t("Pagína")}
                   items={PAGES_SELECT}
-                  error={errors.page}
                 />
               </div>
             </CardContent>
