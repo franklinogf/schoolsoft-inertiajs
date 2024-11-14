@@ -31,7 +31,7 @@ interface ValuesFormProps {
   onValueChange: (valueKey: string, value: string) => void;
 }
 
-export default function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesFormProps) {
+export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesFormProps) {
   const { t } = useTranslation();
   const { put, processing, errors, data, setData } = useForm(values);
 
