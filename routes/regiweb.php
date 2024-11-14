@@ -23,8 +23,10 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
 
         Route::name('notes.')->prefix('notes')->controller(RegiwebNotesController::class)->group(function () {
             Route::get('/', 'index')->name('index');
-            // Route::post('/', 'submit')->name('index.submit');
             Route::get('/enter-grades', 'show')->name('show');
+            Route::post('/enter-grades/default', 'saveDefault')->name('default.save');
+            Route::post('/enter-grades/attendance', 'saveAttendance')->name('attendance.save');
+            Route::post('/enter-grades/exam', 'saveExam')->name('exam.save');
             Route::put('/enter-grades/values/{id}', 'saveValues')->name('values.save');
         });
 
