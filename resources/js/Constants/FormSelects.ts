@@ -1,12 +1,6 @@
 import { SelectItemType } from "@/Components/forms/inputs/SelectField";
-import {
-  GenderEnum,
-  PagesEnum,
-  PhoneCompaniesEnum,
-  TeacherLevelEnum,
-  TrimesterEnum,
-  YesNoEnum,
-} from "@/Enums";
+import { PhoneCompaniesEnum, TeacherLevelEnum } from "@/Enums";
+import { GENDERS, PAGES, TRIMESTERS, YES_NO } from ".";
 
 export function createSelectItemsFromArrayOfObjects(
   array: Record<string, string>[] | undefined,
@@ -19,7 +13,7 @@ export function createSelectItemsFromArrayOfObjects(
       values instanceof Array ? values.map((value) => item[value]).join(separator) : item[values],
   }));
 }
-export function createSelectItemsFromEnum(
+export function createSelectItems(
   enumObject: Record<string, string>,
   { onlyKey }: { onlyKey: boolean } = { onlyKey: false },
 ): SelectItemType[] {
@@ -29,15 +23,15 @@ export function createSelectItemsFromEnum(
   }));
 }
 
-export const GENDERS_SELECT = createSelectItemsFromEnum(GenderEnum);
+export const GENDERS_SELECT = createSelectItems(GENDERS);
 
-export const PHONE_COMPANIES_SELECT = createSelectItemsFromEnum(PhoneCompaniesEnum, {
+export const PHONE_COMPANIES_SELECT = createSelectItems(PhoneCompaniesEnum, {
   onlyKey: true,
 });
 
-export const TEACHER_LEVEL_SELECT = createSelectItemsFromEnum(TeacherLevelEnum);
+export const TEACHER_LEVEL_SELECT = createSelectItems(TeacherLevelEnum);
 
-export const YES_NO_SELECT = createSelectItemsFromEnum(YesNoEnum);
+export const YES_NO_SELECT = createSelectItems(YES_NO);
 
-export const TRIMESTER_SELECT = createSelectItemsFromEnum(TrimesterEnum);
-export const PAGES_SELECT = createSelectItemsFromEnum(PagesEnum);
+export const TRIMESTER_SELECT = createSelectItems(TRIMESTERS);
+export const PAGES_SELECT = createSelectItems(PAGES);
