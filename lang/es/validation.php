@@ -195,6 +195,5 @@ return [
         "fex3" => "fecha",
         "fex4" => "fecha",
     ],
-    ,
 
 ];
