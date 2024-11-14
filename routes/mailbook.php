@@ -1,6 +1,5 @@
 <?php
 
-use App\Mail\MailbookMail;
 use App\Mail\Root\Contact;
 use Xammie\Mailbook\Facades\Mailbook;
 
