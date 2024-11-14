@@ -9,7 +9,7 @@ await i18next
     defaultNS: "common",
     lng: "en",
     fallbackLng: "es",
-    saveMissing: true,
+    saveMissing: false,
     missingKeyHandler(lngs, ns, key, fallbackValue, updateMissing, options) {
       console.log("Missing key:", key);
     },
