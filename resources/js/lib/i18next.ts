@@ -1,7 +1,7 @@
 import i18next from "i18next";
 import Backend from "i18next-http-backend";
 import { I18nextProviderProps, initReactI18next } from "react-i18next";
-await i18next
+i18next
   .use(initReactI18next)
   .use(Backend)
   .init<I18nextProviderProps>({
