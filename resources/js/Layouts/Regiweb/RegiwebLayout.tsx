@@ -1,5 +1,5 @@
 import Header from "@/Layouts/Regiweb/Header";
-import { Teacher } from "@/types/Teacher";
+import { Teacher } from "@/types/teacher";
 import { Head } from "@inertiajs/react";
 
 interface MainLayoutProps {

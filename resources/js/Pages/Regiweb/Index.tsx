@@ -3,7 +3,7 @@ import { Button } from "@/Components/ui/button";
 import { LOGO_REGIWEB } from "@/Constants";
 import { formatDate } from "@/lib/utils";
 import { type PagePropsWithUser } from "@/types";
-import { type Teacher } from "@/types/Teacher";
+import { type Teacher } from "@/types/teacher";
 import { Head, Link } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 

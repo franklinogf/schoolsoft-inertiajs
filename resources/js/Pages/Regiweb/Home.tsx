@@ -1,7 +1,7 @@
 import { GLOBE_PICTURE } from "@/Constants";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
-import { Teacher } from "@/types/Teacher";
+import { Teacher } from "@/types/teacher";
 import { useTranslation } from "react-i18next";
 
 export default function HomePage({ auth }: PagePropsWithUser<Teacher>) {
