@@ -9,7 +9,7 @@ import { PagesEnum, TrimesterEnum } from "@/Enums";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { formatDate } from "@/lib/utils";
 import type { PagePropsWithUser } from "@/types";
-import type { Teacher } from "@/types/Teacher";
+import type { Teacher } from "@/types/teacher";
 import { Head } from "@inertiajs/react";
 import { useId, useState } from "react";
 import { useTranslation } from "react-i18next";

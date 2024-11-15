@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/Components/ui/card";
-import { Teacher } from "@/types/Teacher";
+import { Teacher } from "@/types/teacher";
 import { Link, useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import { InputField } from "./inputs/InputField";

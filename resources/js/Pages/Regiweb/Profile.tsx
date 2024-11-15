@@ -26,7 +26,7 @@ import {
 import { YesNoEnum } from "@/Enums";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
-import { Teacher } from "@/types/Teacher";
+import { Teacher } from "@/types/teacher";
 import { useForm } from "@inertiajs/react";
 import { ArrowUpDown, User2 } from "lucide-react";
 import { useState } from "react";

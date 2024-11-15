@@ -11,7 +11,7 @@ import {
 } from "@/Constants/FormSelects";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
-import { Teacher } from "@/types/Teacher";
+import { Teacher } from "@/types/teacher";
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 

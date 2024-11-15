@@ -11,7 +11,7 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/ui/sheet";
 import { LOGO_REGIWEB } from "@/Constants";
 import { cn } from "@/lib/utils";
-import { Teacher } from "@/types/Teacher";
+import { Teacher } from "@/types/teacher";
 import { Link, usePage } from "@inertiajs/react";
 import { Menu, UserCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
