@@ -32,9 +32,9 @@ export function CheckboxField({
     >
       <Checkbox
         name={name}
-        checked={data[name] === YesNoEnum.SI}
+        checked={data[name] === YesNoEnum.YES}
         onCheckedChange={(checked) => {
-          setData(name, checked ? YesNoEnum.SI : YesNoEnum.NO);
+          setData(name, checked ? YesNoEnum.YES : YesNoEnum.NO);
         }}
         id={id}
       />

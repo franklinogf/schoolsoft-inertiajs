@@ -509,7 +509,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                             error={errors[lp]}
                           />
                           <DateField
-                            disabled={data[lp] !== YesNoEnum.SI}
+                            disabled={data[lp] !== YesNoEnum.YES}
                             className="max-w-[300px]"
                             data={data}
                             setData={setData}
