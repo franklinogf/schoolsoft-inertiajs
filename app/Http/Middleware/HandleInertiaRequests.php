@@ -46,10 +46,11 @@ class HandleInertiaRequests extends Middleware
         };
         $user = null;
         if ($guard) {
-            if( $guard === 'teacher' && $request->user($guard)){
+            if($guard === 'teacher' && $request->user($guard)){
                 $user = new TeacherResource($request->user($guard));
-            }                     
-            $user = $request->user($guard);
+            } else{
+                $user = $request->user($guard);
+            }                    
         }
         return [
             ...parent::share($request),
