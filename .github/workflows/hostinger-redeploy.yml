@@ -24,8 +24,8 @@ jobs:
         run: npm ci
 
       - name: Build Project
-        run: npm run build'
-          
+        run: npm run build
+
       - name: Deploy to Server
         if: ${{ success() }}
         uses: appleboy/ssh-action@master
