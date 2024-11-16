@@ -1,13 +1,16 @@
 import Header from "@/Layouts/Regiweb/Header";
+import { PagePropsWithUser } from "@/types";
 import { Teacher } from "@/types/teacher";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 
-interface MainLayoutProps {
+interface RegiwebLayoutProps {
   children: React.ReactNode;
   title: string;
-  user: Teacher;
 }
-export function RegiwebLayout({ children, title, user }: MainLayoutProps) {
+export function RegiwebLayout({ children, title }: RegiwebLayoutProps) {
+  const {
+    auth: { user },
+  } = usePage<PagePropsWithUser<Teacher>>().props;
   return (
     <>
       <Head title={title} />
