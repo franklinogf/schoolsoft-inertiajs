@@ -1,347 +1,530 @@
 {
-  "_CustomFormField-!~{00k}~.js": {
-    "file": "assets/CustomFormField-D32zUxz1.css",
-    "src": "_CustomFormField-!~{00k}~.js"
+  "_AlertDesctructive-BKeASQEm.js": {
+    "file": "assets/AlertDesctructive-BKeASQEm.js",
+    "name": "AlertDesctructive",
+    "imports": [
+      "resources/js/app.tsx"
+    ]
   },
-  "_CustomFormField-CNb3EPgb.js": {
-    "file": "assets/CustomFormField-CNb3EPgb.js",
-    "name": "CustomFormField",
+  "_DateField-BM6658ib.js": {
+    "file": "assets/DateField-BM6658ib.js",
+    "name": "DateField",
     "imports": [
       "resources/js/app.tsx",
-      "_index-DDYEweUE.js",
-      "_useTranslation-lxyVvsoK.js"
-    ],
-    "css": [
-      "assets/CustomFormField-D32zUxz1.css"
+      "_input-C1ppTGHs.js",
+      "_index-vQjKArSP.js",
+      "_select-D8G8Bxty.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
-  "_FormSelects-79hGM5G-.js": {
-    "file": "assets/FormSelects-79hGM5G-.js",
+  "_FieldLabel-C46D0iW2.js": {
+    "file": "assets/FieldLabel-C46D0iW2.js",
+    "name": "FieldLabel",
+    "imports": [
+      "resources/js/app.tsx"
+    ]
+  },
+  "_FormSelects-SwXH09HJ.js": {
+    "file": "assets/FormSelects-SwXH09HJ.js",
     "name": "FormSelects",
     "imports": [
-      "_CustomFormField-CNb3EPgb.js"
+      "resources/js/app.tsx",
+      "_FieldLabel-C46D0iW2.js",
+      "_select-D8G8Bxty.js",
+      "_useTranslation-BFciaWIq.js",
+      "_index-CvX-CwAB.js",
+      "_index-CxqioC3r.js"
     ]
   },
-  "_HomeLayout-Dm-uB4yv.js": {
-    "file": "assets/HomeLayout-Dm-uB4yv.js",
+  "_HomeLayout-BzcHvN8D.js": {
+    "file": "assets/HomeLayout-BzcHvN8D.js",
     "name": "HomeLayout",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
-  "_InfoBadge-BfU7PPd2.js": {
-    "file": "assets/InfoBadge-BfU7PPd2.js",
+  "_InfoBadge-CfCKRkKg.js": {
+    "file": "assets/InfoBadge-CfCKRkKg.js",
     "name": "InfoBadge",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
-  "_InputsGrid-vKz71s7f.js": {
-    "file": "assets/InputsGrid-vKz71s7f.js",
-    "name": "InputsGrid",
+  "_InputField-BUTWqXb_.js": {
+    "file": "assets/InputField-BUTWqXb_.js",
+    "name": "InputField",
     "imports": [
-      "resources/js/app.tsx"
+      "resources/js/app.tsx",
+      "_FieldLabel-C46D0iW2.js",
+      "_input-C1ppTGHs.js"
     ]
   },
-  "_List-5tCGT4Ig.js": {
-    "file": "assets/List-5tCGT4Ig.js",
+  "_List-CgTLDrDb.js": {
+    "file": "assets/List-CgTLDrDb.js",
     "name": "List",
     "imports": [
       "resources/js/app.tsx",
-      "_MaxWidthSection-8MLmyqK7.js"
+      "_MaxWidthSection-DYyUvoJK.js"
     ]
   },
-  "_LoginForm-DG6u4f-q.js": {
-    "file": "assets/LoginForm-DG6u4f-q.js",
+  "_LoginForm-DDMg1KKc.js": {
+    "file": "assets/LoginForm-DDMg1KKc.js",
     "name": "LoginForm",
     "imports": [
       "resources/js/app.tsx",
-      "_card-CB2M7X9Z.js",
-      "_CustomFormField-CNb3EPgb.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_AlertDesctructive-BKeASQEm.js",
+      "_card-pcNJtYFp.js",
+      "_InputField-BUTWqXb_.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
-  "_MaxWidthSection-8MLmyqK7.js": {
-    "file": "assets/MaxWidthSection-8MLmyqK7.js",
+  "_MaxWidthSection-DYyUvoJK.js": {
+    "file": "assets/MaxWidthSection-DYyUvoJK.js",
     "name": "MaxWidthSection",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
-  "_RegiwebLayout-BwiG8CVy.js": {
-    "file": "assets/RegiwebLayout-BwiG8CVy.js",
+  "_OptionsContext-ts2LDpz6.js": {
+    "file": "assets/OptionsContext-ts2LDpz6.js",
+    "name": "OptionsContext",
+    "imports": [
+      "resources/js/app.tsx"
+    ]
+  },
+  "_PhoneField-!~{00H}~.js": {
+    "file": "assets/PhoneField-DpsRipQV.css",
+    "src": "_PhoneField-!~{00H}~.js"
+  },
+  "_PhoneField-D-9uA3nd.js": {
+    "file": "assets/PhoneField-D-9uA3nd.js",
+    "name": "PhoneField",
+    "imports": [
+      "resources/js/app.tsx",
+      "_FieldLabel-C46D0iW2.js"
+    ],
+    "css": [
+      "assets/PhoneField-DpsRipQV.css"
+    ]
+  },
+  "_RegiwebLayout-2uHZJMQm.js": {
+    "file": "assets/RegiwebLayout-2uHZJMQm.js",
     "name": "RegiwebLayout",
     "imports": [
       "resources/js/app.tsx",
-      "_dropdown-menu-D3XSmsqN.js",
-      "_index-ueuYHyUX.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_dropdown-menu-Cdh8CvQO.js",
+      "_index-CxqioC3r.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
-  "_SubmitButton-DTi0cYqS.js": {
-    "file": "assets/SubmitButton-DTi0cYqS.js",
+  "_SubmitButton-DGNpqimD.js": {
+    "file": "assets/SubmitButton-DGNpqimD.js",
     "name": "SubmitButton",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
-  "_card-CB2M7X9Z.js": {
-    "file": "assets/card-CB2M7X9Z.js",
+  "_card-pcNJtYFp.js": {
+    "file": "assets/card-pcNJtYFp.js",
     "name": "card",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
-  "_dropdown-menu-D3XSmsqN.js": {
-    "file": "assets/dropdown-menu-D3XSmsqN.js",
+  "_dropdown-menu-Cdh8CvQO.js": {
+    "file": "assets/dropdown-menu-Cdh8CvQO.js",
     "name": "dropdown-menu",
     "imports": [
       "resources/js/app.tsx",
-      "_index-DDYEweUE.js"
+      "_index-vQjKArSP.js"
     ]
   },
-  "_index-DDYEweUE.js": {
-    "file": "assets/index-DDYEweUE.js",
+  "_index-CvX-CwAB.js": {
+    "file": "assets/index-CvX-CwAB.js",
+    "name": "index"
+  },
+  "_index-CxqioC3r.js": {
+    "file": "assets/index-CxqioC3r.js",
+    "name": "index"
+  },
+  "_index-vQjKArSP.js": {
+    "file": "assets/index-vQjKArSP.js",
     "name": "index",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
-  "_index-ueuYHyUX.js": {
-    "file": "assets/index-ueuYHyUX.js",
-    "name": "index"
+  "_input-C1ppTGHs.js": {
+    "file": "assets/input-C1ppTGHs.js",
+    "name": "input",
+    "imports": [
+      "resources/js/app.tsx"
+    ]
   },
-  "_useTranslation-lxyVvsoK.js": {
-    "file": "assets/useTranslation-lxyVvsoK.js",
+  "_select-D8G8Bxty.js": {
+    "file": "assets/select-D8G8Bxty.js",
+    "name": "select",
+    "imports": [
+      "resources/js/app.tsx",
+      "_index-vQjKArSP.js"
+    ]
+  },
+  "_table-C1_9J6tE.js": {
+    "file": "assets/table-C1_9J6tE.js",
+    "name": "table",
+    "imports": [
+      "resources/js/app.tsx"
+    ]
+  },
+  "_useTranslation-BFciaWIq.js": {
+    "file": "assets/useTranslation-BFciaWIq.js",
     "name": "useTranslation",
     "imports": [
       "resources/js/app.tsx"
     ]
   },
   "resources/js/Pages/Admin/Login.tsx": {
-    "file": "assets/Login-B2FGlprW.js",
+    "file": "assets/Login-DvsjEYeH.js",
     "name": "Login",
     "src": "resources/js/Pages/Admin/Login.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_LoginForm-DG6u4f-q.js",
-      "_card-CB2M7X9Z.js",
-      "_CustomFormField-CNb3EPgb.js",
-      "_index-DDYEweUE.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_LoginForm-DDMg1KKc.js",
+      "_AlertDesctructive-BKeASQEm.js",
+      "_card-pcNJtYFp.js",
+      "_InputField-BUTWqXb_.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_input-C1ppTGHs.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
   "resources/js/Pages/Foro/Student/Login.tsx": {
-    "file": "assets/Login-D1HweKsd.js",
+    "file": "assets/Login-C3W4jRKs.js",
     "name": "Login",
     "src": "resources/js/Pages/Foro/Student/Login.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_LoginForm-DG6u4f-q.js",
-      "_card-CB2M7X9Z.js",
-      "_CustomFormField-CNb3EPgb.js",
-      "_index-DDYEweUE.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_LoginForm-DDMg1KKc.js",
+      "_AlertDesctructive-BKeASQEm.js",
+      "_card-pcNJtYFp.js",
+      "_InputField-BUTWqXb_.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_input-C1ppTGHs.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
   "resources/js/Pages/Foro/Teacher/Login.tsx": {
-    "file": "assets/Login-pTphGV4g.js",
+    "file": "assets/Login-YQNmcCID.js",
     "name": "Login",
     "src": "resources/js/Pages/Foro/Teacher/Login.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_LoginForm-DG6u4f-q.js",
-      "_card-CB2M7X9Z.js",
-      "_CustomFormField-CNb3EPgb.js",
-      "_index-DDYEweUE.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_LoginForm-DDMg1KKc.js",
+      "_AlertDesctructive-BKeASQEm.js",
+      "_card-pcNJtYFp.js",
+      "_InputField-BUTWqXb_.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_input-C1ppTGHs.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
   "resources/js/Pages/Home/Documents.tsx": {
-    "file": "assets/Documents-C_f3dO40.js",
+    "file": "assets/Documents-TwxpqjIq.js",
     "name": "Documents",
     "src": "resources/js/Pages/Home/Documents.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_card-CB2M7X9Z.js",
-      "_HomeLayout-Dm-uB4yv.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_AlertDesctructive-BKeASQEm.js",
+      "_card-pcNJtYFp.js",
+      "_HomeLayout-BzcHvN8D.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
   "resources/js/Pages/Home/Index.tsx": {
-    "file": "assets/Index-B0HbcERc.js",
+    "file": "assets/Index-D02nIf00.js",
     "name": "Index",
     "src": "resources/js/Pages/Home/Index.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_dropdown-menu-D3XSmsqN.js",
-      "_HomeLayout-Dm-uB4yv.js",
-      "_useTranslation-lxyVvsoK.js",
-      "_index-DDYEweUE.js"
+      "_dropdown-menu-Cdh8CvQO.js",
+      "_HomeLayout-BzcHvN8D.js",
+      "_useTranslation-BFciaWIq.js",
+      "_index-vQjKArSP.js"
     ]
   },
   "resources/js/Pages/Parents/Login.tsx": {
-    "file": "assets/Login-BBo6isHd.js",
+    "file": "assets/Login-Bv-ha7RC.js",
     "name": "Login",
     "src": "resources/js/Pages/Parents/Login.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_LoginForm-DG6u4f-q.js",
-      "_card-CB2M7X9Z.js",
-      "_CustomFormField-CNb3EPgb.js",
-      "_index-DDYEweUE.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_LoginForm-DDMg1KKc.js",
+      "_AlertDesctructive-BKeASQEm.js",
+      "_card-pcNJtYFp.js",
+      "_InputField-BUTWqXb_.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_input-C1ppTGHs.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
   "resources/js/Pages/Regiweb/Home.tsx": {
-    "file": "assets/Home-B0TNIqCI.js",
+    "file": "assets/Home-CXU8nrnx.js",
     "name": "Home",
     "src": "resources/js/Pages/Regiweb/Home.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_index-ueuYHyUX.js",
-      "_RegiwebLayout-BwiG8CVy.js",
-      "_useTranslation-lxyVvsoK.js",
-      "_dropdown-menu-D3XSmsqN.js",
-      "_index-DDYEweUE.js"
+      "_index-CxqioC3r.js",
+      "_RegiwebLayout-2uHZJMQm.js",
+      "_useTranslation-BFciaWIq.js",
+      "_dropdown-menu-Cdh8CvQO.js",
+      "_index-vQjKArSP.js"
     ]
   },
   "resources/js/Pages/Regiweb/Index.tsx": {
-    "file": "assets/Index-DqmnewB7.js",
+    "file": "assets/Index-CokBlLyo.js",
     "name": "Index",
     "src": "resources/js/Pages/Regiweb/Index.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_InfoBadge-BfU7PPd2.js",
-      "_index-ueuYHyUX.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_InfoBadge-CfCKRkKg.js",
+      "_index-CxqioC3r.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
   "resources/js/Pages/Regiweb/Login.tsx": {
-    "file": "assets/Login-C00Ns1gR.js",
+    "file": "assets/Login-r8LTJNQa.js",
     "name": "Login",
     "src": "resources/js/Pages/Regiweb/Login.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_LoginForm-DG6u4f-q.js",
-      "_index-ueuYHyUX.js",
-      "_card-CB2M7X9Z.js",
-      "_CustomFormField-CNb3EPgb.js",
-      "_index-DDYEweUE.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_LoginForm-DDMg1KKc.js",
+      "_index-CxqioC3r.js",
+      "_AlertDesctructive-BKeASQEm.js",
+      "_card-pcNJtYFp.js",
+      "_InputField-BUTWqXb_.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_input-C1ppTGHs.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
   "resources/js/Pages/Regiweb/Notes/Index.tsx": {
-    "file": "assets/Index-CdgyPQLN.js",
+    "file": "assets/Index-BsWe2zq1.js",
     "name": "Index",
     "src": "resources/js/Pages/Regiweb/Notes/Index.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_CustomFormField-CNb3EPgb.js",
-      "_SubmitButton-DTi0cYqS.js",
-      "_FormSelects-79hGM5G-.js",
-      "_RegiwebLayout-BwiG8CVy.js",
-      "_useTranslation-lxyVvsoK.js",
-      "_index-DDYEweUE.js",
-      "_dropdown-menu-D3XSmsqN.js",
-      "_index-ueuYHyUX.js"
+      "_AlertDesctructive-BKeASQEm.js",
+      "_FormSelects-SwXH09HJ.js",
+      "_SubmitButton-DGNpqimD.js",
+      "_card-pcNJtYFp.js",
+      "_RegiwebLayout-2uHZJMQm.js",
+      "_useTranslation-BFciaWIq.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_select-D8G8Bxty.js",
+      "_index-vQjKArSP.js",
+      "_index-CvX-CwAB.js",
+      "_index-CxqioC3r.js",
+      "_dropdown-menu-Cdh8CvQO.js"
     ]
   },
   "resources/js/Pages/Regiweb/Notes/Show.tsx": {
-    "file": "assets/Show-Cebb6JVV.js",
+    "file": "assets/Show-DSwkU4EJ.js",
     "name": "Show",
     "src": "resources/js/Pages/Regiweb/Notes/Show.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_RegiwebLayout-BwiG8CVy.js",
-      "_useTranslation-lxyVvsoK.js",
-      "_dropdown-menu-D3XSmsqN.js",
-      "_index-DDYEweUE.js",
-      "_index-ueuYHyUX.js"
+      "_InfoBadge-CfCKRkKg.js",
+      "_card-pcNJtYFp.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_index-vQjKArSP.js",
+      "_index-CvX-CwAB.js",
+      "_RegiwebLayout-2uHZJMQm.js",
+      "_AlertDesctructive-BKeASQEm.js",
+      "_index-CxqioC3r.js",
+      "resources/js/Pages/Regiweb/Notes/_components/AttendanceForm.tsx",
+      "resources/js/Pages/Regiweb/Notes/_components/DefaultForm.tsx",
+      "resources/js/Pages/Regiweb/Notes/_components/ExamForm.tsx",
+      "resources/js/Pages/Regiweb/Notes/_components/ValuesForm.tsx",
+      "_OptionsContext-ts2LDpz6.js",
+      "_useTranslation-BFciaWIq.js",
+      "_dropdown-menu-Cdh8CvQO.js",
+      "_input-C1ppTGHs.js",
+      "_table-C1_9J6tE.js",
+      "resources/js/Pages/Regiweb/Notes/_components/FormSubmit.tsx",
+      "_SubmitButton-DGNpqimD.js",
+      "_DateField-BM6658ib.js",
+      "_select-D8G8Bxty.js",
+      "_InputField-BUTWqXb_.js"
+    ]
+  },
+  "resources/js/Pages/Regiweb/Notes/_components/AttendanceForm.tsx": {
+    "file": "assets/AttendanceForm-UFeaB9gz.js",
+    "name": "AttendanceForm",
+    "src": "resources/js/Pages/Regiweb/Notes/_components/AttendanceForm.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_AlertDesctructive-BKeASQEm.js",
+      "_input-C1ppTGHs.js",
+      "_table-C1_9J6tE.js",
+      "_OptionsContext-ts2LDpz6.js",
+      "resources/js/Pages/Regiweb/Notes/_components/FormSubmit.tsx",
+      "_useTranslation-BFciaWIq.js",
+      "_SubmitButton-DGNpqimD.js"
+    ]
+  },
+  "resources/js/Pages/Regiweb/Notes/_components/DefaultForm.tsx": {
+    "file": "assets/DefaultForm-uc5rQMF3.js",
+    "name": "DefaultForm",
+    "src": "resources/js/Pages/Regiweb/Notes/_components/DefaultForm.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_AlertDesctructive-BKeASQEm.js",
+      "_input-C1ppTGHs.js",
+      "_table-C1_9J6tE.js",
+      "_index-CvX-CwAB.js",
+      "_OptionsContext-ts2LDpz6.js",
+      "resources/js/Pages/Regiweb/Notes/_components/FormSubmit.tsx",
+      "_useTranslation-BFciaWIq.js",
+      "_SubmitButton-DGNpqimD.js"
+    ]
+  },
+  "resources/js/Pages/Regiweb/Notes/_components/ExamForm.tsx": {
+    "file": "assets/ExamForm-DqaD_Y8f.js",
+    "name": "ExamForm",
+    "src": "resources/js/Pages/Regiweb/Notes/_components/ExamForm.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_AlertDesctructive-BKeASQEm.js",
+      "_input-C1ppTGHs.js",
+      "_table-C1_9J6tE.js",
+      "_OptionsContext-ts2LDpz6.js",
+      "resources/js/Pages/Regiweb/Notes/_components/FormSubmit.tsx",
+      "_useTranslation-BFciaWIq.js",
+      "_SubmitButton-DGNpqimD.js"
+    ]
+  },
+  "resources/js/Pages/Regiweb/Notes/_components/FormSubmit.tsx": {
+    "file": "assets/FormSubmit-BoASpagY.js",
+    "name": "FormSubmit",
+    "src": "resources/js/Pages/Regiweb/Notes/_components/FormSubmit.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_SubmitButton-DGNpqimD.js",
+      "_useTranslation-BFciaWIq.js"
+    ]
+  },
+  "resources/js/Pages/Regiweb/Notes/_components/ValuesForm.tsx": {
+    "file": "assets/ValuesForm-DuWckOp2.js",
+    "name": "ValuesForm",
+    "src": "resources/js/Pages/Regiweb/Notes/_components/ValuesForm.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.tsx",
+      "_DateField-BM6658ib.js",
+      "_InputField-BUTWqXb_.js",
+      "_SubmitButton-DGNpqimD.js",
+      "_card-pcNJtYFp.js",
+      "_table-C1_9J6tE.js",
+      "_useTranslation-BFciaWIq.js",
+      "_input-C1ppTGHs.js",
+      "_index-vQjKArSP.js",
+      "_select-D8G8Bxty.js",
+      "_FieldLabel-C46D0iW2.js"
     ]
   },
   "resources/js/Pages/Regiweb/Profile.tsx": {
-    "file": "assets/Profile-BRe7K-Wm.js",
+    "file": "assets/Profile-BGl5sbkN.js",
     "name": "Profile",
     "src": "resources/js/Pages/Regiweb/Profile.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_InputsGrid-vKz71s7f.js",
-      "_card-CB2M7X9Z.js",
-      "_FormSelects-79hGM5G-.js",
-      "_RegiwebLayout-BwiG8CVy.js",
-      "_CustomFormField-CNb3EPgb.js",
-      "_useTranslation-lxyVvsoK.js",
-      "_InfoBadge-BfU7PPd2.js",
-      "_SubmitButton-DTi0cYqS.js",
-      "_dropdown-menu-D3XSmsqN.js",
-      "_index-DDYEweUE.js",
-      "_index-ueuYHyUX.js"
+      "_InputField-BUTWqXb_.js",
+      "_useTranslation-BFciaWIq.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_index-vQjKArSP.js",
+      "_index-CvX-CwAB.js",
+      "_DateField-BM6658ib.js",
+      "_PhoneField-D-9uA3nd.js",
+      "_FormSelects-SwXH09HJ.js",
+      "_SubmitButton-DGNpqimD.js",
+      "_InfoBadge-CfCKRkKg.js",
+      "_card-pcNJtYFp.js",
+      "_RegiwebLayout-2uHZJMQm.js",
+      "_input-C1ppTGHs.js",
+      "_select-D8G8Bxty.js",
+      "_index-CxqioC3r.js",
+      "_dropdown-menu-Cdh8CvQO.js"
     ]
   },
   "resources/js/Pages/Root/Contact.tsx": {
-    "file": "assets/Contact-DvxWt1QX.js",
+    "file": "assets/Contact-sSrukaQX.js",
     "name": "Contact",
     "src": "resources/js/Pages/Root/Contact.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_card-CB2M7X9Z.js",
-      "_CustomFormField-CNb3EPgb.js",
-      "_InputsGrid-vKz71s7f.js",
-      "_SubmitButton-DTi0cYqS.js",
-      "_MaxWidthSection-8MLmyqK7.js",
-      "_index-DDYEweUE.js",
-      "_useTranslation-lxyVvsoK.js"
+      "_PhoneField-D-9uA3nd.js",
+      "_InputField-BUTWqXb_.js",
+      "_FieldLabel-C46D0iW2.js",
+      "_SubmitButton-DGNpqimD.js",
+      "_card-pcNJtYFp.js",
+      "_MaxWidthSection-DYyUvoJK.js",
+      "_input-C1ppTGHs.js"
     ]
   },
   "resources/js/Pages/Root/Index.tsx": {
-    "file": "assets/Index-2eAXfM9D.js",
+    "file": "assets/Index-B5KBfd19.js",
     "name": "Index",
     "src": "resources/js/Pages/Root/Index.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_MaxWidthSection-8MLmyqK7.js",
-      "_card-CB2M7X9Z.js"
+      "_MaxWidthSection-DYyUvoJK.js",
+      "_card-pcNJtYFp.js",
+      "_useTranslation-BFciaWIq.js"
     ]
   },
   "resources/js/Pages/Root/Modules.tsx": {
-    "file": "assets/Modules-C2XfFa8J.js",
+    "file": "assets/Modules-DLcvLhBy.js",
     "name": "Modules",
     "src": "resources/js/Pages/Root/Modules.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_List-5tCGT4Ig.js",
-      "_MaxWidthSection-8MLmyqK7.js"
+      "_List-CgTLDrDb.js",
+      "_MaxWidthSection-DYyUvoJK.js"
     ]
   },
   "resources/js/Pages/Root/Regiweb.tsx": {
-    "file": "assets/Regiweb-CUr_PCao.js",
+    "file": "assets/Regiweb--TCRsJMV.js",
     "name": "Regiweb",
     "src": "resources/js/Pages/Root/Regiweb.tsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.tsx",
-      "_List-5tCGT4Ig.js",
-      "_MaxWidthSection-8MLmyqK7.js"
+      "_List-CgTLDrDb.js",
+      "_MaxWidthSection-DYyUvoJK.js"
     ]
   },
   "resources/js/app.tsx": {
-    "file": "assets/app-EXvRzil4.js",
+    "file": "assets/app-DaSyKZ4n.js",
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
@@ -357,6 +540,11 @@
       "resources/js/Pages/Regiweb/Login.tsx",
       "resources/js/Pages/Regiweb/Notes/Index.tsx",
       "resources/js/Pages/Regiweb/Notes/Show.tsx",
+      "resources/js/Pages/Regiweb/Notes/_components/AttendanceForm.tsx",
+      "resources/js/Pages/Regiweb/Notes/_components/DefaultForm.tsx",
+      "resources/js/Pages/Regiweb/Notes/_components/ExamForm.tsx",
+      "resources/js/Pages/Regiweb/Notes/_components/FormSubmit.tsx",
+      "resources/js/Pages/Regiweb/Notes/_components/ValuesForm.tsx",
       "resources/js/Pages/Regiweb/Profile.tsx",
       "resources/js/Pages/Root/Contact.tsx",
       "resources/js/Pages/Root/Index.tsx",
@@ -364,7 +552,7 @@
       "resources/js/Pages/Root/Regiweb.tsx"
     ],
     "css": [
-      "assets/app-HS7LroNk.css"
+      "assets/app-yw9vEy3G.css"
     ]
   }
 }
