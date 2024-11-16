@@ -130,7 +130,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   }
 
   return (
-    <RegiwebLayout user={user} title={t("Perfil")}>
+    <RegiwebLayout title={t("Perfil")}>
       <form onSubmit={handleSubmit}>
         <div className="flex grow flex-col gap-8 px-2 pb-10 pt-5">
           <h1 className="page-primary-title flex items-center gap-2">
