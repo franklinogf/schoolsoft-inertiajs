@@ -44,14 +44,18 @@ class HandleInertiaRequests extends Middleware
             default   => null,
 
         };
-        
+        $user = null;
+        if ($guard) {
+            if( $guard === 'teacher' && $request->user($guard)){
+                $user = new TeacherResource($request->user($guard));
+            }                     
+            $user = $request->user($guard);
+        }
         return [
             ...parent::share($request),
             'csrf_token' => csrf_token(),
             'auth' => [
-                'user' => $guard
-                    ? $guard === 'teacher' ? TeacherResource::make($request->user($guard)) : $request->user($guard)
-                    : null,
+                'user' => $user,
             ],
             'flash' => [
                 FlashMessageKey::SUCCESS->value => $request->session()->get(FlashMessageKey::SUCCESS->value) ?? null,
