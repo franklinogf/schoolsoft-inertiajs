@@ -161,9 +161,8 @@ export function DefaultForm({
   }
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(studentsGrades);
     router.post(
-      route("regiweb.notes.dafault.save"),
+      route("regiweb.notes.default.save"),
       {
         data: studentsGrades as any,
         course,
