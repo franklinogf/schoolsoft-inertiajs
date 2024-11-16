@@ -1,1 +1,0 @@
-import{j as i,c as a,a as c}from"./app-EXvRzil4.js";const o=c("grid grid-cols-1 gap-2",{variants:{cols:{1:"md:grid-cols-1",2:"md:grid-cols-2",3:"md:grid-cols-3",4:"md:grid-cols-4",5:"md:grid-cols-5",6:"md:grid-cols-6"}},defaultVariants:{cols:2}});function l({children:s,cols:r,className:d}){return i.jsx("div",{className:a(o({cols:r,className:d})),children:s})}export{l as I};
