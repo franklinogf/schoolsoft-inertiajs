@@ -1,47 +1,52 @@
-name: Deploy to Hostinger
+name: HostingerDeploy
 
 on:
   push:
-    branches: [master]
-      
+    branches: [main]
 jobs:
-  Setup-Enviroment:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v4.1.0
         with:
           node-version: 22
-          
-      - name: Install composer Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist  
+      - name: Copy .env
+        run: cp .env.example .env
 
-      - name: Create Storage Link
-        run: php artisan storage:link
+      - name: Install composer Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Install node dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build Assets
+      - name: Setup Project
         run: npm run build
 
-      - name: Push
-        uses: s0/git-publish-subdir-action@develop
-        env: 
-          REPO: self
-          BRANCH: build
-          FOLDER: public/build
-          GITHUN_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "Build assets: ({sha}) {msg}"
-
-      
-    
-    
+      # - name: Deploy PHP to Server
+      #   if: ${{ success() }}
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USERNAME }}
+      #     port: ${{ secrets.SSH_PORT }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     script_stop: true
+      #     script: |
+      #       cd domains
+      #       cd laravel-space.com
+      #       git pull
+      #       php composer.phar install
+      #       php artisan migrate --force
+      # - name: Install SSH key
+      #   run: |
+      #     mkdir -p ~/.ssh/
+      #     echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     ssh-keyscan -t rsa -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      # - name: Copy Build Files to Target Server
+      #   run: |
+      #     rsync -r -e "ssh -p ${{ secrets.SSH_PORT }}" ${{ github.workspace }}/public/build/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:~/domains/laravel-space.com/public/build
