@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 
 type PageProps = PagePropsWithUser<Teacher>;
 
-export default function Page({ auth, errors }: PageProps) {
+export default function Page({ auth: { user }, errors }: PageProps) {
   const { t } = useTranslation();
   const { data, setData, get, processing } = useForm({
     course: "",
@@ -30,7 +30,7 @@ export default function Page({ auth, errors }: PageProps) {
     get(route("regiweb.notes.show"));
   }
   return (
-    <RegiwebLayout user={auth.user} title={t("Inicio")}>
+    <RegiwebLayout title={t("Inicio")}>
       <h1 className="page-primary-title mt-4">{t("Notas")}</h1>
       <div className="mt-2 flex flex-col items-center gap-8 px-2 pb-10">
         <div className="w-full max-w-xl rounded-md bg-secondary p-4">
@@ -54,7 +54,7 @@ export default function Page({ auth, errors }: PageProps) {
                   setData={setData}
                   name="course"
                   label={t("Curso")}
-                  items={createSelectItemsFromArrayOfObjects(auth.user.cursos, {
+                  items={createSelectItemsFromArrayOfObjects(user.cursos, {
                     separator: " - ",
                     key: "curso",
                     values: ["curso", "descripcion"],
