@@ -41,14 +41,15 @@ class HandleInertiaRequests extends Middleware
             'regiweb' => 'teacher',
             'teacher' => 'teacher',
             'student' => 'student',
-            default   => 'web',
+            default   => null,
 
         };
+        
         return [
             ...parent::share($request),
             'csrf_token' => csrf_token(),
             'auth' => [
-                'user' => $request->user($guard)
+                'user' => $guard
                     ? $guard === 'teacher' ? TeacherResource::make($request->user($guard)) : $request->user($guard)
                     : null,
             ],
