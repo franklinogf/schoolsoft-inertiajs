@@ -24,7 +24,7 @@ class RegiwebNotesController extends Controller
         #[CurrentUser()] protected Teacher $user
 
     ) {
-        $this->admin = Admin::where('usuario', 'administrador')->first();
+        $this->admin = Admin::getPrimaryAdmin();
      }
 
     public function index()
