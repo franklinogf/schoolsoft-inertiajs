@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,5 +30,9 @@ class AppServiceProvider extends ServiceProvider
         }
         Model::unguard();
         JsonResource::withoutWrapping();
+        App::singleton('school_info', fn () => [
+            'year' => Admin::getPrimaryAdmin()->getYear,
+        ]);
+        
     }
 }
