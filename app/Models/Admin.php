@@ -26,7 +26,7 @@ class Admin extends Model
     /**
      * Scope a query to only include active users.
      */
-    public function scopePrimary(Builder $query)
+    public function scopeGetPrimaryAdmin(Builder $query)
     {
         return $query->where('usuario', 'administrador')->first();
     }
