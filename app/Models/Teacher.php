@@ -7,6 +7,7 @@ use App\Casts\Gender;
 use App\Casts\NullToEmptyString;
 use App\Casts\ProfilePicture;
 use App\Casts\YesNo;
+use App\Models\Scopes\SchoolYear;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Model;
 
@@ -30,7 +31,7 @@ class Teacher extends Model
 
     public function courses(): HasMany
     {
-        return $this->hasMany(Course::class, 'id', 'id')->where('year', Admin::primary()->year2);
+        return $this->hasMany(Course::class, 'id', 'id');
     }
 
     protected function casts(): array
