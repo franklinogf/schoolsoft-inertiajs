@@ -126,14 +126,18 @@ class RegiwebNotesController extends Controller
                     $grades["nota$index"]['column'] = "not$i";
                     $index++;
                 }
+                $tdiaData = $this->findValueFor($_info[PagesEnum::DAILY_WORKS->value]['table'],  $course, $student->ss);
+                $tdia = $tdiaData->{$_info[PagesEnum::DAILY_WORKS->value][$trimester]['totalGrade']} ?? '';
+                $tdiaTdp = $tdiaData->{$_info[PagesEnum::DAILY_WORKS->value][$trimester]['values']['tdp']} ?? '';
+                
+                $tlibData = $this->findValueFor($_info[PagesEnum::NOTEBOOKS_WORKS->value]['table'],  $course, $student->ss);
+                $tlib = $tlibData->{$_info[PagesEnum::NOTEBOOKS_WORKS->value][$trimester]['totalGrade']} ?? '';
+                $tlibTdp = $tlibData->{$_info[PagesEnum::NOTEBOOKS_WORKS->value][$trimester]['values']['tdp']} ?? '';
 
-                $tdia = $this->findValueFor($_info[PagesEnum::DAILY_WORKS->value]['table'], $_info[PagesEnum::DAILY_WORKS->value][$trimester]['totalGrade'], $course, $student->ss);
-                $tlib = $this->findValueFor($_info[PagesEnum::NOTEBOOKS_WORKS->value]['table'], $_info[PagesEnum::NOTEBOOKS_WORKS->value][$trimester]['totalGrade'], $course, $student->ss);
-                $pcor = $this->findValueFor($_info[PagesEnum::SHORT_TESTS->value]['table'], $_info[PagesEnum::SHORT_TESTS->value][$trimester]['totalGrade'], $course, $student->ss);
-
-                $tdiaTdp = $this->findValueFor($_info[PagesEnum::DAILY_WORKS->value]['table'], $_info[PagesEnum::DAILY_WORKS->value][$trimester]['values']['tdp'], $course, $student->ss);
-                $tlibTdp = $this->findValueFor($_info[PagesEnum::NOTEBOOKS_WORKS->value]['table'], $_info[PagesEnum::NOTEBOOKS_WORKS->value][$trimester]['values']['tdp'], $course, $student->ss);
-                $pcorTdp = $this->findValueFor($_info[PagesEnum::SHORT_TESTS->value]['table'], $_info[PagesEnum::SHORT_TESTS->value][$trimester]['values']['tdp'], $course, $student->ss);
+                $pcorData = $this->findValueFor($_info[PagesEnum::SHORT_TESTS->value]['table'],  $course, $student->ss);
+                $pcor = $pcorData->{$_info[PagesEnum::SHORT_TESTS->value][$trimester]['totalGrade']} ?? '';
+                $pcorTdp = $pcorData->{$_info[PagesEnum::SHORT_TESTS->value][$trimester]['values']['tdp']} ?? '';
+                
 
                 $tpa = $student->{$values['tpa']};
                 $tdp = $student->{$values['tdp']};
@@ -277,18 +281,14 @@ class RegiwebNotesController extends Controller
     //     return 0;
     // }
 
-    private function findValueFor($table, $column, $course, $ss): string
+    private function findValueFor($table, $course, $ss): object|null
     {
         $data = DB::table($table)->where([
             ['curso', $course],
             ['ss', $ss],
             ['year', $this->admin->getYear],
         ])->first();
-        if (!$data) {
-            return '';
-        }
-
-        return $data->{$column};
+        return $data;
     }
 
     // private function findValue($table, $course, $ss, $column): string
