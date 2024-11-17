@@ -3,6 +3,9 @@ import laravel from "laravel-vite-plugin";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  build: {
+    target: "esnext",
+  },
   plugins: [
     laravel({
       input: "resources/js/app.tsx",
