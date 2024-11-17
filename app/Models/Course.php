@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\SchoolYear;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
+#[ScopedBy(SchoolYear::class)]
 class Course extends Model
 {
     public $timestamps = false;
