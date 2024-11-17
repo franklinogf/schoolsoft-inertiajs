@@ -14,7 +14,7 @@ class SchoolHomeController extends Controller
      */
     public function __invoke()
     {
-        $school = Admin::primary();
+        $school = Admin::getPrimaryAdmin();
 
         return Inertia::render('Home/Index', [
             'school' => $school,
