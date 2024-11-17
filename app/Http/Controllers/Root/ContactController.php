@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Mail;
 class ContactController extends Controller
 {
     public function index()
-    {
-
+    {        
         return inertia('Root/Contact');
     }
 
@@ -32,6 +31,6 @@ class ContactController extends Controller
             $validated['phone'],
         ));
 
-        return redirect()->back()->with('success', 'Your message has been sent successfully.');
+        return redirect()->back();
     }
 }
