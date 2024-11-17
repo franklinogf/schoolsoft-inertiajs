@@ -1,4 +1,4 @@
-import i18n from "@/lib/i18next";
+import i18n from "@/lib/i18n";
 import { Computer, Globe, MonitorSpeaker, Origami, Wrench } from "lucide-react";
 
 export const MENU_LINKS = [

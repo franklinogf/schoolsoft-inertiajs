@@ -1,5 +1,5 @@
 import { Toaster } from "@/Components/ui/sonner";
-import "@/lib/i18next";
+import "@/lib/i18n";
 import { Suspense } from "react";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
