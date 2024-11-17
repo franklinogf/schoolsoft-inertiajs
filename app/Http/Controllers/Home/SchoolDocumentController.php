@@ -12,7 +12,7 @@ class SchoolDocumentController extends Controller
 {
     public function index()
     {
-        $school = Admin::primary();
+        $school = Admin::getPrimaryAdmin();
         $date = now()->format('Y-m-d');
         $documents = DB::table('T_ing')->get();
 
