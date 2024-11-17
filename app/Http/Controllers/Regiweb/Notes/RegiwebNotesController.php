@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Regiweb\Notes;
 
-use App\Enums\FlashMessageKey;
 use App\Enums\PagesEnum;
-use App\Enums\TrimesterEnum;
 use App\Enums\YesNoEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Regiweb\Notes\SaveAttendanceRequest;
@@ -16,8 +14,6 @@ use App\Models\Teacher;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class RegiwebNotesController extends Controller
@@ -28,18 +24,20 @@ class RegiwebNotesController extends Controller
         #[CurrentUser()] protected Teacher $user
 
     ) {
-        $user->load('courses');
-        $this->admin = Admin::primary();
-    }
+        $this->admin = Admin::where('usuario', 'administrador')->first();
+     }
 
     public function index()
     {
+        $this->user->load('courses');
         return Inertia::render('Regiweb/Notes/Index');
     }
 
 
     public function show(ShowRequest $request)
     {
+        
+        $year = $this->admin->getYear;
 
         $validated = $request->validated();
         $trimester = $validated['trimester'];
@@ -81,7 +79,7 @@ class RegiwebNotesController extends Controller
 
         $gradeInfo = StudentGrade::where([
             ['curso', $course],
-            ['year', $this->admin->getYear],
+            ['year', $year],
         ])->first();
 
         $isLetter = !$gradeInfo ? false : $gradeInfo->letra === 'ON';
@@ -115,7 +113,7 @@ class RegiwebNotesController extends Controller
             $students = StudentGrade::fromTable($thisReport['table'])
                 ->where([
                     ['curso', $course],
-                    ['year', $this->admin->getYear],
+                    ['year', $year],
                 ])->when($page === PagesEnum::SUMMER_GRADES, function ($query) {
                     $query->where('verano', 2);
                 })->orderBy('apellidos')
@@ -161,7 +159,7 @@ class RegiwebNotesController extends Controller
             $students = StudentGrade::fromTable($thisReport['table'])
                 ->where([
                     ['curso', $course],
-                    ['year', $this->admin->getYear],
+                    ['year', $year],
                 ])->orderBy('apellidos')
                 ->get();
             $studentsGrades = $students->map(function (StudentGrade $student) use ($thisReport, $trimester) {
@@ -182,7 +180,7 @@ class RegiwebNotesController extends Controller
             $students = StudentGrade::fromTable($thisReport['table'])
                 ->where([
                     ['curso', $course],
-                    ['year', $this->admin->getYear],
+                    ['year', $year],
                 ])->orderBy('apellidos')
                 ->get();
             $studentsGrades = $students->map(function (StudentGrade $student) use ($thisReport, $trimester) {
@@ -244,6 +242,8 @@ class RegiwebNotesController extends Controller
             }
             $student->update($array);
         }
+        
+        return redirect()->back();
     }
     public function saveAttendance(SaveAttendanceRequest $request)
     {
@@ -258,6 +258,7 @@ class RegiwebNotesController extends Controller
             ];
             $student->update($array);
         }
+        return redirect()->back();
     }
 
     public function saveExam()
@@ -340,6 +341,7 @@ class RegiwebNotesController extends Controller
         ]);
 
         DB::table('valores')->where('id', $id)->update($validated);
+        return redirect()->back();
 
     }
 
