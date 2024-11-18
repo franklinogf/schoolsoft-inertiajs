@@ -47,7 +47,33 @@
         "title": "Perfil",
         "description": "Información del usuario"
       },
-      "title": "Mi Perfil"
+      "title": "Mi Perfil",
+      "info": {
+        "title": "Información",
+        "id": "ID",
+        "user": "Usuario",
+        "homeCourse": "Salón hogar"
+      },
+      "card1": {
+        "title": "Información personal",
+        "passwordTitle": "Cambiar contraseña"
+      },
+      "card2": {
+        "title": "Direcciones",
+        "subtitle1": "Dirección resindecial",
+        "subtitle2": "Dirección postal",
+        "sameAddressHelpText": "Usar la misma dirección para la dirección postal"
+      },
+      "card3": {
+        "title": "Otros",
+        "subtitle1": "Preparación"
+      },
+      "card4": {
+        "title1": "Clubes",
+        "title2": "Licencias"
+      },
+      "successMessage": "Perfil actualizado correctamente",
+      "errorMessage": "Error al actualizar el perfil"
     }
   }
 }

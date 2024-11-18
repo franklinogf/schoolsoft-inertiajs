@@ -32,10 +32,9 @@ import { ArrowUpDown, User2 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-
 export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   const [sameAddress, setSameAddress] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "input", "pages"]);
   const { data, setData, post, errors, processing } = useForm<Partial<Teacher> & { picture: null }>(
     {
       picture: null,
@@ -124,17 +123,17 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
     post(route("regiweb.profile.update"), {
       preserveScroll: true,
       onSuccess: () => {
-        toast.success(t("Perfil guardado"));
+        toast.success(t("pages:regiweb.profile.successMessage"));
       },
     });
   }
 
   return (
-    <RegiwebLayout title={t("Perfil")}>
+    <RegiwebLayout title={t("pages:regiweb.profile.meta.title")}>
       <form onSubmit={handleSubmit}>
         <div className="flex grow flex-col gap-8 px-2 pb-10 pt-5">
           <h1 className="page-primary-title flex items-center gap-2">
-            {t("Mi perfil")}
+            {t("pages:regiweb.profile.title")}
             <User2 className="size-8" />
           </h1>
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -149,12 +148,17 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             <div className="hidden md:flex md:items-center md:justify-center">
               <Card className="border-accent bg-accent">
                 <CardHeader className="p-2">
-                  <CardTitle className="text-lg">{t("Información")}</CardTitle>
+                  <CardTitle className="text-lg">{t("pages:regiweb.profile.info.title")}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2 rounded-b-md bg-background pt-2">
-                  <InfoBadge label={t("Id")} value={user.id} />
-                  <InfoBadge label={t("User")} value={user.usuario} />
-                  {user.grado && <InfoBadge label={t("Salón hogar")} value={user.grado} />}
+                  <InfoBadge label={t("pages:regiweb.profile.info.id")} value={user.id} />
+                  <InfoBadge label={t("pages:regiweb.profile.info.user")} value={user.usuario} />
+                  {user.grado && (
+                    <InfoBadge
+                      label={t("pages:regiweb.profile.info.homeCourse")}
+                      value={user.grado}
+                    />
+                  )}
                 </CardContent>
               </Card>
             </div>
@@ -163,7 +167,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>{t("Información personal")}</CardTitle>
+                <CardTitle>{t("pages:regiweb.profile.card1.title")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col gap-4">
@@ -171,14 +175,14 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <InputField
                       data={data}
                       setData={setData}
-                      label={t("Nombre")}
+                      label={t("input:name")}
                       name="nombre"
                       error={errors.nombre}
                     />
                     <InputField
                       data={data}
                       setData={setData}
-                      label={t("Apellidos")}
+                      label={t("input:lastname")}
                       name="apellidos"
                       error={errors.apellidos}
                     />
@@ -187,7 +191,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <SelectField
                       data={data}
                       setData={setData}
-                      label={t("Genero")}
+                      label={t("input:gender")}
                       name="genero"
                       error={errors.genero}
                       items={GENDERS_SELECT}
@@ -195,7 +199,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <DateField
                       data={data}
                       setData={setData}
-                      label={t("Fecha de nacimiento")}
+                      label={t("input:dob")}
                       name="fecha_nac"
                       error={errors.fecha_nac}
                     />
@@ -203,7 +207,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                   <InputField
                     data={data}
                     setData={setData}
-                    label={t("Correo principal")}
+                    label={t("input:primaryEmail")}
                     name="email1"
                     type="email"
                     error={errors.email1}
@@ -211,7 +215,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                   <InputField
                     data={data}
                     setData={setData}
-                    label={t("Correo secundario")}
+                    label={t("input:secondaryEmail")}
                     name="email2"
                     type="email"
                     error={errors.email2}
@@ -220,14 +224,14 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <PhoneField
                       data={data}
                       setData={setData}
-                      label={t("Telefono residencial")}
+                      label={t("input:residencePhone")}
                       name="tel_res"
                       error={errors.tel_res}
                     />
                     <PhoneField
                       data={data}
                       setData={setData}
-                      label={t("Contacto de emergencia")}
+                      label={t("input:emergencyContact")}
                       name="tel_emer"
                       error={errors.tel_emer}
                     />
@@ -236,7 +240,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <PhoneField
                       data={data}
                       setData={setData}
-                      label={t("Celular")}
+                      label={t("input:mobilePhone")}
                       name="cel"
                       error={errors.cel}
                     />
@@ -244,7 +248,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       name="cel_com"
                       data={data}
                       setData={setData}
-                      label={t("Compañia del celular")}
+                      label={t("input:mobilePhoneCompany")}
                       error={errors.cel_com}
                       items={PHONE_COMPANIES_SELECT}
                     />
@@ -258,23 +262,25 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             <div className="flex flex-col gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>{t("Direcciones")}</CardTitle>
+                  <CardTitle>{t("pages:regiweb.profile.card2.title")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col gap-4">
                     <div className="space-y-1">
-                      <h2 className="font-semibold">{t("Dirección residencial")}</h2>
+                      <h2 className="font-semibold">
+                        {t("pages:regiweb.profile.card2.subtitle1")}
+                      </h2>
                       <InputField
                         data={data}
                         setData={setData}
-                        placeholder={`${t("Dirección")} 1`}
+                        placeholder={t("input:address1")}
                         name="dir1"
                         error={errors.dir1}
                       />
                       <InputField
                         data={data}
                         setData={setData}
-                        placeholder={`${t("Dirección")} 2`}
+                        placeholder={t("input:address2")}
                         name="dir2"
                         error={errors.dir2}
                       />
@@ -282,21 +288,21 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                         <InputField
                           data={data}
                           setData={setData}
-                          placeholder={t("Ciudad")}
+                          placeholder={t("input:city")}
                           name="pueblo1"
                           error={errors.pueblo1}
                         />
                         <InputField
                           data={data}
                           setData={setData}
-                          placeholder={t("País")}
+                          placeholder={t("input:country")}
                           name="esta1"
                           error={errors.esta1}
                         />
                         <InputField
                           data={data}
                           setData={setData}
-                          placeholder={t("Código postal")}
+                          placeholder={t("input:zip")}
                           name="zip1"
                           error={errors.zip1}
                         />
@@ -316,23 +322,25 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                           <ArrowUpDown />
                         </Button>
                         <small className="text-xs text-secondary-foreground">
-                          {t("Usar la misma dirección que la residencial")}?
+                          {t("pages:regiweb.profile.card2.sameAddressHelpText")}?
                         </small>
                       </div>
 
-                      <h2 className="font-semibold">{t("Dirección postal")}</h2>
+                      <h2 className="font-semibold">
+                        {t("pages:regiweb.profile.card2.subtitle2")}
+                      </h2>
 
                       <InputField
                         data={data}
                         setData={setData}
-                        placeholder={`${t("Dirección")} 1`}
+                        placeholder={t("input:address1")}
                         name="dir3"
                         error={errors.dir3}
                       />
                       <InputField
                         data={data}
                         setData={setData}
-                        placeholder={`${t("Dirección")} 2`}
+                        placeholder={t("input:address2")}
                         name="dir4"
                         error={errors.dir4}
                       />
@@ -340,21 +348,21 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                         <InputField
                           data={data}
                           setData={setData}
-                          placeholder={t("Ciudad")}
+                          placeholder={t("input:city")}
                           name="pueblo2"
                           error={errors.pueblo2}
                         />
                         <InputField
                           data={data}
                           setData={setData}
-                          placeholder={t("País")}
+                          placeholder={t("input:country")}
                           name="esta2"
                           error={errors.esta2}
                         />
                         <InputField
                           data={data}
                           setData={setData}
-                          placeholder={t("Código postal")}
+                          placeholder={t("input:zip")}
                           name="zip2"
                           error={errors.zip2}
                         />
@@ -365,14 +373,14 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle>{t("Otros")}</CardTitle>
+                  <CardTitle>{t("pages:regiweb.profile.card3.title")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col gap-4">
                     <InputField
                       data={data}
                       setData={setData}
-                      label={t("Alias")}
+                      label={t("input:alias")}
                       name="alias"
                       error={errors.alias}
                     />
@@ -380,33 +388,35 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       <InputField
                         data={data}
                         setData={setData}
-                        label={t("Posición")}
+                        label={t("input:position")}
                         name="posicion"
                         error={errors.posicion}
                       />
                       <SelectField
                         data={data}
                         setData={setData}
-                        label={t("Nivel")}
+                        label={t("input:level")}
                         name="nivel"
                         error={errors.nivel}
                         items={TEACHER_LEVEL_SELECT}
                       />
                     </FieldsGrid>
                     <div>
-                      <h2 className="text-sm font-medium">{t("Preparación")}</h2>
+                      <h2 className="text-sm font-medium">
+                        {t("pages:regiweb.profile.card3.subtitle1")}
+                      </h2>
                       <div className="space-y-1">
                         <InputField
                           data={data}
                           setData={setData}
-                          placeholder={`${t("Preparación")} 2`}
+                          placeholder={t("input:preparation1")}
                           name="preparacion1"
                           error={errors.preparacion1}
                         />
                         <InputField
                           data={data}
                           setData={setData}
-                          placeholder={`${t("Preparación")} 2`}
+                          placeholder={t("input:preparation2")}
                           name="preparacion2"
                           error={errors.preparacion2}
                         />
@@ -417,14 +427,14 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       <DateField
                         data={data}
                         setData={setData}
-                        label={t("Fecha de inicio")}
+                        label={t("input:initialDate")}
                         name="fecha_ini"
                         error={errors.fecha_ini}
                       />
                       <DateField
                         data={data}
                         setData={setData}
-                        label={t("Fecha de baja")}
+                        label={t("input:finalDate")}
                         name="fecha_daja"
                         error={errors.fecha_daja}
                       />
@@ -432,7 +442,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <SelectField
                       data={data}
                       setData={setData}
-                      label={t("Recibir email")}
+                      label={t("input:receiveEmails")}
                       items={YES_NO_SELECT}
                       name="re_e"
                       error={errors.re_e}
@@ -446,7 +456,9 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
           <section>
             <Accordion className="rounded-md bg-white shadow-sm" type="single" collapsible>
               <AccordionItem value="club">
-                <AccordionTrigger className="px-6">{t("Clubes")}</AccordionTrigger>
+                <AccordionTrigger className="px-6">
+                  {t("pages:regiweb.profile.card4.title1")}
+                </AccordionTrigger>
                 <AccordionContent className="space-y-2 px-6">
                   {[1, 2, 3, 4, 5].map((number) => {
                     const club = `club${number}` as "club1";
@@ -458,28 +470,28 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                         <InputField
                           data={data}
                           setData={setData}
-                          label={t("Nombre")}
+                          label={t("input:name")}
                           name={club}
                           error={errors[club]}
                         />
                         <InputField
                           data={data}
                           setData={setData}
-                          label={t("Presidente")}
+                          label={t("input:president")}
                           name={pre}
                           error={errors[pre]}
                         />
                         <InputField
                           data={data}
                           setData={setData}
-                          label={t("Vice presidente")}
+                          label={t("input:vicePresident")}
                           name={vi}
                           error={errors[vi]}
                         />
                         <InputField
                           data={data}
                           setData={setData}
-                          label={t("Secretario")}
+                          label={t("input:secretary")}
                           name={se}
                           error={errors[se]}
                         />
@@ -489,7 +501,9 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="licens">
-                <AccordionTrigger className="px-6">{t("Licencias")}</AccordionTrigger>
+                <AccordionTrigger className="px-6">
+                  {t("pages:regiweb.profile.card4.title2")}
+                </AccordionTrigger>
                 <AccordionContent className="space-y-2 px-6 pt-2">
                   {[1, 2, 3, 4].map((number) => {
                     const lic = `lic${number}` as "lic1";
@@ -502,7 +516,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                         <div className="grid grid-flow-col items-center gap-2">
                           <CheckboxField
                             className="grow"
-                            label="Expira"
+                            label={t("input:expires")}
                             data={data}
                             setData={setData}
                             name={lp}
@@ -525,7 +539,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             </Accordion>
           </section>
           <SubmitButton disabled={processing} size="lg">
-            {t("Guardar")}
+            {t("btn.save")}
           </SubmitButton>
         </div>
       </form>
