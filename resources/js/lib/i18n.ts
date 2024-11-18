@@ -30,4 +30,7 @@ await i18next
       console.log("Missing key:", key);
     },
   });
+i18next.services.formatter?.add("lowercase", (value, lng, options) => {
+  return value.toLowerCase();
+});
 export default i18next;
