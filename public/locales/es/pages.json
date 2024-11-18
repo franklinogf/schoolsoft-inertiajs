@@ -1,0 +1,36 @@
+{
+  "regiweb": {
+    "menu": {
+      "imageAlt": "Logo de Regiweb",
+      "item1": "Notas",
+      "item2": "Opciones",
+      "item3": "Informes",
+      "user": {
+        "item1": "Perfil",
+        "item2": "Cerrar sesión"
+      }
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "imageAlt": "Logo de Regiweb"
+    },
+    "index": {
+      "title": "Inicio",
+      "imageAlt": "Logo de Regiweb",
+      "card": {
+        "title": "Bienvenido a Regiweb",
+        "name": "Nombre",
+        "id": "ID",
+        "group": "Grupo",
+        "lastEntry": "Última entrada",
+        "ip": "IP",
+        "time": "Hora"
+      }
+    },
+    "home": {
+      "title": "Inicio",
+      "imageAlt": "Globo terraqueo",
+      "message": "Conectate de cualquier parte del mundo"
+    }
+  }
+}
