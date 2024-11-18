@@ -34,7 +34,7 @@ export function DefaultForm({
 }: DefaultFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "pages"]);
   const { page, trimester, course } = useContext(OptionsContext);
   const { errors } = usePage().props;
   function calculateStudentTdp(id: number) {
@@ -172,7 +172,7 @@ export function DefaultForm({
       {
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(t("Notas guardadas correctamente"));
+          toast.success(t("pages:regiweb.notes.show.successMessage.default"));
           setStudentsChangedToFalse();
         },
         onError: () => {
@@ -194,16 +194,16 @@ export function DefaultForm({
           <TableHeader>
             <TableRow className="bg-primary hover:bg-primary [&>th]:text-center [&>th]:text-primary-foreground">
               <TableHead>#</TableHead>
-              <TableHead>Estudiante</TableHead>
+              <TableHead>{t("common:student")}</TableHead>
               {Array.from({ length: amountOfGrades }, (_, i) => i + 1).map((_, i) => (
                 <TableHead key={i}>
-                  {t("Nota")} {i + 1}
+                  {t("common:note")} {i + 1}
                 </TableHead>
               ))}
-              {columns?.map((column, i) => <TableHead key={i}>{t(column)}</TableHead>)}
-              <TableHead>{t("TPA")}</TableHead>
-              <TableHead>{t("TDP")}</TableHead>
-              <TableHead>{t("Nota")}</TableHead>
+              {columns?.map((column, i) => <TableHead key={i}>{column}</TableHead>)}
+              <TableHead>{t("common:tpa")}</TableHead>
+              <TableHead>{t("common:tdp")}</TableHead>
+              <TableHead>{t("common:note")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
