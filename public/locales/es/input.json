@@ -33,5 +33,23 @@
   "vicePresident": "Vicepresidente",
   "secretary": "Secretario",
   "licenses": "Licencias",
-  "expires": "Expira"
+  "expires": "Expira",
+  "defaultPlaceholders": {
+    "date": "Seleccione una fecha"
+  },
+  "placeholder": {
+    "select": {
+      "course": "Selecciona el curso",
+      "trimester": "Selecciona el trimestre",
+      "page": "Selecciona la página"
+    }
+  },
+  "profilePictureDragDrop": {
+    "defaultLabel": "Imagen de perfil",
+    "status": {
+      "active": "Suelte una imagen aquí",
+      "inactive": "Arrastre y suelte una imagen aquí o haga click para seleccionarla",
+      "change": "Arrastre y suelte una imagen aquí para cambiarla"
+    }
+  }
 }

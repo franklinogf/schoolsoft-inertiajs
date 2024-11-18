@@ -10,7 +10,6 @@ import {
 } from "@/Components/ui/select";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
-import { useTranslation } from "react-i18next";
 export type SelectItemType = { key: string; value: string };
 interface SelectFieldProps {
   data: any;
@@ -35,7 +34,6 @@ export function SelectField({
   items,
 }: SelectFieldProps) {
   const id = useId();
-  const { t } = useTranslation();
   return (
     <FieldContainer className={className}>
       <FieldLabel disabled={disabled} error={error} id={id} label={label} />
@@ -58,7 +56,7 @@ export function SelectField({
         <SelectContent>
           {items.map((item) => (
             <SelectItem key={item.key} value={item.key}>
-              {t(item.value)}
+              {item.value}
             </SelectItem>
           ))}
         </SelectContent>

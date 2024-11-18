@@ -1,4 +1,44 @@
 {
+  "notes": "Notas",
+  "grade": {
+    "label": "Grado",
+    "initialGrade": "Grado Inicial",
+    "finalGrade": "Grado Final"
+  },
+  "date": {
+    "label": "Fecha",
+    "initialDate": "Fecha Inicial",
+    "finalDate": "Fecha Final"
+  },
+  "trimester": {
+    "label": "Trimestre",
+    "1": "1er Trimestre",
+    "2": "2do Trimestre",
+    "3": "3er Trimestre",
+    "4": "4to Trimestre",
+    "summer": "Verano"
+  },
+  "course": {
+    "label": "Curso"
+  },
+  "gender": {
+    "label": "Género",
+    "male": "Masculino",
+    "female": "Femenino"
+  },
+  "pages": {
+    "label": "Pagína",
+    "grades": "Notas",
+    "grades2": "Notas2",
+    "shortTests": "Pruebas Cortas",
+    "dailyWork": "Trabajos Diarios",
+    "notebookWork": "Trabajos de Libreta",
+    "conductAttendance": "Conducta y Asistencia",
+    "finalExam": "Examen Final",
+    "summerGrades": "Verano Notas"
+  },
+  "yes": "Sí",
+  "no": "No",
   "btn": {
     "continue": "Continuar",
     "submit": "Enviar",
@@ -25,7 +65,10 @@
     "download": "Descargar",
     "print": "Imprimir",
     "send": "Enviar",
-    "access": "Acceder"
+    "access": "Acceder",
+    "changePassword": "Cambiar Contraseña"
   },
-  "signIn": "Iniciar sesión"
+  "signIn": "Iniciar sesión",
+  "changePassword": "Cambiar contraseña",
+  "changePasswordSuccess": "Contraseña cambiada con éxito"
 }
