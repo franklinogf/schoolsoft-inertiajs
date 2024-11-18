@@ -1,1 +1,31 @@
-{}
+{
+  "btn": {
+    "continue": "Continuar",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "change": "Cambiar",
+    "edit": "Editar",
+    "add": "Añadir",
+    "create": "Crear",
+    "close": "Cerrar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "finish": "Finalizar",
+    "accept": "Aceptar",
+    "reject": "Rechazar",
+    "confirm": "Confirmar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "clear": "Limpiar",
+    "reset": "Restablecer",
+    "upload": "Subir",
+    "download": "Descargar",
+    "print": "Imprimir",
+    "send": "Enviar",
+    "access": "Acceder"
+  },
+  "signIn": "Iniciar sesión"
+}

@@ -1,1 +1,30 @@
-{}
+{
+  "button": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "change": "Change",
+    "edit": "Edit",
+    "add": "Add",
+    "create": "Create",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "finish": "Finish",
+    "accept": "Accept",
+    "reject": "Reject",
+    "confirm": "Confirm",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "reset": "Reset",
+    "upload": "Upload",
+    "download": "Download",
+    "print": "Print",
+    "send": "Send",
+    "access": "Access"
+  },
+  "signIn": "Sign In"
+}
