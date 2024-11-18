@@ -18,7 +18,7 @@ interface LoginFormProps {
   errorMessage: string | null;
 }
 export function LoginForm({ className, submitRoute, errorMessage }: LoginFormProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["input", "common"]);
   const { data, setData, post, errors, processing } = useForm<Pick<Teacher, "usuario" | "clave">>({
     usuario: "",
     clave: "",
@@ -31,7 +31,7 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
     <form onSubmit={submit} className={className}>
       <Card className="max-w-md shadow-lg max-md:mx-auto">
         <CardHeader>
-          <CardTitle>{t("Iniciar sesión")}</CardTitle>
+          <CardTitle>{t("signIn", { ns: "common" })}</CardTitle>
           <CardDescription>
             <AlertDestructive message={errorMessage} />
           </CardDescription>
@@ -39,14 +39,14 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
         <CardContent>
           <div className="space-y-2">
             <InputField
-              label={t("Usuario")}
+              label={t("username", { ns: "input" })}
               data={data}
               setData={setData}
               name="usuario"
               error={errors.usuario}
             />
             <InputField
-              label={t("Contraseña")}
+              label={t("password", { ns: "input" })}
               data={data}
               setData={setData}
               name="clave"
@@ -56,9 +56,9 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
           </div>
         </CardContent>
         <CardFooter className="grid gap-2">
-          <Button disabled={processing}>{t("Acceder")}</Button>
+          <Button disabled={processing}>{t("btn.access", { ns: "common" })}</Button>
           <Button variant="outline" asChild>
-            <Link href={route("home.index")}>{t("Volver atrás")}</Link>
+            <Link href={route("home.index")}>{t("btn.back", { ns: "common" })}</Link>
           </Button>
         </CardFooter>
       </Card>
