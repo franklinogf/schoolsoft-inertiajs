@@ -5,7 +5,7 @@ import { InputField } from "./forms/inputs/InputField";
 import { Button } from "./ui/button";
 
 export function ChangePasswordForm({ route }: { route: string }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["input", "common"]);
   const { data, setData, errors, processing, patch, reset } = useForm({
     clave: "",
     clave_confirmation: "",
@@ -13,12 +13,12 @@ export function ChangePasswordForm({ route }: { route: string }) {
   return (
     <div className="mt-5 space-y-4">
       <h3 className="text-2xl font-semibold leading-none tracking-tight">
-        {t("Cambiar contraseña")}
+        {t("common:changePassword")}
       </h3>
       <InputField
         data={data}
         setData={setData}
-        label={t("Nueva contraseña")}
+        label={t("input:newPassword")}
         name="clave"
         error={errors.clave}
         type="password"
@@ -26,7 +26,7 @@ export function ChangePasswordForm({ route }: { route: string }) {
       <InputField
         data={data}
         setData={setData}
-        label={t("Confirmar nueva contraseña")}
+        label={t("input:confirmNewPassword")}
         name="clave_confirmation"
         error={errors.clave_confirmation}
         type="password"
@@ -36,7 +36,7 @@ export function ChangePasswordForm({ route }: { route: string }) {
           patch(route, {
             preserveScroll: true,
             onSuccess: () => {
-              toast.success(t("Contraseña cambiada"));
+              toast.success(t("common:changePasswordSuccess"));
               reset();
             },
           });
@@ -44,7 +44,7 @@ export function ChangePasswordForm({ route }: { route: string }) {
         disabled={processing}
         size="sm"
       >
-        {t("Cambiar contraseña")}
+        {t("common:btn.changePassword")}
       </Button>
     </div>
   );

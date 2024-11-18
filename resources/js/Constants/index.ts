@@ -1,4 +1,6 @@
 import { GenderEnum, PagesEnum, TrimesterEnum, YesNoEnum } from "@/Enums";
+import i18n from "@/lib/i18n";
+i18n.setDefaultNamespace("common");
 
 export const NO_PICTURE_BOY = "/assets/no-picture-boy.png";
 export const NO_PICTURE_GIRL = "/assets/no-picture-girl.png";
@@ -14,30 +16,30 @@ export const LOGIN_FORO_TEACHER_PICTURE = LOGO_SCHOOLSOFT;
 export const LOGIN_FORO_STUDENT_PICTURE = LOGO_SCHOOLSOFT;
 
 export const TRIMESTERS: Record<TrimesterEnum, string> = {
-  "Trimestre-1": "1er Trimestre",
-  "Trimestre-2": "2do Trimestre",
-  "Trimestre-3": "3er Trimestre",
-  "Trimestre-4": "4to Trimestre",
-  Verano: "Verano",
+  "Trimestre-1": i18n.t("trimester.1"),
+  "Trimestre-2": i18n.t("trimester.2"),
+  "Trimestre-3": i18n.t("trimester.3"),
+  "Trimestre-4": i18n.t("trimester.4"),
+  Verano: i18n.t("trimester.summer"),
 };
 
 export const PAGES: Record<PagesEnum, string> = {
-  Notas: "Notas",
-  Notas2: "Notas2",
-  "Pruebas-Cortas": "Pruebas Cortas",
-  "Trab-Diarios": "Trabajos Diarios",
-  "Trab-Libreta": "Trabajos de Libreta",
-  "Cond-Asis": "Conducta y Asistencia",
-  "Ex-Final": "Examen Final",
-  "V-Nota": "Verano Notas",
+  Notas: i18n.t("pages.grades"),
+  Notas2: i18n.t("pages.grades2"),
+  "Pruebas-Cortas": i18n.t("pages.shortTests"),
+  "Trab-Diarios": i18n.t("pages.dailyWork"),
+  "Trab-Libreta": i18n.t("pages.notebookWork"),
+  "Cond-Asis": i18n.t("pages.conductAttendance"),
+  "Ex-Final": i18n.t("pages.finalExam"),
+  "V-Nota": i18n.t("pages.summerGrades"),
 };
 
 export const YES_NO: Record<YesNoEnum, string> = {
-  SI: "Si",
-  NO: "No",
+  SI: i18n.t("yes"),
+  NO: i18n.t("no"),
 };
 
 export const GENDERS: Record<GenderEnum, string> = {
-  m: "Masculino",
-  f: "Femenino",
+  m: i18n.t("gender.male"),
+  f: i18n.t("gender.female"),
 };

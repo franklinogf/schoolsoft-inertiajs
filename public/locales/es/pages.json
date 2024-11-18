@@ -1,4 +1,38 @@
 {
+  "home": {
+    "index": {
+      "btn": {
+        "admin": "Administración",
+        "regiweb": "Regiweb",
+        "parents": "Padres",
+        "forum": {
+          "label": "Foro",
+          "students": "Estudiantes",
+          "teachers": "Profesores"
+        },
+        "cafeteria": {
+          "label": "Cafetería",
+          "cashRegister": "Caja registradora",
+          "autoService": "Auto servicio"
+        },
+        "calendar": "Calendario",
+        "documents": "Documentos",
+        "requests": "Solicitudes"
+      }
+    },
+    "documents": {
+      "meta": {
+        "title": "Documentos",
+        "description": "Página de documentos"
+      },
+      "title": "Lista de documentos para descargar",
+      "backBtn": "Ir a la pagina principal",
+      "alert": {
+        "title": "¡No hay documentos!",
+        "message": "Si le han solicitado buscar un documento, por favor contactarse con administración"
+      }
+    }
+  },
   "regiweb": {
     "menu": {
       "imageAlt": "Logo de Regiweb",
@@ -74,6 +108,18 @@
       },
       "successMessage": "Perfil actualizado correctamente",
       "errorMessage": "Error al actualizar el perfil"
+    },
+    "notes": {
+      "index": {
+        "meta": { "title": "Notas", "description": "Página de notas" },
+        "title": "Notas",
+        "btn": {
+          "attendance": "Entrada de asistencia",
+          "dailyAttendanceReport": "Informe de asistencia diaria",
+          "attendanceReport": "Informe de asistencia",
+          "preschool": "Preescolar"
+        }
+      }
     }
   }
 }

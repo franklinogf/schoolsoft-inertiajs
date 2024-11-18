@@ -35,7 +35,7 @@ export function DateField({
   const {
     t,
     i18n: { language },
-  } = useTranslation();
+  } = useTranslation(["input"]);
 
   const id = useId();
 
@@ -50,7 +50,7 @@ export function DateField({
           locale={language === "es" ? es : enUS}
           displayFormat={displayFormat}
           granularity="day"
-          placeholder={placeholder ?? t("Selecciona una fecha")}
+          placeholder={placeholder ?? t("input:defaultPlaceholders.date")}
           value={formatStringToDate(data[name])}
           onChange={(value) => {
             setData(name, formatDateToString(value));

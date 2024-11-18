@@ -6,73 +6,79 @@ import {
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { HomeLayout } from "@/Layouts/Home/HomeLayout";
+import i18n from "@/lib/i18n";
 import type { PagePropsWithSchool } from "@/types";
 import { Link } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
+await i18n.loadNamespaces("pages");
 
 const buttons = [
   {
-    label: "Administración",
+    label: i18n.t("pages:home.index.btn.admin"),
     route: route("admin.login.index"),
   },
   {
-    label: "Regiweb",
+    label: i18n.t("pages:home.index.btn.regiweb"),
     route: route("regiweb.login.index"),
   },
   {
-    label: "Padres",
+    label: i18n.t("pages:home.index.btn.parents"),
     route: route("parents.login.index"),
   },
   {
-    label: "Foro",
+    label: i18n.t("pages:home.index.btn.forum.label"),
     children: [
-      { label: "Estudiante", route: route("foro.student.login.index") },
-      { label: "Profesor", route: route("foro.teacher.login.index") },
+      {
+        label: i18n.t("pages:home.index.btn.forum.students"),
+        route: route("foro.student.login.index"),
+      },
+      {
+        label: i18n.t("pages:home.index.btn.forum.teachers"),
+        route: route("foro.teacher.login.index"),
+      },
     ],
   },
   {
-    label: "Calendario",
+    label: i18n.t("pages:home.index.btn.calendar"),
     route: "#",
   },
   {
-    label: "Solicitudes",
+    label: i18n.t("pages:home.index.btn.requests"),
     route: "#",
   },
   {
-    label: "Documentos",
+    label: i18n.t("pages:home.index.btn.documents"),
     route: route("home.documents"),
   },
   {
-    label: "Cafetería",
+    label: i18n.t("pages:home.index.btn.cafeteria.label"),
     children: [
-      { label: "Caja registradora", route: "" },
-      { label: "Auto servicio", route: "" },
+      { label: i18n.t("pages:home.index.btn.cafeteria.cashRegister"), route: "" },
+      { label: i18n.t("pages:home.index.btn.cafeteria.autoService"), route: "" },
     ],
   },
 ];
 
 export default function HomePage({ school }: PagePropsWithSchool) {
-  const { t } = useTranslation();
   return (
     <HomeLayout school={school} title={school.colegio}>
       <section className="flex min-h-80 items-center justify-center" id="buttons">
         <ul className="grid max-w-xl grid-cols-2 gap-x-5 gap-y-2 md:grid-cols-4">
           {buttons.map((button) => (
             <li key={button.label}>
-              {!button.children ? (
+              {!button?.children ? (
                 <Button className="w-full" asChild>
-                  <Link href={button.route ?? ""}>{t(button.label)}</Link>
+                  <Link href={button.route ?? ""}>{button.label}</Link>
                 </Button>
               ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="w-full">{t(button.label)}</Button>
+                    <Button className="w-full">{button.label}</Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     {button.children.map((child) => (
                       <DropdownMenuItem key={child.label} asChild>
                         <Link className="cursor-pointer" href={child.route}>
-                          {t(child.label)}
+                          {child.label}
                         </Link>
                       </DropdownMenuItem>
                     ))}

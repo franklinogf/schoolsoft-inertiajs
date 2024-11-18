@@ -18,16 +18,16 @@ interface DocumentsPageProps extends PagePropsWithSchool {
   documents: Document[];
 }
 export default function DocumentsPage({ school, documents, flash }: DocumentsPageProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["pages", "common"]);
   return (
-    <HomeLayout school={school} title="Documentos">
+    <HomeLayout school={school} title={t("pages:home.documents.meta.title")}>
       <div className="p-5">
         <section className="flex flex-col items-center justify-center">
           <h2 className="text-center text-lg font-bold md:text-3xl">
-            {t("Lista de documentos para descargar")}
+            {t("pages:home.documents.title")}
           </h2>
           <Button asChild variant="ghost">
-            <Link href={route("home.index")}>{t("Ir a la pagina principal")}</Link>
+            <Link href={route("home.index")}>{t("pages:home.documents.backBtn")}</Link>
           </Button>
           <AlertDestructive className="mt-2" message={flash.error} />
         </section>
@@ -41,10 +41,10 @@ export default function DocumentsPage({ school, documents, flash }: DocumentsPag
                   </CardTitle>
                   <CardDescription className="flex justify-around">
                     <span className="text-sm">
-                      {t("Grado inicial")}: {document.grado_desde}{" "}
+                      {t("common:grade.initialGrade")}: {document.grado_desde}
                     </span>
                     <span className="text-sm">
-                      {t("Grado final")}: {document.grado_hasta}{" "}
+                      {t("common:grade.finalGrade")}: {document.grado_hasta}
                     </span>
                   </CardDescription>
                   <CardContent className="flex items-center justify-center py-2">
@@ -53,16 +53,16 @@ export default function DocumentsPage({ school, documents, flash }: DocumentsPag
                         className="d-block"
                         href={route("home.documents.download", { id: document.id })}
                       >
-                        {t("Descargar")}
+                        {t("common:btn.download")}
                       </a>
                     </Button>
                   </CardContent>
                   <CardFooter className="flex justify-around p-0">
                     <span className="text-sm text-muted-foreground">
-                      {t("Fecha inicial")}: {document.fecha_desde}
+                      {t("common:date.initialDate")}: {document.fecha_desde}
                     </span>
                     <span className="text-sm text-muted-foreground">
-                      {t("Fecha final")}: {document.fecha_hasta}
+                      {t("common:date.finalDate")}: {document.fecha_hasta}
                     </span>
                   </CardFooter>
                 </CardHeader>
@@ -72,10 +72,8 @@ export default function DocumentsPage({ school, documents, flash }: DocumentsPag
         ) : (
           <div className="mt-10 flex items-center justify-center">
             <Alert className="max-w-xl" variant="destructive">
-              <AlertTitle>No hay documentos!</AlertTitle>
-              <AlertDescription>
-                Si le han solicitado buscar un documento, por favor contactarse con administración
-              </AlertDescription>
+              <AlertTitle>{t("pages:home.documents.alert.title")}</AlertTitle>
+              <AlertDescription>{t("pages:home.documents.alert.message")}</AlertDescription>
             </Alert>
           </div>
         )}

@@ -15,7 +15,7 @@ interface ProfilePictureFieldProps {
 }
 type FileWithPreview = File & { preview: string };
 export function ProfilePictureField({
-  label = "Foto de perfil",
+  label,
   data,
   initialFile,
   setData,
@@ -23,8 +23,9 @@ export function ProfilePictureField({
   name,
   disabled,
 }: ProfilePictureFieldProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation("input", { keyPrefix: "profilePictureDragDrop" });
   const id = useId();
+  const labelToUse = label ?? t("defaultLabel");
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
@@ -66,10 +67,10 @@ export function ProfilePictureField({
           )}
         >
           {isDragActive
-            ? t("Drop an image here...")
+            ? t("status.active")
             : data[name]
-              ? t("Drag and drop, or click to change the image")
-              : t("Drag and drop, or click to select an image")}
+              ? t("status.change")
+              : t("status.inactive")}
         </p>
         {data[name] || initialFile ? (
           <div className="absolute">
@@ -83,7 +84,7 @@ export function ProfilePictureField({
           </div>
         ) : null}
       </div>
-      <FieldLabel className="mt-1" id={id} label={t(label)} error={error} />
+      <FieldLabel className="mt-1" id={id} label={labelToUse} error={error} />
       <FieldError error={error} />
     </div>
   );

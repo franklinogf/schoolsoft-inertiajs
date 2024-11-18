@@ -1,67 +1,67 @@
 import i18n from "@/lib/i18n";
 import { Computer, Globe, MonitorSpeaker, Origami, Wrench } from "lucide-react";
-
+i18n.loadNamespaces("home");
+const { t } = i18n;
 export const MENU_LINKS = [
   {
-    label: "Inicio",
+    label: t("home:menu.item1"),
     path: "home",
   },
   {
-    label: "Modulos",
+    label: t("home:menu.item2"),
     path: "modules",
   },
   {
-    label: "Regiweb",
+    label: t("home:menu.item3"),
     path: "regiweb",
   },
-] as const;
-i18n.setDefaultNamespace("home");
-const { t } = i18n;
+];
+
 export const SERVICES = [
   {
-    title: t("services.items.0.title"),
-    description: t("services.items.0.description"),
+    title: t("home:services.items.item1.title"),
+    description: t("home:services.items.item1.description"),
     Icon: Origami,
   },
   {
-    title: t("services.items.1.title"),
-    description: t("services.items.1.description"),
+    title: t("home:services.items.item2.title"),
+    description: t("home:services.items.item2.description"),
     Icon: Globe,
   },
   {
-    title: t("services.items.2.title"),
-    description: t("services.items.2.description"),
+    title: t("home:services.items.item3.title"),
+    description: t("home:services.items.item3.description"),
     Icon: MonitorSpeaker,
   },
   {
-    title: t("services.items.3.title"),
-    description: t("services.items.3.description"),
+    title: t("home:services.items.item4.title"),
+    description: t("home:services.items.item4.description"),
     Icon: Wrench,
   },
   {
-    title: t("services.items.4.title"),
-    description: t("services.items.4.description"),
+    title: t("home:services.items.item5.title"),
+    description: t("home:services.items.item5.description"),
     Icon: Computer,
   },
 ];
 
 export const OTHER_SERVICES = [
   {
-    title: t("otherServices.items.0.title"),
+    title: t("home:otherServices.items.item1"),
   },
   {
-    title: t("otherServices.items.1.title"),
+    title: t("home:otherServices.items.item2"),
   },
   {
-    title: t("otherServices.items.2.title"),
+    title: t("home:otherServices.items.item3"),
   },
   {
-    title: t("otherServices.items.3.title"),
+    title: t("home:otherServices.items.item4"),
   },
   {
-    title: t("otherServices.items.4.title"),
+    title: t("home:otherServices.items.item5"),
   },
   {
-    title: t("otherServices.items.5.title"),
+    title: t("home:otherServices.items.item6"),
   },
 ] as const;
