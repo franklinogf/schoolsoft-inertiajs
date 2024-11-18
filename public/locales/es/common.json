@@ -1,41 +1,50 @@
 {
+  "student": "Estudiante",
+  "students": "Estudiantes",
+  "note": "Nota",
   "notes": "Notas",
   "grade": {
     "label": "Grado",
-    "initialGrade": "Grado Inicial",
-    "finalGrade": "Grado Final"
+    "pluralLabel": "Grados",
+    "initialGrade": "$t(grade.label) Inicial",
+    "finalGrade": "$t(grade.label) Final"
   },
   "date": {
     "label": "Fecha",
-    "initialDate": "Fecha Inicial",
-    "finalDate": "Fecha Final"
+    "pluralLabel": "Fechas",
+    "initialDate": "$t(date.label) Inicial",
+    "finalDate": "$t(date.label) Final"
   },
   "trimester": {
     "label": "Trimestre",
-    "1": "1er Trimestre",
-    "2": "2do Trimestre",
-    "3": "3er Trimestre",
-    "4": "4to Trimestre",
+    "pluralLabel": "Trimestres",
+    "1": "1er $t(trimester.label, lowercase)",
+    "2": "2do $t(trimester.label, lowercase)",
+    "3": "3er $t(trimester.label, lowercase)",
+    "4": "4to $t(trimester.label, lowercase)",
     "summer": "Verano"
   },
   "course": {
-    "label": "Curso"
+    "label": "Curso",
+    "pluralLabel": "Cursos"
   },
   "gender": {
     "label": "Género",
+    "pluralLabel": "Géneros",
     "male": "Masculino",
     "female": "Femenino"
   },
   "pages": {
     "label": "Pagína",
+    "pluralLabel": "Páginas",
     "grades": "Notas",
-    "grades2": "Notas2",
+    "grades2": "$t(pages.grades)2",
     "shortTests": "Pruebas Cortas",
     "dailyWork": "Trabajos Diarios",
     "notebookWork": "Trabajos de Libreta",
     "conductAttendance": "Conducta y Asistencia",
     "finalExam": "Examen Final",
-    "summerGrades": "Verano Notas"
+    "summerGrades": "Verano $t(pages.grades)"
   },
   "yes": "Sí",
   "no": "No",
@@ -70,5 +79,16 @@
   },
   "signIn": "Iniciar sesión",
   "changePassword": "Cambiar contraseña",
-  "changePasswordSuccess": "Contraseña cambiada con éxito"
+  "changePasswordSuccess": "Contraseña cambiada con éxito",
+  "tpa": "TPA",
+  "tdp": "TDP",
+  "pcor": "PCOR",
+  "attendance": "Asistencia",
+  "conduct": "Conducta",
+  "absences": "Ausencias",
+  "tardies": "Tardanzas",
+  "demerits": "Deméritos",
+  "value": "Valor",
+  "values": "Valores",
+  "topic": "Tema"
 }

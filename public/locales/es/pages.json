@@ -119,6 +119,44 @@
           "attendanceReport": "Informe de asistencia",
           "preschool": "Preescolar"
         }
+      },
+      "show": {
+        "meta": { "title": "Entrada de notas", "description": "Página de entrada de notas" },
+        "card1": {
+          "title": "Información",
+          "studentsTotal": "Total de estudiantes",
+          "addingNotes": "Añadiendo notas a",
+          "noteType": {
+            "label": "Tipo de nota",
+            "sum": "Suma",
+            "percent": "Porcentaje"
+          }
+        },
+        "card2": {
+          "title": "Opciones",
+          "convertToLetters": {
+            "label": "Convertir a letras",
+            "description": "Aplicada a la columna Nota {{ noteNumber }} exclusivamente"
+          },
+          "convert": {
+            "label": "Convertir",
+            "description": "Convertir los numeros a letras"
+          },
+          "notification": {
+            "label": "Notificación",
+            "description": "Marcar cuando el trimestre termine"
+          }
+        },
+        "importantAlert": {
+          "title": "¡Importante!",
+          "message": "Recuerda ir a la pagina de notas y darle a grabar para tener los promédios correctos."
+        },
+        "successMessage": {
+          "default": "Notas guardadas correctamente",
+          "attendance": "Asistencia guardada correctamente",
+          "exam": "Nota del examen guardado correctamente",
+          "values": "Valores guardados correctamente"
+        }
       }
     }
   }
