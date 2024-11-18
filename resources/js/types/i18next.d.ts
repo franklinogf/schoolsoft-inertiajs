@@ -1,5 +1,6 @@
 import "i18next";
 import common from "../../../public/locales/es/common.json";
+import home from "../../../public/locales/es/home.json";
 import input from "../../../public/locales/es/input.json";
 import pages from "../../../public/locales/es/pages.json";
 
@@ -13,7 +14,7 @@ declare module "i18next" {
       common: typeof common;
       input: typeof input;
       pages: typeof pages;
-      home: typeof input;
+      home: typeof home;
     };
     // other
   }
