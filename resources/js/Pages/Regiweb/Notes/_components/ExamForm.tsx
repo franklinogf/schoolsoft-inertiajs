@@ -22,7 +22,7 @@ interface DefaultFormProps {
 export function ExamForm({ students }: DefaultFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "pages"]);
   const { page, trimester, course } = useContext(OptionsContext);
   const { errors } = usePage().props;
 
@@ -61,7 +61,7 @@ export function ExamForm({ students }: DefaultFormProps) {
       {
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(t("Notas del examen guardadas correctamente"));
+          toast.success(t("pages:regiweb.notes.show.successMessage.exam"));
           setStudentsChangedToFalse();
         },
         onError: () => {
@@ -101,8 +101,8 @@ export function ExamForm({ students }: DefaultFormProps) {
           <TableHeader>
             <TableRow className="bg-primary hover:bg-primary [&>th]:text-center [&>th]:text-primary-foreground">
               <TableHead className="!text-left">#</TableHead>
-              <TableHead>Estudiante</TableHead>
-              <TableHead>Nota</TableHead>
+              <TableHead>{t("common:student")}</TableHead>
+              <TableHead>{t("common:note")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

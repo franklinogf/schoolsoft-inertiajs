@@ -61,7 +61,7 @@ export default function Page({
   const [convert, setConvert] = useState(false);
 
   const [values, setValues] = useState(gradesValues);
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "pages"]);
 
   function handleValueChange(valueKey: string, value: string) {
     if (!values) return;
@@ -75,59 +75,70 @@ export default function Page({
     setValues(updatedValues);
   }
   return (
-    <RegiwebLayout title={t("Entrada de notas")}>
+    <RegiwebLayout title={t("pages:regiweb.notes.show.meta.title")}>
       <section className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("Información")}</CardTitle>
+            <CardTitle>{t("pages:regiweb.notes.show.card1.title")}</CardTitle>
             <CardDescription hidden></CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              <InfoBadge label={t("Curso")} value={course} />
-              <InfoBadge label={t("Trimestre")} value={TRIMESTERS[trimester]} />
-              <InfoBadge label={t("Entrando notas a")} value={PAGES[page]} />
-              <InfoBadge label={t("Total de estudiantes")} value={studentsGrades.length} />
+              <InfoBadge label={t("common:course.label")} value={course} />
+              <InfoBadge label={t("common:trimester.label")} value={TRIMESTERS[trimester]} />
               <InfoBadge
-                label={t("Fecha de inicio")}
+                label={t("pages:regiweb.notes.show.card1.addingNotes")}
+                value={PAGES[page]}
+              />
+              <InfoBadge
+                label={t("pages:regiweb.notes.show.card1.studentsTotal")}
+                value={studentsGrades.length}
+              />
+              <InfoBadge
+                label={t("common:date.initialDate")}
                 value={formatDate(initialDate, { dateStyle: "long" })}
               />
               <InfoBadge
-                label={t("Fecha de cierre")}
+                label={t("common:date.finalDate")}
                 value={formatDate(finalDate, { dateStyle: "long" })}
               />
-              <InfoBadge label={t("Tipo de nota")} value={isPercent ? t("Porciento") : t("Suma")} />
+              <InfoBadge
+                label={t("pages:regiweb.notes.show.card1.noteType.label")}
+                value={
+                  isPercent
+                    ? t("pages:regiweb.notes.show.card1.noteType.percent")
+                    : t("pages:regiweb.notes.show.card1.noteType.sum")
+                }
+              />
             </div>
           </CardContent>
         </Card>
         {(page === PagesEnum.GRADES || page === PagesEnum.SUMMER_GRADES) && (
           <Card>
             <CardHeader>
-              <CardTitle>{t("Opciones")}</CardTitle>
+              <CardTitle>{t("pages:regiweb.notes.show.card2.title")}</CardTitle>
               <CardDescription hidden></CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <SwitchCheckbox
                   checked={isLetter}
-                  label={t("Convertir a letras")}
-                  description={
-                    page === PagesEnum.GRADES
-                      ? t("Esta opción es aplicada a la columna Nota 9 exclusivamente")
-                      : t("Esta opción es aplicada a la columna Nota 7 exclusivamente")
-                  }
+                  label={t("pages:regiweb.notes.show.card2.convertToLetters.label")}
+                  description={t("pages:regiweb.notes.show.card2.convertToLetters.description", {
+                    noteNumber: page === PagesEnum.GRADES ? 9 : 7,
+                  })}
                 />
                 <SwitchCheckbox
                   checked={convert}
                   onChange={setConvert}
-                  label={t("Conversión")}
-                  description={t("Esta opción convierte numeros a letras")}
+                  label={t("pages:regiweb.notes.show.card2.convert.label")}
+                  description={t("pages:regiweb.notes.show.card2.convert.description")}
                 />
                 {canEnd && (
                   <SwitchCheckbox
                     checked={hasEnded}
-                    label={t("Notificación")}
-                    description={t("Cuando el trimestre termine marque esta opción")}
+                    label={t("pages:regiweb.notes.show.card2.notification.label")}
+                    description={t("pages:regiweb.notes.show.card2.notification.description")}
                   />
                 )}
               </div>
@@ -140,9 +151,9 @@ export default function Page({
         page !== PagesEnum.CONDUCT_ATTENDANCE ? (
           <Alert variant="warning">
             <Info className="size-4" />
-            <AlertTitle>{t("Importante")}</AlertTitle>
+            <AlertTitle>{t("pages:regiweb.notes.show.importantAlert.title")}</AlertTitle>
             <AlertDescription>
-              Recuerda ir a la pagina de notas y darle a grabar para tener los promédios correctos.
+              {t("pages:regiweb.notes.show.importantAlert.message")}
             </AlertDescription>
           </Alert>
         ) : null}

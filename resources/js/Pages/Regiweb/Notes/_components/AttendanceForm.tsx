@@ -22,7 +22,7 @@ interface DefaultFormProps {
 export function AttendaceForm({ students }: DefaultFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation(["common", "pages"]);
   const { page, trimester, course } = useContext(OptionsContext);
   const { errors } = usePage().props;
 
@@ -66,7 +66,7 @@ export function AttendaceForm({ students }: DefaultFormProps) {
       {
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(t("Asistencias guardadas correctamente"));
+          toast.success(t("pages:regiweb.notes.show.successMessage.attendance"));
           setStudentsChangedToFalse();
         },
         onError: () => {
@@ -106,11 +106,11 @@ export function AttendaceForm({ students }: DefaultFormProps) {
           <TableHeader>
             <TableRow className="bg-primary hover:bg-primary [&>th]:text-center [&>th]:text-primary-foreground">
               <TableHead className="!text-left">#</TableHead>
-              <TableHead>Estudiante</TableHead>
-              <TableHead>Conducta</TableHead>
-              <TableHead>Ausencias</TableHead>
-              <TableHead>Tardanzas</TableHead>
-              <TableHead>Deméritos</TableHead>
+              <TableHead>{t("common:student")}</TableHead>
+              <TableHead>{t("common:conduct")}</TableHead>
+              <TableHead>{t("common:absences")}</TableHead>
+              <TableHead>{t("common:tardies")}</TableHead>
+              <TableHead>{t("common:demerits")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
