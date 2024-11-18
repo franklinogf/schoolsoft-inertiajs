@@ -15,22 +15,22 @@ import { Teacher } from "@/types/teacher";
 import { Link } from "@inertiajs/react";
 import { Menu, UserCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
+// i18n.loadNamespaces("pages");
 const menuItems = [
-  { label: "Notas", route: "regiweb.notes.index" },
-  { label: "Opciones", route: "regiweb.home" },
-  { label: "Informes", route: "regiweb.home" },
-];
+  { label: "item1", route: "regiweb.notes.index" },
+  { label: "item2", route: "regiweb.home" },
+  { label: "item3", route: "regiweb.home" },
+] as const;
 interface HeaderProps {
   user: Teacher;
 }
 export default function Header({ user }: HeaderProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(["pages"], { keyPrefix: "regiweb.menu" });
   return (
     <header className="flex h-16 items-center bg-secondary px-4 shadow">
       <div className="mr-8">
         <Link href={route("regiweb.home")}>
-          <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt={t("Logo regiweb")} />
+          <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt={t("imageAlt")} />
         </Link>
       </div>
       <NavigationMenu className="hidden md:flex">
@@ -59,12 +59,12 @@ export default function Header({ user }: HeaderProps) {
           <DropdownMenuItem>
             <Link href={route("regiweb.profile.show")} className="flex w-full grow items-center">
               <UserCircle className="mr-1 size-4" />
-              {t("Perfil")}
+              {t("user.item1")}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link method="delete" as="button" href={route("regiweb.logout")}>
-              {t("Cerrar sesión")}
+              {t("user.item2")}
             </Link>
           </DropdownMenuItem>
         </UserProfileDropdownButton>
@@ -108,12 +108,12 @@ export default function Header({ user }: HeaderProps) {
                       className="flex w-full grow items-center"
                     >
                       <UserCircle className="mr-1 size-4" />
-                      {t("Perfil")}
+                      {t("user.item1")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link method="delete" as="button" href={route("regiweb.logout")}>
-                      {t("Cerrar sesión")}
+                      {t("user.item2")}
                     </Link>
                   </DropdownMenuItem>
                 </UserProfileDropdownButton>
