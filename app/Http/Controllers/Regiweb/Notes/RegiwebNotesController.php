@@ -407,7 +407,12 @@ class RegiwebNotesController extends Controller
         //         'text' => [false, '60%', '10%', '10%', '20%']
         //     ];
         // } else {
-        $columnsArray = ['Bono', 'T-Diario', 'T-Libreta', 'P-Cor'];
+        $columnsArray = [
+            __('common.bonus.long'),
+             __('common.dailyWork.short'),
+              __('common.notebookWork.short'), 
+              __('common.shortTests.short')
+            ];
         // }
 
         return [
