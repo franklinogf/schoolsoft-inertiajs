@@ -11,11 +11,18 @@
       }
     },
     "login": {
+      "meta": {
+        "title": "Iniciar sesión",
+        "description": "Página de inicio de sesión"
+      },
       "title": "Iniciar sesión",
       "imageAlt": "Logo de Regiweb"
     },
     "index": {
-      "title": "Inicio",
+      "meta": {
+        "title": "Inicio",
+        "description": "Página de inicio"
+      },
       "imageAlt": "Logo de Regiweb",
       "card": {
         "title": "Bienvenido a Regiweb",
@@ -28,9 +35,19 @@
       }
     },
     "home": {
-      "title": "Inicio",
+      "meta": {
+        "title": "Inicio",
+        "description": "Página de inicio"
+      },
       "imageAlt": "Globo terraqueo",
-      "message": "Conectate de cualquier parte del mundo"
+      "title": "Conectate de cualquier parte del mundo"
+    },
+    "profile": {
+      "meta": {
+        "title": "Perfil",
+        "description": "Información del usuario"
+      },
+      "title": "Mi Perfil"
     }
   }
 }

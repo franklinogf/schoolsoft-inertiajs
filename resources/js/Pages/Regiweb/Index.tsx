@@ -14,7 +14,7 @@ export default function IndexPage({ auth: { user }, ip }: IndexPageProps) {
   const { t } = useTranslation(["pages", "common"]);
   return (
     <>
-      <Head title={t("regiweb.index.title", { ns: "pages" })} />
+      <Head title={t("regiweb.index.meta.title", { ns: "pages" })} />
       <main className="flex min-h-dvh place-items-center justify-center">
         <div className="w-[700px] px-2">
           <div className="flex justify-center">

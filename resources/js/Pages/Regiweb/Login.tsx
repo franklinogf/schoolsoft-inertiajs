@@ -8,7 +8,7 @@ export default function Page({ flash }: PageProps) {
   const { t } = useTranslation("pages");
   return (
     <>
-      <Head title={t("regiweb.login.title")} />
+      <Head title={t("regiweb.login.meta.title")} />
       <div className="fle-col flex min-h-dvh items-center justify-center px-4 py-6">
         <div className="grid w-full max-w-6xl items-center gap-4 md:grid-cols-2">
           <LoginForm
