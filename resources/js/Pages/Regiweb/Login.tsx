@@ -2,11 +2,13 @@ import { LoginForm } from "@/Components/forms/LoginForm";
 import { LOGIN_REGIWEB_PICTURE } from "@/Constants";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 
 export default function Page({ flash }: PageProps) {
+  const { t } = useTranslation("pages");
   return (
     <>
-      <Head title="Login" />
+      <Head title={t("regiweb.login.title")} />
       <div className="fle-col flex min-h-dvh items-center justify-center px-4 py-6">
         <div className="grid w-full max-w-6xl items-center gap-4 md:grid-cols-2">
           <LoginForm
@@ -18,7 +20,7 @@ export default function Page({ flash }: PageProps) {
             <img
               src={LOGIN_REGIWEB_PICTURE}
               className="mx-auto block h-full w-full object-contain max-md:w-4/5"
-              alt="Logo regiweb"
+              alt={t("regiweb.login.imageAlt")}
             />
           </div>
         </div>
