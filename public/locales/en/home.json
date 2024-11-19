@@ -51,5 +51,51 @@
         "title": "Website for your school."
       }
     ]
+  },
+  "modules": {
+    "title": "Modules",
+    "items": [
+      {
+        "title": "Student Information",
+        "description": "Student record, father, mother, guardian, teachers, vaccines, diseases, disabilities, re-enrollment, homeroom, data control, indexes, record search, socio-economic, medical, totals by grade, account list, address report, phone list, work list, parent list, new student report, discount list, labels, certified letter, and a variety of reports."
+      },
+      {
+        "title": "Grading System",
+        "description": "Course catalog, subjects, special programs, entry of grades and behavior by trimester, teacher's log, calculate trimester and semester grades, merits, demerits, failures, honor roll, ranges, trimester averages, summer grades, report cards, comment screen for the report card, messages for the report card, class schedule, grade distribution, grade log, cumulative and a variety of reports."
+      },
+      {
+        "title": "Electronic Record",
+        "description": "Entry of daily work grades, projects, notebook work, exams, trimester behavior, trimester, semester, and final averages, trimester attendance, daily plans, and a variety of reports."
+      },
+      {
+        "title": "Accounts Receivable",
+        "description": "Budget, costs, discounts, payment screen, surcharges, payment booklet, list of debtors, account statement, daily payments, generates different collection letters, 30-60-90 info, receipt, and a variety of reports."
+      },
+      {
+        "title": "Church System",
+        "description": "Marriage, Baptism, Communion, Denial, Confirmation, and Notification certificates, etc."
+      }
+    ]
+  },
+  "regiweb": {
+    "title": "Regiweb",
+    "items": [
+      {
+        "title": "Regiweb",
+        "description": "Includes grade entry; the teacher can enter different types of grades, such as exams, quizzes, daily work, notebook assignments, attendance, behavior, and send homework. The teacher can communicate with parents through the web, mobile, or email. Various reports can be printed."
+      },
+      {
+        "title": "Parent Module",
+        "description": "Parents can view their children's grades, communicate with teachers via web or email, update their information, enable or disable email notifications, and request appointments with teachers."
+      },
+      {
+        "title": "Administration",
+        "description": "The school can manage modules, general school information, control start and end dates of trimesters, import and export data, activate and deactivate users, send messages through the web, mobile, or email, and generate various reports."
+      },
+      {
+        "title": "Event Calendar",
+        "description": "Allows adding different activities throughout the year. Anyone can view the calendar, but only the administrator or designated person can add, modify, or delete events. These modules include maintenance for updates and changes suggested by the institution."
+      }
+    ]
   }
 }
