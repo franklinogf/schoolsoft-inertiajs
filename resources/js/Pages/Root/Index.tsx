@@ -23,10 +23,10 @@ const listVariants: Variants = {
 };
 
 export default function Page() {
-  const { t } = useTranslation("home");
+  const { t } = useTranslation("home", { keyPrefix: "index" });
   return (
     <>
-      <Head title="Inicio" />
+      <Head title={t("meta.title")} />
       <div className="absolute top-0 z-[-2] h-full w-full bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
       <MaxWidthSection className="relative">
         <div className="mx-auto grid max-w-screen-xl lg:grid-cols-12 lg:gap-8 xl:gap-0">
