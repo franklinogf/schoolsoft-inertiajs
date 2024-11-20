@@ -79,7 +79,7 @@ export default function Page() {
             variants={listVariants}
             className="title mb-8"
           >
-            Servicios
+            {t("services.title")}
           </motion.h2>
           <div className="space-y-8 md:grid md:grid-cols-2 md:gap-10 md:space-y-0 lg:grid-cols-3">
             {SERVICES.map(({ title, description, Icon }, i) => (
@@ -111,7 +111,7 @@ export default function Page() {
             variants={listVariants}
             className="title mb-8"
           >
-            Otros Servicios
+            {t("otherServices.title")}
           </motion.h2>
           <div className="grid max-w-3xl grid-cols-1 gap-2 md:mx-auto md:mb-2 md:grid-cols-2">
             {OTHER_SERVICES.map(({ title }) => (
