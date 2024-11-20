@@ -1,11 +1,9 @@
 {
-  "btnContact": {
-    "label": "Contact"
-  },
   "menu": {
     "item1": "Home",
     "item2": "Modules",
-    "item3": "Regiweb"
+    "item3": "Regiweb",
+    "btnContact": "Contact us"
   },
   "hero": {
     "title": "Administrative system for schools",
@@ -93,5 +91,14 @@
         "description": "Allows adding activities scheduled throughout the year. Anyone can view the calendar, but only the administrator or authorized person can add, modify, or delete events. These modules include maintenance for updates and institution-requested changes."
       }
     }
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact us",
+      "description": "Contact SchoolSoft to request a demonstration of our administrative system for schools."
+    },
+    "title": "Contact Form",
+    "btn": "Send message",
+    "success": "Message sent successfully"
   }
 }

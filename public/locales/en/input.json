@@ -7,6 +7,7 @@
   "email": "Email",
   "primaryEmail": "Primary Email",
   "secondaryEmail": "Secondary Email",
+  "phone": "Phone",
   "residencePhone": "Residence Phone",
   "mobilePhone": "Mobile Phone",
   "mobilePhoneCompany": "Mobile Phone Company",
@@ -33,5 +34,25 @@
   "vicePresident": "Vice President",
   "secretary": "Secretary",
   "licenses": "Licenses",
-  "expire": "Expire"
+  "expires": "Expires",
+  "message": "Message",
+  "defaultPlaceholders": {
+    "date": "Select a date",
+    "message": "Write a message"
+  },
+  "placeholder": {
+    "select": {
+      "course": "Select the course",
+      "trimester": "Select the trimester",
+      "page": "Select the page"
+    }
+  },
+  "profilePictureDragDrop": {
+    "defaultLabel": "Profile Picture",
+    "status": {
+      "active": "Drop an image here",
+      "inactive": "Drag and drop an image here or click to select",
+      "change": "Drag and drop an image here to change"
+    }
+  }
 }

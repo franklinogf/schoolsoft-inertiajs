@@ -1,11 +1,9 @@
 {
-  "btnContact": {
-    "label": "Contactar"
-  },
   "menu": {
     "item1": "Inicio",
     "item2": "Modulos",
-    "item3": "Regiweb"
+    "item3": "Regiweb",
+    "btnContact": "Contactanos"
   },
   "hero": {
     "title": "Sistema administrativo para colegios",
@@ -93,5 +91,14 @@
         "description": "Puede añadir las diferentes actividades que se llevarán a cabo durante todo el año. Cualquiera puede ver el calendario pero solamente el administrador o persona encargada puede añadir, modificar o borrar eventos. Estos módulos tienen incluido el mantenimiento para Update y cambios sugeridos por la institución."
       }
     }
+  },
+  "contact": {
+    "meta": {
+      "title": "Contactanos",
+      "description": "Contacta a SchoolSoft para solicitar una demostración de nuestro sistema administrativo para colegios."
+    },
+    "title": "Formulario de contacto",
+    "btn": "Enviar mensaje",
+    "success": "Mensaje enviado con éxito"
   }
 }
