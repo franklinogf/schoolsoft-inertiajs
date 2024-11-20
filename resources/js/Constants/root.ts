@@ -1,5 +1,19 @@
 import i18n from "@/lib/i18n";
-import { Computer, Globe, MonitorSpeaker, Origami, Wrench } from "lucide-react";
+import {
+  BadgeInfo,
+  BriefcaseBusiness,
+  CalendarClock,
+  Computer,
+  FileCheck,
+  Globe,
+  MonitorSpeaker,
+  NotebookPen,
+  Origami,
+  PieChart,
+  School,
+  Users,
+  Wrench,
+} from "lucide-react";
 i18n.loadNamespaces("home");
 const { t } = i18n;
 export const MENU_LINKS = [
@@ -64,4 +78,53 @@ export const OTHER_SERVICES = [
   {
     title: t("home:otherServices.items.item6"),
   },
-] as const;
+];
+export const MODULES = [
+  {
+    title: t("home:modules.items.item1.title"),
+    description: t("home:modules.items.item1.description"),
+    Icon: BadgeInfo,
+  },
+  {
+    title: t("home:modules.items.item2.title"),
+    description: t("home:modules.items.item2.description"),
+    Icon: NotebookPen,
+  },
+  {
+    title: t("home:modules.items.item3.title"),
+    description: t("home:modules.items.item3.description"),
+    Icon: BriefcaseBusiness,
+  },
+  {
+    title: t("home:modules.items.item4.title"),
+    description: t("home:modules.items.item4.description"),
+    Icon: PieChart,
+  },
+  {
+    title: t("home:modules.items.item5.title"),
+    description: t("home:modules.items.item5.description"),
+    Icon: FileCheck,
+  },
+];
+export const REGIWEB = [
+  {
+    title: t("home:regiweb.items.item1.title"),
+    description: t("home:regiweb.items.item1.description"),
+    Icon: Globe,
+  },
+  {
+    title: t("home:regiweb.items.item2.title"),
+    description: t("home:regiweb.items.item2.description"),
+    Icon: Users,
+  },
+  {
+    title: t("home:regiweb.items.item3.title"),
+    description: t("home:regiweb.items.item3.description"),
+    Icon: School,
+  },
+  {
+    title: t("home:regiweb.items.item4.title"),
+    description: t("home:regiweb.items.item4.description"),
+    Icon: CalendarClock,
+  },
+];
