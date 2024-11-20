@@ -23,5 +23,18 @@ return [
     ],
     'notebookWork' => [
         'long' => 'Notebook works',
+        'short' => 'N-Work',
+    ],
+    'conductAttendance' => [
+        'long' => 'Conduct and attendance',
+        'short' => 'CA',
+    ],
+    'finalExam' => [
+        'long' => 'Final exam',
+        'short' => 'FE',
+    ],
+    'summerGrades' => [
+        'long' => 'Summer notes',
+        'short' => 'SG',
     ],
 ];
