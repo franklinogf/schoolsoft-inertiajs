@@ -68,7 +68,7 @@ export function NavBar() {
       <NavLinks />
 
       <Button size="sm" asChild>
-        <Link href={route("contact.index")}>{t("btnContact.label")}</Link>
+        <Link href={route("contact.index")}>{t("menu.btnContact")}</Link>
       </Button>
     </header>
   );
