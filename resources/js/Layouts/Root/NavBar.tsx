@@ -19,8 +19,10 @@ import { MENU_LINKS } from "@/Constants/root";
 import { cn } from "@/lib/utils";
 import { Link } from "@inertiajs/react";
 import { Menu } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function NavBar() {
+  const { t } = useTranslation("home");
   const pathname = route().current();
   return (
     <header className="sticky top-0 z-40 flex h-16 w-full items-center justify-between bg-background px-4 shadow-xl">
@@ -66,7 +68,7 @@ export function NavBar() {
       <NavLinks />
 
       <Button size="sm" asChild>
-        <Link href={route("contact.index")}>Contactar</Link>
+        <Link href={route("contact.index")}>{t("btnContact.label")}</Link>
       </Button>
     </header>
   );

@@ -1,4 +1,7 @@
 {
+  "btnContact": {
+    "label": "Contactar"
+  },
   "menu": {
     "item1": "Inicio",
     "item2": "Modulos",
