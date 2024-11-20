@@ -6,51 +6,39 @@
   },
   "services": {
     "title": "Services",
-    "items": [
-      {
+    "items": {
+      "item1": {
         "title": "Implementation Service",
         "description": "This includes coordination for training stages with implementation dates. Material (manuals, etc.) for staff training. Follow-up to ensure the tasks required to complete the implementation of the SchoolSoft system are carried out for the benefit of the institution."
       },
-      {
+      "item2": {
         "title": "Regiweb",
         "description": "The new all-internet service, complete teacher registration, parents can view their children's grades, manage all accounts, and much more."
       },
-      {
+      "item3": {
         "title": "Technical Support",
         "description": "Individual technical assistance for administrative and teaching staff, by phone, internet, or remote control. All these technical support access options are available according to the needs and facilities available at the institution."
       },
-      {
+      "item4": {
         "title": "Repair Service",
         "description": "Parts and service for school equipment installed by our company."
       },
-      {
+      "item5": {
         "title": "Laboratory Rental",
         "description": "Offer your students a modern lab with all applications such as Office 2018, class control, educational programs, antivirus, Windows 10, Windows Server 2018, among other options. Call us, and we will improve any written offer."
       }
-    ]
+    }
   },
   "otherServices": {
     "title": "Other Services",
-    "items": [
-      {
-        "title": "Network configurations."
-      },
-      {
-        "title": "Sale of Computers and all types of accessories."
-      },
-      {
-        "title": "Computer Rental for laboratory."
-      },
-      {
-        "title": "Wireless Connection throughout the school."
-      },
-      {
-        "title": "Computer Maintenance Services."
-      },
-      {
-        "title": "Website for your school."
-      }
-    ]
+    "items": {
+      "item1": "Network configurations.",
+      "item2": "Sale of Computers and all types of accessories.",
+      "item3": "Computer Rental for laboratory.",
+      "item4": "Wireless Connection throughout the school.",
+      "item5": "Computer Maintenance Services.",
+      "item6": "Website for your school."
+    }
   },
   "modules": {
     "title": "Modules",
