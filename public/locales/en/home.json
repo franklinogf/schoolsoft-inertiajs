@@ -5,45 +5,51 @@
     "item3": "Regiweb",
     "btnContact": "Contact us"
   },
-  "hero": {
-    "title": "Administrative system for schools",
-    "description": "Program designed in Spanish and English with a sophisticated security system for access control. This administrative system facilitates administrative tasks, increasing efficiency and providing more time to focus on the supervision phase of educational processes.",
-    "button": "Request a demonstration"
-  },
-  "services": {
-    "title": "Services",
-    "items": {
-      "item1": {
-        "title": "Implementation Service",
-        "description": "This includes coordination for training stages with implementation dates. Material (manuals, etc.) for staff training. Follow-up to ensure the tasks required to complete the implementation of the SchoolSoft system are carried out for the benefit of the institution."
-      },
-      "item2": {
-        "title": "Regiweb",
-        "description": "The new all-internet service, complete teacher registration, parents can view their children's grades, manage all accounts, and much more."
-      },
-      "item3": {
-        "title": "Technical Support",
-        "description": "Individual technical assistance for administrative and teaching staff, by phone, internet, or remote control. All these technical support access options are available according to the needs and facilities available at the institution."
-      },
-      "item4": {
-        "title": "Repair Service",
-        "description": "Parts and service for school equipment installed by our company."
-      },
-      "item5": {
-        "title": "Laboratory Rental",
-        "description": "Offer your students a modern lab with all applications such as Office 2018, class control, educational programs, antivirus, Windows 10, Windows Server 2018, among other options. Call us, and we will improve any written offer."
+  "index": {
+    "meta": {
+      "title": "SchoolSoft | Administrative system for schools",
+      "description": "SchoolSoft is an administrative system for schools designed in Spanish and English with a sophisticated security system for access control."
+    },
+    "hero": {
+      "title": "Administrative system for schools",
+      "description": "Program designed in Spanish and English with a sophisticated security system for access control. This administrative system facilitates administrative tasks, increasing efficiency and providing more time to focus on the supervision phase of educational processes.",
+      "button": "Request a demonstration"
+    },
+    "services": {
+      "title": "Services",
+      "items": {
+        "item1": {
+          "title": "Implementation Service",
+          "description": "This includes coordination for training stages with implementation dates. Material (manuals, etc.) for staff training. Follow-up to ensure the tasks required to complete the implementation of the SchoolSoft system are carried out for the benefit of the institution."
+        },
+        "item2": {
+          "title": "Regiweb",
+          "description": "The new all-internet service, complete teacher registration, parents can view their children's grades, manage all accounts, and much more."
+        },
+        "item3": {
+          "title": "Technical Support",
+          "description": "Individual technical assistance for administrative and teaching staff, by phone, internet, or remote control. All these technical support access options are available according to the needs and facilities available at the institution."
+        },
+        "item4": {
+          "title": "Repair Service",
+          "description": "Parts and service for school equipment installed by our company."
+        },
+        "item5": {
+          "title": "Laboratory Rental",
+          "description": "Offer your students a modern lab with all applications such as Office 2018, class control, educational programs, antivirus, Windows 10, Windows Server 2018, among other options. Call us, and we will improve any written offer."
+        }
       }
-    }
-  },
-  "otherServices": {
-    "title": "Other Services",
-    "items": {
-      "item1": "Network configurations.",
-      "item2": "Sale of Computers and all types of accessories.",
-      "item3": "Computer Rental for laboratory.",
-      "item4": "Wireless Connection throughout the school.",
-      "item5": "Computer Maintenance Services.",
-      "item6": "Website for your school."
+    },
+    "otherServices": {
+      "title": "Other Services",
+      "items": {
+        "item1": "Network configurations.",
+        "item2": "Sale of Computers and all types of accessories.",
+        "item3": "Computer Rental for laboratory.",
+        "item4": "Wireless Connection throughout the school.",
+        "item5": "Computer Maintenance Services.",
+        "item6": "Website for your school."
+      }
     }
   },
   "modules": {
