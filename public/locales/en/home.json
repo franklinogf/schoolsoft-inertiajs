@@ -1,4 +1,12 @@
 {
+  "btnContact": {
+    "label": "Contact"
+  },
+  "menu": {
+    "item1": "Home",
+    "item2": "Modules",
+    "item3": "Regiweb"
+  },
   "hero": {
     "title": "Administrative system for schools",
     "description": "Program designed in Spanish and English with a sophisticated security system for access control. This administrative system facilitates administrative tasks, increasing efficiency and providing more time to focus on the supervision phase of educational processes.",
