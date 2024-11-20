@@ -33,50 +33,50 @@ export const MENU_LINKS = [
 
 export const SERVICES = [
   {
-    title: t("home:services.items.item1.title"),
-    description: t("home:services.items.item1.description"),
+    title: t("home:index.services.items.item1.title"),
+    description: t("home:index.services.items.item1.description"),
     Icon: Origami,
   },
   {
-    title: t("home:services.items.item2.title"),
-    description: t("home:services.items.item2.description"),
+    title: t("home:index.services.items.item2.title"),
+    description: t("home:index.services.items.item2.description"),
     Icon: Globe,
   },
   {
-    title: t("home:services.items.item3.title"),
-    description: t("home:services.items.item3.description"),
+    title: t("home:index.services.items.item3.title"),
+    description: t("home:index.services.items.item3.description"),
     Icon: MonitorSpeaker,
   },
   {
-    title: t("home:services.items.item4.title"),
-    description: t("home:services.items.item4.description"),
+    title: t("home:index.services.items.item4.title"),
+    description: t("home:index.services.items.item4.description"),
     Icon: Wrench,
   },
   {
-    title: t("home:services.items.item5.title"),
-    description: t("home:services.items.item5.description"),
+    title: t("home:index.services.items.item5.title"),
+    description: t("home:index.services.items.item5.description"),
     Icon: Computer,
   },
 ];
 
 export const OTHER_SERVICES = [
   {
-    title: t("home:otherServices.items.item1"),
+    title: t("home:index.otherServices.items.item1"),
   },
   {
-    title: t("home:otherServices.items.item2"),
+    title: t("home:index.otherServices.items.item2"),
   },
   {
-    title: t("home:otherServices.items.item3"),
+    title: t("home:index.otherServices.items.item3"),
   },
   {
-    title: t("home:otherServices.items.item4"),
+    title: t("home:index.otherServices.items.item4"),
   },
   {
-    title: t("home:otherServices.items.item5"),
+    title: t("home:index.otherServices.items.item5"),
   },
   {
-    title: t("home:otherServices.items.item6"),
+    title: t("home:index.otherServices.items.item6"),
   },
 ];
 export const MODULES = [
