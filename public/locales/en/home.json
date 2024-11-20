@@ -54,48 +54,48 @@
   },
   "modules": {
     "title": "Modules",
-    "items": [
-      {
+    "items": {
+      "item1": {
         "title": "Student Information",
-        "description": "Student record, father, mother, guardian, teachers, vaccines, diseases, disabilities, re-enrollment, homeroom, data control, indexes, record search, socio-economic, medical, totals by grade, account list, address report, phone list, work list, parent list, new student report, discount list, labels, certified letter, and a variety of reports."
+        "description": "Student records, parent, guardian, teachers, vaccines, illnesses, disabilities, re-enrollment, homeroom, data control, indexes, record search, socioeconomic, medical, totals by grade, account lists, address reports, phone lists, work lists, parent lists, new student report, discount lists, labels, certified letters, and a variety of reports."
       },
-      {
+      "item2": {
         "title": "Grading System",
-        "description": "Course catalog, subjects, special programs, entry of grades and behavior by trimester, teacher's log, calculate trimester and semester grades, merits, demerits, failures, honor roll, ranges, trimester averages, summer grades, report cards, comment screen for the report card, messages for the report card, class schedule, grade distribution, grade log, cumulative and a variety of reports."
+        "description": "Course catalog, subjects, special programs, entry of grades and behaviors by trimester, teacher records, calculation of trimester and semester grades, merits, demerits, failures, rankings, trimester averages, summer grades, report cards, comment section for report cards, messages for report cards, class schedule, grade distribution, grade records, cumulative data, and a variety of reports."
       },
-      {
+      "item3": {
         "title": "Electronic Record",
-        "description": "Entry of daily work grades, projects, notebook work, exams, trimester behavior, trimester, semester, and final averages, trimester attendance, daily plans, and a variety of reports."
+        "description": "Entry of daily work grades, projects, notebook work, exams, trimester behaviors, trimester, semester, and final averages, trimester attendance, daily plans, and a variety of reports."
       },
-      {
+      "item4": {
         "title": "Accounts Receivable",
-        "description": "Budget, costs, discounts, payment screen, surcharges, payment booklet, list of debtors, account statement, daily payments, generates different collection letters, 30-60-90 info, receipt, and a variety of reports."
+        "description": "Budgeting, costs, discounts, payment screen, surcharges, payment booklet, debtor list, account statements, daily payments, creation of various collection letters, 30-60-90 reports, receipts, and a variety of reports."
       },
-      {
+      "item5": {
         "title": "Church System",
-        "description": "Marriage, Baptism, Communion, Denial, Confirmation, and Notification certificates, etc."
+        "description": "Certificates for Marriage, Baptism, Communion, Negative, Confirmation, and Notification, etc."
       }
-    ]
+    }
   },
   "regiweb": {
-    "title": "Regiweba",
-    "items": [
-      {
+    "title": "Regiweb",
+    "items": {
+      "item1": {
         "title": "Regiweb",
-        "description": "Includes grade entry; the teacher can enter different types of grades, such as exams, quizzes, daily work, notebook assignments, attendance, behavior, and send homework. The teacher can communicate with parents through the web, mobile, or email. Various reports can be printed."
+        "description": "Includes grade entry, allowing teachers to input various types of grades such as exams, quizzes, daily work, notebook assignments, attendance, behavior, and send homework. Teachers can communicate with parents via web, mobile, or email and print various reports."
       },
-      {
+      "item2": {
         "title": "Parent Module",
         "description": "Parents can view their children's grades, communicate with teachers via web or email, update their information, enable or disable email notifications, and request appointments with teachers."
       },
-      {
+      "item3": {
         "title": "Administration",
-        "description": "The school can manage modules, general school information, control start and end dates of trimesters, import and export data, activate and deactivate users, send messages through the web, mobile, or email, and generate various reports."
+        "description": "The school can manage modules, general school information, trimester start and end dates, import and export data, activate and deactivate users, send messages via web, mobile, or email, and generate a variety of reports."
       },
-      {
+      "item4": {
         "title": "Event Calendar",
-        "description": "Allows adding different activities throughout the year. Anyone can view the calendar, but only the administrator or designated person can add, modify, or delete events. These modules include maintenance for updates and changes suggested by the institution."
+        "description": "Allows adding activities scheduled throughout the year. Anyone can view the calendar, but only the administrator or authorized person can add, modify, or delete events. These modules include maintenance for updates and institution-requested changes."
       }
-    ]
+    }
   }
 }
