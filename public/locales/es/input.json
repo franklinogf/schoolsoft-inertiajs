@@ -7,6 +7,7 @@
   "email": "Correo electrónico",
   "primaryEmail": "Correo electrónico principal",
   "secondaryEmail": "Correo electrónico secundario",
+  "phone": "Teléfono",
   "residencePhone": "Teléfono residencial",
   "mobilePhone": "Teléfono celular",
   "mobilePhoneCompany": "Compañía de teléfono celular",
@@ -34,8 +35,10 @@
   "secretary": "Secretario",
   "licenses": "Licencias",
   "expires": "Expira",
+  "message": "Mensaje",
   "defaultPlaceholders": {
-    "date": "Seleccione una fecha"
+    "date": "Seleccione una fecha",
+    "message": "Escribe un mensaje"
   },
   "placeholder": {
     "select": {
