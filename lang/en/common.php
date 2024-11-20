@@ -6,7 +6,7 @@ return [
         'short' => 'B',
     ],
     'grades' => [
-        'long' => 'Notes',
+        'long' => 'Grades',
         'short' => 'G',
     ],
     'grades2' => [
