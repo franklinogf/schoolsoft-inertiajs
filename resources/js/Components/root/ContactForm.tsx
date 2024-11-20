@@ -6,9 +6,11 @@ import SubmitButton from "@/Components/forms/SubmitButton";
 import { Card, CardContent } from "@/Components/ui/card";
 import { useForm } from "@inertiajs/react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 export function ContactForm() {
+  const { t } = useTranslation(["home", "input"]);
   const { data, setData, post, processing, errors, reset } = useForm({
     email: "",
     lastname: "",
@@ -20,8 +22,7 @@ export function ContactForm() {
     event.preventDefault();
     post(route("contact.submit"), {
       onSuccess: () => {
-        console.log(data);
-        toast.success("Mensaje enviado con éxito");
+        toast.success(t("home:contact.success"));
         reset();
       },
     });
@@ -37,14 +38,14 @@ export function ContactForm() {
           <form onSubmit={onSubmit} className="space-y-6">
             <FieldsGrid>
               <InputField
-                label="Nombre"
+                label={t("input:name")}
                 data={data}
                 setData={setData}
                 name="name"
                 error={errors.name}
               />
               <InputField
-                label="Apellido"
+                label={t("input:lastname")}
                 data={data}
                 setData={setData}
                 name="lastname"
@@ -52,7 +53,7 @@ export function ContactForm() {
               />
             </FieldsGrid>
             <InputField
-              label="Correo Electrónico"
+              label={t("input:email")}
               type="email"
               data={data}
               setData={setData}
@@ -60,22 +61,22 @@ export function ContactForm() {
               error={errors.email}
             />
             <PhoneField
-              label="Teléfono"
+              label={t("input:phone")}
               data={data}
               setData={setData}
               name="phone"
               error={errors.phone}
             />
             <TextareaField
-              label="Mensaje"
+              label={t("input:message")}
               data={data}
               setData={setData}
               name="message"
-              placeholder="Escribenos tu mensaje..."
+              placeholder={t("input:defaultPlaceholders.message") + "..."}
               error={errors.message}
             />
             <div className="grid w-full">
-              <SubmitButton disabled={processing}>Enviar Mensaje</SubmitButton>
+              <SubmitButton disabled={processing}>{t("home:contact.btn")}</SubmitButton>
             </div>
           </form>
         </CardContent>
