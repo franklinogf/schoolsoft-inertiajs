@@ -28,6 +28,7 @@
     "laravel/pint": "^1.18",
     "laravel/sail": "^1.26",
     "mockery/mockery": "^1.6",
+    "msamgan/laravel-env-keys-checker": "*",
     "nunomaduro/collision": "^8.0",
     "pestphp/pest": "^2.0",
     "pestphp/pest-plugin-laravel": "^2.0",
