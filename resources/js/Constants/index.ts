@@ -1,4 +1,11 @@
-import { GenderEnum, PagesEnum, TrimesterEnum, YesNoEnum } from "@/Enums";
+import {
+  AbsenceEnum,
+  GenderEnum,
+  PagesEnum,
+  TardinessEnum,
+  TrimesterEnum,
+  YesNoEnum,
+} from "@/Enums";
 import i18n from "@/lib/i18n";
 i18n.setDefaultNamespace("common");
 
@@ -14,8 +21,8 @@ export const LOGIN_REGIWEB_PICTURE = LOGO_REGIWEB;
 export const LOGIN_ADMIN_PICTURE = LOGO_SCHOOLSOFT;
 export const LOGIN_FORO_TEACHER_PICTURE = LOGO_SCHOOLSOFT;
 export const LOGIN_FORO_STUDENT_PICTURE = LOGO_SCHOOLSOFT;
-
-export const TRIMESTERS: Record<TrimesterEnum, string> = {
+type Constant<K extends keyof any> = Record<K, string>;
+export const TRIMESTERS: Constant<TrimesterEnum> = {
   "Trimestre-1": i18n.t("trimester.1"),
   "Trimestre-2": i18n.t("trimester.2"),
   "Trimestre-3": i18n.t("trimester.3"),
@@ -23,7 +30,7 @@ export const TRIMESTERS: Record<TrimesterEnum, string> = {
   Verano: i18n.t("trimester.summer"),
 };
 
-export const PAGES: Record<PagesEnum, string> = {
+export const PAGES: Constant<PagesEnum> = {
   Notas: i18n.t("pages.grades"),
   Notas2: i18n.t("pages.grades2"),
   "Pruebas-Cortas": i18n.t("pages.shortTests"),
@@ -34,12 +41,30 @@ export const PAGES: Record<PagesEnum, string> = {
   "V-Nota": i18n.t("pages.summerGrades"),
 };
 
-export const YES_NO: Record<YesNoEnum, string> = {
+export const YES_NO: Constant<YesNoEnum> = {
   SI: i18n.t("yes"),
   NO: i18n.t("no"),
 };
 
-export const GENDERS: Record<GenderEnum, string> = {
+export const GENDERS: Constant<GenderEnum> = {
   m: i18n.t("gender.male"),
   f: i18n.t("gender.female"),
+};
+
+export const ABSENCES_ATTENDANCE: Constant<AbsenceEnum> = {
+  "1": "Situación  en el hogar",
+  "2": "Determinación en el hogar (viaje)",
+  "3": "Actividad con padres (open house)",
+  "4": "Enfermedad",
+  "5": "Cita",
+  "6": "Actividad educativa del colegio",
+  "7": "Sin excusa",
+};
+
+export const TARDINESS_ATTENDANCE: Constant<TardinessEnum> = {
+  "8": "Sin excusa",
+  "9": "Situacion en el hogar",
+  "10": "Problem de transporte",
+  "11": "Enfermedad",
+  "12": "Cita",
 };
