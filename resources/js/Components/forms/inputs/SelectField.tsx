@@ -1,50 +1,57 @@
 import { FieldContainer } from "@/Components/forms/inputs/FieldContainer";
 import { FieldError } from "@/Components/forms/inputs/FieldError";
 import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
+import { Button } from "@/Components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/Components/ui/select";
 import { cn } from "@/lib/utils";
-import { useId } from "react";
+import React, { useId } from "react";
 export type SelectItemType = { key: string; value: string };
-interface SelectFieldProps {
-  data: any;
-  setData: (key: string, value: any) => void;
-  name: string;
+
+type DefaultSelectFieldProps = {
   error?: string;
   label?: string;
   disabled?: boolean;
   className?: string;
   placeholder?: string;
+  clearable?: boolean;
+  value: string;
+  onChange: (value: string) => void;
+};
+
+type SelectFieldPropsWithItems = DefaultSelectFieldProps & {
   items: SelectItemType[];
-}
+  children?: never;
+};
+type SelectFieldPropsWithChildren = DefaultSelectFieldProps & {
+  items?: never;
+  children: React.ReactNode;
+};
+type SelectFieldProps = SelectFieldPropsWithItems | SelectFieldPropsWithChildren;
+
 export function SelectField({
   error,
   label,
   disabled,
   className,
-  data,
-  setData,
-  name,
   placeholder,
   items,
+  children,
+  value,
+  clearable = false,
+  onChange,
 }: SelectFieldProps) {
   const id = useId();
   return (
     <FieldContainer className={className}>
       <FieldLabel disabled={disabled} error={error} id={id} label={label} />
-      <Select
-        name={name}
-        disabled={disabled}
-        defaultValue={data[name]}
-        onValueChange={(value) => {
-          setData(name, value);
-        }}
-      >
+      <Select disabled={disabled} defaultValue={value} onValueChange={onChange}>
         <SelectTrigger
           id={id}
           className={cn({
@@ -54,11 +61,28 @@ export function SelectField({
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
-          {items.map((item) => (
-            <SelectItem key={item.key} value={item.key}>
-              {item.value}
-            </SelectItem>
-          ))}
+          {items
+            ? items.map((item) => (
+                <SelectItem key={item.key} value={item.key}>
+                  {item.value}
+                </SelectItem>
+              ))
+            : children}
+          {clearable && (
+            <>
+              <SelectSeparator />
+              <Button
+                size="sm"
+                onClick={() => {
+                  onChange("");
+                }}
+                className="w-full"
+                variant="secondary"
+              >
+                Deseleccionar
+              </Button>
+            </>
+          )}
         </SelectContent>
       </Select>
       <FieldError error={error} />

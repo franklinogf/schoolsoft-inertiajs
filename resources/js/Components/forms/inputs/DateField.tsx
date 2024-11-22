@@ -10,14 +10,14 @@ import { useId } from "react";
 import { useTranslation } from "react-i18next";
 interface DatePickerInputProps
   extends Pick<DateTimePickerProps, "yearRange" | "displayFormat" | "showOutsideDays"> {
-  data: any;
-  setData: (key: string, value: any) => void;
-  name: string;
   error?: string;
   label?: string;
   disabled?: boolean;
   className?: string;
   placeholder?: string;
+  clearable?: boolean;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 export function DateField({
   label,
@@ -25,11 +25,11 @@ export function DateField({
   className,
   disabled,
   placeholder,
-  data,
-  name,
-  setData,
   yearRange = 80,
   displayFormat = { hour24: "PPP" },
+  clearable = true,
+  value,
+  onChange,
   ...props
 }: DatePickerInputProps) {
   const {
@@ -51,16 +51,16 @@ export function DateField({
           displayFormat={displayFormat}
           granularity="day"
           placeholder={placeholder ?? t("input:defaultPlaceholders.date")}
-          value={formatStringToDate(data[name])}
+          value={formatStringToDate(value)}
           onChange={(value) => {
-            setData(name, formatDateToString(value));
+            onChange && onChange(formatDateToString(value));
           }}
           {...props}
         />
-        {data[name] && !disabled && (
+        {!disabled && clearable && value && (
           <Button
             onClick={() => {
-              setData(name, "");
+              onChange && onChange("");
             }}
             asChild
             className="size-4"
