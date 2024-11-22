@@ -13,7 +13,7 @@ class SchoolYear implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $year = app('school_info')['year'];
+        $year = app('year');
         $builder->where($model->getTable().'.year', $year);
     }
 }
