@@ -58,7 +58,7 @@ export default function Page({ attendanceOption, initialDate, studentsAttendance
           <DateField clearable={false} value={date} onChange={handleChangeDate} />
         </div>
       </section>
-      <section className="mt-8 pb-8">
+      <section className="mt-8">
         <Table className="mx-auto max-w-2xl">
           <TableHeader>
             <TableRow>
