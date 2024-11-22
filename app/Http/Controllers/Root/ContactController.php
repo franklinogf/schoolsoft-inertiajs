@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 class ContactController extends Controller
 {
     public function index()
-    {        
+    {
         return inertia('Root/Contact');
     }
 

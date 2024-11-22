@@ -26,7 +26,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'picture' => ['exclude', Rule::requiredIf(fn() => $this->user()->foto_name === null), 'nullable', 'image'],
+            'picture' => ['exclude', Rule::requiredIf(fn () => $this->user()->foto_name === null), 'nullable', 'image'],
             'nombre' => ['required', 'min:2', 'string'],
             'apellidos' => ['required', 'min:2', 'string'],
             'tel_res' => ['nullable', 'phone:US,PR'],
@@ -83,10 +83,10 @@ class ProfileUpdateRequest extends FormRequest
             'lp2' => ['nullable', Rule::enum(YesNoEnum::class)],
             'lp3' => ['nullable', Rule::enum(YesNoEnum::class)],
             'lp4' => ['nullable', Rule::enum(YesNoEnum::class)],
-            'fex1' => ['nullable', Rule::requiredIf(fn() => $this->request->get('lp1') === YesNoEnum::YES->value), 'date'],
-            'fex2' => ['nullable', Rule::requiredIf(fn() => $this->request->get('lp2') === YesNoEnum::YES->value), 'date'],
-            'fex3' => ['nullable', Rule::requiredIf(fn() => $this->request->get('lp3') === YesNoEnum::YES->value), 'date'],
-            'fex4' => ['nullable', Rule::requiredIf(fn() => $this->request->get('lp4') === YesNoEnum::YES->value), 'date'],
+            'fex1' => ['nullable', Rule::requiredIf(fn () => $this->request->get('lp1') === YesNoEnum::YES->value), 'date'],
+            'fex2' => ['nullable', Rule::requiredIf(fn () => $this->request->get('lp2') === YesNoEnum::YES->value), 'date'],
+            'fex3' => ['nullable', Rule::requiredIf(fn () => $this->request->get('lp3') === YesNoEnum::YES->value), 'date'],
+            'fex4' => ['nullable', Rule::requiredIf(fn () => $this->request->get('lp4') === YesNoEnum::YES->value), 'date'],
 
         ];
     }

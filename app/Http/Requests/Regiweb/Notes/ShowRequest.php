@@ -9,8 +9,8 @@ use Illuminate\Validation\Rule;
 
 class ShowRequest extends FormRequest
 {
-
     protected $redirectRoute = 'regiweb.notes.index';
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -39,8 +39,8 @@ class ShowRequest extends FormRequest
             'trimester' => [
                 'required',
                 Rule::enum(TrimesterEnum::class)->when(
-                    fn() => $this->input('page') === PagesEnum::FINAL_EXAM->value,
-                    fn($rule) => $rule->only([TrimesterEnum::SECOND_TRIMESTER, TrimesterEnum::FOURTH_TRIMESTER])
+                    fn () => $this->input('page') === PagesEnum::FINAL_EXAM->value,
+                    fn ($rule) => $rule->only([TrimesterEnum::SECOND_TRIMESTER, TrimesterEnum::FOURTH_TRIMESTER])
                 ),
             ],
 

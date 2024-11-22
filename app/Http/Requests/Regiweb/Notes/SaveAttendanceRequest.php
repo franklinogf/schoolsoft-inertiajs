@@ -25,19 +25,19 @@ class SaveAttendanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "data" => ["required", "array"],
-            "data.*.id" => ["required", "integer"],
-            "data.*.conduct.value" => ["nullable", 'string'],
-            "data.*.conduct.column" => ["required", 'string'],
-            "data.*.absence.value" => ["nullable", 'string'],
-            "data.*.absence.column" => ["required", 'string'],
-            "data.*.tardy.value" => ["nullable", 'string'],
-            "data.*.tardy.column" => ["required", 'string'],
-            "data.*.demerits.value" => ["nullable", 'string'],
-            "data.*.demerits.column" => ["required", 'string'],
-            "trimester" => ["required", Rule::enum(TrimesterEnum::class)],
-            "page" => ["required", Rule::enum(PagesEnum::class)->only(PagesEnum::CONDUCT_ATTENDANCE)],
-            "course" => ["required", Rule::in($this->user()->courses()->pluck('curso')->toArray())],
+            'data' => ['required', 'array'],
+            'data.*.id' => ['required', 'integer'],
+            'data.*.conduct.value' => ['nullable', 'string'],
+            'data.*.conduct.column' => ['required', 'string'],
+            'data.*.absence.value' => ['nullable', 'string'],
+            'data.*.absence.column' => ['required', 'string'],
+            'data.*.tardy.value' => ['nullable', 'string'],
+            'data.*.tardy.column' => ['required', 'string'],
+            'data.*.demerits.value' => ['nullable', 'string'],
+            'data.*.demerits.column' => ['required', 'string'],
+            'trimester' => ['required', Rule::enum(TrimesterEnum::class)],
+            'page' => ['required', Rule::enum(PagesEnum::class)->only(PagesEnum::CONDUCT_ATTENDANCE)],
+            'course' => ['required', Rule::in($this->user()->courses()->pluck('curso')->toArray())],
         ];
     }
 }

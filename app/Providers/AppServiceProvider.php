@@ -33,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
         App::singleton('school_info', fn () => [
             'year' => Admin::getPrimaryAdmin()->getYear,
         ]);
-        
+
     }
 }

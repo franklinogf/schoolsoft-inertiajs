@@ -80,10 +80,12 @@ class Student extends Model
     {
         return $this->belongsTo(StudentGrade::class, 'ss', 'ss');
     }
+
     public function grades(): HasMany
     {
         return $this->hasMany(StudentGrade::class, 'ss', 'ss');
     }
+
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class, 'grado', 'grado');

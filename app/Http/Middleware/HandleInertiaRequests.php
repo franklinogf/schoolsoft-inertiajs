@@ -37,21 +37,22 @@ class HandleInertiaRequests extends Middleware
         $subPath = Str::before(Str::after($path, '/'), '/');
 
         $guard = match ($subPath) {
-            'admin'   => 'admin',
+            'admin' => 'admin',
             'regiweb' => 'teacher',
             'teacher' => 'teacher',
             'student' => 'student',
-            default   => null,
+            default => null,
 
         };
         $user = null;
         if ($guard) {
-            if($guard === 'teacher' && $request->user($guard)){
+            if ($guard === 'teacher' && $request->user($guard)) {
                 $user = new TeacherResource($request->user($guard));
-            } else{
+            } else {
                 $user = $request->user($guard);
-            }                    
+            }
         }
+
         return [
             ...parent::share($request),
             'csrf_token' => csrf_token(),

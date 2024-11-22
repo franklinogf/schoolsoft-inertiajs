@@ -34,7 +34,7 @@ class Admin extends Model
     public function getYear(): Attribute
     {
         return Attribute::make(
-            get: fn(mixed $value, array $attributes) => $attributes['year'],
+            get: fn (mixed $value, array $attributes) => $attributes['year'],
         );
     }
 }
