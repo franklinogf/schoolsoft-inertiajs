@@ -37,7 +37,7 @@ class RegiwebNotesController extends Controller
     public function show(ShowRequest $request)
     {
 
-        $year = app('school_info')['year'];
+        $year = app('year');
 
         $validated = $request->validated();
         $trimester = $validated['trimester'];
