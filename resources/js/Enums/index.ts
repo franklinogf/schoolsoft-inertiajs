@@ -41,3 +41,21 @@ export enum PagesEnum {
   FINAL_EXAM = "Ex-Final",
   SUMMER_GRADES = "V-Nota",
 }
+
+export enum AbsenceEnum {
+  HOME = "1",
+  VACATION = "2",
+  PARENTS_ACTIVITY = "3",
+  SICK = "4",
+  APPOINTMENT = "5",
+  SCHOOL_ACTIVITY = "6",
+  NO_EXCUSE = "7",
+}
+
+export enum TardinessEnum {
+  NO_EXCUSE = "8",
+  HOME = "9",
+  TRANSPORTATION = "10",
+  SICK = "11",
+  APPOINTMENT = "12",
+}
