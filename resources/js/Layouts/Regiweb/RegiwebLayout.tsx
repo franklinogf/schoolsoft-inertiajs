@@ -16,7 +16,7 @@ export function RegiwebLayout({ children, title }: RegiwebLayoutProps) {
       <Head title={title} />
       <div className="flex min-h-dvh flex-col">
         <Header user={user} />
-        <div className="px-2 py-4">{children}</div>
+        <main className="px-2 pb-8 pt-4">{children}</main>
       </div>
     </>
   );
