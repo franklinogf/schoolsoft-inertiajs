@@ -19,10 +19,9 @@ class Course extends Model
     protected function descripcion(): Attribute
     {
         return Attribute::make(
-            get: fn(mixed $value, array $attributes) => app()->getLocale() === 'es'
+            get: fn (mixed $value, array $attributes) => app()->getLocale() === 'es'
             ? $attributes['desc1']
             : ($attributes['desc2'] === '' ? $attributes['desc1'] : $attributes['desc2']),
         );
     }
-
 }

@@ -25,29 +25,29 @@ class SaveDefaultRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "data" => ["required", "array"],
-            "data.*.id" => ["required", "integer"],
-            "data.*.notas" => ["required", "array"],
-            "data.*.notas.*.value" => ["nullable", "string"],
-            "data.*.notas.*.column" => ["nullable", "string"],
-            "data.*.total" => ["nullable", "string"],
-            "data.*.tdia" => ["nullable", "numeric"],
-            "data.*.tlib" => ["nullable", "numeric"],
-            "data.*.pcor" => ["nullable", "numeric"],
-            "data.*.tpa" => ["nullable", "numeric"],
-            "data.*.tdp" => ["nullable", "numeric"],
-            "trimester" => ["required", Rule::enum(TrimesterEnum::class)],
-            "page" => [
-                "required",
+            'data' => ['required', 'array'],
+            'data.*.id' => ['required', 'integer'],
+            'data.*.notas' => ['required', 'array'],
+            'data.*.notas.*.value' => ['nullable', 'string'],
+            'data.*.notas.*.column' => ['nullable', 'string'],
+            'data.*.total' => ['nullable', 'string'],
+            'data.*.tdia' => ['nullable', 'numeric'],
+            'data.*.tlib' => ['nullable', 'numeric'],
+            'data.*.pcor' => ['nullable', 'numeric'],
+            'data.*.tpa' => ['nullable', 'numeric'],
+            'data.*.tdp' => ['nullable', 'numeric'],
+            'trimester' => ['required', Rule::enum(TrimesterEnum::class)],
+            'page' => [
+                'required',
                 Rule::enum(PagesEnum::class)->only([
                     PagesEnum::GRADES,
                     PagesEnum::SUMMER_GRADES,
                     PagesEnum::SHORT_TESTS,
                     PagesEnum::DAILY_WORKS,
-                    PagesEnum::NOTEBOOKS_WORKS
-                ])
+                    PagesEnum::NOTEBOOKS_WORKS,
+                ]),
             ],
-            "course" => ["required", Rule::in($this->user()->courses()->pluck('curso')->toArray())],
+            'course' => ['required', Rule::in($this->user()->courses()->pluck('curso')->toArray())],
         ];
     }
 }

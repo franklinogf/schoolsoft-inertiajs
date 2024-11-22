@@ -52,6 +52,7 @@ class User extends Authenticatable implements FilamentUser
     {
         return true;
     }
+
     protected function gate(): void
     {
         Gate::define('viewTelescope', function () {

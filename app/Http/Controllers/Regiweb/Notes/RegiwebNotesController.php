@@ -25,18 +25,18 @@ class RegiwebNotesController extends Controller
 
     ) {
         $this->admin = Admin::getPrimaryAdmin();
-     }
+    }
 
     public function index()
     {
         $this->user->load('courses');
+
         return Inertia::render('Regiweb/Notes/Index');
     }
 
-
     public function show(ShowRequest $request)
-    {       
-        
+    {
+
         $year = app('school_info')['year'];
 
         $validated = $request->validated();
@@ -82,7 +82,7 @@ class RegiwebNotesController extends Controller
             ['year', $year],
         ])->first();
 
-        $isLetter = !$gradeInfo ? false : $gradeInfo->letra === 'ON';
+        $isLetter = ! $gradeInfo ? false : $gradeInfo->letra === 'ON';
         $isPercent = $gradeInfo && $gradeInfo->nota_por === '1';
         $canEnd = $this->admin->sie === 'Si' && intval($this->admin->sieab) === 4;
         $hasEnded = $gradeInfo && $gradeInfo->{$end} === 'X';
@@ -126,18 +126,17 @@ class RegiwebNotesController extends Controller
                     $grades["nota$index"]['column'] = "not$i";
                     $index++;
                 }
-                $tdiaData = $this->findValueFor($_info[PagesEnum::DAILY_WORKS->value]['table'],  $course, $student->ss);
+                $tdiaData = $this->findValueFor($_info[PagesEnum::DAILY_WORKS->value]['table'], $course, $student->ss);
                 $tdia = $tdiaData->{$_info[PagesEnum::DAILY_WORKS->value][$trimester]['totalGrade']} ?? '';
                 $tdiaTdp = $tdiaData->{$_info[PagesEnum::DAILY_WORKS->value][$trimester]['values']['tdp']} ?? '';
-                
-                $tlibData = $this->findValueFor($_info[PagesEnum::NOTEBOOKS_WORKS->value]['table'],  $course, $student->ss);
+
+                $tlibData = $this->findValueFor($_info[PagesEnum::NOTEBOOKS_WORKS->value]['table'], $course, $student->ss);
                 $tlib = $tlibData->{$_info[PagesEnum::NOTEBOOKS_WORKS->value][$trimester]['totalGrade']} ?? '';
                 $tlibTdp = $tlibData->{$_info[PagesEnum::NOTEBOOKS_WORKS->value][$trimester]['values']['tdp']} ?? '';
 
-                $pcorData = $this->findValueFor($_info[PagesEnum::SHORT_TESTS->value]['table'],  $course, $student->ss);
+                $pcorData = $this->findValueFor($_info[PagesEnum::SHORT_TESTS->value]['table'], $course, $student->ss);
                 $pcor = $pcorData->{$_info[PagesEnum::SHORT_TESTS->value][$trimester]['totalGrade']} ?? '';
                 $pcorTdp = $pcorData->{$_info[PagesEnum::SHORT_TESTS->value][$trimester]['values']['tdp']} ?? '';
-                
 
                 $tpa = $student->{$values['tpa']};
                 $tdp = $student->{$values['tdp']};
@@ -159,7 +158,7 @@ class RegiwebNotesController extends Controller
                     'changed' => false,
                 ];
             });
-        } else if ($page === PagesEnum::CONDUCT_ATTENDANCE->value) {
+        } elseif ($page === PagesEnum::CONDUCT_ATTENDANCE->value) {
             $students = StudentGrade::fromTable($thisReport['table'])
                 ->where([
                     ['curso', $course],
@@ -180,7 +179,7 @@ class RegiwebNotesController extends Controller
                 ];
             });
 
-        } else if ($page === PagesEnum::FINAL_EXAM->value) {
+        } elseif ($page === PagesEnum::FINAL_EXAM->value) {
             $students = StudentGrade::fromTable($thisReport['table'])
                 ->where([
                     ['curso', $course],
@@ -197,9 +196,6 @@ class RegiwebNotesController extends Controller
                 ];
             });
         }
-
-
-
 
         return Inertia::render('Regiweb/Notes/Show', [
             'course' => $course,
@@ -246,9 +242,10 @@ class RegiwebNotesController extends Controller
             }
             $student->update($array);
         }
-        
+
         return redirect()->back();
     }
+
     public function saveAttendance(SaveAttendanceRequest $request)
     {
         $validated = $request->validated();
@@ -262,13 +259,11 @@ class RegiwebNotesController extends Controller
             ];
             $student->update($array);
         }
+
         return redirect()->back();
     }
 
-    public function saveExam()
-    {
-
-    }
+    public function saveExam() {}
     // private function findTotal($info, $type, $trimesterNumber, $page, $student)
     // {
     //     if ($trimesterNumber === 2 || $trimesterNumber === 4) {
@@ -281,13 +276,14 @@ class RegiwebNotesController extends Controller
     //     return 0;
     // }
 
-    private function findValueFor($table, $course, $ss): object|null
+    private function findValueFor($table, $course, $ss): ?object
     {
         $data = DB::table($table)->where([
             ['curso', $course],
             ['ss', $ss],
             ['year', $this->admin->getYear],
         ])->first();
+
         return $data;
     }
 
@@ -308,7 +304,7 @@ class RegiwebNotesController extends Controller
             ['trimestre', $trimester],
             ['nivel', $page],
         ])->first();
-        if (!$gradesValuesData) {
+        if (! $gradesValuesData) {
             $id = DB::table('valores')->insertGetId([
                 'curso' => $course,
                 'year' => $this->admin->getYear,
@@ -341,6 +337,7 @@ class RegiwebNotesController extends Controller
         ]);
 
         DB::table('valores')->where('id', $id)->update($validated);
+
         return redirect()->back();
 
     }
@@ -409,10 +406,10 @@ class RegiwebNotesController extends Controller
         // } else {
         $columnsArray = [
             __('common.bonus.long'),
-             __('common.dailyWork.short'),
-              __('common.notebookWork.short'), 
-              __('common.shortTests.short')
-            ];
+            __('common.dailyWork.short'),
+            __('common.notebookWork.short'),
+            __('common.shortTests.short'),
+        ];
         // }
 
         return [

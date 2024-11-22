@@ -7,7 +7,6 @@ use App\Casts\Gender;
 use App\Casts\NullToEmptyString;
 use App\Casts\ProfilePicture;
 use App\Casts\YesNo;
-use App\Models\Scopes\SchoolYear;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Model;
 
@@ -87,6 +86,7 @@ class Teacher extends Model
         foreach ($nullToEmptyStringColumns as $column) {
             $array[$column] = NullToEmptyString::class;
         }
+
         return $array;
     }
 }
