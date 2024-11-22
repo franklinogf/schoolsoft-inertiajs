@@ -49,16 +49,6 @@ class Student extends Model
         // });
     }
 
-    // public function getFullNameAttribute(): string
-    // {
-    //     return "$this->nombre $this->apellidos";
-    // }
-
-    // public function getFullNameReverseAttribute(): string
-    // {
-    //     return "$this->apellidos $this->nombre";
-    // }
-
     // public function scopeOfGrade(Builder $query, string $grade): void
     // {
     //     $query->where('grado', $grade);
@@ -89,5 +79,10 @@ class Student extends Model
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class, 'grado', 'grado');
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(StudentAttendance::class, 'ss', 'ss');
     }
 }
