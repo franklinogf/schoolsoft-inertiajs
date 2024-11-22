@@ -28,11 +28,12 @@ class AppServiceProvider extends ServiceProvider
             Mail::alwaysTo('franklinomarflores@gmail.com');
             Mail::alwaysFrom('onboarding@resend.dev', 'Franklin Omar Flores');
         }
+
         Model::unguard();
+
         JsonResource::withoutWrapping();
-        App::singleton('school_info', fn () => [
-            'year' => Admin::getPrimaryAdmin()->getYear,
-        ]);
+
+        App::singleton('year', fn () => optional(Admin::getPrimaryAdmin())->year);
 
     }
 }
