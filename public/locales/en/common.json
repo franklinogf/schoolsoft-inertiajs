@@ -1,5 +1,55 @@
 {
-  "button": {
+  "student": "Student",
+  "students": "Students",
+  "note": "Note",
+  "notes": "Notes",
+  "grade": {
+    "label": "Grade",
+    "pluralLabel": "Grades",
+    "initialGrade": "$t(grade.label) Initial",
+    "finalGrade": "$t(grade.label) Final"
+  },
+  "date": {
+    "label": "Date",
+    "pluralLabel": "Dates",
+    "initialDate": "$t(date.label) Initial",
+    "finalDate": "$t(date.label) Final"
+  },
+  "trimester": {
+    "label": "Trimester",
+    "pluralLabel": "Trimesters",
+    "1": "1st $t(trimester.label, lowercase)",
+    "2": "2nd $t(trimester.label, lowercase)",
+    "3": "3rd $t(trimester.label, lowercase)",
+    "4": "4th $t(trimester.label, lowercase)",
+    "summer": "Summer"
+  },
+  "course": {
+    "label": "Course",
+    "pluralLabel": "Courses"
+  },
+  "gender": {
+    "label": "Gender",
+    "pluralLabel": "Genders",
+    "male": "Male",
+    "female": "Female"
+  },
+  "pages": {
+    "label": "Page",
+    "pluralLabel": "Pages",
+    "grades": "Grades",
+    "grades2": "$t(pages.grades)2",
+    "shortTests": "Short Tests",
+    "dailyWork": "Daily Work",
+    "notebookWork": "Notebook Work",
+    "conductAttendance": "Conduct and Attendance",
+    "finalExam": "Final Exam",
+    "summerGrades": "Summer $t(pages.grades)"
+  },
+  "yes": "Yes",
+  "no": "No",
+  "btn": {
+    "continue": "Continue",
     "submit": "Submit",
     "cancel": "Cancel",
     "save": "Save",
@@ -24,7 +74,21 @@
     "download": "Download",
     "print": "Print",
     "send": "Send",
-    "access": "Access"
+    "access": "Access",
+    "changePassword": "Change Password"
   },
-  "signIn": "Sign In"
+  "signIn": "Sign In",
+  "changePassword": "Change Password",
+  "changePasswordSuccess": "Password changed successfully",
+  "tpa": "TPA",
+  "tdp": "TDP",
+  "pcor": "PCOR",
+  "attendance": "Attendance",
+  "conduct": "Conduct",
+  "absences": "Absences",
+  "tardies": "Tardies",
+  "demerits": "Demerits",
+  "value": "Value",
+  "values": "Values",
+  "topic": "Topic"
 }
