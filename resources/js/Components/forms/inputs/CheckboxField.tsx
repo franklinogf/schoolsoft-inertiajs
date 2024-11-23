@@ -6,23 +6,21 @@ import { YesNoEnum } from "@/Enums";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
 interface CheckboxFieldProps {
-  data: any;
-  setData: (key: string, value: any) => void;
-  name: string;
   error?: string;
   label?: string;
   disabled?: boolean;
   className?: string;
   description?: string;
+  value: string;
+  onChange: (value: string) => void;
 }
 export function CheckboxField({
   error,
   label,
   disabled,
   className,
-  data,
-  setData,
-  name,
+  value,
+  onChange,
   description,
 }: CheckboxFieldProps) {
   const id = useId();
@@ -31,10 +29,9 @@ export function CheckboxField({
       className={cn(className, "flex space-x-2", description ? "items-top" : "items-center")}
     >
       <Checkbox
-        name={name}
-        checked={data[name] === YesNoEnum.YES}
+        checked={value === YesNoEnum.YES}
         onCheckedChange={(checked) => {
-          setData(name, checked ? YesNoEnum.YES : YesNoEnum.NO);
+          onChange && onChange(checked ? YesNoEnum.YES : YesNoEnum.NO);
         }}
         id={id}
       />

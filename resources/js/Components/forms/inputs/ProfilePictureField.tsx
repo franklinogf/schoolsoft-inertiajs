@@ -4,24 +4,24 @@ import { cn } from "@/lib/utils";
 import { useCallback, useEffect, useId } from "react";
 import { useDropzone } from "react-dropzone";
 import { useTranslation } from "react-i18next";
+type FileWithPreview = File & { preview?: string };
+
 interface ProfilePictureFieldProps {
   label?: string;
   error?: string;
-  data: any;
   initialFile?: string;
-  name: string;
-  setData: (key: string, value: any) => void;
   disabled?: boolean;
+  value?: File | null;
+  onChange?: (value: File | null) => void;
 }
-type FileWithPreview = File & { preview: string };
+
 export function ProfilePictureField({
   label,
-  data,
   initialFile,
-  setData,
   error,
-  name,
   disabled,
+  value,
+  onChange,
 }: ProfilePictureFieldProps) {
   const { t } = useTranslation("input", { keyPrefix: "profilePictureDragDrop" });
   const id = useId();
@@ -32,7 +32,7 @@ export function ProfilePictureField({
       Object.assign(file, {
         preview: URL.createObjectURL(file),
       });
-      setData(name, file);
+      onChange && onChange(file);
     }
   }, []);
   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
@@ -45,8 +45,10 @@ export function ProfilePictureField({
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => {
-      if (data[name]) {
-        data[name]?.forEach((file: FileWithPreview) => URL.revokeObjectURL(file.preview));
+      if (value) {
+        if (value && (value as FileWithPreview).preview) {
+          URL.revokeObjectURL((value as FileWithPreview).preview!);
+        }
       }
     };
   }, []);
@@ -66,19 +68,16 @@ export function ProfilePictureField({
             "absolute z-20 text-balance text-center font-serif text-sm font-medium text-input",
           )}
         >
-          {isDragActive
-            ? t("status.active")
-            : data[name]
-              ? t("status.change")
-              : t("status.inactive")}
+          {isDragActive ? t("status.active") : value ? t("status.change") : t("status.inactive")}
         </p>
-        {data[name] || initialFile ? (
+        {value || initialFile ? (
           <div className="absolute">
             <img
-              src={data[name] ? data[name].preview : initialFile}
+              src={value ? (value as FileWithPreview).preview : initialFile}
               className="z-10 aspect-square object-cover"
               onLoad={() => {
-                if (data[name]) URL.revokeObjectURL(data[name].preview);
+                if (value && (value as FileWithPreview).preview)
+                  URL.revokeObjectURL((value as FileWithPreview).preview!);
               }}
             />
           </div>
