@@ -35,71 +35,69 @@ import { toast } from "sonner";
 export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   const [sameAddress, setSameAddress] = useState(false);
   const { t } = useTranslation(["common", "input", "pages"]);
-  const { data, setData, post, errors, processing } = useForm<Partial<Teacher> & { picture: null }>(
-    {
-      picture: null,
-      fecha_nac: user.fecha_nac,
-      nombre: user.nombre,
-      apellidos: user.apellidos,
-      genero: user.genero,
-      email1: user.email1,
-      email2: user.email2,
-      tel_res: user.tel_res,
-      tel_emer: user.tel_emer,
-      cel: user.cel,
-      cel_com: user.cel_com,
-      dir1: user.dir1,
-      dir2: user.dir2,
-      dir3: user.dir3,
-      dir4: user.dir4,
-      pueblo1: user.pueblo1,
-      pueblo2: user.pueblo2,
-      esta1: user.esta1,
-      esta2: user.esta2,
-      zip1: user.zip1,
-      zip2: user.zip2,
-      alias: user.alias,
-      posicion: user.posicion,
-      nivel: user.nivel,
-      preparacion1: user.preparacion1,
-      preparacion2: user.preparacion2,
-      fecha_ini: user.fecha_ini,
-      fecha_daja: user.fecha_daja,
-      re_e: user.re_e,
-      club1: user.club1,
-      club2: user.club2,
-      club3: user.club3,
-      club4: user.club4,
-      club5: user.club5,
-      pre1: user.pre1,
-      pre2: user.pre2,
-      pre3: user.pre3,
-      pre4: user.pre4,
-      pre5: user.pre5,
-      vi1: user.vi1,
-      vi2: user.vi2,
-      vi3: user.vi3,
-      vi4: user.vi4,
-      vi5: user.vi5,
-      se1: user.se1,
-      se2: user.se2,
-      se3: user.se3,
-      se4: user.se4,
-      se5: user.se5,
-      lic1: user.lic1,
-      lic2: user.lic2,
-      lic3: user.lic3,
-      lic4: user.lic4,
-      lp1: user.lp1,
-      lp2: user.lp2,
-      lp3: user.lp3,
-      lp4: user.lp4,
-      fex1: user.fex1,
-      fex2: user.fex2,
-      fex3: user.fex3,
-      fex4: user.fex4,
-    },
-  );
+  const { data, setData, post, errors, processing } = useForm({
+    picture: null as File | null,
+    fecha_nac: user.fecha_nac,
+    nombre: user.nombre,
+    apellidos: user.apellidos,
+    genero: user.genero,
+    email1: user.email1,
+    email2: user.email2,
+    tel_res: user.tel_res,
+    tel_emer: user.tel_emer,
+    cel: user.cel,
+    cel_com: user.cel_com,
+    dir1: user.dir1,
+    dir2: user.dir2,
+    dir3: user.dir3,
+    dir4: user.dir4,
+    pueblo1: user.pueblo1,
+    pueblo2: user.pueblo2,
+    esta1: user.esta1,
+    esta2: user.esta2,
+    zip1: user.zip1,
+    zip2: user.zip2,
+    alias: user.alias ?? "",
+    posicion: user.posicion,
+    nivel: user.nivel ?? "",
+    preparacion1: user.preparacion1 ?? "",
+    preparacion2: user.preparacion2 ?? "",
+    fecha_ini: user.fecha_ini,
+    fecha_daja: user.fecha_daja,
+    re_e: user.re_e,
+    club1: user.club1 ?? "",
+    club2: user.club2 ?? "",
+    club3: user.club3 ?? "",
+    club4: user.club4 ?? "",
+    club5: user.club5 ?? "",
+    pre1: user.pre1 ?? "",
+    pre2: user.pre2 ?? "",
+    pre3: user.pre3 ?? "",
+    pre4: user.pre4 ?? "",
+    pre5: user.pre5 ?? "",
+    vi1: user.vi1 ?? "",
+    vi2: user.vi2 ?? "",
+    vi3: user.vi3 ?? "",
+    vi4: user.vi4 ?? "",
+    vi5: user.vi5 ?? "",
+    se1: user.se1 ?? "",
+    se2: user.se2 ?? "",
+    se3: user.se3 ?? "",
+    se4: user.se4 ?? "",
+    se5: user.se5 ?? "",
+    lic1: user.lic1 ?? "",
+    lic2: user.lic2 ?? "",
+    lic3: user.lic3 ?? "",
+    lic4: user.lic4 ?? "",
+    lp1: user.lp1 ?? "",
+    lp2: user.lp2 ?? "",
+    lp3: user.lp3 ?? "",
+    lp4: user.lp4 ?? "",
+    fex1: user.fex1 ?? "",
+    fex2: user.fex2 ?? "",
+    fex3: user.fex3 ?? "",
+    fex4: user.fex4 ?? "",
+  });
 
   function residentialAddressToPostalAddress() {
     setSameAddress(true);
@@ -139,9 +137,8 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
             <ProfilePictureField
               initialFile={user.foto_name}
-              data={data}
-              name="picture"
-              setData={setData}
+              value={data.picture}
+              onChange={(value) => setData("picture", value)}
               error={errors.picture}
             />
 
@@ -173,81 +170,70 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                 <div className="flex flex-col gap-4">
                   <FieldsGrid>
                     <InputField
-                      data={data}
-                      setData={setData}
                       label={t("input:name")}
-                      name="nombre"
+                      value={data.nombre}
+                      onChange={(value) => setData("nombre", value)}
                       error={errors.nombre}
                     />
                     <InputField
-                      data={data}
-                      setData={setData}
                       label={t("input:lastname")}
-                      name="apellidos"
+                      value={data.apellidos}
+                      onChange={(value) => setData("apellidos", value)}
                       error={errors.apellidos}
                     />
                   </FieldsGrid>
                   <FieldsGrid>
                     <SelectField
-                      data={data}
-                      setData={setData}
                       label={t("input:gender")}
-                      name="genero"
+                      value={data.genero}
+                      onChange={(value) => setData("genero", value)}
                       error={errors.genero}
                       items={GENDERS_SELECT}
                     />
                     <DateField
-                      data={data}
-                      setData={setData}
                       label={t("input:dob")}
-                      name="fecha_nac"
+                      value={data.fecha_nac}
+                      onChange={(value) => setData("fecha_nac", value)}
                       error={errors.fecha_nac}
                     />
                   </FieldsGrid>
                   <InputField
-                    data={data}
-                    setData={setData}
                     label={t("input:primaryEmail")}
-                    name="email1"
+                    value={data.email1}
+                    onChange={(value) => setData("email1", value)}
                     type="email"
                     error={errors.email1}
                   />
                   <InputField
-                    data={data}
-                    setData={setData}
+                    onChange={(value) => setData("email2", value)}
                     label={t("input:secondaryEmail")}
-                    name="email2"
                     type="email"
                     error={errors.email2}
                   />
                   <FieldsGrid>
                     <PhoneField
-                      data={data}
-                      setData={setData}
+                      value={data.tel_res}
+                      onChange={(value) => setData("tel_res", value)}
                       label={t("input:residencePhone")}
-                      name="tel_res"
                       error={errors.tel_res}
                     />
                     <PhoneField
-                      data={data}
-                      setData={setData}
+                      value={data.tel_emer}
+                      onChange={(value) => setData("tel_emer", value)}
                       label={t("input:emergencyContact")}
-                      name="tel_emer"
                       error={errors.tel_emer}
                     />
                   </FieldsGrid>
                   <FieldsGrid>
                     <PhoneField
-                      data={data}
-                      setData={setData}
+                      value={data.cel}
+                      onChange={(value) => setData("cel", value)}
                       label={t("input:mobilePhone")}
-                      name="cel"
                       error={errors.cel}
                     />
                     <SelectField
-                      name="cel_com"
-                      data={data}
-                      setData={setData}
+                      value={data.cel_com}
+                      onChange={(value) => setData("cel_com", value)}
                       label={t("input:mobilePhoneCompany")}
                       error={errors.cel_com}
                       items={PHONE_COMPANIES_SELECT}
@@ -271,39 +257,34 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                         {t("pages:regiweb.profile.card2.subtitle1")}
                       </h2>
                       <InputField
-                        data={data}
-                        setData={setData}
+                        value={data.dir1}
+                        onChange={(value) => setData("dir1", value)}
                         placeholder={t("input:address1")}
-                        name="dir1"
                         error={errors.dir1}
                       />
                       <InputField
-                        data={data}
-                        setData={setData}
+                        value={data.dir2}
+                        onChange={(value) => setData("dir2", value)}
                         placeholder={t("input:address2")}
-                        name="dir2"
                         error={errors.dir2}
                       />
                       <FieldsGrid cols={3}>
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data.pueblo1}
+                          onChange={(value) => setData("pueblo1", value)}
                           placeholder={t("input:city")}
-                          name="pueblo1"
                           error={errors.pueblo1}
                         />
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data.esta1}
+                          onChange={(value) => setData("esta1", value)}
                           placeholder={t("input:country")}
-                          name="esta1"
                           error={errors.esta1}
                         />
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data.zip1}
+                          onChange={(value) => setData("zip1", value)}
                           placeholder={t("input:zip")}
-                          name="zip1"
                           error={errors.zip1}
                         />
                       </FieldsGrid>
@@ -331,39 +312,34 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       </h2>
 
                       <InputField
-                        data={data}
-                        setData={setData}
+                        value={data.dir3}
+                        onChange={(value) => setData("dir3", value)}
                         placeholder={t("input:address1")}
-                        name="dir3"
                         error={errors.dir3}
                       />
                       <InputField
-                        data={data}
-                        setData={setData}
+                        value={data.dir4}
+                        onChange={(value) => setData("dir4", value)}
                         placeholder={t("input:address2")}
-                        name="dir4"
                         error={errors.dir4}
                       />
                       <FieldsGrid cols={3}>
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data.pueblo2}
+                          onChange={(value) => setData("pueblo2", value)}
                           placeholder={t("input:city")}
-                          name="pueblo2"
                           error={errors.pueblo2}
                         />
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data.esta2}
+                          onChange={(value) => setData("esta2", value)}
                           placeholder={t("input:country")}
-                          name="esta2"
                           error={errors.esta2}
                         />
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data.zip2}
+                          onChange={(value) => setData("zip2", value)}
                           placeholder={t("input:zip")}
-                          name="zip2"
                           error={errors.zip2}
                         />
                       </FieldsGrid>
@@ -378,25 +354,22 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                 <CardContent>
                   <div className="flex flex-col gap-4">
                     <InputField
-                      data={data}
-                      setData={setData}
+                      value={data.alias}
+                      onChange={(value) => setData("alias", value)}
                       label={t("input:alias")}
-                      name="alias"
                       error={errors.alias}
                     />
                     <FieldsGrid>
                       <InputField
-                        data={data}
-                        setData={setData}
+                        value={data.posicion}
+                        onChange={(value) => setData("posicion", value)}
                         label={t("input:position")}
-                        name="posicion"
                         error={errors.posicion}
                       />
                       <SelectField
-                        data={data}
-                        setData={setData}
+                        value={data.nivel}
+                        onChange={(value) => setData("nivel", value)}
                         label={t("input:level")}
-                        name="nivel"
                         error={errors.nivel}
                         items={TEACHER_LEVEL_SELECT}
                       />
@@ -407,17 +380,15 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       </h2>
                       <div className="space-y-1">
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data.preparacion1}
+                          onChange={(value) => setData("preparacion1", value)}
                           placeholder={t("input:preparation1")}
-                          name="preparacion1"
                           error={errors.preparacion1}
                         />
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data.preparacion2}
+                          onChange={(value) => setData("preparacion2", value)}
                           placeholder={t("input:preparation2")}
-                          name="preparacion2"
                           error={errors.preparacion2}
                         />
                       </div>
@@ -425,26 +396,23 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <Separator />
                     <FieldsGrid>
                       <DateField
-                        data={data}
-                        setData={setData}
+                        value={data.fecha_ini}
+                        onChange={(value) => setData("fecha_ini", value)}
                         label={t("input:initialDate")}
-                        name="fecha_ini"
                         error={errors.fecha_ini}
                       />
                       <DateField
-                        data={data}
-                        setData={setData}
+                        value={data.fecha_daja}
+                        onChange={(value) => setData("fecha_daja", value)}
                         label={t("input:finalDate")}
-                        name="fecha_daja"
                         error={errors.fecha_daja}
                       />
                     </FieldsGrid>
                     <SelectField
-                      data={data}
-                      setData={setData}
+                      value={data.re_e}
+                      onChange={(value) => setData("re_e", value)}
                       label={t("input:receiveEmails")}
                       items={YES_NO_SELECT}
-                      name="re_e"
                       error={errors.re_e}
                     />
                   </div>
@@ -452,7 +420,6 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
               </Card>
             </div>
           </section>
-
           <section>
             <Accordion className="rounded-md bg-white shadow-sm" type="single" collapsible>
               <AccordionItem value="club">
@@ -468,31 +435,27 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     return (
                       <FieldsGrid key={number} className="md:grid-cols-4">
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data[club]}
+                          onChange={(value) => setData(club, value)}
                           label={t("input:name")}
-                          name={club}
                           error={errors[club]}
                         />
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data[pre]}
+                          onChange={(value) => setData(pre, value)}
                           label={t("input:president")}
-                          name={pre}
                           error={errors[pre]}
                         />
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data[vi]}
+                          onChange={(value) => setData(vi, value)}
                           label={t("input:vicePresident")}
-                          name={vi}
                           error={errors[vi]}
                         />
                         <InputField
-                          data={data}
-                          setData={setData}
+                          value={data[se]}
+                          onChange={(value) => setData(se, value)}
                           label={t("input:secretary")}
-                          name={se}
                           error={errors[se]}
                         />
                       </FieldsGrid>
@@ -511,23 +474,25 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     const fex = `fex${number}` as "fex1";
                     return (
                       <FieldsGrid key={number}>
-                        <InputField data={data} setData={setData} name={lic} error={errors[lic]} />
+                        <InputField
+                          value={data[lic]}
+                          onChange={(value) => setData(lic, value)}
+                          error={errors[lic]}
+                        />
 
                         <div className="grid grid-flow-col items-center gap-2">
                           <CheckboxField
                             className="grow"
                             label={t("input:expires")}
-                            data={data}
-                            setData={setData}
-                            name={lp}
+                            value={data[lp]}
+                            onChange={(value) => setData(lp, value)}
                             error={errors[lp]}
                           />
                           <DateField
                             disabled={data[lp] !== YesNoEnum.YES}
                             className="max-w-[300px]"
-                            data={data}
-                            setData={setData}
-                            name={fex}
+                            value={data[fex]}
+                            onChange={(value) => setData(fex, value)}
                             error={errors[fex]}
                           />
                         </div>
