@@ -16,18 +16,16 @@ export function ChangePasswordForm({ route }: { route: string }) {
         {t("common:changePassword")}
       </h3>
       <InputField
-        data={data}
-        setData={setData}
         label={t("input:newPassword")}
-        name="clave"
+        value={data.clave}
+        onChange={(value) => setData("clave", value)}
         error={errors.clave}
         type="password"
       />
       <InputField
-        data={data}
-        setData={setData}
         label={t("input:confirmNewPassword")}
-        name="clave_confirmation"
+        value={data.clave_confirmation}
+        onChange={(value) => setData("clave_confirmation", value)}
         error={errors.clave_confirmation}
         type="password"
       />

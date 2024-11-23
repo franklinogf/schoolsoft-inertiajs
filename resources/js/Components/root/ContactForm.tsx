@@ -39,39 +39,34 @@ export function ContactForm() {
             <FieldsGrid>
               <InputField
                 label={t("input:name")}
-                data={data}
-                setData={setData}
-                name="name"
+                value={data.name}
+                onChange={(value) => setData("name", value)}
                 error={errors.name}
               />
               <InputField
                 label={t("input:lastname")}
-                data={data}
-                setData={setData}
-                name="lastname"
+                value={data.lastname}
+                onChange={(value) => setData("lastname", value)}
                 error={errors.lastname}
               />
             </FieldsGrid>
             <InputField
               label={t("input:email")}
+              value={data.email}
+              onChange={(value) => setData("email", value)}
               type="email"
-              data={data}
-              setData={setData}
-              name="email"
               error={errors.email}
             />
             <PhoneField
               label={t("input:phone")}
-              data={data}
-              setData={setData}
-              name="phone"
+              value={data.phone}
+              onChange={(value) => setData("phone", value)}
               error={errors.phone}
             />
             <TextareaField
+              value={data.message}
+              onChange={(value) => setData("message", value)}
               label={t("input:message")}
-              data={data}
-              setData={setData}
-              name="message"
               placeholder={t("input:defaultPlaceholders.message") + "..."}
               error={errors.message}
             />

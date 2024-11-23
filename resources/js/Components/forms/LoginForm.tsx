@@ -40,16 +40,14 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
           <div className="space-y-2">
             <InputField
               label={t("username", { ns: "input" })}
-              data={data}
-              setData={setData}
-              name="usuario"
+              value={data.usuario}
+              onChange={(value) => setData("usuario", value)}
               error={errors.usuario}
             />
             <InputField
               label={t("password", { ns: "input" })}
-              data={data}
-              setData={setData}
-              name="clave"
+              value={data.clave}
+              onChange={(value) => setData("clave", value)}
               error={errors.clave}
               type="password"
             />
