@@ -4,15 +4,10 @@ import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
 import { Input, type InputProps } from "@/Components/ui/input";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
-interface InputFieldProps
-  extends Omit<InputProps, "value" | "onChange" | "id" | "disabled" | "name"> {
-  data: any;
-  setData: (key: string, value: any) => void;
-  name: string;
+interface InputFieldProps extends Omit<InputProps, "onChange" | "id"> {
+  onChange?: (value: string) => void;
   error?: string;
   label?: string;
-  disabled?: boolean;
-  className?: string;
   removeArrows?: boolean;
 }
 export function InputField({
@@ -20,9 +15,8 @@ export function InputField({
   label,
   disabled,
   className,
-  data,
-  setData,
-  name,
+  value,
+  onChange,
   removeArrows,
   ...props
 }: InputFieldProps) {
@@ -39,9 +33,8 @@ export function InputField({
           },
           { "remove-arrows": removeArrows },
         )}
-        value={data[name]}
         onChange={(e) => {
-          setData(name, e.target.value);
+          onChange && onChange(e.target.value);
         }}
         {...props}
       />
