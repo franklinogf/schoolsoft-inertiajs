@@ -64,38 +64,39 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
               <TableBody>
                 {Array.from({ length: amoutOfGrades }).map((_, i) => {
                   const index = i + 1;
+                  const fec = `fec${index}`;
+                  const val = `val${index}`;
+                  const tema = `tema${index}`;
                   return (
                     <TableRow className="[&>td]:text-center" key={i}>
                       <TableCell>
                         <InputField
-                          data={data}
-                          name={`tema${index}`}
-                          setData={setData}
+                          value={data[tema]}
+                          name={tema}
+                          onChange={(value) => setData(tema, value)}
                           placeholder={t("topic") + " " + index}
-                          error={errors[`tema${index}` as keyof typeof errors]}
+                          error={errors[tema as keyof typeof errors]}
                         />
                       </TableCell>
                       <TableCell>
                         <InputField
                           removeArrows
-                          data={data}
-                          name={`val${index}`}
-                          setData={setData}
+                          value={data[val]}
+                          onChange={(value) => setData(val, value)}
                           placeholder={t("value") + " " + index}
                           type="number"
-                          error={errors[`val${index}` as keyof typeof errors]}
+                          error={errors[val as keyof typeof errors]}
                           onBlur={(e) => {
-                            onValueChange("val" + index, e.target.value);
+                            onValueChange(val, e.target.value);
                           }}
                         />
                       </TableCell>
                       <TableCell>
                         <DateField
-                          data={data}
-                          name={`fec${index}`}
-                          setData={setData}
+                          value={data[fec]}
+                          onChange={(value) => setData(fec, value)}
                           placeholder={t("date.label") + " " + index}
-                          error={errors[`fec${index}` as keyof typeof errors]}
+                          error={errors[fec]}
                         />
                       </TableCell>
                     </TableRow>
