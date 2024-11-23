@@ -5,24 +5,22 @@ import { useId } from "react";
 import PhoneInput, { type Value as E164Number } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 interface PhoneFieldProps {
-  data: any;
-  setData: (key: string, value: any) => void;
-  name: string;
   error?: string;
   label?: string;
   disabled?: boolean;
   className?: string;
   placeholder?: string;
+  value?: string | E164Number;
+  onChange?: (value: string) => void;
 }
 export function PhoneField({
   error,
   label,
   disabled,
   className,
-  data,
-  setData,
-  name,
   placeholder,
+  value,
+  onChange,
 }: PhoneFieldProps) {
   const id = useId();
   return (
@@ -37,9 +35,9 @@ export function PhoneField({
         placeholder={placeholder}
         defaultCountry="PR"
         disabled={disabled}
-        value={data[name]}
+        value={value}
         onChange={(value) => {
-          setData(name, value as E164Number);
+          onChange && onChange(value as E164Number);
         }}
         className="input-phone"
       />

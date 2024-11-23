@@ -4,23 +4,19 @@ import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
 import { Textarea, type TextareaProps } from "@/Components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
-interface TextareaFieldProps extends TextareaProps {
-  data: any;
-  setData: (key: string, value: any) => void;
-  name: string;
+interface TextareaFieldProps extends Omit<TextareaProps, "onChange" | "id"> {
   error?: string;
   label?: string;
   disabled?: boolean;
   className?: string;
+  onChange?: (value: string) => void;
 }
 export function TextareaField({
   error,
   label,
   disabled,
   className,
-  data,
-  setData,
-  name,
+  onChange,
   ...props
 }: TextareaFieldProps) {
   const id = useId();
@@ -33,9 +29,8 @@ export function TextareaField({
         className={cn({
           "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
         })}
-        value={data[name]}
         onChange={(e) => {
-          setData(name, e.target.value);
+          onChange && onChange(e.target.value);
         }}
         {...props}
       />

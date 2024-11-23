@@ -21,8 +21,8 @@ type DefaultSelectFieldProps = {
   className?: string;
   placeholder?: string;
   clearable?: boolean;
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
 };
 
 type SelectFieldPropsWithItems = DefaultSelectFieldProps & {
@@ -74,7 +74,7 @@ export function SelectField({
               <Button
                 size="sm"
                 onClick={() => {
-                  onChange("");
+                  onChange && onChange("");
                 }}
                 className="w-full"
                 variant="secondary"
