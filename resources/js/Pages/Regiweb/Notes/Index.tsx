@@ -14,6 +14,7 @@ import { PagePropsWithUser } from "@/types";
 import { Teacher } from "@/types/teacher";
 import { Link, useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
+import { AttendanceReportModalForm } from "./_components/AttendanceReportModalForm";
 
 type PageProps = PagePropsWithUser<Teacher>;
 
@@ -45,11 +46,7 @@ export default function Page({ auth: { user }, errors }: PageProps) {
                 {t("pages:regiweb.notes.index.btn.dailyAttendanceReport")}
               </Link>
             </Button>
-            <Button variant="outline" asChild>
-              <Link href={route("regiweb.notes.attendance.report")}>
-                {t("pages:regiweb.notes.index.btn.attendanceReport")}
-              </Link>
-            </Button>
+            <AttendanceReportModalForm courses={user.cursos} />
             <Button variant="outline">{t("pages:regiweb.notes.index.btn.preschool")}</Button>
           </div>
         </div>
