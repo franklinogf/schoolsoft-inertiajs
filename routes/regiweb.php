@@ -34,14 +34,17 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
                     Route::put('/values/{id}', 'saveValues')->name('values.save');
                 });
             });
-            Route::name('attendance.')->prefix('attendance')->controller(AttendanceController::class)->group(function () {
-
-                Route::get('/', 'entry')->name('entry');
-                Route::put('/update', 'update')->name('entry.update');
-                Route::post('/report', 'report')->name('report');
-                Route::post('/report/daily', 'dailyReport')->name('dailyReport');
-                Route::get('/report', [AttendanceReportPDFController::class, 'report'])->name('report.pdf');
-                Route::get('/report/daily', [AttendanceReportPDFController::class, 'dailyReport'])->name('dailyReport.pdf');
+            Route::name('attendance.')->prefix('attendance')->group(function () {
+                Route::controller(AttendanceController::class)->group(function () {
+                    Route::get('/', 'entry')->name('entry');
+                    Route::put('/update', 'update')->name('entry.update');
+                });
+                Route::controller(AttendanceReportPDFController::class)->group(function () {
+                    // Route::post('/report', 'report')->name('report');
+                    Route::get('/report', 'reportPdf')->name('report');
+                    // Route::post('/report/daily', 'dailyReport')->name('dailyReport');
+                    Route::get('/report/daily', 'dailyReportPdf')->name('dailyReport');
+                });
 
             });
         });
