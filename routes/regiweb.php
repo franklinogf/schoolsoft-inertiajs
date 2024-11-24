@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PDF\AttendanceReportPDFController;
 use App\Http\Controllers\Regiweb\Notes\AttendanceController;
 use App\Http\Controllers\Regiweb\Notes\RegiwebNotesController;
 use App\Http\Controllers\Regiweb\RegiwebHomeController;
@@ -34,12 +35,13 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
                 });
             });
             Route::name('attendance.')->prefix('attendance')->controller(AttendanceController::class)->group(function () {
+
                 Route::get('/', 'entry')->name('entry');
                 Route::put('/update', 'update')->name('entry.update');
-                Route::get('/report', 'report')->name('report');
-                Route::get('/report/pdf', 'reportPdf')->name('report.pdf');
-                Route::get('/report/daily', 'dailyReport')->name('dailyReport');
-                Route::get('/report/daily/pdf', 'dailyReportPdf')->name('dailyReport.pdf');
+                Route::post('/report', 'report')->name('report');
+                Route::post('/report/daily', 'dailyReport')->name('dailyReport');
+                Route::get('/report', [AttendanceReportPDFController::class, 'report'])->name('report.pdf');
+                Route::get('/report/daily', [AttendanceReportPDFController::class, 'dailyReport'])->name('dailyReport.pdf');
 
             });
         });
