@@ -14,7 +14,7 @@ export function createSelectItemsFromArrayOfObjects(
   }));
 }
 export function createSelectItems(
-  enumObject: Record<string, string>,
+  enumObject: Record<string, string> | SelectItemType[],
   { onlyKey }: { onlyKey: boolean } = { onlyKey: false },
 ): SelectItemType[] {
   return Object.entries(enumObject).map(([key, value]) => ({
@@ -34,4 +34,7 @@ export const TEACHER_LEVEL_SELECT = createSelectItems(TeacherLevelEnum);
 export const YES_NO_SELECT = createSelectItems(YES_NO);
 
 export const TRIMESTER_SELECT = createSelectItems(TRIMESTERS);
+export const TRIMESTER_SELECT_WITHOUT_SUMMER = TRIMESTER_SELECT.filter(
+  (trimester) => trimester.key !== "Verano",
+);
 export const PAGES_SELECT = createSelectItems(PAGES);
