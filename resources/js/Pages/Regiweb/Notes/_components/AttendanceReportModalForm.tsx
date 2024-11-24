@@ -37,7 +37,6 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
       title={t("pages:regiweb.notes.index.btn.attendanceReport")}
     >
       <SelectField
-        placeholder={t("input:placeholder.select.course")}
         value={data.course}
         onChange={(value) => setData("course", value)}
         error={errors.course}
@@ -51,7 +50,6 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
         ))}
       </SelectField>
       <SelectField
-        placeholder={t("input:placeholder.select.trimester")}
         value={data.trimester}
         onChange={(value) => setData("trimester", value)}
         label={t("common:trimester.label")}
