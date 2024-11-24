@@ -40,7 +40,6 @@ export default function Page({
   initialSubject,
   subjects,
 }: PageProps) {
-  console.log({ subjects, initialSubject });
   const [date, setDate] = useState<string>(initialDate);
   const handleChangeDate = (value: string) => {
     setDate(value);
