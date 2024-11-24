@@ -14,13 +14,17 @@ interface AttendanceReportModalFormProps {
 }
 
 export function AttendanceReportModalForm({ courses }: AttendanceReportModalFormProps) {
-  const { data, setData, errors, get, reset, processing } = useForm({
+  const { data, setData, errors, post, reset, processing } = useForm({
     course: "",
     trimester: "",
   });
   const { t } = useTranslation(["common", "pages", "input"]);
   const handleSubmit = () => {
-    get(route("regiweb.notes.attendance.report"), { preserveState: true });
+    post(route("regiweb.notes.attendance.report"), {
+      onSuccess: () => {
+        window.open(route("regiweb.notes.attendance.report.pdf", { ...data }), "attendancePfd");
+      },
+    });
   };
   return (
     <ModalForm
