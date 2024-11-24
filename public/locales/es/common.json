@@ -75,7 +75,8 @@
     "print": "Imprimir",
     "send": "Enviar",
     "access": "Acceder",
-    "changePassword": "Cambiar Contraseña"
+    "changePassword": "Cambiar Contraseña",
+    "pdf": "PDF"
   },
   "signIn": "Iniciar sesión",
   "changePassword": "Cambiar contraseña",
@@ -90,5 +91,6 @@
   "demerits": "Deméritos",
   "value": "Valor",
   "values": "Valores",
-  "topic": "Tema"
+  "topic": "Tema",
+  "homeGrade": "Salón hogar"
 }
