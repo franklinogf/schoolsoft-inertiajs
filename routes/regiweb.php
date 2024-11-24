@@ -41,9 +41,9 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
                 });
                 Route::controller(AttendanceReportPDFController::class)->group(function () {
                     // Route::post('/report', 'report')->name('report');
-                    Route::get('/report', 'reportPdf')->name('report');
+                    Route::get('/report', 'report')->name('report');
                     // Route::post('/report/daily', 'dailyReport')->name('dailyReport');
-                    Route::get('/report/daily', 'dailyReportPdf')->name('dailyReport');
+                    Route::get('/report/daily', 'dailyReport')->name('dailyReport');
                 });
 
             });
