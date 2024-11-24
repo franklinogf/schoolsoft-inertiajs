@@ -43,16 +43,11 @@ class Student extends Model
         // static::addGlobalScope('active', function (Builder $builder) {
         //     $builder->where('year.fecha_baja', '0000-00-00');
         // });
-        // //Siempre ordernar por apellidos
-        // static::addGlobalScope('surnameDesc', function (Builder $builder) {
-        //     $builder->orderBy('year.apellidos');
-        // });
+        //Siempre ordernar por apellidos
+        static::addGlobalScope('orderByLastname', function (Builder $builder) {
+            $builder->orderBy('year.apellidos')->orderBy('year.nombre');
+        });
     }
-
-    // public function scopeOfGrade(Builder $query, string $grade): void
-    // {
-    //     $query->where('grado', $grade);
-    // }
 
     public function scopeOfCourse(Builder $query, string $class, string $table = 'padres', $summer = false): void
     {
@@ -64,6 +59,11 @@ class Student extends Model
             $where[] = ["$table.verano", '2'];
         }
         $query->addSelect("{$this->table}.*")->join($table, "{$this->table}.ss", '=', "$table.ss")->where($where);
+    }
+
+    public function scopeOfGrade(Builder $query, string $grade): void
+    {
+        $query->where('grado', $grade);
     }
 
     public function grade(): BelongsTo
