@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Regiweb\Notes;
 
+use App\Enums\TrimesterEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class AttendanceController extends Controller
 {
@@ -122,5 +124,14 @@ class AttendanceController extends Controller
         }
 
         return back();
+    }
+
+    public function report(Request $request)
+    {
+        $request->validate([
+            'course' => ['required', 'string'],
+            'trimester' => ['required', Rule::enum(TrimesterEnum::class)],
+        ]);
+
     }
 }
