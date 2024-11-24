@@ -41,7 +41,13 @@ export function ModalForm({
 }: ModalFormProps) {
   const { t } = useTranslation("common");
   return (
-    <Dialog>
+    <Dialog
+      onOpenChange={(open) => {
+        if (!open) {
+          onClose && onClose();
+        }
+      }}
+    >
       <DialogTrigger asChild>
         <Button variant={buttonVariant} className={buttonClassname}>
           {buttonLabel}
@@ -62,13 +68,7 @@ export function ModalForm({
           {children}
           <DialogFooter className="gap-2">
             <DialogClose asChild>
-              <Button
-                onClick={() => {
-                  onClose && onClose();
-                }}
-                type="button"
-                variant="secondary"
-              >
+              <Button type="button" variant="secondary">
                 {t("btn.close")}
               </Button>
             </DialogClose>
