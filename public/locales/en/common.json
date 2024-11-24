@@ -75,7 +75,8 @@
     "print": "Print",
     "send": "Send",
     "access": "Access",
-    "changePassword": "Change Password"
+    "changePassword": "Change Password",
+    "pdf": "PDF"
   },
   "signIn": "Sign In",
   "changePassword": "Change Password",
@@ -90,5 +91,6 @@
   "demerits": "Demerits",
   "value": "Value",
   "values": "Values",
-  "topic": "Topic"
+  "topic": "Topic",
+  "homeGrade": "Home grade"
 }
