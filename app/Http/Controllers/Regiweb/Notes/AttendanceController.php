@@ -72,7 +72,7 @@ class AttendanceController extends Controller
             ];
         });
 
-        return inertia('Regiweb/Notes/Attendance/Entry',
+        return inertia('Regiweb/Notes/AttendanceEntry',
             compact(
                 'attendanceOption',
                 'initialDate',
