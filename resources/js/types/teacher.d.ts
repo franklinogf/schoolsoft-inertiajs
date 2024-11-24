@@ -1,4 +1,4 @@
-interface Course extends Record<string, string> {
+export interface Course extends Record<string, string> {
   id: string;
   curso: string;
   year: string;
