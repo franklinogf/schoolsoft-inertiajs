@@ -18,9 +18,9 @@ import { AttendanceReportModalForm } from "./_components/AttendanceReportModalFo
 
 type PageProps = PagePropsWithUser<Teacher>;
 
-export default function Page({ auth: { user }, errors }: PageProps) {
+export default function Page({ auth: { user }, errors: pageErrors }: PageProps) {
   const { t } = useTranslation(["pages", "common", "input"]);
-  const { data, setData, get, processing } = useForm({
+  const { data, setData, get, processing, errors } = useForm({
     course: "",
     trimester: "",
     page: "",
@@ -53,7 +53,7 @@ export default function Page({ auth: { user }, errors }: PageProps) {
         <form className="w-full max-w-lg" onSubmit={submit}>
           <Card>
             <CardHeader>
-              <AlertDestructive message={errors} />
+              <AlertDestructive message={pageErrors} />
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
