@@ -14,21 +14,22 @@ interface AttendanceReportModalFormProps {
 }
 
 export function AttendanceReportModalForm({ courses }: AttendanceReportModalFormProps) {
-  const { data, setData, errors, post, reset, processing } = useForm({
-    course: "",
-    trimester: "",
+  const coursesSelect = createSelectItemsFromArrayOfObjects(courses, {
+    separator: " - ",
+    key: "curso",
+    values: ["curso", "descripcion"],
+  });
+
+  const { data, setData, errors, reset } = useForm({
+    course: coursesSelect[0].key,
+    trimester: TRIMESTER_SELECT_WITHOUT_SUMMER[0].key,
   });
   const { t } = useTranslation(["common", "pages", "input"]);
   const handleSubmit = () => {
-    post(route("regiweb.notes.attendance.report"), {
-      onSuccess: () => {
-        window.open(route("regiweb.notes.attendance.report.pdf", { ...data }), "attendancePfd");
-      },
-    });
+    window.open(route("regiweb.notes.attendance.report", { ...data }));
   };
   return (
     <ModalForm
-      submitting={processing}
       onClose={reset}
       onSubmit={handleSubmit}
       buttonLabel={t("pages:regiweb.notes.index.btn.attendanceReport")}
@@ -43,11 +44,7 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
         label={t("common:course.label")}
       >
         <SelectItem value="home">{t("common:homeGrade")}</SelectItem>
-        {createSelectItemsFromArrayOfObjects(courses, {
-          separator: " - ",
-          key: "curso",
-          values: ["curso", "descripcion"],
-        }).map((item) => (
+        {coursesSelect.map((item) => (
           <SelectItem key={item.key} value={item.key}>
             {item.value}
           </SelectItem>
