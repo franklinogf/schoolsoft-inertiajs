@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AttendanceController extends Controller
 {
@@ -13,20 +14,55 @@ class AttendanceController extends Controller
     {
         $request->validate([
             'date' => ['sometimes', 'date:Y-m-d'],
+            'grade' => ['sometimes', 'string'],
+            'subject' => ['sometimes', 'string'],
         ]);
+        $year = app('year');
 
         $initialDate = $request->query('date', now()->format('Y-m-d'));
+        $initialSubject = null;
+        $initialGrade = null;
+        $grades = null;
+        $subjects = null;
 
         $attendanceOption = Admin::getPrimaryAdmin()->asist;
         if ($attendanceOption === '3') {
-            $students = [];
+            $subjects = DB::table('cursos')->where('id', auth()->id())->orderBy('curso')->pluck('curso');
+
+            $initialSubject = $request->query('subject', $subjects[0]);
+
+            $students = Student::ofCourse($initialSubject)
+                ->get();
+        } elseif ($attendanceOption === '2') {
+
+            $grades = DB::table('year')
+                ->select('grado')
+                ->distinct()
+                ->where('year', $year)
+                ->orderBy('grado')
+                ->pluck('grado');
+
+            $initialGrade = $request->query('grade', $grades[0]);
+
+            $students = Student::ofGrade($initialGrade)
+                ->get();
+
         } else {
             $students = Student::where([
                 'grado' => auth()->user()->grado,
-            ])->orderBy('apellidos')->orderBy('nombre')->get();
+            ])->get();
         }
-        $studentsAttendances = $students->map(function ($student) use ($initialDate) {
-            $attendance = $student->attendances()->whereDate('fecha', $initialDate)->first();
+
+        $studentsAttendances = $students->map(function (Student $student) use ($initialDate, $initialSubject, $initialGrade) {
+            $attendance = $student->attendances()
+                ->whereDate('fecha', $initialDate)
+                ->when($initialGrade !== null, function ($query) use ($initialGrade) {
+                    return $query->where('grado', $initialGrade);
+                })
+                ->when($initialSubject !== null, function ($query) use ($initialSubject) {
+                    return $query->where('curso', $initialSubject);
+                })
+                ->first();
 
             return [
                 'id' => $attendance->id ?? null,
@@ -40,7 +76,11 @@ class AttendanceController extends Controller
             compact(
                 'attendanceOption',
                 'initialDate',
-                'studentsAttendances'
+                'studentsAttendances',
+                'grades',
+                'subjects',
+                'initialGrade',
+                'initialSubject'
             )
         );
     }
@@ -52,6 +92,8 @@ class AttendanceController extends Controller
             'studentId' => ['required', 'integer'],
             'attendance' => ['required', 'string'],
             'date' => ['required', 'date:Y-m-d'],
+            'subject' => ['nullable', 'string'],
+
         ]);
         $student = Student::find($validated['studentId']);
         if ($validated['id'] === null) {
@@ -70,7 +112,7 @@ class AttendanceController extends Controller
                 'p6' => '',
                 'p7' => '',
                 'p8' => '',
-                'curso' => '',
+                'curso' => $validated['subject'] ?? '',
                 'baja' => '',
             ]);
         } else {
@@ -79,6 +121,6 @@ class AttendanceController extends Controller
             ]);
         }
 
-        return to_route('regiweb.notes.attendance.entry', ['date' => $validated['date']]);
+        return back();
     }
 }
