@@ -9,6 +9,7 @@
   "license": "MIT",
   "require": {
     "php": "^8.2",
+    "codedge/laravel-fpdf": "*",
     "filament/filament": "^3.2",
     "inertiajs/inertia-laravel": "^1.0",
     "laravel/framework": "^11.30.0",
