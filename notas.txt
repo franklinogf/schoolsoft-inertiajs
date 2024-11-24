@@ -6,4 +6,4 @@ Poner todos los campos en null menos curso, trimestre, nivel, year, id
 tabla padres2,padres3,padres4,padres5,padres6:
 Agregar clave primaria autoincrementada (`aa` para que sea igual que la de tabla padres)
 
-tabla asispp agregar clave primaria autoincrementada (id)
+tabla asispp agregar clave primaria autoincrementada (id) elimar index ss,grado
