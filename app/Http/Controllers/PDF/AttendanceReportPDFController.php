@@ -17,17 +17,6 @@ class AttendanceReportPDFController extends Controller
             'trimester' => ['required', Rule::enum(TrimesterEnum::class)],
         ]);
 
-        return inertia()->location(route('regiweb.notes.attendance.report', $validated));
-
-    }
-
-    public function reportPdf(Request $request)
-    {
-        $validated = $request->validate([
-            'course' => ['required', 'string'],
-            'trimester' => ['required', Rule::enum(TrimesterEnum::class)],
-        ]);
-
         $pdf = new Fpdf;
         $pdf->AddPage();
         $pdf->SetFont('Courier', 'B', 18);
