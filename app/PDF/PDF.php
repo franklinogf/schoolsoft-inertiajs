@@ -16,11 +16,11 @@ class PDF extends BasePDF
 
     public $headerFirstPage = false;
 
-    public function __construct(?string $title = null)
+    public function __construct(?string $title = null, $orientation = 'P', $unit = 'mm', $size = 'A4')
     {
         $this->school = Admin::getPrimaryAdmin();
-        parent::__construct();
-        $this->AddPage();
+        parent::__construct($orientation, $unit, $size);
+        $this->SetFillColor(89, 171, 227);
         $this->SetTitle($title);
         $this->SetAuthor($this->school->colegio);
         $this->SetCreator(config('app.name'));
@@ -51,12 +51,6 @@ class PDF extends BasePDF
             $this->Ln(10);
             $this->SetLeftMargin($this->leftMargin);
         }
-    }
-
-    public function splitCells(string $value1, string $value2)
-    {
-        $this->Cell(0, 5, $value1, 0, 0, 'L');
-        $this->Cell(0, 5, $value2, 0, 1, 'R');
     }
 
     public function Footer()
