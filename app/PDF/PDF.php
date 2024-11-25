@@ -62,6 +62,7 @@ class PDF extends BasePDF
         $this->AliasNbPages();
         $this->SetY(-$this->footer);
         $this->SetFont('Arial', 'I', 8);
+        $this->Cell(0, 10, __('Página')." {$this->PageNo()}/{nb}", 0, 0, 'C');
 
     }
 
