@@ -92,5 +92,10 @@
   "value": "Valor",
   "values": "Valores",
   "topic": "Tema",
-  "homeGrade": "Salón hogar"
+  "homeGrade": "Salón hogar",
+  "description": "Descripción",
+  "descriptions": "Descripciones",
+  "perStudent": "Por estudiante",
+  "list": "Lista",
+  "summary": "Resumen"
 }

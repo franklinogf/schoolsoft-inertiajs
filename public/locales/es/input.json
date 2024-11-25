@@ -54,5 +54,8 @@
       "inactive": "Arrastre y suelte una imagen aquí o haga click para seleccionarla",
       "change": "Arrastre y suelte una imagen aquí para cambiarla"
     }
-  }
+  },
+  "type": "Tipo",
+  "status": "Estado",
+  "option": "Opción"
 }

@@ -20,7 +20,7 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
     values: ["curso", "descripcion"],
   });
 
-  const { data, setData, errors, reset } = useForm({
+  const { data, setData, reset } = useForm({
     course: coursesSelect[0].key,
     trimester: TRIMESTER_SELECT_WITHOUT_SUMMER[0].key,
   });
@@ -39,7 +39,6 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
       <SelectField
         value={data.course}
         onChange={(value) => setData("course", value)}
-        error={errors.course}
         label={t("common:course.label")}
       >
         <SelectItem value="home">{t("common:homeGrade")}</SelectItem>
@@ -54,7 +53,6 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
         onChange={(value) => setData("trimester", value)}
         label={t("common:trimester.label")}
         items={TRIMESTER_SELECT_WITHOUT_SUMMER}
-        error={errors.trimester}
       />
     </ModalForm>
   );

@@ -1,31 +1,30 @@
+import i18n from "@/lib/i18n";
 import { clsx, type ClassValue } from "clsx";
+import { format, intlFormat, parse } from "date-fns";
 import { twMerge } from "tailwind-merge";
+const locale = i18n.language;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 /* ---------------------------- Dates formattters --------------------------- */
 export function formatDate(
-  date: string | Date,
+  date: string | Date = new Date(),
   { dateStyle }: { dateStyle: Intl.DateTimeFormatOptions["dateStyle"] } = {
     dateStyle: "medium",
   },
 ) {
   if (!date || date === "0000-00-00") return undefined;
-  const dateToFormat = new Date(date);
-  if (!dateToFormat) return undefined;
-  return new Intl.DateTimeFormat("es", { dateStyle }).format(dateToFormat);
+  return intlFormat(date, { dateStyle }, { locale });
 }
 
-export function formatDateToString(date?: Date) {
-  if (!date) return "";
-  return new Date(date).toISOString().split("T")[0];
+export function formatDateToString(date = new Date()) {
+  return format(date, "yyyy-MM-dd");
 }
-export function formatStringToDate(date?: string) {
+
+export function formatStringToDate(date = formatDateToString(new Date())) {
   if (!date || date === "0000-00-00") return undefined;
-  const dateToFormat = formatDate(date.replaceAll("-", "/"));
-  if (!dateToFormat) return undefined;
-  return new Date(dateToFormat);
+  return parse(date, "yyyy-mm-dd", new Date());
 }
 
 /* ----------------------------- Time formatters ---------------------------- */
@@ -47,6 +46,7 @@ export function formatTime(time: string) {
     second: "2-digit",
   }).format(timeToformat);
 }
+
 export function formatStringToTime(time?: string) {
   if (!time || time === "00:00:00") return undefined;
   const [hours, minutes, seconds] = time.split(":");
