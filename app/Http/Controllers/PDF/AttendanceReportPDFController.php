@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\PDF\PDF;
+use App\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -37,63 +38,58 @@ class AttendanceReportPDFController extends Controller
             TrimesterEnum::FOURTH_TRIMESTER->value => ['7', '8', '05'],
         ];
         $selectedTrimesterValue = $trimesterValue[$validated['trimester']];
+        $isHomeCourse = $validated['course'] === 'home';
 
-        $months = [
-            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
-        ];
-        $teacher = Teacher::find(auth()->id());
+        $month = ucfirst(Utils::getMonthName($selectedTrimesterValue[2]));
+        if ($isHomeCourse) {
+            $teacher = Teacher::find(auth()->id());
+            $students = Student::ofGrade($teacher->grado)->get();
+        } else {
+            $course = Course::where('curso', $validated['course'])->with('teacher')->firstOrFail();
+            $teacher = $course->teacher;
+            $students = Student::ofCourse($validated['course'])->get();
+        }
         $school = Admin::getPrimaryAdmin();
         $date1 = $school->{"asis{$selectedTrimesterValue[0]}"};
         $date2 = $school->{"asis{$selectedTrimesterValue[1]}"};
 
-        $pdf = new PDF('Informe de asistencia');
+        $pdf = new PDF(__('pdf.attendanceReport.metaTitle'));
         $pdf->useFooter(false);
         $pdf->SetLeftMargin(5);
         $pdf->AddPage();
         $pdf->SetFont('Times', 'B', 12);
-        $pdf->Cell(0, 5, __('Año escolar'), 0, 1, 'C');
+        $pdf->Cell(0, 5, __('pdf.attendanceReport.schoolYear'), 0, 1, 'C');
         $pdf->Cell(0, 5, "20{$year1}-20{$year2}", 0, 1, 'C');
-        if (intval($selectedTrimesterValue[2]) < 6) {
-            $date = "20{$year1}-{$selectedTrimesterValue[2]}-31";
-        } else {
-            $date = "20{$year2}-{$selectedTrimesterValue[2]}-31";
-        }
-        $pdf->Cell(0, 5, "{$months[$selectedTrimesterValue[2]]} {$date}", 0, 1, 'C');
-        $pdf->Cell(0, 5, __('Informe de estudiantes con problemas de tardanzas y ausentismo por horario de clase'), 0, 1, 'C');
+        $date = intval($selectedTrimesterValue[2]) < 6 ? "20{$year1}-{$selectedTrimesterValue[2]}-31" : "20{$year2}-{$selectedTrimesterValue[2]}-31";
+        $pdf->Cell(0, 5, "{$month} {$date}", 0, 1, 'C');
+        $pdf->Cell(0, 5, __('pdf.attendanceReport.title'), 0, 1, 'C');
         $pdf->Ln();
         $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(20, 5, __('Maestro(a):'));
+        $pdf->Cell(20, 5, __('pdf.attendanceReport.teacher'), 0, 0, 'C');
         $pdf->Cell(75, 5, "$teacher->apellidos $teacher->nombre", 'B');
 
-        if ($validated['course'] === 'grado') {
-            $pdf->Cell(20, 5, __('Grado:'), 0, 0, 'C');
-            $pdf->Cell(15, 5, "$teacher->grado", 'B', 1, 'C');
+        if ($isHomeCourse) {
+            $pdf->Cell(20, 5, __('pdf.attendanceReport.grade'), 0, 0, 'C');
+            $pdf->Cell(15, 5, $teacher->grado, 'B', 1, 'C');
         } else {
-            $course = Course::where('curso', $validated['course'])->first();
-            $pdf->Cell(25, 5, __('Asignatura:'), 0, 0, 'C');
+            $pdf->Cell(25, 5, __('pdf.attendanceReport.subject'), 0, 0, 'C');
             $pdf->Cell(0, 5, "$course->curso - $course->desc1", 'B', 1);
         }
 
         $pdf->Ln();
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->Cell(10, 5, '', 1, 0, 0, true);
-        $pdf->Cell(70, 5, __('Nombre del estudiante'), 1, 0, 'C', true);
-        $pdf->Cell(20, 5, __('Horario'), 1, 0, 'C', true);
-        $pdf->Cell(25, 5, __('Ausencias'), 1, 0, 'C', true);
-        $pdf->Cell(25, 5, __('Tardanzas'), 1, 0, 'C', true);
-        $pdf->Cell(50, 5, __('Observaciones'), 1, 1, 'C', true);
+        $pdf->Cell(70, 5, __('pdf.attendanceReport.columns.1'), 1, 0, 'C', true);
+        $pdf->Cell(20, 5, __('pdf.attendanceReport.columns.2'), 1, 0, 'C', true);
+        $pdf->Cell(25, 5, __('pdf.attendanceReport.columns.3'), 1, 0, 'C', true);
+        $pdf->Cell(25, 5, __('pdf.attendanceReport.columns.4'), 1, 0, 'C', true);
+        $pdf->Cell(50, 5, __('pdf.attendanceReport.columns.5'), 1, 1, 'C', true);
         $pdf->SetFont('Arial', '', 9);
-        if ($validated['course'] === 'grado') {
-            $students = Student::ofGrade($teacher->grado)->get();
-        } else {
-            $students = Student::ofCourse($validated['course'])->get();
-        }
 
         foreach ($students as $index => $student) {
             $attendances = $student->attendances()
-                ->whereDate('fecha', '>=', $date1)
-                ->whereDate('fecha', '<=', $date2)->get();
+                ->whereDatesBetween($date1, $date2)
+                ->get();
             $attended = 0;
             $late = 0;
             foreach ($attendances as $attendance) {
