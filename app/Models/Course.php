@@ -6,6 +6,7 @@ use App\Models\Scopes\SchoolYear;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[ScopedBy(SchoolYear::class)]
 class Course extends Model
@@ -23,5 +24,10 @@ class Course extends Model
             ? $attributes['desc1']
             : ($attributes['desc2'] === '' ? $attributes['desc1'] : $attributes['desc2']),
         );
+    }
+
+    public function teacher(): HasOne
+    {
+        return $this->hasOne(Teacher::class, 'id', 'id');
     }
 }
