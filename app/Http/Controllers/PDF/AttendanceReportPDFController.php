@@ -77,12 +77,12 @@ class AttendanceReportPDFController extends Controller
 
         $pdf->Ln();
         $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(10, 5, '', 1);
-        $pdf->Cell(70, 5, __('Nombre del estudiante'), 1, 0, 'C');
-        $pdf->Cell(20, 5, __('Horario'), 1, 0, 'C');
-        $pdf->Cell(25, 5, __('Ausencias'), 1, 0, 'C');
-        $pdf->Cell(25, 5, __('Tardanzas'), 1, 0, 'C');
-        $pdf->Cell(50, 5, __('Observaciones'), 1, 1, 'C');
+        $pdf->Cell(10, 5, '', 1, 0, 0, true);
+        $pdf->Cell(70, 5, __('Nombre del estudiante'), 1, 0, 'C', true);
+        $pdf->Cell(20, 5, __('Horario'), 1, 0, 'C', true);
+        $pdf->Cell(25, 5, __('Ausencias'), 1, 0, 'C', true);
+        $pdf->Cell(25, 5, __('Tardanzas'), 1, 0, 'C', true);
+        $pdf->Cell(50, 5, __('Observaciones'), 1, 1, 'C', true);
         $pdf->SetFont('Arial', '', 9);
         if ($validated['course'] === 'grado') {
             $students = Student::ofGrade($teacher->grado)->get();
