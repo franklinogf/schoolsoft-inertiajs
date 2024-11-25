@@ -1,0 +1,83 @@
+<?php
+
+namespace App\PDF;
+
+use App\Models\Admin;
+
+class PDF extends BasePDF
+{
+    private Admin $school;
+
+    public bool $header = true;
+
+    public bool|int $footer = 15;
+
+    private $leftMargin = 10;
+
+    public $headerFirstPage = false;
+
+    public function __construct(?string $title = null)
+    {
+        $this->school = Admin::getPrimaryAdmin();
+        parent::__construct();
+        $this->AddPage();
+        $this->SetTitle($title);
+        $this->SetAuthor($this->school->colegio);
+        $this->SetCreator(config('app.name'));
+
+    }
+
+    public function header()
+    {
+        if (! $this->header) {
+            return;
+        }
+        $this->leftMargin = $this->lMargin;
+        $this->SetXY($this->leftMargin, 10);
+        $this->SetMargins($this->leftMargin, 10);
+        $this->SetFont('Times', 'B', 15);
+        if (($this->headerFirstPage && $this->PageNo() === 1) || ! $this->headerFirstPage) {
+            $this->Cell(0, 5, $this->school->colegio, 0, 1, 'C');
+            $this->SetFont('Times', '', 9);
+            if ($this->school->dir1 !== '') {
+                $this->Cell(0, 4, $this->school->dir1, 0, 1, 'C');
+            }
+            if ($this->school->dir2 !== '') {
+                $this->Cell(0, 4, $this->school->dir2, 0, 1, 'C');
+            }
+            $this->Cell(0, 4, $this->school->pueblo1.', '.$this->school->esta1.' '.$this->school->zip1, 0, 1, 'C');
+            $this->Cell(0, 4, 'Tel: '.$this->school->telefono.' Fax: '.$this->school->fax, 0, 1, 'C');
+            $this->Cell(0, 4, $this->school->correo, 0, 1, 'C');
+            $this->Ln(10);
+            $this->SetLeftMargin($this->leftMargin);
+        }
+    }
+
+    public function splitCells(string $value1, string $value2)
+    {
+        $this->Cell(0, 5, $value1, 0, 0, 'L');
+        $this->Cell(0, 5, $value2, 0, 1, 'R');
+    }
+
+    public function Footer()
+    {
+        if ($this->footer === false) {
+            return;
+        }
+        $this->SetTextColor(0);
+        $this->AliasNbPages();
+        $this->SetY(-$this->footer);
+        $this->SetFont('Arial', 'I', 8);
+
+    }
+
+    public function useHeader(bool $bool)
+    {
+        $this->header = $bool;
+    }
+
+    public function useFooter(bool|int $bool)
+    {
+        $this->footer = $bool;
+    }
+}
