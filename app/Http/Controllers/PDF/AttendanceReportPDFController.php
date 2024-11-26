@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\PDF;
 
+use App\Enums\AttendanceEnum;
 use App\Enums\TrimesterEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Course;
 use App\Models\Student;
+use App\Models\StudentAttendance;
 use App\Models\Teacher;
 use App\PDF\PDF;
 use App\Utils;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -118,16 +121,99 @@ class AttendanceReportPDFController extends Controller
             'initialDate' => ['required', 'date:Y-m-d'],
             'finalDate' => ['required', 'date:Y-m-d'],
             'option' => ['required', Rule::in(['home', 'student'])],
-            'type' => ['required', Rule::in(['list', 'summary'])],
+            'type' => ['sometimes', Rule::in(['list', 'summary'])],
+            'student' => ['sometimes', 'exists:year,mt'],
         ]);
-        // $school = Admin::getPrimaryAdmin();
+        $isHomeCourse = $validated['option'] === 'home';
+        $isList = $validated['type'] === 'list';
         $pdf = new PDF('Daily Report');
-        $pdf->RotatedText(100, 60, 'Hello World!', 45);
-        // $pdf->SetAuthor($school->colegio);
-        // $pdf->SetCreator(config('app.name'));
-        // $pdf->AddPage();
-        // $pdf->SetFont('Courier', 'B', 18);
-        // $pdf->Cell(50, 25, 'Hello World!');
+        $pdf->useFooter(false);
+        $pdf->SetLeftMargin(5);
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 12);
+        if ($isHomeCourse) {
+            $title = $validated['type'] === 'list' ? 'Lista de asistencias diarias' : 'Resumen de asistencias diarias';
+            $teacher = Teacher::find(auth()->id());
+            $grade = $teacher->grado;
+        } else {
+            $title = 'Asistencias diarias';
+        }
+        $initialDate = ucfirst(Carbon::createFromDate($validated['initialDate'])->translatedFormat('F j, Y'));
+        $finalDate = ucfirst(Carbon::createFromDate($validated['finalDate'])->translatedFormat('F j, Y'));
+        $pdf->Cell(0, 5, "{$title} {$this->year}", 0, 1, 'C');
+        $pdf->Cell(0, 10, "Desde: {$initialDate} / Hasta: {$finalDate}", 0, 1, 'C');
+        $pdf->SetFont('Arial', 'B', 10);
+        if ($isHomeCourse) {
+
+            if (! $isList) {
+                $pdf->Cell(15);
+            }
+            $pdf->Cell(10, 5, '', 'LTB', 0, 'C', true);
+            $pdf->Cell(50, 5, 'Apellidos', 'RTB', 0, 'C', true);
+            $pdf->Cell(50, 5, 'Nombre', 1, 0, 'C', true);
+            if ($isList) {
+                $pdf->Cell(25, 5, 'Fecha', 1, 0, 'C', true);
+                $pdf->Cell(60, 5, 'Asistencia', 1, 0, 'C', true);
+            } else {
+                $pdf->Cell(30, 5, 'Ausencias', 1, 0, 'C', true);
+                $pdf->Cell(30, 5, 'Tardanzas', 1, 0, 'C', true);
+            }
+            $pdf->Ln();
+            $pdf->SetFont('Arial', '', 10);
+            if ($isList) {
+                $studentAttendances = StudentAttendance::where([['codigo', '>', 0], ['grado', $grade]])
+                    ->whereDatesBetween($validated['initialDate'], $validated['finalDate'])
+                    ->orderBy('apellidos')->orderBy('nombre')->orderBy('fecha')->get();
+                foreach ($studentAttendances as $index => $attendance) {
+                    $pdf->Cell(10, 5, $index + 1, 1, 0, 'C');
+                    $pdf->Cell(50, 5, $attendance->apellidos, 1);
+                    $pdf->Cell(50, 5, $attendance->nombre, 1);
+                    $pdf->Cell(25, 5, $attendance->fecha, 1, 0, 'C');
+                    $pdf->Cell(60, 5, AttendanceEnum::get($attendance->codigo)->labelWithType(), 1, 1);
+                }
+            } else {
+                $studentAttendances = StudentAttendance::where([['codigo', '>', 0], ['grado', $grade]])
+                    ->whereDatesBetween($validated['initialDate'], $validated['finalDate'])
+                    ->orderBy('apellidos')->orderBy('nombre')
+                    ->get()->groupBy('ss');
+                $count = 1;
+                foreach ($studentAttendances as $ss => $attendances) {
+                    $absences = $tardiness = 0;
+                    foreach ($attendances as $attendance) {
+                        $absences += intval($attendance->codigo) <= 7 ? 1 : 0;
+                        $tardiness += intval($attendance->codigo) >= 8 ? 1 : 0;
+
+                    }
+                    $student = Student::where('ss', $ss)->select(['nombre', 'apellidos'])->first();
+
+                    $pdf->Cell(15);
+                    $pdf->Cell(10, 5, $count, 1, 0, 'C');
+                    $pdf->Cell(50, 5, $student->apellidos, 1);
+                    $pdf->Cell(50, 5, $student->nombre, 1);
+                    $pdf->Cell(30, 5, $absences, 1, 0, 'C');
+                    $pdf->Cell(30, 5, $tardiness, 1, 1, 'C');
+                    $count++;
+                }
+
+            }
+        } else {
+            $student = Student::with('attendances')->findOrFail($validated['student']);
+
+            $pdf->splitCells("Nombre: {$student->apellidos}, {$student->nombre}", "Grado: {$student->grado}");
+            $pdf->Ln(10);
+            $pdf->Cell(40);
+            $pdf->Cell(10, 5, '', 'LTB', 0, 'C', true);
+            $pdf->Cell(35, 5, 'Fecha', 'RTB', 0, 'C', true);
+            $pdf->Cell(70, 5, 'Asistencia', 1, 1, 'C', true);
+            $pdf->SetFont('Arial', '', 10);
+            foreach ($student->attendances as $index => $attendance) {
+                $pdf->Cell(40);
+                $pdf->Cell(10, 5, $index + 1, 1, 0, 'C');
+                $pdf->Cell(35, 5, $attendance->fecha, 1, 0, 'C');
+                $pdf->Cell(70, 5, AttendanceEnum::get($attendance->codigo)->labelWithType(), 1, 1);
+            }
+
+        }
 
         $pdf->Output();
         exit;
