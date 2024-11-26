@@ -4,19 +4,30 @@ import { SelectField } from "@/Components/forms/inputs/SelectField";
 import { ModalForm } from "@/Components/ModalForm";
 import { SelectItem } from "@/Components/ui/select";
 import { formatDateToString } from "@/lib/utils";
+import { Student } from "@/types/student";
 import { useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 
-export function AttendanceDailyReportModalForm() {
+interface AttendanceDailyReportModalFormProps {
+  students: Student[];
+}
+export function AttendanceDailyReportModalForm({ students }: AttendanceDailyReportModalFormProps) {
   const { data, setData, reset } = useForm({
     initialDate: formatDateToString(),
     finalDate: formatDateToString(),
     option: "home",
     type: "list",
+    student: students[0].mt.toString(),
   });
   const { t } = useTranslation(["common", "pages", "input"]);
   const handleSubmit = () => {
-    window.open(route("regiweb.notes.attendance.dailyReport", { ...data }));
+    const dataToSend: Partial<typeof data> = {
+      ...data,
+    };
+    if (data.option === "home") {
+      delete dataToSend.student;
+    }
+    window.open(route("regiweb.notes.attendance.dailyReport", { ...dataToSend }));
   };
   return (
     <ModalForm
@@ -41,21 +52,36 @@ export function AttendanceDailyReportModalForm() {
         />
       </FieldsGrid>
       <SelectField
+        label={t("input:option")}
         value={data.option}
         onChange={(value) => setData("option", value)}
-        label={t("input:option")}
       >
         <SelectItem value="home">{t("common:homeGrade")}</SelectItem>
         <SelectItem value="student">{t("common:perStudent")}</SelectItem>
       </SelectField>
-      <SelectField
-        value={data.type}
-        onChange={(value) => setData("type", value)}
-        label={t("input:type")}
-      >
-        <SelectItem value="list">{t("common:list")}</SelectItem>
-        <SelectItem value="summary">{t("common:summary")}</SelectItem>
-      </SelectField>
+      {data.option === "home" && (
+        <SelectField
+          label={t("input:type")}
+          value={data.type}
+          onChange={(value) => setData("type", value)}
+        >
+          <SelectItem value="list">{t("common:list")}</SelectItem>
+          <SelectItem value="summary">{t("common:summary")}</SelectItem>
+        </SelectField>
+      )}
+      {data.option === "student" && (
+        <SelectField
+          label={t("input:student")}
+          value={data.student}
+          onChange={(value) => setData("student", value)}
+        >
+          {students.map((student) => (
+            <SelectItem key={student.mt} value={student.mt.toString()}>
+              {`${student.apellidos} ${student.nombre}`}
+            </SelectItem>
+          ))}
+        </SelectField>
+      )}
     </ModalForm>
   );
 }

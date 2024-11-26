@@ -11,15 +11,18 @@ import {
 } from "@/Constants/FormSelects";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
+import { Student } from "@/types/student";
 import { Teacher } from "@/types/teacher";
 import { Link, useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import { AttendanceDailyReportModalForm } from "./_components/AttendanceDailyReportModalForm";
 import { AttendanceReportModalForm } from "./_components/AttendanceReportModalForm";
 
-type PageProps = PagePropsWithUser<Teacher>;
+type PageProps = PagePropsWithUser<Teacher> & {
+  students: Student[];
+};
 
-export default function Page({ auth: { user }, errors: pageErrors }: PageProps) {
+export default function Page({ auth: { user }, errors: pageErrors, students }: PageProps) {
   const { t } = useTranslation(["pages", "common", "input"]);
   const { data, setData, get, processing, errors } = useForm({
     course: "",
@@ -42,7 +45,7 @@ export default function Page({ auth: { user }, errors: pageErrors }: PageProps) 
                 {t("pages:regiweb.notes.index.btn.attendance")}
               </Link>
             </Button>
-            <AttendanceDailyReportModalForm />
+            <AttendanceDailyReportModalForm students={students} />
             <AttendanceReportModalForm courses={user.cursos} />
             <Button variant="outline">{t("pages:regiweb.notes.index.btn.preschool")}</Button>
           </div>
