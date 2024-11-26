@@ -24,7 +24,7 @@ export function formatDateToString(date = new Date()) {
 
 export function formatStringToDate(date = formatDateToString(new Date())) {
   if (!date || date === "0000-00-00") return undefined;
-  return parse(date, "yyyy-mm-dd", new Date());
+  return parse(date, "yyyy-MM-dd", new Date());
 }
 
 /* ----------------------------- Time formatters ---------------------------- */
