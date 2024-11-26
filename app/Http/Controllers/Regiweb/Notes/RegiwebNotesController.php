@@ -30,8 +30,9 @@ class RegiwebNotesController extends Controller
     public function index()
     {
         $this->user->load('courses');
+        $students = $this->user->students;
 
-        return Inertia::render('Regiweb/Notes/Index');
+        return Inertia::render('Regiweb/Notes/Index', compact('students'));
     }
 
     public function show(ShowRequest $request)
