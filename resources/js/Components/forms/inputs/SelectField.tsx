@@ -51,7 +51,7 @@ export function SelectField({
   return (
     <FieldContainer className={className}>
       <FieldLabel disabled={disabled} error={error} id={id} label={label} />
-      <Select disabled={disabled} defaultValue={value} onValueChange={onChange}>
+      <Select name={id} disabled={disabled} defaultValue={value} onValueChange={onChange}>
         <SelectTrigger
           id={id}
           className={cn({
