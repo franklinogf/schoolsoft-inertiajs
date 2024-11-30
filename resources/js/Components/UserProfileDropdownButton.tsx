@@ -17,8 +17,8 @@ export function UserProfileDropdownButton({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar className="size-10">
-          <AvatarImage src={avatar} alt="User profile picture" />
+        <Avatar className="size-10 border border-primary">
+          <AvatarImage src={avatar} alt="User profile picture" className="object-cover" />
           <AvatarFallback className="text-sm font-bold">{avatarFallback}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
