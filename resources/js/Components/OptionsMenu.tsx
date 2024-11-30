@@ -1,5 +1,5 @@
+import { Button } from "@/Components/ui/button";
 import { Link } from "@inertiajs/react";
-import { Button } from "./ui/button";
 export type MenuOption = { title: string; items: { label: string; route: string }[] };
 interface OptionsMenuProps {
   title: string;
