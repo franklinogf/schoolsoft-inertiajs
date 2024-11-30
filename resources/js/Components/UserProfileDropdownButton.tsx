@@ -18,11 +18,11 @@ export function UserProfileDropdownButton({
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar className="size-10 border border-primary">
-          <AvatarImage src={avatar} alt="User profile picture" className="object-cover" />
+          <AvatarImage src={avatar} alt="User profile picture" className="object-contain" />
           <AvatarFallback className="text-sm font-bold">{avatarFallback}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>{children}</DropdownMenuContent>
+      <DropdownMenuContent align="end">{children}</DropdownMenuContent>
     </DropdownMenu>
   );
 }
