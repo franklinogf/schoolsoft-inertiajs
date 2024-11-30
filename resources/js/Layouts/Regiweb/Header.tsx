@@ -53,7 +53,7 @@ export default function Header({ user }: HeaderProps) {
       </NavigationMenu>
       <nav className="ml-auto hidden md:flex md:items-center">
         <UserProfileDropdownButton
-          avatar={user.tipo}
+          avatar={user.foto_name}
           avatarFallback={`${user.nombre[0]}${user.apellidos[0]}`}
         >
           <DropdownMenuItem>
