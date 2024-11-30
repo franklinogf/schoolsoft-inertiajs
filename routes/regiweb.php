@@ -3,6 +3,7 @@
 use App\Http\Controllers\PDF\AttendanceReportPDFController;
 use App\Http\Controllers\Regiweb\Notes\AttendanceController;
 use App\Http\Controllers\Regiweb\Notes\RegiwebNotesController;
+use App\Http\Controllers\Regiweb\Options\RegiwebOptionsIndexController;
 use App\Http\Controllers\Regiweb\RegiwebHomeController;
 use App\Http\Controllers\Regiweb\RegiwebLoginController;
 use App\Http\Controllers\Regiweb\RegiwebProfileController;
@@ -47,6 +48,10 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
                 });
 
             });
+        });
+
+        Route::name('options.')->prefix('options')->group(function () {
+            Route::get('/', RegiwebOptionsIndexController::class)->name('index');
         });
 
     });
