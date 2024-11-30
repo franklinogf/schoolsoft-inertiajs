@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 // i18n.loadNamespaces("pages");
 const menuItems = [
   { label: "item1", route: "regiweb.notes.index" },
-  { label: "item2", route: "regiweb.home" },
+  { label: "item2", route: "regiweb.options.index" },
   { label: "item3", route: "regiweb.home" },
 ] as const;
 interface HeaderProps {
