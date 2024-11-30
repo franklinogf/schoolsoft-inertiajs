@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Regiweb\Options;
+namespace App\Http\Controllers\Regiweb;
 
 use App\Http\Controllers\Controller;
 
