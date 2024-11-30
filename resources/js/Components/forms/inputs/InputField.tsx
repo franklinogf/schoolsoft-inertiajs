@@ -27,6 +27,7 @@ export function InputField({
       <Input
         disabled={disabled}
         id={id}
+        value={value}
         className={cn(
           {
             "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
