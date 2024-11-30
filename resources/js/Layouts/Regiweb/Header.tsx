@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 const menuItems = [
   { label: "item1", route: "regiweb.notes.index" },
   { label: "item2", route: "regiweb.options.index" },
-  { label: "item3", route: "regiweb.home" },
+  { label: "item3", route: "regiweb.reports.index" },
 ] as const;
 interface HeaderProps {
   user: Teacher;
