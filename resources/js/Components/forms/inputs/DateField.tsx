@@ -26,7 +26,7 @@ export function DateField({
   disabled,
   placeholder,
   yearRange = 50,
-  displayFormat = { hour24: "PPP" },
+  displayFormat = { hour24: "PP" },
   clearable = true,
   value,
   onChange,
