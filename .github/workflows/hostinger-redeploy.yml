@@ -39,7 +39,7 @@ jobs:
             cd domains
             cd ${{ vars.SITE_NAME }}
             git pull
-            ~/composer.phar install
+            ~/composer.phar install --no-dev
             php artisan optimize
 
       - name: Install SSH key
