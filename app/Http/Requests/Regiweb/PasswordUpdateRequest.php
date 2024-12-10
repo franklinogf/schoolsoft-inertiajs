@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Regiweb;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class PasswordUpdateRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class PasswordUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'clave' => ['required', 'min:6', 'confirmed'],
+            'clave' => ['required', Password::defaults(), 'confirmed'],
             'clave_confirmation' => ['required', 'exclude'],
         ];
     }
