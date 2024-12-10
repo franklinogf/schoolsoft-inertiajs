@@ -37,13 +37,9 @@ class AppServiceProvider extends ServiceProvider
         App::singleton('year', fn () => optional(Admin::getPrimaryAdmin())->year);
 
         Password::defaults(function () {
-            $rule = Password::min(8);
-
-            return $this->app->isProduction()
-                        ? $rule->letters()
-                            ->mixedCase()
-                            ->numbers()
-                        : $rule;
+            return Password::min(8)->letters()
+                ->mixedCase()
+                ->numbers();
         });
 
     }
