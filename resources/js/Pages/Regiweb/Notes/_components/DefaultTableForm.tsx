@@ -18,20 +18,20 @@ import { StudentsDefaultGrades } from "../_types/studentsGrades";
 import { FormSubmit } from "./FormSubmit";
 import { GradesValues } from "./ValuesForm";
 
-interface DefaultFormProps {
+interface DefaultTableFormProps {
   columns: string[] | null;
   amountOfGrades: number;
   convert: boolean;
   values: GradesValues;
   students: StudentsDefaultGrades[];
 }
-export function DefaultForm({
+export function DefaultTableForm({
   columns,
   amountOfGrades,
   convert,
   values,
   students,
-}: DefaultFormProps) {
+}: DefaultTableFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation(["common", "pages"]);

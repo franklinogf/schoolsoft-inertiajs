@@ -16,10 +16,10 @@ import { OptionsContext } from "../_context/OptionsContext";
 import { StudentsExamGrades } from "../_types/studentsGrades";
 import { FormSubmit } from "./FormSubmit";
 
-interface DefaultFormProps {
+interface ExamTableFormProps {
   students: StudentsExamGrades[];
 }
-export function ExamForm({ students }: DefaultFormProps) {
+export function ExamForm({ students }: ExamTableFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation(["common", "pages"]);
