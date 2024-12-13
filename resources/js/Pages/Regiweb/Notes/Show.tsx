@@ -14,9 +14,9 @@ import { useTranslation } from "react-i18next";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 import { PAGES, TRIMESTERS } from "@/Constants";
 import { Info } from "lucide-react";
-import { AttendaceForm } from "./_components/AttendanceForm";
-import { DefaultForm } from "./_components/DefaultForm";
-import { ExamForm } from "./_components/ExamForm";
+import { AttendaceTableForm } from "./_components/AttendanceTableForm";
+import { DefaultTableForm } from "./_components/DefaultTableForm";
+import { ExamForm } from "./_components/ExamTableForm";
 import { GradesValues, ValuesForm } from "./_components/ValuesForm";
 import { OptionsContext } from "./_context/OptionsContext";
 import {
@@ -167,7 +167,7 @@ export default function Page({
             page === PagesEnum.SHORT_TESTS ||
             page === PagesEnum.DAILY_WORKS ||
             page === PagesEnum.NOTEBOOKS_WORKS) ? (
-            <DefaultForm
+            <DefaultTableForm
               values={values}
               amountOfGrades={amountOfGrades}
               columns={columns}
@@ -175,7 +175,7 @@ export default function Page({
               students={studentsGrades as StudentsDefaultGrades[]}
             />
           ) : page === PagesEnum.CONDUCT_ATTENDANCE ? (
-            <AttendaceForm students={studentsGrades as StudentsAttendanceGrades[]} />
+            <AttendaceTableForm students={studentsGrades as StudentsAttendanceGrades[]} />
           ) : page === PagesEnum.FINAL_EXAM ? (
             <ExamForm students={studentsGrades as StudentsExamGrades[]} />
           ) : null}

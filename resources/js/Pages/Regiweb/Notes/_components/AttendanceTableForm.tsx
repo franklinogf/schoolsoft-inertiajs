@@ -16,10 +16,10 @@ import { OptionsContext } from "../_context/OptionsContext";
 import { StudentAttendaceGradeKey, StudentsAttendanceGrades } from "../_types/studentsGrades";
 import { FormSubmit } from "./FormSubmit";
 
-interface DefaultFormProps {
+interface AttendanceTableFormProps {
   students: StudentsAttendanceGrades[];
 }
-export function AttendaceForm({ students }: DefaultFormProps) {
+export function AttendaceTableForm({ students }: AttendanceTableFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation(["common", "pages"]);
