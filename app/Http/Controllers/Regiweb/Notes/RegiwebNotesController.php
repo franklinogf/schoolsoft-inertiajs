@@ -202,7 +202,7 @@ class RegiwebNotesController extends Controller
             'course' => $course,
             'page' => $page,
             'trimester' => $trimester,
-            'studentsGrades' => $studentsGrades,
+            'studentsGrades' => Inertia::defer(fn () => $studentsGrades),
             'initialDate' => $initialDate,
             'finalDate' => $finalDate,
             'isLetter' => $isLetter,
