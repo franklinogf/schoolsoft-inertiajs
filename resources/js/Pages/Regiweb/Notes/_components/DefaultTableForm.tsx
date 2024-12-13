@@ -1,5 +1,5 @@
 import { AlertDestructive } from "@/Components/AlertDesctructive";
-import { Input } from "@/Components/ui/input";
+import { InputField } from "@/Components/forms/inputs/InputField";
 import {
   Table,
   TableBody,
@@ -219,15 +219,16 @@ export function DefaultTableForm({
                       const disabled = val === "";
                       return (
                         <TableCell className="px-1" key={gradeIndex}>
-                          <Input
+                          <InputField
                             title={
                               !disabled && val !== undefined ? `Nota maxima: ${val}` : undefined
                             }
                             disabled={disabled}
-                            onChange={(e) => {
-                              handleGradeChange(id, number, e.target.value, number === 10);
+                            onChange={(value) => {
+                              handleGradeChange(id, number, value, number === 10);
                             }}
-                            className="remove-arrows px-1 text-center"
+                            removeArrows
+                            className="px-1 text-center"
                             type={convert ? "text" : "number"}
                             value={notas[`nota${number}`].value}
                           />
