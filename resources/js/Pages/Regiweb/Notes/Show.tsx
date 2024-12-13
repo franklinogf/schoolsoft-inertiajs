@@ -13,10 +13,12 @@ import { useTranslation } from "react-i18next";
 
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 import { PAGES, TRIMESTERS } from "@/Constants";
+import { Deferred } from "@inertiajs/react";
 import { Info } from "lucide-react";
 import { AttendaceTableForm } from "./_components/AttendanceTableForm";
 import { DefaultTableForm } from "./_components/DefaultTableForm";
 import { ExamForm } from "./_components/ExamTableForm";
+import { TableFormFallback } from "./_components/TableFormFallback";
 import { GradesValues, ValuesForm } from "./_components/ValuesForm";
 import { OptionsContext } from "./_context/OptionsContext";
 import {
@@ -90,10 +92,17 @@ export default function Page({
                 label={t("pages:regiweb.notes.show.card1.addingNotes")}
                 value={PAGES[page]}
               />
-              <InfoBadge
-                label={t("pages:regiweb.notes.show.card1.studentsTotal")}
-                value={studentsGrades.length}
-              />
+              <Deferred
+                data="studentsGrades"
+                fallback={
+                  <InfoBadge label={t("pages:regiweb.notes.show.card1.studentsTotal")} value={0} />
+                }
+              >
+                <InfoBadge
+                  label={t("pages:regiweb.notes.show.card1.studentsTotal")}
+                  value={studentsGrades?.length}
+                />
+              </Deferred>
               <InfoBadge
                 label={t("common:date.initialDate")}
                 value={formatDate(initialDate, { dateStyle: "long" })}
@@ -159,27 +168,29 @@ export default function Page({
         ) : null}
       </section>
       <section className="mt-8">
-        <OptionsContext.Provider value={{ page, trimester, course }}>
-          {values &&
-          amountOfGrades &&
-          (page === PagesEnum.GRADES ||
-            page === PagesEnum.SUMMER_GRADES ||
-            page === PagesEnum.SHORT_TESTS ||
-            page === PagesEnum.DAILY_WORKS ||
-            page === PagesEnum.NOTEBOOKS_WORKS) ? (
-            <DefaultTableForm
-              values={values}
-              amountOfGrades={amountOfGrades}
-              columns={columns}
-              convert={convert}
-              students={studentsGrades as StudentsDefaultGrades[]}
-            />
-          ) : page === PagesEnum.CONDUCT_ATTENDANCE ? (
-            <AttendaceTableForm students={studentsGrades as StudentsAttendanceGrades[]} />
-          ) : page === PagesEnum.FINAL_EXAM ? (
-            <ExamForm students={studentsGrades as StudentsExamGrades[]} />
-          ) : null}
-        </OptionsContext.Provider>
+        <Deferred data="studentsGrades" fallback={<TableFormFallback />}>
+          <OptionsContext.Provider value={{ page, trimester, course }}>
+            {values &&
+            amountOfGrades &&
+            (page === PagesEnum.GRADES ||
+              page === PagesEnum.SUMMER_GRADES ||
+              page === PagesEnum.SHORT_TESTS ||
+              page === PagesEnum.DAILY_WORKS ||
+              page === PagesEnum.NOTEBOOKS_WORKS) ? (
+              <DefaultTableForm
+                values={values}
+                amountOfGrades={amountOfGrades}
+                columns={columns}
+                convert={convert}
+                students={studentsGrades as StudentsDefaultGrades[]}
+              />
+            ) : page === PagesEnum.CONDUCT_ATTENDANCE ? (
+              <AttendaceTableForm students={studentsGrades as StudentsAttendanceGrades[]} />
+            ) : page === PagesEnum.FINAL_EXAM ? (
+              <ExamForm students={studentsGrades as StudentsExamGrades[]} />
+            ) : null}
+          </OptionsContext.Provider>
+        </Deferred>
       </section>
       {values && gradesValuesId && amountOfGrades && (
         <section className="mt-8">
