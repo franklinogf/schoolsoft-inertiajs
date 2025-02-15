@@ -29,7 +29,7 @@ export default function Page() {
       <Head title={t("meta.title")} />
       <div className="absolute top-0 z-[-2] h-full w-full bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
       <MaxWidthSection className="relative">
-        <div className="mx-auto grid max-w-screen-xl lg:grid-cols-12 lg:gap-8 xl:gap-0">
+        <div className="mx-auto grid max-w-(--breakpoint-xl) lg:grid-cols-12 lg:gap-8 xl:gap-0">
           <div className="mr-auto flex flex-col items-center place-self-center md:mx-auto lg:col-span-7">
             <motion.h1
               initial={{ opacity: 0, x: -200 }}
@@ -63,7 +63,7 @@ export default function Page() {
               transition={{ delay: 0.5, duration: 0.5 }}
               initial={{ x: 200, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              className="aspect-[541/784]"
+              className="aspect-541/784"
               src="/assets/schoolsoft-book.png"
               alt="Schoolsoft libro"
             />
@@ -71,7 +71,7 @@ export default function Page() {
         </div>
       </MaxWidthSection>
       <MaxWidthSection>
-        <div className="mx-auto max-w-screen-lg">
+        <div className="mx-auto max-w-(--breakpoint-lg)">
           <motion.h2
             initial="offScreen"
             whileInView="onScreen"
@@ -103,7 +103,7 @@ export default function Page() {
         </div>
       </MaxWidthSection>
       <MaxWidthSection>
-        <div className="mx-auto max-w-screen-lg">
+        <div className="mx-auto max-w-(--breakpoint-lg)">
           <motion.h2
             initial="offScreen"
             whileInView="onScreen"

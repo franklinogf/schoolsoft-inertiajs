@@ -24,7 +24,7 @@ export default function IndexPage({ auth: { user }, ip }: IndexPageProps) {
               alt={t("regiweb.index.imageAlt")}
             />
           </div>
-          <div className="rounded-md bg-secondary/50 p-4 shadow">
+          <div className="rounded-md bg-secondary/50 p-4 shadow-sm">
             <h1 className="text-center text-2xl font-bold">
               {t("regiweb.index.card.title", { ns: "pages" })}
             </h1>
