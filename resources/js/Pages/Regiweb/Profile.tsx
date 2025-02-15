@@ -421,7 +421,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             </div>
           </section>
           <section>
-            <Accordion className="rounded-md bg-white shadow-sm" type="single" collapsible>
+            <Accordion className="rounded-md bg-white shadow-xs" type="single" collapsible>
               <AccordionItem value="club">
                 <AccordionTrigger className="px-6">
                   {t("pages:regiweb.profile.card4.title1")}
