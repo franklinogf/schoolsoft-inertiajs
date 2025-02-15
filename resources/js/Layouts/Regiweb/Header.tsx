@@ -27,7 +27,7 @@ interface HeaderProps {
 export default function Header({ user }: HeaderProps) {
   const { t } = useTranslation(["pages"], { keyPrefix: "regiweb.menu" });
   return (
-    <header className="flex h-16 items-center bg-secondary px-4 shadow">
+    <header className="flex h-16 items-center bg-secondary px-4 shadow-sm">
       <div className="mr-8">
         <Link href={route("regiweb.home")}>
           <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt={t("imageAlt")} />

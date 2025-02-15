@@ -105,7 +105,7 @@ export function AttendaceTableForm({ students }: AttendanceTableFormProps) {
         <Table>
           <TableHeader>
             <TableRow className="bg-primary hover:bg-primary [&>th]:text-center [&>th]:text-primary-foreground">
-              <TableHead className="!text-left">#</TableHead>
+              <TableHead className="text-left!">#</TableHead>
               <TableHead>{t("common:student")}</TableHead>
               <TableHead>{t("common:conduct")}</TableHead>
               <TableHead>{t("common:absences")}</TableHead>

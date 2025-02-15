@@ -57,7 +57,7 @@ export function ProfilePictureField({
       <div
         {...getRootProps()}
         className={cn(
-          "relative flex aspect-square size-[250px] items-center justify-center overflow-hidden rounded-full border-2 border-dashed px-2 shadow-sm",
+          "relative flex aspect-square size-[250px] items-center justify-center overflow-hidden rounded-full border-2 border-dashed px-2 shadow-xs",
           disabled ? "cursor-not-allowed bg-muted" : "cursor-pointer bg-background",
           { "cursor-not-allowed border-destructive": isDragReject },
         )}
