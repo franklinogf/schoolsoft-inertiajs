@@ -7,15 +7,6 @@ import { ColumnDef } from "@tanstack/react-table";
 export const columns: ColumnDef<Partial<Student>>[] = [
   { ...(selectionHeader as ColumnDef<Partial<Student>>) },
   {
-    header: "ID",
-    accessorKey: "mt",
-    cell: ({ row }) => {
-      const value = row.getValue("mt") as number;
-
-      return value;
-    },
-  },
-  {
     header: ({ column }) => <DataTableColumnHeader column={column} title="Apellidos" />,
     accessorKey: "apellidos",
     cell: ({ row }) => {
