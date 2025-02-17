@@ -29,6 +29,19 @@ class StudentGrade extends Model
         $this->table = $tableName;
     }
 
+    public function scopeOfTeacher(Builder $builder, string $teacherId): void
+    {
+        $builder->where('id', $teacherId);
+    }
+
+    public static function studentsDataTable(){
+        return self::ofTeacher(auth()->id())
+        ->select('ss','nombre','apellidos','id2 as mt')
+        ->groupBy('ss','nombre','apellidos','id2')
+        ->orderBy('apellidos')
+        ->get();
+    }
+
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'ss', 'ss');
