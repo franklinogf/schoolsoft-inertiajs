@@ -17,7 +17,7 @@ class RegiwebOptionsIndexController extends Controller
                 'items' => [
                     [
                         'label' => 'Correo electrónico',
-                        'route' => route('regiweb.options.index'),
+                        'route' => route('regiweb.options.messages.email.index'),
                     ],
                     [
                         'label' => 'SMS',
