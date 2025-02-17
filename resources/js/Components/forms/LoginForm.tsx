@@ -12,6 +12,7 @@ import { Teacher } from "@/types/teacher";
 import { Link, useForm } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import { InputField } from "./inputs/InputField";
+import SubmitButton from "./SubmitButton";
 interface LoginFormProps {
   submitRoute: string;
   className?: string;
@@ -54,7 +55,7 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
           </div>
         </CardContent>
         <CardFooter className="grid gap-2">
-          <Button disabled={processing}>{t("btn.access", { ns: "common" })}</Button>
+          <SubmitButton disabled={processing}>{t("btn.access", { ns: "common" })}</SubmitButton>
           <Button variant="outline" asChild>
             <Link href={route("home.index")}>{t("btn.back", { ns: "common" })}</Link>
           </Button>
