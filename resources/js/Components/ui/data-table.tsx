@@ -21,6 +21,8 @@ import { XSquare } from "lucide-react";
 import { useState } from "react";
 import { DataTablePagination } from "../datatables/DataTablePagination";
 import { InputField } from "../forms/inputs/InputField";
+import useConfirmationStore from "@/stores/confirmationStore"
+import { toast } from "sonner"
 
 interface DataTableProps<Tdata, TValue> {
   columns: ColumnDef<Tdata, TValue>[];
@@ -40,7 +42,7 @@ export function DataTable<Tdata, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState<any>([]);
   const [rowSelection, setRowSelection] = useState({});
-
+  const { openConfirmation } = useConfirmationStore();
   const table = useReactTable({
     columns,
     data,
@@ -102,7 +104,9 @@ export function DataTable<Tdata, TValue>({
           <TableBody className="bg-background/80">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow onClick={() => {
+                  buttonLabel && row.toggleSelected();
+                }} key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell className="p-3" key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -128,8 +132,12 @@ export function DataTable<Tdata, TValue>({
           <Button
           className="cursor-pointer"
             onClick={() => {
-              onButtonClick &&
-                onButtonClick(table.getSelectedRowModel().rows.map((row) => row.original));
+              if(!onButtonClick) return;
+              if(table.getSelectedRowModel().rows.length === 0) {
+                toast.info("Please select at least one row")
+              }else{
+                onButtonClick(table.getSelectedRowModel().rows.map((row) => row.original))
+              }  
             }}
           >
             {buttonLabel}
