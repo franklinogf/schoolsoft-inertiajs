@@ -20,7 +20,10 @@ Open another terminal and run
 ```
 npm run dev
 ```
+One command for both (new)
+```
+composer dev
+```
 
 ## Dev features (urls)
 - /telescope
-- /translations (backend)
