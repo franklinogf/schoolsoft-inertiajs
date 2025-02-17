@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin '@tailwindcss/forms';
 @plugin 'tailwindcss-animate';
@@ -43,8 +43,8 @@
   --radius-sm: calc(var(--radius) - 4px);
 
   --font-sans:
-    Figtree, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    Figtree, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -101,7 +101,7 @@
 }
 
 @utility page-primary-title {
-  @apply mx-auto max-w-2xl text-balance text-center text-4xl font-bold;
+  @apply mx-auto max-w-2xl text-center text-4xl font-bold text-balance;
 }
 
 @utility filepond--panel-root {
@@ -113,23 +113,23 @@
 }
 
 @utility input-phone {
-  @apply h-10! rounded-md! border! border-input! bg-background! px-3! text-sm! placeholder:text-foreground!;
+  @apply border-input! bg-background! placeholder:text-foreground! h-10! rounded-md! border! px-3! text-sm!;
   input {
     @apply h-9 border-0 focus:ring-0;
   }
 }
 
 @utility remove-arrows {
-  &input[type='number']::-webkit-inner-spin-button {
+  &input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
-  & input[type='number']::-webkit-outer-spin-button {
+  & input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  &input[type='number'] {
+  &input[type="number"] {
     appearance: textfield;
   }
 }
