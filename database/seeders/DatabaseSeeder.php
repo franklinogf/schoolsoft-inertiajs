@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\School;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,5 +20,17 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $school = School::create([
+            'name' => 'Test School',
+            'email' => 'test@test.com',
+        ]);
+
+        $school->run(function () {
+            User::factory()->create([
+                'name' => 'Test School Admin',
+                'email' => 'test@test.com',
+            ]);
+        });
     }
 }

@@ -19,6 +19,7 @@ return [
     'central_domains' => [
         '127.0.0.1',
         'localhost',
+        'schoolsoft-main-pco6v1.laravel.cloud',
     ],
 
     /**
