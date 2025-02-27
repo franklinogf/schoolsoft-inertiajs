@@ -7,50 +7,70 @@ import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { Admin } from "@/types/auth";
 import { Student } from "@/types/student";
 import { Course } from "@/types/teacher";
+import { router } from "@inertiajs/react";
+import { useState } from "react";
+
+export enum SelectedEnum {
+  STUDENTS = "students",
+  COURSES = "courses",
+  ADMIN = "admin",
+}
+
 interface PageProps {
   students: Student[];
   courses: Course[];
   admins: Admin[];
+  selected: SelectedEnum;
 }
-export default function Page({ students, courses, admins }: PageProps) {
+
+export default function Page({ students, courses, admins, selected: initialSelected }: PageProps) {
+  const [selected, setSelected] = useState<SelectedEnum>(initialSelected);
+
+  const handleButtonClick = (data: string[]) => {
+    router.get(route("regiweb.options.messages.email.form"), { data, selected });
+  };
+
   return (
     <RegiwebLayout title="Mensajes de correo electrónico">
       <section className="mx-auto w-full max-w-4xl">
-        <h1 className="pb-4 text-center text-2xl font-semibold">Enviar de correo electrónico</h1>
-        <Tabs defaultValue="students">
+        <h1 className="pb-4 text-center text-2xl font-semibold">Mensajes de correo electrónico</h1>
+        <Tabs
+          value={selected}
+          onValueChange={(value) => {
+            setSelected(value as SelectedEnum);
+          }}
+        >
           <TabsList className="mx-auto">
-            <TabsTrigger value="students">Estudiantes</TabsTrigger>
-            <TabsTrigger value="courses">Cursos</TabsTrigger>
-            <TabsTrigger value="admin">Administradores</TabsTrigger>
+            <TabsTrigger value={SelectedEnum.STUDENTS}>Estudiantes</TabsTrigger>
+            <TabsTrigger value={SelectedEnum.COURSES}>Cursos</TabsTrigger>
+            <TabsTrigger value={SelectedEnum.ADMIN}>Administradores</TabsTrigger>
           </TabsList>
-          <TabsContent value="students">
+          <TabsContent value={SelectedEnum.STUDENTS}>
             <DataTable
+              rowId="ss"
               columns={studentsColumns}
               data={students}
               buttonLabel="Continuar"
-              onButtonClick={(data) => {
-                console.log(data);
-              }}
+              onButtonClick={handleButtonClick}
             />
           </TabsContent>
-          <TabsContent value="courses">
+          <TabsContent value={SelectedEnum.COURSES}>
             <DataTable
+              rowId="curso"
               columns={coursesColumns}
               data={courses}
               buttonLabel="Continuar"
-              onButtonClick={(data) => {
-                console.log(data);
-              }}
+              onButtonClick={handleButtonClick}
             />
           </TabsContent>
-          <TabsContent value="admin">
+          <TabsContent value={SelectedEnum.ADMIN}>
             <DataTable
+              rowId="usuario"
+              selectOne
               columns={columns}
               data={admins}
               buttonLabel="Continuar"
-              onButtonClick={(data) => {
-                console.log(data);
-              }}
+              onButtonClick={handleButtonClick}
             />
           </TabsContent>
         </Tabs>

@@ -34,12 +34,20 @@ class StudentGrade extends Model
         $builder->where('id', $teacherId);
     }
 
-    public static function studentsDataTable(){
+    public static function studentsDataTable(array|string|null $ss = null)
+    {
         return self::ofTeacher(auth()->id())
-        ->select('ss','nombre','apellidos','id2 as mt')
-        ->groupBy('ss','nombre','apellidos','id2')
-        ->orderBy('apellidos')
-        ->get();
+            ->select('ss', 'nombre', 'apellidos')
+            ->groupBy('ss', 'nombre', 'apellidos')
+            ->when($ss !== null, function ($query) use ($ss) {
+                if (is_string($ss)) {
+                    $ss = [$ss];
+                }
+
+                return $query->whereIn('ss', $ss);
+            })
+            ->orderBy('apellidos')
+            ->get();
     }
 
     public function student(): BelongsTo

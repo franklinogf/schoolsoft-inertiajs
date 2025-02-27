@@ -19,17 +19,18 @@ import {
 } from "@tanstack/react-table";
 import { XSquare } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { DataTablePagination } from "../datatables/DataTablePagination";
 import { InputField } from "../forms/inputs/InputField";
-import useConfirmationStore from "@/stores/confirmationStore"
-import { toast } from "sonner"
 
 interface DataTableProps<Tdata, TValue> {
   columns: ColumnDef<Tdata, TValue>[];
   data: Tdata[];
-  onButtonClick?: (data: Tdata[]) => void;
+  onButtonClick?: (data: string[]) => void;
   buttonLabel?: string;
   filter?: boolean;
+  selectOne?: boolean;
+  rowId: string;
 }
 
 export function DataTable<Tdata, TValue>({
@@ -38,11 +39,12 @@ export function DataTable<Tdata, TValue>({
   onButtonClick,
   buttonLabel,
   filter = true,
+  selectOne = false,
+  rowId,
 }: DataTableProps<Tdata, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState<any>([]);
   const [rowSelection, setRowSelection] = useState({});
-  const { openConfirmation } = useConfirmationStore();
   const table = useReactTable({
     columns,
     data,
@@ -54,8 +56,9 @@ export function DataTable<Tdata, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: "includesString",
     onRowSelectionChange: setRowSelection,
-
+    enableMultiRowSelection: !selectOne,
     state: { sorting, globalFilter, rowSelection },
+    getRowId: (row: Tdata) => row[rowId as keyof Tdata] as string,
   });
 
   return (
@@ -95,7 +98,9 @@ export function DataTable<Tdata, TValue>({
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
+                      : header.id === "select" && selectOne
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
               </TableRow>
@@ -104,9 +109,13 @@ export function DataTable<Tdata, TValue>({
           <TableBody className="bg-background/80">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow onClick={() => {
-                  buttonLabel && row.toggleSelected();
-                }} key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow
+                  onClick={() => {
+                    buttonLabel && row.toggleSelected();
+                  }}
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell className="p-3" key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -128,16 +137,16 @@ export function DataTable<Tdata, TValue>({
         <DataTablePagination table={table} />
       </div>
       {buttonLabel && (
-        <div className="flex justify-center mt-4">
+        <div className="mt-4 flex justify-center">
           <Button
-          className="cursor-pointer"
+            className="cursor-pointer"
             onClick={() => {
-              if(!onButtonClick) return;
-              if(table.getSelectedRowModel().rows.length === 0) {
-                toast.info("Please select at least one row")
-              }else{
-                onButtonClick(table.getSelectedRowModel().rows.map((row) => row.original))
-              }  
+              if (!onButtonClick) return;
+              if (table.getSelectedRowModel().rows.length === 0) {
+                toast.info("Please select at least one row");
+              } else {
+                onButtonClick(table.getSelectedRowModel().rows.flatMap((row) => row.id));
+              }
             }}
           >
             {buttonLabel}
