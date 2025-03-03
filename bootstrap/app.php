@@ -4,7 +4,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -41,8 +40,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->redirectGuestsTo(fn () => route('home.index'));
         $middleware->redirectUsersTo(function (Request $request) {
-            $path = $request->route()->getPrefix();
-            $subPath = Str::replace('/', '.', Str::after($path, '/'));
+            $subPath = $request->segment(2);
 
             return route($subPath.'.home');
 
