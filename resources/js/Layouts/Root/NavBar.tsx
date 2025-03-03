@@ -16,16 +16,16 @@ import {
   SheetTrigger,
 } from "@/Components/ui/sheet";
 import { MENU_LINKS } from "@/Constants/root";
+import { useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
 import { Link } from "@inertiajs/react";
 import { Menu } from "lucide-react";
-import { useTranslation } from "react-i18next";
 
 export function NavBar() {
-  const { t } = useTranslation("home");
+  const { t } = useTranslations();
   const pathname = route().current();
   return (
-    <header className="sticky top-0 z-40 flex h-16 w-full items-center justify-between bg-background px-4 shadow-xl">
+    <header className="bg-background sticky top-0 z-40 flex h-16 w-full items-center justify-between px-4 shadow-xl">
       <div className="z-50 md:hidden">
         <Sheet>
           <SheetTrigger asChild>
@@ -47,11 +47,11 @@ export function NavBar() {
                   key={label}
                   href={route(path)}
                   className={cn(
-                    "rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+                    "text-muted-foreground hover:text-primary rounded-lg px-3 py-2 transition-all",
                     { "text-primary hover:text-muted-foreground": pathname === path },
                   )}
                 >
-                  {label}
+                  {t(label)}
                 </Link>
               ))}
             </nav>
@@ -68,13 +68,14 @@ export function NavBar() {
       <NavLinks />
 
       <Button size="sm" asChild>
-        <Link href={route("contact.index")}>{t("menu.btnContact")}</Link>
+        <Link href={route("contact.index")}>{t("Contact us")}</Link>
       </Button>
     </header>
   );
 }
 
 function NavLinks() {
+  const { t } = useTranslations();
   const pathname = route().current();
   return (
     <NavigationMenu className="hidden md:flex">
@@ -88,7 +89,7 @@ function NavLinks() {
                 })}
                 href={route(path)}
               >
-                {label}
+                {t(label)}
               </Link>
             </NavigationMenuLink>
           </NavigationMenuItem>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Enums\FlashMessageKey;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,6 @@ class SchoolDocumentController extends Controller
     public function index()
     {
         $school = Admin::getPrimaryAdmin();
-        $date = now()->format('Y-m-d');
         $documents = DB::table('T_ing')->get();
 
         // $documents = DB::table('T_ing')
@@ -33,6 +33,6 @@ class SchoolDocumentController extends Controller
             return Storage::download($document->archivo);
         }
 
-        return to_route('home.documents')->with('message', __('El archivo no exite o ha sido borrado'));
+        return back()->with(FlashMessageKey::ERROR->value, __('The file does not exist or has been deleted.'));
     }
 }

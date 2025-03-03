@@ -14,6 +14,8 @@ class RegiwebProfileController extends Controller
      */
     public function show()
     {
+        // dd(Storage::path('profile_pictures/teacher/l2BJiHKOM7nGEsT6x91XTpSHU2cM9XEsvE7ydXSu.png'));
+
         return Inertia::render('Regiweb/Profile');
     }
 
@@ -26,15 +28,16 @@ class RegiwebProfileController extends Controller
         $request->user()->fill($data);
         if ($request->hasFile('picture')) {
             if ($request->user()->foto_name !== null) {
-                Storage::delete(get_tenant_uploaded_file_path($request->user()->foto_name));
+                Storage::delete(Storage::path($request->user()->foto_name));
             }
-            $picturePath = $request->file('picture')->storePublicly('profile_pictures/teacher');
+            $picturePath = Storage::put('profile_pictures/teacher', $request->file('picture'));
+            dd($picturePath);
             $request->user()->foto_name = $picturePath;
         }
 
         $request->user()->save();
 
-        return to_route('regiweb.profile.show');
+        return back()->with('success', __('Profile updated successfully'));
 
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Resources\Teacher;
 use App\Http\Resources\CoursesResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Storage;
 
 class TeacherResource extends JsonResource
 {
@@ -103,7 +104,7 @@ class TeacherResource extends JsonResource
             'dep' => $this->dep,
             'dep_des' => $this->dep_des,
             'docente' => $this->docente,
-            'foto_name' => $this->foto_name ? create_tenant_file_url($this->foto_name) : null,
+            'foto_name' => $this->foto_name ? Storage::path($this->foto_name) : null,
             'email_smtp' => $this->email_smtp,
             'clave_email' => $this->clave_email,
             'host_smtp' => $this->host_smtp,

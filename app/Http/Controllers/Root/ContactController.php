@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Root;
 
+use App\Enums\FlashMessageKey;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -31,6 +32,6 @@ class ContactController extends Controller
             $validated['phone'],
         ));
 
-        return redirect()->back();
+        return back()->with(FlashMessageKey::SUCCESS->value, __('Message sent successfully'));
     }
 }

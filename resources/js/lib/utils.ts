@@ -1,8 +1,7 @@
-import i18n from "@/lib/i18n";
+import { useTranslations } from "@/hooks/translations";
 import { clsx, type ClassValue } from "clsx";
 import { format, intlFormat, parse } from "date-fns";
 import { twMerge } from "tailwind-merge";
-const locale = i18n.language;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -14,8 +13,9 @@ export function formatDate(
     dateStyle: "medium",
   },
 ) {
+  const { currentLocale } = useTranslations();
   if (!date || date === "0000-00-00") return undefined;
-  return intlFormat(date, { dateStyle }, { locale });
+  return intlFormat(date, { dateStyle }, { locale: currentLocale() });
 }
 
 export function formatDateToString(date = new Date()) {

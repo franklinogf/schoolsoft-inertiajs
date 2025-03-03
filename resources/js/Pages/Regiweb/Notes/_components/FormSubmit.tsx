@@ -1,12 +1,12 @@
 import SubmitButton from "@/Components/forms/SubmitButton";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "@/hooks/translations";
 
 export function FormSubmit({ isSubmitting }: { isSubmitting: boolean }) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslations();
   return (
     <div className="flex justify-center">
       <SubmitButton size="lg" disabled={isSubmitting} className="mt-4">
-        {t("btn.save")}
+        {t("Save")}
       </SubmitButton>
     </div>
   );

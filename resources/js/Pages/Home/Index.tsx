@@ -5,55 +5,57 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import { Translations } from "@/hooks/translations";
 import { HomeLayout } from "@/Layouts/Home/HomeLayout";
-import i18n from "@/lib/i18n";
 import type { PagePropsWithSchool } from "@/types";
 import { Link } from "@inertiajs/react";
-await i18n.loadNamespaces("pages");
+type Button = { label: Translations; route: string };
+type ButtonWithChildren = { label: Translations; children: Button[] };
+type Buttons = Button | ButtonWithChildren;
 
-const buttons = [
+const buttons: Buttons[] = [
   {
-    label: i18n.t("pages:home.index.btn.admin"),
+    label: "Administration",
     route: route("admin.login.index"),
   },
   {
-    label: i18n.t("pages:home.index.btn.regiweb"),
+    label: "Regiweb",
     route: route("regiweb.login.index"),
   },
   {
-    label: i18n.t("pages:home.index.btn.parents"),
+    label: "Parents",
     route: route("parents.login.index"),
   },
   {
-    label: i18n.t("pages:home.index.btn.forum.label"),
+    label: "Forum",
     children: [
       {
-        label: i18n.t("pages:home.index.btn.forum.students"),
+        label: "Students",
         route: route("foro.student.login.index"),
       },
       {
-        label: i18n.t("pages:home.index.btn.forum.teachers"),
+        label: "Teachers",
         route: route("foro.teacher.login.index"),
       },
     ],
   },
   {
-    label: i18n.t("pages:home.index.btn.calendar"),
+    label: "Calendar",
     route: "#",
   },
   {
-    label: i18n.t("pages:home.index.btn.requests"),
+    label: "Requests",
     route: "#",
   },
   {
-    label: i18n.t("pages:home.index.btn.documents"),
+    label: "Documents",
     route: route("home.documents"),
   },
   {
-    label: i18n.t("pages:home.index.btn.cafeteria.label"),
+    label: "Cafeteria",
     children: [
-      { label: i18n.t("pages:home.index.btn.cafeteria.cashRegister"), route: "" },
-      { label: i18n.t("pages:home.index.btn.cafeteria.autoService"), route: "" },
+      { label: "Cash Register", route: "#" },
+      { label: "Auto Service", route: "#" },
     ],
   },
 ];
@@ -65,11 +67,7 @@ export default function HomePage({ school }: PagePropsWithSchool) {
         <ul className="grid max-w-xl grid-cols-2 gap-x-5 gap-y-2 md:grid-cols-4">
           {buttons.map((button) => (
             <li key={button.label}>
-              {!button?.children ? (
-                <Button className="w-full" asChild>
-                  <Link href={button.route ?? ""}>{button.label}</Link>
-                </Button>
-              ) : (
+              {"children" in button ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button className="w-full">{button.label}</Button>
@@ -84,6 +82,10 @@ export default function HomePage({ school }: PagePropsWithSchool) {
                     ))}
                   </DropdownMenuContent>
                 </DropdownMenu>
+              ) : (
+                <Button className="w-full" asChild>
+                  <Link href={button.route ?? ""}>{button.label}</Link>
+                </Button>
               )}
             </li>
           ))}

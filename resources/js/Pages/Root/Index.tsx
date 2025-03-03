@@ -2,10 +2,11 @@ import { MaxWidthSection } from "@/Components/root/MaxWidthSection";
 import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { OTHER_SERVICES, SERVICES } from "@/Constants/root";
-import { Head, Link } from "@inertiajs/react";
+import { useTranslations } from "@/hooks/translations";
+import RootLayout from "@/Layouts/Root/RootLayout";
+import { Link } from "@inertiajs/react";
 import { motion, type Variants } from "framer-motion";
 import { CircleCheckBig } from "lucide-react";
-import { useTranslation } from "react-i18next";
 const listVariants: Variants = {
   offScreen: {
     y: 50,
@@ -23,10 +24,14 @@ const listVariants: Variants = {
 };
 
 export default function Page() {
-  const { t } = useTranslation("home", { keyPrefix: "index" });
+  const { t } = useTranslations();
   return (
-    <>
-      <Head title={t("meta.title")} />
+    <RootLayout
+      title={t("Administrative system for schools")}
+      description={t(
+        "SchoolSoft is an administrative system for schools designed in Spanish and English with a sophisticated security system for access control.",
+      )}
+    >
       <div className="absolute top-0 z-[-2] h-full w-full bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
       <MaxWidthSection className="relative">
         <div className="mx-auto grid max-w-(--breakpoint-xl) lg:grid-cols-12 lg:gap-8 xl:gap-0">
@@ -35,17 +40,19 @@ export default function Page() {
               initial={{ opacity: 0, x: -200 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="mb-4 max-w-2xl text-center text-4xl font-extrabold leading-none tracking-tight md:mb-6 md:text-4xl xl:text-5xl"
+              className="mb-4 max-w-2xl text-center text-4xl leading-none font-extrabold tracking-tight md:mb-6 md:text-4xl xl:text-5xl"
             >
-              {t("hero.title")}
+              {t("Administrative system for schools")}
             </motion.h1>
             <motion.p
               transition={{ delay: 0.5 }}
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="mb-6 max-w-prose text-pretty font-light text-muted-foreground lg:mb-8"
+              className="text-muted-foreground mb-6 max-w-prose font-light text-pretty lg:mb-8"
             >
-              {t("hero.description")}
+              {t(
+                "Program designed in Spanish and English with a sophisticated security system for access control. This administrative system facilitates administrative tasks, increasing efficiency and providing more time to focus on the supervision phase of educational processes.",
+              )}
             </motion.p>
             <motion.div
               initial={{ y: 50, opacity: 0 }}
@@ -54,7 +61,7 @@ export default function Page() {
               className="flex justify-center"
             >
               <Button asChild>
-                <Link href="/">{t("hero.button")}</Link>
+                <Link href="/">{t("Request a demonstration")}</Link>
               </Button>
             </motion.div>
           </div>
@@ -79,7 +86,7 @@ export default function Page() {
             variants={listVariants}
             className="title mb-8"
           >
-            {t("services.title")}
+            {t("Services")}
           </motion.h2>
           <div className="space-y-8 md:grid md:grid-cols-2 md:gap-10 md:space-y-0 lg:grid-cols-3">
             {SERVICES.map(({ title, description, Icon }, i) => (
@@ -92,9 +99,9 @@ export default function Page() {
                 <motion.div variants={listVariants} className="h-full">
                   <ServiceCard
                     className="h-full"
-                    title={title}
+                    title={t(title)}
                     description={description}
-                    icon={<Icon className="ml-auto size-6 stroke-2 text-primary md:mx-auto" />}
+                    icon={<Icon className="text-primary ml-auto size-6 stroke-2 md:mx-auto" />}
                   />
                 </motion.div>
               </motion.div>
@@ -111,7 +118,7 @@ export default function Page() {
             variants={listVariants}
             className="title mb-8"
           >
-            {t("otherServices.title")}
+            {t("Others Services")}
           </motion.h2>
           <div className="grid max-w-3xl grid-cols-1 gap-2 md:mx-auto md:mb-2 md:grid-cols-2">
             {OTHER_SERVICES.map(({ title }) => (
@@ -123,10 +130,10 @@ export default function Page() {
                 className="h-full"
               >
                 <motion.div variants={listVariants} key={title} className="h-full">
-                  <div className="flex h-full items-center gap-x-2 rounded bg-muted p-4">
-                    <CircleCheckBig className="size-4 text-primary" />
-                    <p className="shrink text-xs font-medium text-muted-foreground sm:text-sm">
-                      {title}
+                  <div className="bg-muted flex h-full items-center gap-x-2 rounded p-4">
+                    <CircleCheckBig className="text-primary size-4" />
+                    <p className="text-muted-foreground shrink text-xs font-medium sm:text-sm">
+                      {t(title)}
                     </p>
                   </div>
                 </motion.div>
@@ -135,7 +142,7 @@ export default function Page() {
           </div>
         </div>
       </MaxWidthSection>
-    </>
+    </RootLayout>
   );
 }
 interface ServiceCardProps {
@@ -154,7 +161,7 @@ function ServiceCard({ title, description, icon, className }: ServiceCardProps) 
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-pretty text-xs text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-xs text-pretty">{description}</p>
       </CardContent>
     </Card>
   );
