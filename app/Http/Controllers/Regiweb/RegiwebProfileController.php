@@ -27,9 +27,9 @@ class RegiwebProfileController extends Controller
         $request->user()->fill($data);
         if ($request->hasFile('picture')) {
             if ($request->user()->foto_name !== null) {
-                Storage::delete(Storage::path($request->user()->foto_name));
+                Storage::delete(get_tenant_uploaded_file_path($request->user()->foto_name));
             }
-            $picturePath = Storage::put('profile_pictures/teacher', $request->file('picture'));
+            $picturePath = $request->file('picture')->storePublicly('profile_pictures/teacher');
             $request->user()->foto_name = $picturePath;
         }
 
