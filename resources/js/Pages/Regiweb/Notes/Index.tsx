@@ -9,12 +9,12 @@ import {
   PAGES_SELECT,
   TRIMESTER_SELECT,
 } from "@/Constants/FormSelects";
+import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
 import { Student } from "@/types/student";
 import { Teacher } from "@/types/teacher";
 import { Link, useForm } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
 import { AttendanceDailyReportModalForm } from "./_components/AttendanceDailyReportModalForm";
 import { AttendanceReportModalForm } from "./_components/AttendanceReportModalForm";
 
@@ -23,7 +23,7 @@ type PageProps = PagePropsWithUser<Teacher> & {
 };
 
 export default function Page({ auth: { user }, errors: pageErrors, students }: PageProps) {
-  const { t } = useTranslation(["pages", "common", "input"]);
+  const { t } = useTranslations();
   const { data, setData, get, processing, errors } = useForm({
     course: "",
     trimester: "",
@@ -35,19 +35,17 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
     get(route("regiweb.notes.show"));
   }
   return (
-    <RegiwebLayout title={t("pages:regiweb.notes.index.meta.title")}>
-      <h1 className="page-primary-title mt-4">{t("common:notes")}</h1>
+    <RegiwebLayout title={t("Notes")}>
+      <h1 className="page-primary-title mt-4">{t("Notes")}</h1>
       <div className="mt-2 flex flex-col items-center gap-8 px-2 pb-10">
-        <div className="w-full max-w-xl rounded-md bg-secondary p-4">
+        <div className="bg-secondary w-full max-w-xl rounded-md p-4">
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
             <Button variant="outline" asChild>
-              <Link href={route("regiweb.notes.attendance.entry")}>
-                {t("pages:regiweb.notes.index.btn.attendance")}
-              </Link>
+              <Link href={route("regiweb.notes.attendance.entry")}>{t("Attendance Entry")}</Link>
             </Button>
             <AttendanceDailyReportModalForm students={students} />
             <AttendanceReportModalForm courses={user.cursos} />
-            <Button variant="outline">{t("pages:regiweb.notes.index.btn.preschool")}</Button>
+            <Button variant="outline">{t("Preschool")}</Button>
           </div>
         </div>
         <form className="w-full max-w-lg" onSubmit={submit}>
@@ -58,11 +56,11 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
             <CardContent>
               <div className="space-y-4">
                 <SelectField
-                  placeholder={t("input:placeholder.select.course")}
+                  placeholder={t("Select the course")}
                   value={data.course}
                   onChange={(value) => setData("course", value)}
                   error={errors.course}
-                  label={t("common:course.label")}
+                  label={t("Course")}
                   items={createSelectItemsFromArrayOfObjects(user.cursos, {
                     separator: " - ",
                     key: "curso",
@@ -70,25 +68,25 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
                   })}
                 />
                 <SelectField
-                  placeholder={t("input:placeholder.select.trimester")}
+                  placeholder={t("Select the trimester")}
                   value={data.trimester}
                   onChange={(value) => setData("trimester", value)}
-                  label={t("common:trimester.label")}
+                  label={t("Trimester")}
                   items={TRIMESTER_SELECT}
                   error={errors.trimester}
                 />
                 <SelectField
-                  placeholder={t("input:placeholder.select.page")}
+                  placeholder={t("Select the page")}
                   value={data.page}
                   onChange={(value) => setData("page", value)}
-                  label={t("common:pages.label")}
+                  label={t("Pages")}
                   items={PAGES_SELECT}
                   error={errors.page}
                 />
               </div>
             </CardContent>
             <CardFooter className="flex justify-center">
-              <SubmitButton disabled={processing}>{t("common:btn.continue")}</SubmitButton>
+              <SubmitButton disabled={processing}>{t("Continue")}</SubmitButton>
             </CardFooter>
           </Card>
         </form>

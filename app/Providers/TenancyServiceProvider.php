@@ -103,7 +103,7 @@ class TenancyServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        InitializeTenancyByPath::$onFail = function ($exception, $request, $next) {
+        InitializeTenancyByPath::$onFail = function () {
             return abort(Response::HTTP_NOT_FOUND);
         };
 

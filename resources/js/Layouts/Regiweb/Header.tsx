@@ -10,27 +10,27 @@ import {
 } from "@/Components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/ui/sheet";
 import { LOGO_REGIWEB } from "@/Constants";
+import { Translations, useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
 import { Teacher } from "@/types/teacher";
 import { Link } from "@inertiajs/react";
 import { Menu, UserCircle } from "lucide-react";
-import { useTranslation } from "react-i18next";
 // i18n.loadNamespaces("pages");
-const menuItems = [
-  { label: "item1", route: "regiweb.notes.index" },
-  { label: "item2", route: "regiweb.options.index" },
-  { label: "item3", route: "regiweb.reports.index" },
+const menuItems: { label: Translations; route: string }[] = [
+  { label: "Grades", route: route("regiweb.notes.index") },
+  { label: "Options", route: route("regiweb.options.index") },
+  { label: "Reports", route: route("regiweb.reports.index") },
 ] as const;
 interface HeaderProps {
   user: Teacher;
 }
 export default function Header({ user }: HeaderProps) {
-  const { t } = useTranslation(["pages"], { keyPrefix: "regiweb.menu" });
+  const { t } = useTranslations();
   return (
-    <header className="flex h-16 items-center bg-secondary px-4 shadow-sm">
+    <header className="bg-secondary flex h-16 items-center px-4 shadow-sm">
       <div className="mr-8">
         <Link href={route("regiweb.home")}>
-          <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt={t("imageAlt")} />
+          <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt="Regiweb Logo" />
         </Link>
       </div>
       <NavigationMenu className="hidden md:flex">
@@ -45,7 +45,7 @@ export default function Header({ user }: HeaderProps) {
                   }),
                 })}
               >
-                <Link href={route(item.route)}>{t(item.label)}</Link>
+                <Link href={item.route}>{t(item.label)}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           ))}
@@ -59,12 +59,12 @@ export default function Header({ user }: HeaderProps) {
           <DropdownMenuItem>
             <Link href={route("regiweb.profile.show")} className="flex w-full grow items-center">
               <UserCircle className="mr-1 size-4" />
-              {t("user.item1")}
+              {t("Profile")}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link method="delete" as="button" href={route("regiweb.logout")}>
-              {t("user.item2")}
+              {t("Log out")}
             </Link>
           </DropdownMenuItem>
         </UserProfileDropdownButton>
@@ -93,7 +93,7 @@ export default function Header({ user }: HeaderProps) {
                     key={item.label}
                     asChild
                   >
-                    <Link href={route(item.route)}>{t(item.label)}</Link>
+                    <Link href={item.route}>{t(item.label)}</Link>
                   </Button>
                 ))}
               </div>
@@ -108,12 +108,12 @@ export default function Header({ user }: HeaderProps) {
                       className="flex w-full grow items-center"
                     >
                       <UserCircle className="mr-1 size-4" />
-                      {t("user.item1")}
+                      {t("Profile")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link method="delete" as="button" href={route("regiweb.logout")}>
-                      {t("user.item2")}
+                      {t("Log out")}
                     </Link>
                   </DropdownMenuItem>
                 </UserProfileDropdownButton>

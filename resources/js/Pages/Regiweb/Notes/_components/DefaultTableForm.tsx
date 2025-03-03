@@ -9,9 +9,9 @@ import {
   TableRow,
 } from "@/Components/ui/table";
 import { PagesEnum } from "@/Enums";
+import { useTranslations } from "@/hooks/translations";
 import { router, usePage } from "@inertiajs/react";
 import { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { OptionsContext } from "../_context/OptionsContext";
 import { StudentsDefaultGrades } from "../_types/studentsGrades";
@@ -34,7 +34,7 @@ export function DefaultTableForm({
 }: DefaultTableFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t } = useTranslation(["common", "pages"]);
+  const { t } = useTranslations();
   const { page, trimester, course } = useContext(OptionsContext);
   const { errors } = usePage().props;
   function calculateStudentTdp(id: number) {
@@ -172,7 +172,7 @@ export function DefaultTableForm({
       {
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(t("pages:regiweb.notes.show.successMessage.default"));
+          toast.success(t("Notes saved successfully"));
           setStudentsChangedToFalse();
         },
         onError: () => {
@@ -192,18 +192,18 @@ export function DefaultTableForm({
       <div className="overflow-auto">
         <Table>
           <TableHeader>
-            <TableRow className="bg-primary hover:bg-primary [&>th]:text-center [&>th]:text-primary-foreground">
+            <TableRow className="bg-primary hover:bg-primary [&>th]:text-primary-foreground [&>th]:text-center">
               <TableHead>#</TableHead>
-              <TableHead>{t("common:student")}</TableHead>
+              <TableHead>{t("Student")}</TableHead>
               {Array.from({ length: amountOfGrades }, (_, i) => i + 1).map((_, i) => (
                 <TableHead key={i}>
-                  {t("common:note")} {i + 1}
+                  {t("Note")} {i + 1}
                 </TableHead>
               ))}
               {columns?.map((column, i) => <TableHead key={i}>{column}</TableHead>)}
-              <TableHead>{t("common:tpa")}</TableHead>
-              <TableHead>{t("common:tdp")}</TableHead>
-              <TableHead>{t("common:note")}</TableHead>
+              <TableHead>{t("TPA")}</TableHead>
+              <TableHead>{t("TDP")}</TableHead>
+              <TableHead>{t("Note")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

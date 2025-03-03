@@ -1,7 +1,8 @@
 import Header from "@/Layouts/Regiweb/Header";
 import { PagePropsWithUser } from "@/types";
 import { Teacher } from "@/types/teacher";
-import { Head, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
+import MainLayout from "../MainLayout";
 
 interface RegiwebLayoutProps {
   children: React.ReactNode;
@@ -12,12 +13,11 @@ export function RegiwebLayout({ children, title }: RegiwebLayoutProps) {
     auth: { user },
   } = usePage<PagePropsWithUser<Teacher>>().props;
   return (
-    <>
-      <Head title={title} />
+    <MainLayout title={title}>
       <div className="flex min-h-dvh flex-col">
         <Header user={user} />
-        <main className="px-2 pb-8 pt-4">{children}</main>
+        <main className="px-2 pt-4 pb-8">{children}</main>
       </div>
-    </>
+    </MainLayout>
   );
 }

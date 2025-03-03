@@ -1,11 +1,20 @@
 import ConfirmationDialog from "@/Components/ConfirmationDialog";
 import { Toaster } from "@/Components/ui/sonner";
-import "@/lib/i18n";
-import { Suspense } from "react";
-
-export default function MainLayout({ children }: { children: React.ReactNode }) {
+import { useFlashToaster } from "@/hooks/flashToaster";
+import { Head } from "@inertiajs/react";
+interface MainLayoutProps {
+  children: React.ReactNode;
+  title: string;
+  description?: string;
+}
+export default function MainLayout({ children, title, description }: MainLayoutProps) {
+  useFlashToaster();
   return (
-    <Suspense fallback="loading">
+    <>
+      <Head>
+        <title>{title}</title>
+        {description && <meta name="description" content={description} />}
+      </Head>
       {children}
       <ConfirmationDialog />
       <Toaster
@@ -16,6 +25,6 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         duration={3000}
         position="top-center"
       />
-    </Suspense>
+    </>
   );
 }

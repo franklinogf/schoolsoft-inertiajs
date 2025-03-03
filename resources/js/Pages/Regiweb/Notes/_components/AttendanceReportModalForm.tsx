@@ -5,9 +5,9 @@ import {
   createSelectItemsFromArrayOfObjects,
   TRIMESTER_SELECT_WITHOUT_SUMMER,
 } from "@/Constants/FormSelects";
+import { useTranslations } from "@/hooks/translations";
 import { Course } from "@/types/teacher";
 import { useForm } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
 
 interface AttendanceReportModalFormProps {
   courses?: Course[];
@@ -24,7 +24,7 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
     course: coursesSelect[0].key,
     trimester: TRIMESTER_SELECT_WITHOUT_SUMMER[0].key,
   });
-  const { t } = useTranslation(["common", "pages", "input"]);
+  const { t } = useTranslations();
   const handleSubmit = () => {
     window.open(route("regiweb.notes.attendance.report", { ...data }));
   };
@@ -32,16 +32,16 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
     <ModalForm
       onClose={reset}
       onSubmit={handleSubmit}
-      buttonLabel={t("pages:regiweb.notes.index.btn.attendanceReport")}
-      submitLabel={t("common:btn.pdf")}
-      title={t("pages:regiweb.notes.index.btn.attendanceReport")}
+      buttonLabel={t("Attendance Report")}
+      submitLabel={t("PDF")}
+      title={t("Attendance Report")}
     >
       <SelectField
         value={data.course}
         onChange={(value) => setData("course", value)}
-        label={t("common:course.label")}
+        label={t("Course")}
       >
-        <SelectItem value="home">{t("common:homeGrade")}</SelectItem>
+        <SelectItem value="home">{t("Home course")}</SelectItem>
         {coursesSelect.map((item) => (
           <SelectItem key={item.key} value={item.key}>
             {item.value}
@@ -51,7 +51,7 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
       <SelectField
         value={data.trimester}
         onChange={(value) => setData("trimester", value)}
-        label={t("common:trimester.label")}
+        label={t("Trimester")}
         items={TRIMESTER_SELECT_WITHOUT_SUMMER}
       />
     </ModalForm>

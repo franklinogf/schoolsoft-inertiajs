@@ -1,4 +1,3 @@
-import { AlertDestructive } from "@/Components/AlertDesctructive";
 import { Button } from "@/Components/ui/button";
 import {
   Card,
@@ -8,18 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/Components/ui/card";
+import { useTranslations } from "@/hooks/translations";
 import { Teacher } from "@/types/teacher";
 import { Link, useForm } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
 import { InputField } from "./inputs/InputField";
 import SubmitButton from "./SubmitButton";
 interface LoginFormProps {
   submitRoute: string;
   className?: string;
-  errorMessage: string | null;
 }
-export function LoginForm({ className, submitRoute, errorMessage }: LoginFormProps) {
-  const { t } = useTranslation(["input", "common"]);
+export function LoginForm({ className, submitRoute }: LoginFormProps) {
+  const { t } = useTranslations();
   const { data, setData, post, errors, processing } = useForm<Pick<Teacher, "usuario" | "clave">>({
     usuario: "",
     clave: "",
@@ -32,21 +30,19 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
     <form onSubmit={submit} className={className}>
       <Card className="max-w-md shadow-lg max-md:mx-auto">
         <CardHeader>
-          <CardTitle>{t("signIn", { ns: "common" })}</CardTitle>
-          <CardDescription>
-            <AlertDestructive message={errorMessage} />
-          </CardDescription>
+          <CardTitle>{t("Log in")}</CardTitle>
+          <CardDescription hidden></CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
             <InputField
-              label={t("username", { ns: "input" })}
+              label={t("Username")}
               value={data.usuario}
               onChange={(value) => setData("usuario", value)}
               error={errors.usuario}
             />
             <InputField
-              label={t("password", { ns: "input" })}
+              label={t("Password")}
               value={data.clave}
               onChange={(value) => setData("clave", value)}
               error={errors.clave}
@@ -55,9 +51,9 @@ export function LoginForm({ className, submitRoute, errorMessage }: LoginFormPro
           </div>
         </CardContent>
         <CardFooter className="grid gap-2">
-          <SubmitButton disabled={processing}>{t("btn.access", { ns: "common" })}</SubmitButton>
+          <SubmitButton disabled={processing}>{t("Access")}</SubmitButton>
           <Button variant="outline" asChild>
-            <Link href={route("home.index")}>{t("btn.back", { ns: "common" })}</Link>
+            <Link href={route("home.index")}>{t("Back")}</Link>
           </Button>
         </CardFooter>
       </Card>
