@@ -14,7 +14,6 @@ class RegiwebProfileController extends Controller
      */
     public function show()
     {
-        // dd(Storage::path('profile_pictures/teacher/l2BJiHKOM7nGEsT6x91XTpSHU2cM9XEsvE7ydXSu.png'));
 
         return Inertia::render('Regiweb/Profile');
     }
