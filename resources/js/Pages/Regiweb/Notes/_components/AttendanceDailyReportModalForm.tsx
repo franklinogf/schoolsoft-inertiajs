@@ -3,10 +3,10 @@ import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
 import { SelectField } from "@/Components/forms/inputs/SelectField";
 import { ModalForm } from "@/Components/ModalForm";
 import { SelectItem } from "@/Components/ui/select";
+import { useTranslations } from "@/hooks/translations";
 import { formatDateToString } from "@/lib/utils";
 import { Student } from "@/types/student";
 import { useForm } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
 
 interface AttendanceDailyReportModalFormProps {
   students: Student[];
@@ -19,7 +19,7 @@ export function AttendanceDailyReportModalForm({ students }: AttendanceDailyRepo
     type: "list",
     student: students[0].mt.toString(),
   });
-  const { t } = useTranslation(["common", "pages", "input"]);
+  const { t } = useTranslations();
   const handleSubmit = () => {
     const dataToSend: Partial<typeof data> = {
       ...data,
@@ -33,45 +33,45 @@ export function AttendanceDailyReportModalForm({ students }: AttendanceDailyRepo
     <ModalForm
       onClose={reset}
       onSubmit={handleSubmit}
-      buttonLabel={t("pages:regiweb.notes.index.btn.dailyAttendanceReport")}
-      submitLabel={t("common:btn.pdf")}
-      title={t("pages:regiweb.notes.index.btn.dailyAttendanceReport")}
+      buttonLabel={t("Daily Attendance Report")}
+      submitLabel={t("PDF")}
+      title={t("Daily Attendance Report")}
     >
       <FieldsGrid cols={1}>
         <DateField
-          label={t("input:initialDate")}
+          label={t("Initial Date")}
           clearable={false}
           value={data.initialDate}
           onChange={(value) => setData("initialDate", value)}
         />
         <DateField
-          label={t("input:finalDate")}
+          label={t("Final Date")}
           clearable={false}
           value={data.finalDate}
           onChange={(value) => setData("finalDate", value)}
         />
       </FieldsGrid>
       <SelectField
-        label={t("input:option")}
+        label={t("Option")}
         value={data.option}
         onChange={(value) => setData("option", value)}
       >
-        <SelectItem value="home">{t("common:homeGrade")}</SelectItem>
-        <SelectItem value="student">{t("common:perStudent")}</SelectItem>
+        <SelectItem value="home">{t("Home course")}</SelectItem>
+        <SelectItem value="student">{t("Per student")}</SelectItem>
       </SelectField>
       {data.option === "home" && (
         <SelectField
-          label={t("input:type")}
+          label={t("Type")}
           value={data.type}
           onChange={(value) => setData("type", value)}
         >
-          <SelectItem value="list">{t("common:list")}</SelectItem>
-          <SelectItem value="summary">{t("common:summary")}</SelectItem>
+          <SelectItem value="list">{t("List")}</SelectItem>
+          <SelectItem value="summary">{t("Summary")}</SelectItem>
         </SelectField>
       )}
       {data.option === "student" && (
         <SelectField
-          label={t("input:student")}
+          label={t("Student")}
           value={data.student}
           onChange={(value) => setData("student", value)}
         >

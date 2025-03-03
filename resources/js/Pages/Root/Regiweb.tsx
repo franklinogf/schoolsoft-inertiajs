@@ -1,20 +1,19 @@
 import { List } from "@/Components/root/List";
 import { MaxWidthSection } from "@/Components/root/MaxWidthSection";
 import { REGIWEB } from "@/Constants/root";
-import { Head } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "@/hooks/translations";
+import RootLayout from "@/Layouts/Root/RootLayout";
 
 export default function Page() {
-  const { t } = useTranslation("home");
+  const { t } = useTranslations();
   return (
-    <>
-      <Head title={t("regiweb.title")} />
+    <RootLayout title={t("Regiweb")}>
       <MaxWidthSection>
         <div className="cointainer mx-auto max-w-4xl">
-          <h2 className="title">{t("regiweb.title")}</h2>
+          <h2 className="title">{t("Regiweb")}</h2>
           <List items={REGIWEB} />
         </div>
       </MaxWidthSection>
-    </>
+    </RootLayout>
   );
 }

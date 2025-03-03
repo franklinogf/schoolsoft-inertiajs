@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Regiweb;
 
+use App\Enums\FlashMessageKey;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Regiweb\PasswordUpdateRequest;
 use App\Models\Teacher;
@@ -30,7 +31,7 @@ class RegiwebLoginController extends Controller
             return redirect()->intended(route('regiweb.index'));
         }
 
-        return to_route('regiweb.login.index')->with('error', 'Error al intentar iniciar sesión');
+        return to_route('regiweb.login.index')->with(FlashMessageKey::ERROR->value, __('Invalid credentials'));
     }
 
     public function destroy(Request $request)
@@ -49,7 +50,7 @@ class RegiwebLoginController extends Controller
         $request->user()->fill($request->validated());
         $request->user()->save();
 
-        return back();
+        return back()->with(FlashMessageKey::SUCCESS->value, __('Password changed successfully'));
 
     }
 }

@@ -24,17 +24,17 @@ import {
   YES_NO_SELECT,
 } from "@/Constants/FormSelects";
 import { YesNoEnum } from "@/Enums";
+import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
 import { Teacher } from "@/types/teacher";
 import { useForm } from "@inertiajs/react";
 import { ArrowUpDown, User2 } from "lucide-react";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
+
 export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   const [sameAddress, setSameAddress] = useState(false);
-  const { t } = useTranslation(["common", "input", "pages"]);
+  const { t } = useTranslations();
   const { data, setData, post, errors, processing } = useForm({
     picture: null as File | null,
     fecha_nac: user.fecha_nac,
@@ -120,18 +120,15 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
     e.preventDefault();
     post(route("regiweb.profile.update"), {
       preserveScroll: true,
-      onSuccess: () => {
-        toast.success(t("pages:regiweb.profile.successMessage"));
-      },
     });
   }
 
   return (
-    <RegiwebLayout title={t("pages:regiweb.profile.meta.title")}>
+    <RegiwebLayout title={t("My Profile")}>
       <form onSubmit={handleSubmit}>
-        <div className="flex grow flex-col gap-8 px-2 pb-10 pt-5">
+        <div className="flex grow flex-col gap-8 px-2 pt-5 pb-10">
           <h1 className="page-primary-title flex items-center gap-2">
-            {t("pages:regiweb.profile.title")}
+            {t("My Profile")}
             <User2 className="size-8" />
           </h1>
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -145,17 +142,12 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             <div className="hidden md:flex md:items-center md:justify-center">
               <Card className="border-accent bg-accent">
                 <CardHeader className="p-2">
-                  <CardTitle className="text-lg">{t("pages:regiweb.profile.info.title")}</CardTitle>
+                  <CardTitle className="text-lg">{t("Information")}</CardTitle>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-2 rounded-b-md bg-background pt-2">
-                  <InfoBadge label={t("pages:regiweb.profile.info.id")} value={user.id} />
-                  <InfoBadge label={t("pages:regiweb.profile.info.user")} value={user.usuario} />
-                  {user.grado && (
-                    <InfoBadge
-                      label={t("pages:regiweb.profile.info.homeCourse")}
-                      value={user.grado}
-                    />
-                  )}
+                <CardContent className="bg-background flex flex-col gap-2 rounded-b-md pt-2">
+                  <InfoBadge label="ID" value={user.id} />
+                  <InfoBadge label={t("User")} value={user.usuario} />
+                  {user.grado && <InfoBadge label={t("Home course")} value={user.grado} />}
                 </CardContent>
               </Card>
             </div>
@@ -164,19 +156,19 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>{t("pages:regiweb.profile.card1.title")}</CardTitle>
+                <CardTitle>{t("Personal Information")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col gap-4">
                   <FieldsGrid>
                     <InputField
-                      label={t("input:name")}
+                      label={t("Name")}
                       value={data.nombre}
                       onChange={(value) => setData("nombre", value)}
                       error={errors.nombre}
                     />
                     <InputField
-                      label={t("input:lastname")}
+                      label={t("Last names")}
                       value={data.apellidos}
                       onChange={(value) => setData("apellidos", value)}
                       error={errors.apellidos}
@@ -184,21 +176,21 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                   </FieldsGrid>
                   <FieldsGrid>
                     <SelectField
-                      label={t("input:gender")}
+                      label={t("Gender")}
                       value={data.genero}
                       onChange={(value) => setData("genero", value)}
                       error={errors.genero}
                       items={GENDERS_SELECT}
                     />
                     <DateField
-                      label={t("input:dob")}
+                      label={t("Date of birth")}
                       value={data.fecha_nac}
                       onChange={(value) => setData("fecha_nac", value)}
                       error={errors.fecha_nac}
                     />
                   </FieldsGrid>
                   <InputField
-                    label={t("input:primaryEmail")}
+                    label={t("Primary email")}
                     value={data.email1}
                     onChange={(value) => setData("email1", value)}
                     type="email"
@@ -206,7 +198,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                   />
                   <InputField
                     onChange={(value) => setData("email2", value)}
-                    label={t("input:secondaryEmail")}
+                    label={t("Secondary email")}
                     type="email"
                     error={errors.email2}
                   />
@@ -214,13 +206,13 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <PhoneField
                       value={data.tel_res}
                       onChange={(value) => setData("tel_res", value)}
-                      label={t("input:residencePhone")}
+                      label={t("Residence phone")}
                       error={errors.tel_res}
                     />
                     <PhoneField
                       value={data.tel_emer}
                       onChange={(value) => setData("tel_emer", value)}
-                      label={t("input:emergencyContact")}
+                      label={t("Emergency contact")}
                       error={errors.tel_emer}
                     />
                   </FieldsGrid>
@@ -228,13 +220,13 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <PhoneField
                       value={data.cel}
                       onChange={(value) => setData("cel", value)}
-                      label={t("input:mobilePhone")}
+                      label={t("Mobile phone")}
                       error={errors.cel}
                     />
                     <SelectField
                       value={data.cel_com}
                       onChange={(value) => setData("cel_com", value)}
-                      label={t("input:mobilePhoneCompany")}
+                      label={t("Mobile phone company")}
                       error={errors.cel_com}
                       items={PHONE_COMPANIES_SELECT}
                     />
@@ -248,43 +240,41 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             <div className="flex flex-col gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>{t("pages:regiweb.profile.card2.title")}</CardTitle>
+                  <CardTitle>{t("Addresses")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col gap-4">
                     <div className="space-y-1">
-                      <h2 className="font-semibold">
-                        {t("pages:regiweb.profile.card2.subtitle1")}
-                      </h2>
+                      <h2 className="font-semibold">{t("Residential Address")}</h2>
                       <InputField
                         value={data.dir1}
                         onChange={(value) => setData("dir1", value)}
-                        placeholder={t("input:address1")}
+                        placeholder={t("Address 1")}
                         error={errors.dir1}
                       />
                       <InputField
                         value={data.dir2}
                         onChange={(value) => setData("dir2", value)}
-                        placeholder={t("input:address2")}
+                        placeholder={t("Address 2")}
                         error={errors.dir2}
                       />
                       <FieldsGrid cols={3}>
                         <InputField
                           value={data.pueblo1}
                           onChange={(value) => setData("pueblo1", value)}
-                          placeholder={t("input:city")}
+                          placeholder={t("City")}
                           error={errors.pueblo1}
                         />
                         <InputField
                           value={data.esta1}
                           onChange={(value) => setData("esta1", value)}
-                          placeholder={t("input:country")}
+                          placeholder={t("Country")}
                           error={errors.esta1}
                         />
                         <InputField
                           value={data.zip1}
                           onChange={(value) => setData("zip1", value)}
-                          placeholder={t("input:zip")}
+                          placeholder={t("Zip code")}
                           error={errors.zip1}
                         />
                       </FieldsGrid>
@@ -292,7 +282,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <Separator />
 
                     <div className="space-y-1 md:relative md:pt-6">
-                      <div className="flex flex-col items-center md:absolute md:right-0 md:top-0">
+                      <div className="flex flex-col items-center md:absolute md:top-0 md:right-0">
                         <Button
                           onClick={
                             !sameAddress ? residentialAddressToPostalAddress : clearPostalAddress
@@ -302,44 +292,42 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                         >
                           <ArrowUpDown />
                         </Button>
-                        <small className="text-xs text-secondary-foreground">
-                          {t("pages:regiweb.profile.card2.sameAddressHelpText")}?
+                        <small className="text-secondary-foreground text-xs">
+                          {t("Use the same address for the postal address")}?
                         </small>
                       </div>
 
-                      <h2 className="font-semibold">
-                        {t("pages:regiweb.profile.card2.subtitle2")}
-                      </h2>
+                      <h2 className="font-semibold">{t("Residential Address")}</h2>
 
                       <InputField
                         value={data.dir3}
                         onChange={(value) => setData("dir3", value)}
-                        placeholder={t("input:address1")}
+                        placeholder={t("Address 1")}
                         error={errors.dir3}
                       />
                       <InputField
                         value={data.dir4}
                         onChange={(value) => setData("dir4", value)}
-                        placeholder={t("input:address2")}
+                        placeholder={t("Address 2")}
                         error={errors.dir4}
                       />
                       <FieldsGrid cols={3}>
                         <InputField
                           value={data.pueblo2}
                           onChange={(value) => setData("pueblo2", value)}
-                          placeholder={t("input:city")}
+                          placeholder={t("City")}
                           error={errors.pueblo2}
                         />
                         <InputField
                           value={data.esta2}
                           onChange={(value) => setData("esta2", value)}
-                          placeholder={t("input:country")}
+                          placeholder={t("Country")}
                           error={errors.esta2}
                         />
                         <InputField
                           value={data.zip2}
                           onChange={(value) => setData("zip2", value)}
-                          placeholder={t("input:zip")}
+                          placeholder={t("Zip code")}
                           error={errors.zip2}
                         />
                       </FieldsGrid>
@@ -349,46 +337,44 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle>{t("pages:regiweb.profile.card3.title")}</CardTitle>
+                  <CardTitle>{t("Others")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col gap-4">
                     <InputField
                       value={data.alias}
                       onChange={(value) => setData("alias", value)}
-                      label={t("input:alias")}
+                      label={t("Alias")}
                       error={errors.alias}
                     />
                     <FieldsGrid>
                       <InputField
                         value={data.posicion}
                         onChange={(value) => setData("posicion", value)}
-                        label={t("input:position")}
+                        label={t("Position")}
                         error={errors.posicion}
                       />
                       <SelectField
                         value={data.nivel}
                         onChange={(value) => setData("nivel", value)}
-                        label={t("input:level")}
+                        label={t("Level")}
                         error={errors.nivel}
                         items={TEACHER_LEVEL_SELECT}
                       />
                     </FieldsGrid>
                     <div>
-                      <h2 className="text-sm font-medium">
-                        {t("pages:regiweb.profile.card3.subtitle1")}
-                      </h2>
+                      <h2 className="text-sm font-medium">{t("Preparation")}</h2>
                       <div className="space-y-1">
                         <InputField
                           value={data.preparacion1}
                           onChange={(value) => setData("preparacion1", value)}
-                          placeholder={t("input:preparation1")}
+                          placeholder={t("Preparation :number", { number: 1 })}
                           error={errors.preparacion1}
                         />
                         <InputField
                           value={data.preparacion2}
                           onChange={(value) => setData("preparacion2", value)}
-                          placeholder={t("input:preparation2")}
+                          placeholder={t("Preparation :number", { number: 2 })}
                           error={errors.preparacion2}
                         />
                       </div>
@@ -398,20 +384,20 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       <DateField
                         value={data.fecha_ini}
                         onChange={(value) => setData("fecha_ini", value)}
-                        label={t("input:initialDate")}
+                        label={t("Initial Date")}
                         error={errors.fecha_ini}
                       />
                       <DateField
                         value={data.fecha_daja}
                         onChange={(value) => setData("fecha_daja", value)}
-                        label={t("input:finalDate")}
+                        label={t("Final Date")}
                         error={errors.fecha_daja}
                       />
                     </FieldsGrid>
                     <SelectField
                       value={data.re_e}
                       onChange={(value) => setData("re_e", value)}
-                      label={t("input:receiveEmails")}
+                      label={t("Receive emails")}
                       items={YES_NO_SELECT}
                       error={errors.re_e}
                     />
@@ -423,9 +409,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
           <section>
             <Accordion className="rounded-md bg-white shadow-xs" type="single" collapsible>
               <AccordionItem value="club">
-                <AccordionTrigger className="px-6">
-                  {t("pages:regiweb.profile.card4.title1")}
-                </AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer px-6">{t("Clubs")}</AccordionTrigger>
                 <AccordionContent className="space-y-2 px-6">
                   {[1, 2, 3, 4, 5].map((number) => {
                     const club = `club${number}` as "club1";
@@ -437,25 +421,25 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                         <InputField
                           value={data[club]}
                           onChange={(value) => setData(club, value)}
-                          label={t("input:name")}
+                          label={t("Name")}
                           error={errors[club]}
                         />
                         <InputField
                           value={data[pre]}
                           onChange={(value) => setData(pre, value)}
-                          label={t("input:president")}
+                          label={t("President")}
                           error={errors[pre]}
                         />
                         <InputField
                           value={data[vi]}
                           onChange={(value) => setData(vi, value)}
-                          label={t("input:vicePresident")}
+                          label={t("Vice president")}
                           error={errors[vi]}
                         />
                         <InputField
                           value={data[se]}
                           onChange={(value) => setData(se, value)}
-                          label={t("input:secretary")}
+                          label={t("Secretary")}
                           error={errors[se]}
                         />
                       </FieldsGrid>
@@ -464,33 +448,30 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="licens">
-                <AccordionTrigger className="px-6">
-                  {t("pages:regiweb.profile.card4.title2")}
-                </AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer px-6">{t("Licenses")}</AccordionTrigger>
                 <AccordionContent className="space-y-2 px-6 pt-2">
                   {[1, 2, 3, 4].map((number) => {
                     const lic = `lic${number}` as "lic1";
                     const lp = `lp${number}` as "lp1";
                     const fex = `fex${number}` as "fex1";
                     return (
-                      <FieldsGrid key={number}>
+                      <FieldsGrid className="space-y-2" key={number}>
                         <InputField
                           value={data[lic]}
                           onChange={(value) => setData(lic, value)}
                           error={errors[lic]}
                         />
 
-                        <div className="grid grid-flow-col items-center gap-2">
+                        <div className="grid grid-flow-col place-items-start gap-2 md:place-items-center">
                           <CheckboxField
-                            className="grow"
-                            label={t("input:expires")}
+                            label={t("Expires")}
                             value={data[lp]}
                             onChange={(value) => setData(lp, value)}
                             error={errors[lp]}
                           />
                           <DateField
+                            className="w-[350px]"
                             disabled={data[lp] !== YesNoEnum.YES}
-                            className="max-w-[300px]"
                             value={data[fex]}
                             onChange={(value) => setData(fex, value)}
                             error={errors[fex]}
@@ -504,7 +485,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             </Accordion>
           </section>
           <SubmitButton disabled={processing} size="lg">
-            {t("btn.save")}
+            {t("Save")}
           </SubmitButton>
         </div>
       </form>

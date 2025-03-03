@@ -10,8 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/Components/ui/dialog";
+import { useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
-import { useTranslation } from "react-i18next";
 
 interface ModalFormProps {
   children?: React.ReactNode;
@@ -39,7 +39,7 @@ export function ModalForm({
   onClose,
   submitting,
 }: ModalFormProps) {
-  const { t } = useTranslation("common");
+  const { t } = useTranslations();
   return (
     <Dialog
       onOpenChange={(open) => {
@@ -69,7 +69,7 @@ export function ModalForm({
           <DialogFooter className="gap-2">
             <DialogClose asChild>
               <Button type="button" variant="secondary">
-                {t("btn.close")}
+                {t("Close")}
               </Button>
             </DialogClose>
             <SubmitButton disabled={submitting}>{submitLabel}</SubmitButton>

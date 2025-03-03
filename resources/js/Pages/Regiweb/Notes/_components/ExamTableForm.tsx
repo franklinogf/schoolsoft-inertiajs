@@ -8,9 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
+import { useTranslations } from "@/hooks/translations";
 import { router, usePage } from "@inertiajs/react";
 import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { OptionsContext } from "../_context/OptionsContext";
 import { StudentsExamGrades } from "../_types/studentsGrades";
@@ -22,7 +22,7 @@ interface ExamTableFormProps {
 export function ExamForm({ students }: ExamTableFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t } = useTranslation(["common", "pages"]);
+  const { t } = useTranslations();
   const { page, trimester, course } = useContext(OptionsContext);
   const { errors } = usePage().props;
 
@@ -61,7 +61,7 @@ export function ExamForm({ students }: ExamTableFormProps) {
       {
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(t("pages:regiweb.notes.show.successMessage.exam"));
+          toast.success(t("Exam note saved successfully"));
           setStudentsChangedToFalse();
         },
         onError: () => {
@@ -99,10 +99,10 @@ export function ExamForm({ students }: ExamTableFormProps) {
       <div className="overflow-auto">
         <Table>
           <TableHeader>
-            <TableRow className="bg-primary hover:bg-primary [&>th]:text-center [&>th]:text-primary-foreground">
+            <TableRow className="bg-primary hover:bg-primary [&>th]:text-primary-foreground [&>th]:text-center">
               <TableHead className="text-left!">#</TableHead>
-              <TableHead>{t("common:student")}</TableHead>
-              <TableHead>{t("common:note")}</TableHead>
+              <TableHead>{t("Student")}</TableHead>
+              <TableHead>{t("Note")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

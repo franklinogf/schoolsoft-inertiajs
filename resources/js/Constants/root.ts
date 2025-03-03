@@ -1,4 +1,4 @@
-import i18n from "@/lib/i18n";
+import { Translations } from "@/hooks/translations";
 import {
   BadgeInfo,
   BriefcaseBusiness,
@@ -6,6 +6,7 @@ import {
   Computer,
   FileCheck,
   Globe,
+  LucideIcon,
   MonitorSpeaker,
   NotebookPen,
   Origami,
@@ -14,117 +15,130 @@ import {
   Users,
   Wrench,
 } from "lucide-react";
-i18n.loadNamespaces("home");
-const { t } = i18n;
-export const MENU_LINKS = [
+type TranslationTitle = { title: Translations };
+type TranslationList = TranslationTitle & { description: Translations; Icon: LucideIcon };
+
+export const MENU_LINKS: { label: Translations; path: string }[] = [
   {
-    label: t("home:menu.item1"),
+    label: "Home",
     path: "home",
   },
   {
-    label: t("home:menu.item2"),
+    label: "Modules",
     path: "modules",
   },
   {
-    label: t("home:menu.item3"),
+    label: "Regiweb",
     path: "regiweb",
   },
 ];
 
-export const SERVICES = [
+export const SERVICES: TranslationList[] = [
   {
-    title: t("home:index.services.items.item1.title"),
-    description: t("home:index.services.items.item1.description"),
+    title: "Implementation Service",
+    description:
+      "This includes coordination for training stages with implementation dates. Material (manuals, etc.) for staff training. Follow-up to ensure the tasks required to complete the implementation of the SchoolSoft system are carried out for the benefit of the institution.",
     Icon: Origami,
   },
   {
-    title: t("home:index.services.items.item2.title"),
-    description: t("home:index.services.items.item2.description"),
+    title: "Regiweb",
+    description:
+      "The new all-internet service, complete teacher registration, parents can view their children's grades, manage all accounts, and much more.",
     Icon: Globe,
   },
   {
-    title: t("home:index.services.items.item3.title"),
-    description: t("home:index.services.items.item3.description"),
+    title: "Technical Support",
+    description:
+      "Individual technical assistance for administrative and teaching staff, by phone, internet, or remote control. All these technical support access options are available according to the needs and facilities available at the institution.",
     Icon: MonitorSpeaker,
   },
   {
-    title: t("home:index.services.items.item4.title"),
-    description: t("home:index.services.items.item4.description"),
+    title: "Repair Service",
+    description: "Parts and service for school equipment installed by our company.",
     Icon: Wrench,
   },
   {
-    title: t("home:index.services.items.item5.title"),
-    description: t("home:index.services.items.item5.description"),
+    title: "Laboratory Rental",
+    description:
+      "Offer your students a modern lab with all applications such as Office 2018, class control, educational programs, antivirus, Windows 10, Windows Server 2018, among other options. Call us, and we will improve any written offer.",
     Icon: Computer,
   },
 ];
 
-export const OTHER_SERVICES = [
+export const OTHER_SERVICES: TranslationTitle[] = [
   {
-    title: t("home:index.otherServices.items.item1"),
+    title: "Network configurations.",
   },
   {
-    title: t("home:index.otherServices.items.item2"),
+    title: "Sale of Computers and all types of accessories.",
   },
   {
-    title: t("home:index.otherServices.items.item3"),
+    title: "Computer Rental for laboratory.",
   },
   {
-    title: t("home:index.otherServices.items.item4"),
+    title: "Wireless Connection throughout the school.",
   },
   {
-    title: t("home:index.otherServices.items.item5"),
+    title: "Computer Maintenance Services.",
   },
   {
-    title: t("home:index.otherServices.items.item6"),
+    title: "Website for your school.",
   },
 ];
-export const MODULES = [
+export const MODULES: TranslationList[] = [
   {
-    title: t("home:modules.items.item1.title"),
-    description: t("home:modules.items.item1.description"),
+    title: "Student Information",
+    description:
+      "Student records, parent, guardian, teachers, vaccines, illnesses, disabilities, re-enrollment, homeroom, data control, indexes, record search, socioeconomic, medical, totals by grade, account lists, address reports, phone lists, work lists, parent lists, new student report, discount lists, labels, certified letters, and a variety of reports.",
     Icon: BadgeInfo,
   },
   {
-    title: t("home:modules.items.item2.title"),
-    description: t("home:modules.items.item2.description"),
+    title: "Grading System",
+    description:
+      "Course catalog, subjects, special programs, entry of grades and behaviors by trimester, teacher records, calculation of trimester and semester grades, merits, demerits, failures, rankings, trimester averages, summer grades, report cards, comment section for report cards, messages for report cards, class schedule, grade distribution, grade records, cumulative data, and a variety of reports.",
     Icon: NotebookPen,
   },
   {
-    title: t("home:modules.items.item3.title"),
-    description: t("home:modules.items.item3.description"),
+    title: "Electronic Record",
+    description:
+      "Entry of daily work grades, projects, notebook work, exams, trimester behaviors, trimester, semester, and final averages, trimester attendance, daily plans, and a variety of reports.",
     Icon: BriefcaseBusiness,
   },
   {
-    title: t("home:modules.items.item4.title"),
-    description: t("home:modules.items.item4.description"),
+    title: "Accounts Receivable",
+    description:
+      "Budgeting, costs, discounts, payment screen, surcharges, payment booklet, debtor list, account statements, daily payments, creation of various collection letters, 30-60-90 reports, receipts, and a variety of reports.",
     Icon: PieChart,
   },
   {
-    title: t("home:modules.items.item5.title"),
-    description: t("home:modules.items.item5.description"),
+    title: "Church System",
+    description:
+      "Certificates for Marriage, Baptism, Communion, Negative, Confirmation, and Notification, etc.",
     Icon: FileCheck,
   },
 ];
-export const REGIWEB = [
+export const REGIWEB: TranslationList[] = [
   {
-    title: t("home:regiweb.items.item1.title"),
-    description: t("home:regiweb.items.item1.description"),
+    title: "Regiweb",
+    description:
+      "Includes grade entry, allowing teachers to input various types of grades such as exams, quizzes, daily work, notebook assignments, attendance, behavior, and send homework. Teachers can communicate with parents via web, mobile, or email and print various reports.",
     Icon: Globe,
   },
   {
-    title: t("home:regiweb.items.item2.title"),
-    description: t("home:regiweb.items.item2.description"),
+    title: "Parent Module",
+    description:
+      "Parents can view their children's grades, communicate with teachers via web or email, update their information, enable or disable email notifications, and request appointments with teachers.",
     Icon: Users,
   },
   {
-    title: t("home:regiweb.items.item3.title"),
-    description: t("home:regiweb.items.item3.description"),
+    title: "Administration",
+    description:
+      "The school can manage modules, general school information, trimester start and end dates, import and export data, activate and deactivate users, send messages via web, mobile, or email, and generate a variety of reports.",
     Icon: School,
   },
   {
-    title: t("home:regiweb.items.item4.title"),
-    description: t("home:regiweb.items.item4.description"),
+    title: "Calendar events",
+    description: "The school can create events, such as exams, meetings, holidays, etc.",
     Icon: CalendarClock,
   },
 ];

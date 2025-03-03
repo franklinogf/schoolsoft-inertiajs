@@ -10,7 +10,7 @@
   "require": {
     "php": "^8.2",
     "codedge/laravel-fpdf": "*",
-    "fakerphp/faker": "*",
+    "fakerphp/faker": "^1.24",
     "filament/filament": "^3.2",
     "inertiajs/inertia-laravel": "2.0",
     "laravel/framework": "^11.30.0",

@@ -1,9 +1,9 @@
 import { FieldError } from "@/Components/forms/inputs/FieldError";
 import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
+import { useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
 import { useCallback, useEffect, useId } from "react";
 import { useDropzone } from "react-dropzone";
-import { useTranslation } from "react-i18next";
 type FileWithPreview = File & { preview?: string };
 
 interface ProfilePictureFieldProps {
@@ -23,9 +23,8 @@ export function ProfilePictureField({
   value,
   onChange,
 }: ProfilePictureFieldProps) {
-  const { t } = useTranslation("input", { keyPrefix: "profilePictureDragDrop" });
+  const { t } = useTranslations();
   const id = useId();
-  const labelToUse = label ?? t("defaultLabel");
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
@@ -58,17 +57,21 @@ export function ProfilePictureField({
         {...getRootProps()}
         className={cn(
           "relative flex aspect-square size-[250px] items-center justify-center overflow-hidden rounded-full border-2 border-dashed px-2 shadow-xs",
-          disabled ? "cursor-not-allowed bg-muted" : "cursor-pointer bg-background",
-          { "cursor-not-allowed border-destructive": isDragReject },
+          disabled ? "bg-muted cursor-not-allowed" : "bg-background cursor-pointer",
+          { "border-destructive cursor-not-allowed": isDragReject },
         )}
       >
         <input id={id} {...getInputProps()} />
         <p
           className={cn(
-            "absolute z-20 text-balance text-center font-serif text-sm font-medium text-input",
+            "text-input absolute z-20 text-center font-serif text-sm font-medium text-balance",
           )}
         >
-          {isDragActive ? t("status.active") : value ? t("status.change") : t("status.inactive")}
+          {isDragActive
+            ? t("Drop an image here")
+            : value
+              ? t("Drag and drop an image here to change")
+              : t("Drag and drop an image here or click to select")}
         </p>
         {value || initialFile ? (
           <div className="absolute">
@@ -83,7 +86,7 @@ export function ProfilePictureField({
           </div>
         ) : null}
       </div>
-      <FieldLabel className="mt-1" id={id} label={labelToUse} error={error} />
+      <FieldLabel className="mt-1" id={id} label={label ?? t("Profile Picture")} error={error} />
       <FieldError error={error} />
     </div>
   );

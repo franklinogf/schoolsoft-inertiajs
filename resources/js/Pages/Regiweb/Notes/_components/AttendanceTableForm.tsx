@@ -8,9 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
+import { useTranslations } from "@/hooks/translations";
 import { router, usePage } from "@inertiajs/react";
 import { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { OptionsContext } from "../_context/OptionsContext";
 import { StudentAttendaceGradeKey, StudentsAttendanceGrades } from "../_types/studentsGrades";
@@ -22,7 +22,7 @@ interface AttendanceTableFormProps {
 export function AttendaceTableForm({ students }: AttendanceTableFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t } = useTranslation(["common", "pages"]);
+  const { t } = useTranslations();
   const { page, trimester, course } = useContext(OptionsContext);
   const { errors } = usePage().props;
 
@@ -66,7 +66,7 @@ export function AttendaceTableForm({ students }: AttendanceTableFormProps) {
       {
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(t("pages:regiweb.notes.show.successMessage.attendance"));
+          toast.success(t("Attendance saved successfully"));
           setStudentsChangedToFalse();
         },
         onError: () => {
@@ -104,13 +104,13 @@ export function AttendaceTableForm({ students }: AttendanceTableFormProps) {
       <div className="overflow-auto">
         <Table>
           <TableHeader>
-            <TableRow className="bg-primary hover:bg-primary [&>th]:text-center [&>th]:text-primary-foreground">
+            <TableRow className="bg-primary hover:bg-primary [&>th]:text-primary-foreground [&>th]:text-center">
               <TableHead className="text-left!">#</TableHead>
-              <TableHead>{t("common:student")}</TableHead>
-              <TableHead>{t("common:conduct")}</TableHead>
-              <TableHead>{t("common:absences")}</TableHead>
-              <TableHead>{t("common:tardies")}</TableHead>
-              <TableHead>{t("common:demerits")}</TableHead>
+              <TableHead>{t("Student")}</TableHead>
+              <TableHead>{t("Conduct")}</TableHead>
+              <TableHead>{t("Absences")}</TableHead>
+              <TableHead>{t("Tardies")}</TableHead>
+              <TableHead>{t("Demerits")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
