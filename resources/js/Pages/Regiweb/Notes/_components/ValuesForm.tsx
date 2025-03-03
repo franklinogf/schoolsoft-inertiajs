@@ -17,8 +17,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
+import { useTranslations } from "@/hooks/translations";
 import { useForm } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 export type GradesValues = {
   [x: string]: string;
@@ -32,7 +32,7 @@ interface ValuesFormProps {
 }
 
 export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesFormProps) {
-  const { t } = useTranslation(["common", "pages"]);
+  const { t } = useTranslations();
   const { put, processing, errors, data, setData } = useForm(values);
 
   function handleValuesSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -40,7 +40,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
     put(route("regiweb.notes.values.save", id), {
       preserveScroll: true,
       onSuccess: () => {
-        toast.success(t("pages:regiweb.notes.show.successMessage.exam"));
+        toast.success(t("Values saved successfully"));
       },
     });
   }
@@ -48,7 +48,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
     <form onSubmit={handleValuesSubmit}>
       <Card>
         <CardHeader>
-          <CardTitle>{t("values")}</CardTitle>
+          <CardTitle>{t("Values")}</CardTitle>
           <CardDescription hidden></CardDescription>
         </CardHeader>
         <CardContent>
@@ -56,9 +56,9 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
             <Table>
               <TableHeader>
                 <TableRow className="[&>th]:text-center">
-                  <TableHead>{t("topic")}</TableHead>
-                  <TableHead>{t("value")}</TableHead>
-                  <TableHead>{t("date.label")}</TableHead>
+                  <TableHead>{t("Topic")}</TableHead>
+                  <TableHead>{t("Value")}</TableHead>
+                  <TableHead>{t("Date")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -74,7 +74,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
                           value={data[tema]}
                           name={tema}
                           onChange={(value) => setData(tema, value)}
-                          placeholder={t("topic") + " " + index}
+                          placeholder={t("Topic") + " " + index}
                           error={errors[tema as keyof typeof errors]}
                         />
                       </TableCell>
@@ -83,7 +83,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
                           removeArrows
                           value={data[val]}
                           onChange={(value) => setData(val, value)}
-                          placeholder={t("value") + " " + index}
+                          placeholder={t("Value") + " " + index}
                           type="number"
                           error={errors[val as keyof typeof errors]}
                           onBlur={(e) => {
@@ -95,7 +95,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
                         <DateField
                           value={data[fec]}
                           onChange={(value) => setData(fec, value)}
-                          placeholder={t("date.label") + " " + index}
+                          placeholder={t("Date") + " " + index}
                           error={errors[fec]}
                         />
                       </TableCell>
@@ -108,7 +108,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
         </CardContent>
         <CardFooter className="justify-center">
           <SubmitButton size="lg" disabled={processing}>
-            {t("btn.save")}
+            {t("Save")}
           </SubmitButton>
         </CardFooter>
       </Card>

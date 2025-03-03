@@ -9,10 +9,10 @@ import { PagesEnum, TrimesterEnum } from "@/Enums";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { formatDate } from "@/lib/utils";
 import { useId, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 import { PAGES, TRIMESTERS } from "@/Constants";
+import { useTranslations } from "@/hooks/translations";
 import { Deferred } from "@inertiajs/react";
 import { Info } from "lucide-react";
 import { AttendaceTableForm } from "./_components/AttendanceTableForm";
@@ -63,7 +63,7 @@ export default function Page({
   const [convert, setConvert] = useState(false);
 
   const [values, setValues] = useState(gradesValues);
-  const { t } = useTranslation(["common", "pages"]);
+  const { t } = useTranslations();
 
   function handleValueChange(valueKey: string, value: string) {
     if (!values) return;
@@ -77,77 +77,62 @@ export default function Page({
     setValues(updatedValues);
   }
   return (
-    <RegiwebLayout title={t("pages:regiweb.notes.show.meta.title")}>
+    <RegiwebLayout title={t("Notes entry")}>
       <section className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("pages:regiweb.notes.show.card1.title")}</CardTitle>
+            <CardTitle>{t("Information")}</CardTitle>
             <CardDescription hidden></CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              <InfoBadge label={t("common:course.label")} value={course} />
-              <InfoBadge label={t("common:trimester.label")} value={TRIMESTERS[trimester]} />
-              <InfoBadge
-                label={t("pages:regiweb.notes.show.card1.addingNotes")}
-                value={PAGES[page]}
-              />
+              <InfoBadge label={t("Course")} value={course} />
+              <InfoBadge label={t("Trimester")} value={TRIMESTERS[trimester]} />
+              <InfoBadge label={t("Adding notes to")} value={PAGES[page]} />
               <Deferred
                 data="studentsGrades"
-                fallback={
-                  <InfoBadge label={t("pages:regiweb.notes.show.card1.studentsTotal")} value={0} />
-                }
+                fallback={<InfoBadge label={t("Students total")} value={0} />}
               >
-                <InfoBadge
-                  label={t("pages:regiweb.notes.show.card1.studentsTotal")}
-                  value={studentsGrades?.length}
-                />
+                <InfoBadge label={t("Students total")} value={studentsGrades?.length} />
               </Deferred>
               <InfoBadge
-                label={t("common:date.initialDate")}
+                label={t("Initial Date")}
                 value={formatDate(initialDate, { dateStyle: "long" })}
               />
               <InfoBadge
-                label={t("common:date.finalDate")}
+                label={t("Final Date")}
                 value={formatDate(finalDate, { dateStyle: "long" })}
               />
-              <InfoBadge
-                label={t("pages:regiweb.notes.show.card1.noteType.label")}
-                value={
-                  isPercent
-                    ? t("pages:regiweb.notes.show.card1.noteType.percent")
-                    : t("pages:regiweb.notes.show.card1.noteType.sum")
-                }
-              />
+              <InfoBadge label={t("Note type")} value={isPercent ? t("Percentage") : t("Sum")} />
             </div>
           </CardContent>
         </Card>
         {(page === PagesEnum.GRADES || page === PagesEnum.SUMMER_GRADES) && (
           <Card>
             <CardHeader>
-              <CardTitle>{t("pages:regiweb.notes.show.card2.title")}</CardTitle>
+              <CardTitle>{t("Options")}</CardTitle>
               <CardDescription hidden></CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <SwitchCheckbox
                   checked={isLetter}
-                  label={t("pages:regiweb.notes.show.card2.convertToLetters.label")}
-                  description={t("pages:regiweb.notes.show.card2.convertToLetters.description", {
-                    noteNumber: page === PagesEnum.GRADES ? 9 : 7,
+                  label={t("Convert to letters")}
+                  description={t("Applied to the Grade column :number exclusively", {
+                    number: page === PagesEnum.GRADES ? 9 : 7,
                   })}
                 />
                 <SwitchCheckbox
                   checked={convert}
                   onChange={setConvert}
-                  label={t("pages:regiweb.notes.show.card2.convert.label")}
-                  description={t("pages:regiweb.notes.show.card2.convert.description")}
+                  label={t("Convert")}
+                  description={t("Convert numbers to letters")}
                 />
                 {canEnd && (
                   <SwitchCheckbox
                     checked={hasEnded}
-                    label={t("pages:regiweb.notes.show.card2.notification.label")}
-                    description={t("pages:regiweb.notes.show.card2.notification.description")}
+                    label={t("Notification")}
+                    description={t("Mark when the trimester end")}
                   />
                 )}
               </div>
@@ -160,9 +145,9 @@ export default function Page({
         page !== PagesEnum.CONDUCT_ATTENDANCE ? (
           <Alert variant="warning">
             <Info className="size-4" />
-            <AlertTitle>{t("pages:regiweb.notes.show.importantAlert.title")}</AlertTitle>
+            <AlertTitle>{t("Important") + "!"}</AlertTitle>
             <AlertDescription>
-              {t("pages:regiweb.notes.show.importantAlert.message")}
+              {t("Rembember to go to the grades page and save to get the correct averages")}
             </AlertDescription>
           </Alert>
         ) : null}
@@ -225,7 +210,7 @@ function SwitchCheckbox({
       <Switch id={id} onCheckedChange={onChange} checked={checked} disabled={disabled} />
       <div className="space-y-1 leading-none">
         <Label htmlFor={id}>{label}</Label>
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-sm">{description}</p>
       </div>
     </div>
   );

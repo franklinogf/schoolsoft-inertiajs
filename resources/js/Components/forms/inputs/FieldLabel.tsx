@@ -14,18 +14,17 @@ export function FieldLabel({
   id: string;
   className?: string;
 }) {
-  if (label) {
-    return (
-      <Label
-        className={cn(className, {
-          "text-destructive": error,
-          "text-muted-foreground/80": disabled,
-        })}
-        htmlFor={id}
-      >
-        {label}
-      </Label>
-    );
-  }
-  return null;
+  if (!label) return null;
+
+  return (
+    <Label
+      className={cn(className, {
+        "text-destructive": error,
+        "text-muted-foreground/80": disabled,
+      })}
+      htmlFor={id}
+    >
+      {label}
+    </Label>
+  );
 }

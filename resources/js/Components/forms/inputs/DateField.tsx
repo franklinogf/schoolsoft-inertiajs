@@ -3,11 +3,11 @@ import { FieldContainer } from "@/Components/forms/inputs/FieldContainer";
 import { FieldError } from "@/Components/forms/inputs/FieldError";
 import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
 import { Button } from "@/Components/ui/button";
+import { useTranslations } from "@/hooks/translations";
 import { formatDateToString, formatStringToDate } from "@/lib/utils";
 import { enUS, es } from "date-fns/locale";
 import { XSquare } from "lucide-react";
 import { useId } from "react";
-import { useTranslation } from "react-i18next";
 interface DatePickerInputProps
   extends Pick<DateTimePickerProps, "yearRange" | "displayFormat" | "showOutsideDays"> {
   error?: string;
@@ -32,25 +32,22 @@ export function DateField({
   onChange,
   ...props
 }: DatePickerInputProps) {
-  const {
-    t,
-    i18n: { language },
-  } = useTranslation(["input"]);
+  const { t, currentLocale } = useTranslations();
 
   const id = useId();
 
   return (
     <FieldContainer className={className}>
       <FieldLabel disabled={disabled} error={error} id={id} label={label} />
-      <div className="relative">
+      <div className="relative w-full">
         <DateTimePicker
           disabled={disabled}
           id={id}
           yearRange={yearRange}
-          locale={language === "es" ? es : enUS}
+          locale={currentLocale() === "es" ? es : enUS}
           displayFormat={displayFormat}
           granularity="day"
-          placeholder={placeholder ?? t("input:defaultPlaceholders.date")}
+          placeholder={placeholder ?? t("Select a date")}
           value={formatStringToDate(value)}
           onChange={(value) => {
             onChange && onChange(formatDateToString(value));
@@ -67,7 +64,7 @@ export function DateField({
             size="icon"
             variant="ghost"
           >
-            <XSquare className="absolute right-2 top-1/2 -translate-y-1/2 hover:cursor-pointer" />
+            <XSquare className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer" />
           </Button>
         )}
       </div>

@@ -1,17 +1,18 @@
 import { ContactForm } from "@/Components/root/ContactForm";
 import { MaxWidthSection } from "@/Components/root/MaxWidthSection";
-import { Head } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "@/hooks/translations";
+import RootLayout from "@/Layouts/Root/RootLayout";
+import { usePage } from "@inertiajs/react";
 
 export default function Page() {
-  const { t } = useTranslation("home", { keyPrefix: "contact" });
+  const { t } = useTranslations();
+  console.log(usePage().props);
   return (
-    <>
-      <Head title={t("meta.title")} />
+    <RootLayout title={t("Contact us")}>
       <MaxWidthSection>
-        <h1 className="title">{t("title")}</h1>
+        <h1 className="title">{t("Contact Form")}</h1>
         <ContactForm />
       </MaxWidthSection>
-    </>
+    </RootLayout>
   );
 }

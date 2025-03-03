@@ -1,19 +1,18 @@
 import { List } from "@/Components/root/List";
 import { MaxWidthSection } from "@/Components/root/MaxWidthSection";
 import { MODULES } from "@/Constants/root";
-import { Head } from "@inertiajs/react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "@/hooks/translations";
+import RootLayout from "@/Layouts/Root/RootLayout";
 export default function Page() {
-  const { t } = useTranslation("home");
+  const { t } = useTranslations();
   return (
-    <>
-      <Head title={t("modules.title")} />
+    <RootLayout title={t("Modules")}>
       <MaxWidthSection>
         <div className="cointainer mx-auto max-w-4xl">
-          <h2 className="title">{t("modules.title")}</h2>
+          <h2 className="title">{t("Modules")}</h2>
           <List items={MODULES} />
         </div>
       </MaxWidthSection>
-    </>
+    </RootLayout>
   );
 }

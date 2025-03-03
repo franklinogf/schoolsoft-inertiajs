@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use App\Enums\FlashMessageKey;
 use App\Http\Resources\Teacher\TeacherResource;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -32,38 +31,51 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $subPath = $request->segment(2);
+        $guard = $this->determineGuard($subPath);
+        $user = $this->getUser($request, $guard);
 
-        $path = $request->route()->getPrefix();
-        $subPath = Str::before(Str::after($path, '/'), '/');
+        return [
+            ...parent::share($request),
+            'locale' => app()->getLocale(),
+            'csrf_token' => csrf_token(),
+            'auth' => [
+                'user' => $user,
+            ],
+            'flash' => $this->getFlashMessages($request),
+        ];
+    }
 
-        $guard = match ($subPath) {
+    private function determineGuard(?string $subPath): ?string
+    {
+        return match ($subPath) {
             'admin' => 'admin',
             'regiweb' => 'teacher',
             'teacher' => 'teacher',
             'student' => 'student',
             default => null,
-
         };
-        $user = null;
+    }
+
+    private function getUser(Request $request, ?string $guard)
+    {
         if ($guard) {
             if ($guard === 'teacher' && $request->user($guard)) {
-                $user = new TeacherResource($request->user($guard));
-            } else {
-                $user = $request->user($guard);
+                return new TeacherResource($request->user($guard));
             }
+
+            return $request->user($guard);
         }
 
+        return null;
+    }
+
+    private function getFlashMessages(Request $request): array
+    {
         return [
-            ...parent::share($request),
-            'csrf_token' => csrf_token(),
-            'auth' => [
-                'user' => $user,
-            ],
-            'flash' => [
-                FlashMessageKey::SUCCESS->value => $request->session()->get(FlashMessageKey::SUCCESS->value) ?? null,
-                FlashMessageKey::ERROR->value => $request->session()->get(FlashMessageKey::ERROR->value) ?? null,
-                FlashMessageKey::ERROR_LIST->value => $request->session()->get(FlashMessageKey::ERROR_LIST->value) ?? null,
-            ],
+            FlashMessageKey::SUCCESS->value => $request->session()->get(FlashMessageKey::SUCCESS->value),
+            FlashMessageKey::ERROR->value => $request->session()->get(FlashMessageKey::ERROR->value),
+            FlashMessageKey::ERROR_LIST->value => $request->session()->get(FlashMessageKey::ERROR_LIST->value),
         ];
     }
 }
