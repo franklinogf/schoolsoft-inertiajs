@@ -43,7 +43,7 @@ export function DataTable<Tdata, TValue>({
   rowId,
 }: DataTableProps<Tdata, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState<any>([]);
+  const [globalFilter, setGlobalFilter] = useState<string>('');
   const [rowSelection, setRowSelection] = useState({});
   const table = useReactTable({
     columns,
@@ -76,7 +76,7 @@ export function DataTable<Tdata, TValue>({
             {globalFilter && (
               <Button
                 onClick={() => {
-                  table.setGlobalFilter("");
+                  table.setGlobalFilter('');
                 }}
                 asChild
                 className="size-4"
