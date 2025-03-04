@@ -34,7 +34,7 @@ export default function Page({ students, courses, admins, selected }: PageProps)
         <Tabs
           defaultValue={selected}
           onValueChange={(value) => {
-            router.reload({ data: { selected: value } });
+            router.reload({ data: { selected: value }, replace: true });
           }}
         >
           <TabsList className="mx-auto">
