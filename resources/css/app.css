@@ -104,14 +104,6 @@
   @apply mx-auto max-w-2xl text-center text-4xl font-bold text-balance;
 }
 
-@utility filepond--panel-root {
-  @apply bg-background!;
-}
-
-@utility filepond--drop-label {
-  @apply text-foreground!;
-}
-
 @utility input-phone {
   @apply border-input! bg-background! placeholder:text-foreground! h-10! rounded-md! border! px-3! text-sm!;
   input {
@@ -120,17 +112,12 @@
 }
 
 @utility remove-arrows {
-  &input[type="number"]::-webkit-inner-spin-button {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
     -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     margin: 0;
-  }
-  & input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &input[type="number"] {
-    appearance: textfield;
   }
 }
 
