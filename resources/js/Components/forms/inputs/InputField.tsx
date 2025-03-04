@@ -9,6 +9,7 @@ interface InputFieldProps extends Omit<InputProps, "onChange" | "id"> {
   error?: string;
   label?: string;
   removeArrows?: boolean;
+  fieldClassName?: string;
 }
 export function InputField({
   error,
@@ -18,6 +19,7 @@ export function InputField({
   value,
   onChange,
   removeArrows,
+  fieldClassName,
   ...props
 }: InputFieldProps) {
   const id = useId();
@@ -29,6 +31,7 @@ export function InputField({
         id={id}
         value={value}
         className={cn(
+          fieldClassName,
           {
             "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
           },
