@@ -103,7 +103,7 @@ class TeacherResource extends JsonResource
             'dep' => $this->dep,
             'dep_des' => $this->dep_des,
             'docente' => $this->docente,
-            'foto_name' => $this->foto_name ? create_tenant_file_url($this->foto_name) : null,
+            'foto_name' => $this->foto_name ? tenant_file_url($this->foto_name) : null,
             'email_smtp' => $this->email_smtp,
             'clave_email' => $this->clave_email,
             'host_smtp' => $this->host_smtp,
