@@ -65,6 +65,7 @@ export function DefaultTableForm({
       });
     });
   }
+
   function calculateStudentTpa(id: number) {
     setStudentsGrades((prev) => {
       const student = prev.find((student) => student.id === id);
@@ -96,7 +97,8 @@ export function DefaultTableForm({
     setStudentsGrades((prev) => {
       const student = prev.find((student) => student.id === id);
       if (!student) return prev;
-      let total = Math.round((Number(student.tpa) / Number(student.tdp)) * 100);
+      const tdp = Number(student.tdp);
+      let total = tdp === 0 ? Number(student.tpa) : Math.round((Number(student.tpa) / tdp) * 100);
       total = isNaN(total) ? 0 : total;
       return prev.map((student) => {
         if (student.id === id) {
@@ -172,7 +174,6 @@ export function DefaultTableForm({
       {
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(t("Notes saved successfully"));
           setStudentsChangedToFalse();
         },
         onError: () => {
@@ -220,6 +221,7 @@ export function DefaultTableForm({
                       return (
                         <TableCell className="px-1" key={gradeIndex}>
                           <InputField
+                            min={0}
                             title={
                               !disabled && val !== undefined ? `Nota maxima: ${val}` : undefined
                             }
@@ -228,7 +230,7 @@ export function DefaultTableForm({
                               handleGradeChange(id, number, value, number === 10);
                             }}
                             removeArrows
-                            className="px-1 text-center"
+                            fieldClassName="px-1 text-center"
                             type={convert ? "text" : "number"}
                             value={notas[`nota${number}`].value}
                           />
