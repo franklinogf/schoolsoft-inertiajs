@@ -8,6 +8,7 @@ import { Admin } from "@/types/auth";
 import { Student } from "@/types/student";
 import { Course } from "@/types/teacher";
 import { Link, useForm } from "@inertiajs/react";
+import { MailIcon } from "lucide-react";
 import { FormEvent } from "react";
 import { toast } from "sonner";
 
@@ -33,18 +34,17 @@ export default function Page({ students, courses, admins, selected, data: rowsId
           : selected === SelectedEnum.ADMIN && admins !== null
             ? admins.map((admin) => admin.director).join(", ")
             : "";
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     post(route("regiweb.options.messages.email.send", { selected, to: rowsId }), {
       preserveState: true,
-      onSuccess: () => {
-        toast.success("Correo electrónico enviado", { duration: 5000 });
-      },
       onError: () => {
         toast.error("Error al enviar el correo electrónico");
       },
     });
   };
+
   return (
     <RegiwebLayout title="Enviar de correo electrónico">
       <div className="mx-auto w-full max-w-2xl">
@@ -77,7 +77,12 @@ export default function Page({ students, courses, admins, selected, data: rowsId
             />
           </div>
           <div className="mt-4 flex justify-center">
-            <SubmitButton disabled={processing}>Enviar</SubmitButton>
+            <SubmitButton
+              loadingIcon={<MailIcon className="animate-bounce" />}
+              disabled={processing}
+            >
+              Enviar
+            </SubmitButton>
           </div>
         </form>
       </div>
