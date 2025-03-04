@@ -80,6 +80,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
                       </TableCell>
                       <TableCell>
                         <InputField
+                          min={0}
                           removeArrows
                           value={data[val]}
                           onChange={(value) => setData(val, value)}
