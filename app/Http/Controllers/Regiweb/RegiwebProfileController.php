@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Regiweb;
 
+use App\Enums\StoragePathEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Regiweb\ProfileUpdateRequest;
 use Illuminate\Support\Facades\Storage;
@@ -27,9 +28,9 @@ class RegiwebProfileController extends Controller
         $request->user()->fill($data);
         if ($request->hasFile('picture')) {
             if ($request->user()->foto_name !== null) {
-                Storage::delete(get_tenant_uploaded_file_path($request->user()->foto_name));
+                Storage::delete($request->user()->foto_name);
             }
-            $picturePath = $request->file('picture')->storePublicly('profile_pictures/teacher');
+            $picturePath = Storage::put(StoragePathEnum::TEACHERS_PROFILE_PICTURES->value, $request->file('picture'));
             $request->user()->foto_name = $picturePath;
         }
 
