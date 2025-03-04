@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Regiweb\Options;
 
+use App\Enums\FlashMessageKey;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\StudentGrade;
+use Illuminate\Http\Request;
 
 class MessagesEmailController extends Controller
 {
@@ -29,7 +31,7 @@ class MessagesEmailController extends Controller
         $validated = request()->validate([
             'data' => ['required', 'array'],
             'data.*' => ['string'],
-            'selected' => ['required', 'string'],
+            'selected' => ['required', 'string', 'in:students,admin,courses'],
         ]);
 
         $data = $validated['data'];
@@ -41,9 +43,9 @@ class MessagesEmailController extends Controller
         return inertia('Regiweb/Options/Messages/Email/Form', compact('students', 'selected', 'data', 'admins', 'courses'));
     }
 
-    public function send()
+    public function send(Request $request)
     {
-        $validated = request()->validate([
+        $validated = $request->validate([
             'to' => ['required', 'array'],
             'to.*' => ['string'],
             'subject' => ['required', 'string'],
@@ -54,6 +56,6 @@ class MessagesEmailController extends Controller
         $subject = $validated['subject'];
         $message = $validated['message'];
 
-        return to_route('regiweb.options.messages.email.index');
+        return to_route('regiweb.options.messages.email.index')->with(FlashMessageKey::SUCCESS->value, 'Correo enviado correctamente');
     }
 }
