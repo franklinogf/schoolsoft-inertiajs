@@ -18,13 +18,16 @@ use Inertia\Inertia;
 
 class RegiwebNotesController extends Controller
 {
-    private Admin $admin;
+    protected Admin $admin;
+
+    protected string $year;
 
     public function __construct(
-        #[CurrentUser()] protected Teacher $user
+        #[CurrentUser()] protected Teacher $user,
 
     ) {
-        $this->admin = Admin::getPrimaryAdmin();
+        $this->admin = Admin::getPrimaryAdmin()->first();
+        $this->year = $this->admin->getYear();
     }
 
     public function index()
@@ -282,7 +285,7 @@ class RegiwebNotesController extends Controller
         $data = DB::table($table)->where([
             ['curso', $course],
             ['ss', $ss],
-            ['year', $this->admin->getYear],
+            ['year', $this->year],
         ])->first();
 
         return $data;
@@ -301,14 +304,14 @@ class RegiwebNotesController extends Controller
     {
         $gradesValuesData = DB::table('valores')->where([
             ['curso', $course],
-            ['year', $this->admin->getYear],
+            ['year', $this->year],
             ['trimestre', $trimester],
             ['nivel', $page],
         ])->first();
         if (! $gradesValuesData) {
             $id = DB::table('valores')->insertGetId([
                 'curso' => $course,
-                'year' => $this->admin->getYear,
+                'year' => $this->year,
                 'trimestre' => $trimester,
                 'nivel' => $page,
             ]);
@@ -345,7 +348,7 @@ class RegiwebNotesController extends Controller
 
     private function getInfo(): array
     {
-        //TODO: Refactor this to use an enum
+        // TODO: Refactor this to use an enum
         $isCppd = $this->admin->cppd === YesNoEnum::YES->value;
         if ($isCppd) {
             return [
