@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Regiweb\Notes;
 
+use App\Enums\FlashMessageKey;
 use App\Enums\PagesEnum;
 use App\Enums\YesNoEnum;
 use App\Http\Controllers\Controller;
@@ -247,7 +248,7 @@ class RegiwebNotesController extends Controller
             $student->update($array);
         }
 
-        return redirect()->back();
+        return redirect()->back()->with(FlashMessageKey::SUCCESS->value, __('Notes saved successfully'));
     }
 
     public function saveAttendance(SaveAttendanceRequest $request)
@@ -264,7 +265,7 @@ class RegiwebNotesController extends Controller
             $student->update($array);
         }
 
-        return redirect()->back();
+        return redirect()->back()->with(FlashMessageKey::SUCCESS->value, __('Attendance saved successfully'));
     }
 
     public function saveExam() {}
@@ -342,7 +343,7 @@ class RegiwebNotesController extends Controller
 
         DB::table('valores')->where('id', $id)->update($validated);
 
-        return redirect()->back();
+        return redirect()->back()->with(FlashMessageKey::SUCCESS->value, __('Values saved successfully'));
 
     }
 
