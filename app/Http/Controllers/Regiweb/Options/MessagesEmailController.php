@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Regiweb\Options;
 
 use App\Enums\FlashMessageKey;
 use App\Http\Controllers\Controller;
+use App\Mail\PersonalEmail;
 use App\Models\Admin;
+use App\Models\Student;
 use App\Models\StudentGrade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class MessagesEmailController extends Controller
 {
@@ -26,14 +30,20 @@ class MessagesEmailController extends Controller
         ]);
     }
 
-    public function form()
+    public function form(Request $request)
     {
-        $validated = request()->validate([
+        $validator = Validator::make($request->all(), [
             'data' => ['required', 'array'],
             'data.*' => ['string'],
             'selected' => ['required', 'string', 'in:students,admin,courses'],
         ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
 
+            return to_route('regiweb.options.messages.email.index')->with(count($errors) > 1 ? FlashMessageKey::ERROR_LIST->value : FlashMessageKey::ERROR->value, $errors);
+        }
+
+        $validated = $validator->validated();
         $data = $validated['data'];
         $selected = $validated['selected'];
         $students = $selected === 'students' ? StudentGrade::studentsDataTable($data) : null;
@@ -50,11 +60,31 @@ class MessagesEmailController extends Controller
             'to.*' => ['string'],
             'subject' => ['required', 'string'],
             'message' => ['required', 'string'],
+            'selected' => ['required', 'string', 'in:students,admin,courses'],
         ]);
 
         $to = $validated['to'];
         $subject = $validated['subject'];
         $message = $validated['message'];
+        $selected = $validated['selected'];
+        $tos = [];
+        if ($selected === 'students') {
+            // TODO
+            $tos = Student::whereIn('ss', $to)->get()->map(function ($student) {
+                return ['email' => $student->email, 'name' => "$student->nombre $student->apellidos"];
+            });
+        } elseif ($selected === 'admin') {
+            $tos = Admin::whereIn('usuario', $to)->get()->map(function ($admin) {
+                return ['email' => $admin->correo, 'name' => $admin->director];
+            });
+        } elseif ($selected === 'courses') {
+            // TODO
+            $tos = auth()->user()->courses()->whereIn('curso', $to)->get();
+        }
+
+        foreach ($tos as $to) {
+            Mail::to($to['email'], $to['name'])->send((new PersonalEmail($message))->subject($subject));
+        }
 
         return to_route('regiweb.options.messages.email.index')->with(FlashMessageKey::SUCCESS->value, 'Correo enviado correctamente');
     }
