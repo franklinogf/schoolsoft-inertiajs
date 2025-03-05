@@ -24,7 +24,7 @@ interface PageProps {
 
 export default function Page({ students, courses, admins, selected }: PageProps) {
   const handleButtonClick = (data: string[]) => {
-    router.post(route("regiweb.options.messages.email.form"), { data, selected });
+    router.get(route("regiweb.options.messages.email.form"), { data, selected });
   };
 
   return (
@@ -63,7 +63,6 @@ export default function Page({ students, courses, admins, selected }: PageProps)
           <TabsContent value={SelectedEnum.ADMIN}>
             <DataTable
               rowId="usuario"
-              selectOne
               columns={columns}
               data={admins}
               buttonLabel="Continuar"
