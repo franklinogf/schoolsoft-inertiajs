@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+use App\Http\Middleware\SetDefaultTenant;
+use Stancl\Tenancy\Middleware\InitializeTenancyByPath;
 
 return [
     /*
@@ -21,7 +23,7 @@ return [
     | When enabled any changes to the database during the rendering
     | of a mail will be rolled back.
     */
-    'database_rollback' => false,
+    'database_rollback' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -72,7 +74,7 @@ return [
     | This option allows you to define the route prefix that will be used on
     | every route defined by mailbook.
     */
-    'route_prefix' => '/mailbook',
+    'route_prefix' => '{school}/mailbook',
 
     /*
     |--------------------------------------------------------------------------
@@ -84,6 +86,8 @@ return [
     */
     'middlewares' => [
         Xammie\Mailbook\Http\Middlewares\RollbackDatabase::class,
+        InitializeTenancyByPath::class,
+        SetDefaultTenant::class,
     ],
 
     /*
