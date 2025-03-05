@@ -56,8 +56,8 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
             Route::get('/', RegiwebOptionsIndexController::class)->name('index');
             Route::name('messages.')->prefix('messages')->group(function () {
                 Route::get('/email', [MessagesEmailController::class, 'index'])->name('email.index');
-                Route::post('/form', [MessagesEmailController::class, 'form'])->name('email.form');
-                Route::post('/send', [MessagesEmailController::class, 'send'])->name('email.send');
+                Route::get('/email/form', [MessagesEmailController::class, 'form'])->name('email.form');
+                Route::post('/email', [MessagesEmailController::class, 'send'])->name('email.send');
             });
         });
 
