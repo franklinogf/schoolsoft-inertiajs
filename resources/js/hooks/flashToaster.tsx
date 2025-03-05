@@ -14,7 +14,7 @@ export function useFlashToaster() {
       toast.error(props.flash.error);
     }
     if (props.flash.errorList) {
-      toast.error(<AlertDestructive message={props.flash.errorList} />);
+      toast.error(<AlertDestructive message={props.flash.errorList} />, { icon: false });
     }
   }, [props.flash]);
 }
