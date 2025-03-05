@@ -1,3 +1,4 @@
+import { AlertDestructive } from "@/Components/AlertDesctructive";
 import type { PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { useEffect } from "react";
@@ -13,7 +14,7 @@ export function useFlashToaster() {
       toast.error(props.flash.error);
     }
     if (props.flash.errorList) {
-      toast.error(Object.values(props.flash.errorList).join("<br>"));
+      toast.error(<AlertDestructive message={props.flash.errorList} />);
     }
   }, [props.flash]);
 }
