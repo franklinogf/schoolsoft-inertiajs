@@ -2,6 +2,7 @@ import { InputField } from "@/Components/forms/inputs/InputField";
 import { TextareaField } from "@/Components/forms/inputs/TextareaField";
 import SubmitButton from "@/Components/forms/SubmitButton";
 import { Button } from "@/Components/ui/button";
+import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { SelectedEnum } from "@/Pages/Regiweb/Options/Messages/Email/Index";
 import { Admin } from "@/types/auth";
@@ -20,15 +21,20 @@ interface PageProps {
   selected: SelectedEnum;
 }
 export default function Page({ students, courses, admins, selected, data: rowsId }: PageProps) {
+  const { t, tChoice } = useTranslations();
   const { data, setData, processing, errors, post } = useForm({
     subject: "",
     message: "",
   });
+
   const to =
     selected === SelectedEnum.STUDENTS && students !== null && students?.length === 1
       ? `${students[0].nombre} ${students[0].apellidos}`
       : selected === SelectedEnum.STUDENTS && students !== null && students?.length > 1
-        ? `${students[0].nombre} ${students[0].apellidos} y ${students.length} estudiantes más`
+        ? `${students[0].nombre} ${students[0].apellidos} ` +
+          tChoice("and :amount more student|and :amount more students", students.length - 1, {
+            amount: students.length - 1,
+          })
         : selected === SelectedEnum.COURSES && courses !== null
           ? courses.map((course) => course.curso).join(", ")
           : selected === SelectedEnum.ADMIN && admins !== null
@@ -48,10 +54,12 @@ export default function Page({ students, courses, admins, selected, data: rowsId
   return (
     <RegiwebLayout title="Enviar de correo electrónico">
       <div className="mx-auto w-full max-w-2xl">
-        <h1 className="pb-4 text-center text-2xl font-semibold">Enviar correo electrónico</h1>
+        <h1 className="mb-2 text-center text-2xl font-semibold">{t("Send email")}</h1>
         <div className="flex justify-end">
           <Button asChild variant="outline" className="mb-4">
-            <Link href={route("regiweb.options.messages.email.index", { selected })}>Back</Link>
+            <Link href={route("regiweb.options.messages.email.index", { selected })}>
+              {t("Go back")}
+            </Link>
           </Button>
         </div>
         <form onSubmit={onSubmit}>
@@ -81,7 +89,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
               loadingIcon={<MailIcon className="animate-bounce" />}
               disabled={processing}
             >
-              Enviar
+              {t("Send")}
             </SubmitButton>
           </div>
         </form>
