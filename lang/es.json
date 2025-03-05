@@ -1,4 +1,10 @@
 {
+    "Send email": "Enviar correo electrónico",
+    "Send SMS": "Enviar SMS",
+    "Send notification": "Enviar notificación",
+    "Go back": "Ir atrás",
+    "and :amount more student|and :amount more students": "y :amount estudiante más|y :amount estudiantes más",
+    "Thanks": "Gracias",
     "All rights reserved.": "Todos los derechos reservados.",
     "Student": "Estudiante",
     "Students": "Estudiantes",
