@@ -11,7 +11,7 @@ export function FieldLabel({
   label?: string;
   error?: string;
   disabled?: boolean;
-  id: string;
+  id?: string;
   className?: string;
 }) {
   if (!label) return null;
