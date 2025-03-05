@@ -11,7 +11,6 @@ import { Course } from "@/types/teacher";
 import { Link, useForm } from "@inertiajs/react";
 import { MailIcon } from "lucide-react";
 import { FormEvent } from "react";
-import { toast } from "sonner";
 
 interface PageProps {
   students: Pick<Student, "ss" | "nombre" | "apellidos">[] | null;
@@ -45,14 +44,11 @@ export default function Page({ students, courses, admins, selected, data: rowsId
     e.preventDefault();
     post(route("regiweb.options.messages.email.send", { selected, to: rowsId }), {
       preserveState: true,
-      onError: () => {
-        toast.error("Error al enviar el correo electrónico");
-      },
     });
   };
 
   return (
-    <RegiwebLayout title="Enviar de correo electrónico">
+    <RegiwebLayout title={t("Send email")}>
       <div className="mx-auto w-full max-w-2xl">
         <h1 className="mb-2 text-center text-2xl font-semibold">{t("Send email")}</h1>
         <div className="flex justify-end">
@@ -64,14 +60,14 @@ export default function Page({ students, courses, admins, selected, data: rowsId
         </div>
         <form onSubmit={onSubmit}>
           <div className="rounded-lg bg-white p-4 shadow">
-            <InputField label="Para" name="to" disabled value={to} />
+            <InputField label={t("To")} name="to" disabled value={to} />
             <InputField
               value={data.subject}
               onChange={(value) => {
                 setData("subject", value);
               }}
               error={errors.subject}
-              label="Asunto"
+              label={t("Subject")}
               name="subject"
             />
             <TextareaField
@@ -80,7 +76,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
                 setData("message", value);
               }}
               error={errors.message}
-              label="Mensaje"
+              label={t("Message")}
               name="message"
             />
           </div>
