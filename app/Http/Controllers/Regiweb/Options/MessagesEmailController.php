@@ -86,6 +86,6 @@ class MessagesEmailController extends Controller
             Mail::to($to['email'], $to['name'])->send((new PersonalEmail($message))->subject($subject));
         }
 
-        return to_route('regiweb.options.messages.email.index')->with(FlashMessageKey::SUCCESS->value, 'Correo enviado correctamente');
+        return to_route('regiweb.options.messages.email.index', ['selected' => $selected])->with(FlashMessageKey::SUCCESS->value, 'Correo enviado correctamente');
     }
 }
