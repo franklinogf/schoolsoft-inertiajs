@@ -1,5 +1,5 @@
 import { InputField } from "@/Components/forms/inputs/InputField";
-import { TextareaField } from "@/Components/forms/inputs/TextareaField";
+import { RichTextField } from "@/Components/forms/inputs/RichTextField";
 import SubmitButton from "@/Components/forms/SubmitButton";
 import { Button } from "@/Components/ui/button";
 import { useTranslations } from "@/hooks/translations";
@@ -24,6 +24,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
   const { data, setData, processing, errors, post } = useForm({
     subject: "",
     message: "",
+    text: "",
   });
 
   const to =
@@ -42,6 +43,8 @@ export default function Page({ students, courses, admins, selected, data: rowsId
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(data);
+    // return;
     post(route("regiweb.options.messages.email.send", { selected, to: rowsId }), {
       preserveState: true,
     });
@@ -59,9 +62,10 @@ export default function Page({ students, courses, admins, selected, data: rowsId
           </Button>
         </div>
         <form onSubmit={onSubmit}>
-          <div className="rounded-lg bg-white p-4 shadow">
+          <div className="space-y-2 rounded-lg bg-white p-4 shadow">
             <InputField label={t("To")} name="to" disabled value={to} />
             <InputField
+              required
               value={data.subject}
               onChange={(value) => {
                 setData("subject", value);
@@ -70,14 +74,13 @@ export default function Page({ students, courses, admins, selected, data: rowsId
               label={t("Subject")}
               name="subject"
             />
-            <TextareaField
+            <RichTextField
+              label={t("Message")}
               value={data.message}
               onChange={(value) => {
                 setData("message", value);
               }}
               error={errors.message}
-              label={t("Message")}
-              name="message"
             />
           </div>
           <div className="mt-4 flex justify-center">
