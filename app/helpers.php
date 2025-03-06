@@ -14,3 +14,10 @@ if (! function_exists('tenant_file_url')) {
     }
 
 }
+
+if (! function_exists('get_extension')) {
+    function get_extension($file)
+    {
+        return '.'.pathinfo($file, PATHINFO_EXTENSION);
+    }
+}

@@ -36,7 +36,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   const [sameAddress, setSameAddress] = useState(false);
   const { t } = useTranslations();
   const { data, setData, post, errors, processing } = useForm({
-    picture: null as File | null,
+    picture: "",
     fecha_nac: user.fecha_nac,
     nombre: user.nombre,
     apellidos: user.apellidos,
@@ -120,6 +120,9 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
     e.preventDefault();
     post(route("regiweb.profile.update"), {
       preserveScroll: true,
+      onSuccess: () => {
+        setData("picture", "");
+      },
     });
   }
 
@@ -132,12 +135,13 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             <User2 className="size-8" />
           </h1>
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
-            <ProfilePictureField
-              initialFile={user.foto_name}
-              value={data.picture}
-              onChange={(value) => setData("picture", value)}
-              error={errors.picture}
-            />
+            <div className="mx-auto">
+              <ProfilePictureField
+                initialFile={user.foto_name}
+                onChange={(value) => setData("picture", value)}
+                error={errors.picture}
+              />
+            </div>
 
             <div className="hidden md:flex md:items-center md:justify-center">
               <Card className="border-accent bg-accent">

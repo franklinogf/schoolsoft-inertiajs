@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Regiweb;
 use App\Enums\StoragePathEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Regiweb\ProfileUpdateRequest;
+use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -24,17 +25,35 @@ class RegiwebProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request)
     {
-        $data = $request->validated();
-        $request->user()->fill($data);
-        if ($request->hasFile('picture')) {
-            if ($request->user()->foto_name !== null) {
-                Storage::delete($request->user()->foto_name);
+        $validated = $request->validated();
+        $data = $request->safe()->except('picture');
+        $user = $request->user();
+        $user->fill($data);
+
+        $folder = $validated['picture'];
+        if ($folder !== null) {
+
+            if ($user->foto_name !== null) {
+                Storage::delete($user->foto_name);
             }
-            $picturePath = Storage::put(StoragePathEnum::TEACHERS_PROFILE_PICTURES->value, $request->file('picture'));
-            $request->user()->foto_name = $picturePath;
+
+            $temporaryFile = tenancy()->central(function () use ($folder) {
+                return TemporaryFile::where('folder', $folder)->first();
+            });
+
+            $picturePath = StoragePathEnum::TEACHERS_PROFILE_PICTURES->value.'/'.$user->id.get_extension($temporaryFile->filename);
+
+            Storage::disk('local')->move(
+                "tmp/{$temporaryFile->folder}/{$temporaryFile->filename}",
+                'public/'.tenant('id').'/'.$picturePath
+            );
+
+            $temporaryFile->delete();
+
+            $user->foto_name = $picturePath;
         }
 
-        $request->user()->save();
+        $user->save();
 
         return back()->with('success', __('Profile updated successfully'));
 
