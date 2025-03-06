@@ -3,7 +3,9 @@
 namespace App\Mail;
 
 use App\Models\Admin;
+use App\Models\TemporaryFile;
 use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Attachment;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -18,6 +20,7 @@ class PersonalEmail extends Mailable
      */
     public function __construct(
         public string $message,
+        public ?array $files = null
     ) {
         //
     }
@@ -50,6 +53,23 @@ class PersonalEmail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        $attachments = [];
+
+        tenancy()->central(function () use (&$attachments) {
+
+            foreach ($this->files as $folder) {
+
+                $temporaryFile = TemporaryFile::where('folder', $folder)->first();
+
+                if ($temporaryFile) {
+
+                    $attachments[] = Attachment::fromStorageDisk('local', "tmp/{$folder}/{$temporaryFile->filename}");
+
+                }
+            }
+
+        });
+
+        return $attachments;
     }
 }
