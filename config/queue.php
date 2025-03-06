@@ -71,6 +71,13 @@ return [
             'block_for' => null,
             'after_commit' => false,
         ],
+        'central' => [
+            'driver' => 'database',
+            'table' => env('DB_QUEUE_TABLE', 'jobs'),
+            'queue' => env('DB_QUEUE', 'default'),
+            'retry_after' => (int) env('DB_QUEUE_RETRY_AFTER', 90),
+            'central' => true,
+        ],
 
     ],
 
