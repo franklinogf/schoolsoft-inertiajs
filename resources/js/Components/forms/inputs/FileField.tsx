@@ -1,4 +1,5 @@
 import { useTranslations } from "@/hooks/translations";
+import { cn } from "@/lib/utils";
 import { PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { FilePondFile } from "filepond";
@@ -6,52 +7,68 @@ import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import "filepond/dist/filepond.min.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FilePond, FilePondProps, registerPlugin } from "react-filepond";
 import { FieldContainer } from "./FieldContainer";
 import { FieldError } from "./FieldError";
 import { FieldLabel } from "./FieldLabel";
 registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
-interface FileFieldProps
-  extends Pick<
+export interface FileFieldProps
+  extends Omit<
     FilePondProps,
-    "allowMultiple" | "maxFiles" | "acceptedFileTypes" | "dropOnPage" | "allowImagePreview"
+    "server" | "onupdatefiles" | "onprocessfiles" | "onremovefile" | "files" | "credits"
   > {
   onChange?: (files: string[]) => void;
   initialFiles?: string[];
   label?: string;
   error?: string;
-  disabled?: boolean;
 }
 export function FileField({
   label,
   error,
   disabled,
   initialFiles,
+  labelIdle,
   onChange,
   allowImagePreview = true,
+  className,
   ...props
 }: FileFieldProps) {
   const { t } = useTranslations();
   const { csrf_token } = usePage<PageProps>().props;
   const [files, setFiles] = useState<FilePondFile[]>([]);
 
+  labelIdle =
+    labelIdle ??
+    t('Drag & Drop your files or <span class="filepond--label-action"> Browse </span>');
+
   const filePondRef = useRef<FilePond | null>(null);
 
+  useEffect(() => {
+    if (initialFiles && initialFiles.length > 0) {
+      initialFiles.forEach((file) => {
+        filePondRef.current?.addFile(file, { type: "local" });
+      });
+    }
+  }, []);
+
   return (
-    <FieldContainer>
+    <FieldContainer className={cn(className)}>
       <FieldLabel label={label} error={error} />
       <FilePond
         disabled={disabled}
         allowImagePreview={allowImagePreview}
         ref={filePondRef}
         className="w-full"
-        labelIdle={t(
-          'Drag & Drop your files or <span class="filepond--label-action"> Browse </span>',
-        )}
-        files={(files as unknown as string[]) ?? initialFiles}
+        labelIdle={labelIdle}
+        files={files as unknown as string[]}
         credits={false}
         server={{
+          load: (source, load) => {
+            fetch(source)
+              .then((res) => res.blob())
+              .then(load);
+          },
           url: "/upload",
           headers: {
             "X-CSRF-TOKEN": csrf_token,
