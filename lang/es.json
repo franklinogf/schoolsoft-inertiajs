@@ -1,4 +1,6 @@
 {
+    "Attachments": "Adjuntos",
+    "Drag & Drop your files or <span class=\"filepond--label-action\"> Browse </span>": "Arrastra y suelta tus archivos o <span class=\"filepond--label-action\"> Buscar </span>",
     "To": "Para",
     "Subject": "Asunto",
     "Send email": "Enviar correo electrónico",
