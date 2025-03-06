@@ -8,14 +8,10 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Stancl\JobPipeline\JobPipeline;
-use Stancl\Tenancy\Controllers\TenantAssetsController;
 use Stancl\Tenancy\Events;
 use Stancl\Tenancy\Jobs;
 use Stancl\Tenancy\Listeners;
 use Stancl\Tenancy\Middleware;
-use Stancl\Tenancy\Middleware\InitializeTenancyByPath;
-use Stancl\Tenancy\Resolvers\PathTenantResolver;
-use Symfony\Component\HttpFoundation\Response;
 
 class TenancyServiceProvider extends ServiceProvider
 {
@@ -103,13 +99,6 @@ class TenancyServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        InitializeTenancyByPath::$onFail = function () {
-            return abort(Response::HTTP_NOT_FOUND);
-        };
-
-        TenantAssetsController::$tenancyMiddleware = InitializeTenancyByPath::class;
-        PathTenantResolver::$tenantParameterName = 'school';
-
         $this->bootEvents();
         $this->mapRoutes();
 
