@@ -56,14 +56,22 @@ export default function Header({ user }: HeaderProps) {
           avatar={user.foto_name}
           avatarFallback={`${user.nombre[0]}${user.apellidos[0]}`}
         >
-          <DropdownMenuItem>
-            <Link href={route("regiweb.profile.show")} className="flex w-full grow items-center">
-              <UserCircle className="mr-1 size-4" />
+          <DropdownMenuItem asChild>
+            <Link
+              href={route("regiweb.profile.show")}
+              className="flex w-full cursor-pointer items-center gap-1"
+            >
+              <UserCircle className="size-4" />
               {t("Profile")}
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link method="delete" as="button" href={route("regiweb.logout")}>
+          <DropdownMenuItem asChild>
+            <Link
+              method="delete"
+              className="w-full cursor-pointer"
+              as="button"
+              href={route("regiweb.logout")}
+            >
               {t("Log out")}
             </Link>
           </DropdownMenuItem>
