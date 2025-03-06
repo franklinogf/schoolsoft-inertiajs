@@ -1,3 +1,4 @@
+import { FileField } from "@/Components/forms/inputs/FileField";
 import { InputField } from "@/Components/forms/inputs/InputField";
 import { RichTextField } from "@/Components/forms/inputs/RichTextField";
 import SubmitButton from "@/Components/forms/SubmitButton";
@@ -21,10 +22,14 @@ interface PageProps {
 }
 export default function Page({ students, courses, admins, selected, data: rowsId }: PageProps) {
   const { t, tChoice } = useTranslations();
-  const { data, setData, processing, errors, post } = useForm({
+  const { data, setData, processing, errors, post } = useForm<{
+    subject: string;
+    message: string;
+    files: string[];
+  }>({
     subject: "",
     message: "",
-    text: "",
+    files: [],
   });
 
   const to =
@@ -43,8 +48,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(data);
-    // return;
+
     post(route("regiweb.options.messages.email.send", { selected, to: rowsId }), {
       preserveState: true,
     });
@@ -81,6 +85,13 @@ export default function Page({ students, courses, admins, selected, data: rowsId
                 setData("message", value);
               }}
               error={errors.message}
+            />
+            <FileField
+              label={t("Attachments")}
+              allowMultiple
+              onChange={(values) => {
+                setData("files", values);
+              }}
             />
           </div>
           <div className="mt-4 flex justify-center">
