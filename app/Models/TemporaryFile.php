@@ -20,4 +20,17 @@ class TemporaryFile extends Model
             Storage::disk('local')->deleteDirectory("tmp/{$temporaryFile->folder}");
         });
     }
+
+    public function moveTo(string $path): bool
+    {
+
+        $moved = Storage::disk('local')->move(
+            tmp_path($this->folder, $this->filename),
+            $path
+        );
+
+        $this->delete();
+
+        return $moved;
+    }
 }
