@@ -19,14 +19,14 @@ interface DocumentsPageProps extends PagePropsWithSchool {
 export default function DocumentsPage({ school, documents }: DocumentsPageProps) {
   const { t } = useTranslations();
   return (
-    <HomeLayout school={school} title={t("Documents")}>
+    <HomeLayout school={school} title={t("Documentos")}>
       <div className="p-5">
         <section className="flex flex-col items-center justify-center">
           <h2 className="text-center text-lg font-bold md:text-3xl">
-            {t("List of documents to download")}
+            {t("Lista de documentos para descargar")}
           </h2>
           <Button asChild variant="link">
-            <Link href={route("home.index")}>{t("Go to the main page")}</Link>
+            <Link href={route("home.index")}>{t("Ir a la página principal")}</Link>
           </Button>
         </section>
         {documents.length > 0 ? (
@@ -39,10 +39,10 @@ export default function DocumentsPage({ school, documents }: DocumentsPageProps)
                   </CardTitle>
                   <CardDescription className="flex justify-around">
                     <span className="text-sm">
-                      {t("Initial Grade")}: {document.grado_desde}
+                      {t("Grado Inicial")}: {document.grado_desde}
                     </span>
                     <span className="text-sm">
-                      {t("Final Grade")}: {document.grado_hasta}
+                      {t("Grado Final")}: {document.grado_hasta}
                     </span>
                   </CardDescription>
                   <CardContent className="flex items-center justify-center py-2">
@@ -51,16 +51,16 @@ export default function DocumentsPage({ school, documents }: DocumentsPageProps)
                         className="d-block"
                         href={route("home.documents.download", { id: document.id })}
                       >
-                        {t("Download")}
+                        {t("Descargar")}
                       </a>
                     </Button>
                   </CardContent>
                   <CardFooter className="flex justify-around p-0">
                     <span className="text-muted-foreground text-sm">
-                      {t("Initial Date")}: {document.fecha_desde}
+                      {t("Fecha Inicial")}: {document.fecha_desde}
                     </span>
                     <span className="text-muted-foreground text-sm">
-                      {t("Final Date")}: {document.fecha_hasta}
+                      {t("Fecha Final")}: {document.fecha_hasta}
                     </span>
                   </CardFooter>
                 </CardHeader>
@@ -70,9 +70,11 @@ export default function DocumentsPage({ school, documents }: DocumentsPageProps)
         ) : (
           <div className="mt-10 flex items-center justify-center">
             <Alert className="max-w-xl" variant="destructive">
-              <AlertTitle>{t("No documents!")}</AlertTitle>
+              <AlertTitle>{t("¡Sin documentos!")}</AlertTitle>
               <AlertDescription>
-                {t("If you have been asked to find a document, please contact administration")}
+                {t(
+                  "Si se le ha pedido que busque un documento, por favor contacte a la administración",
+                )}
               </AlertDescription>
             </Alert>
           </div>

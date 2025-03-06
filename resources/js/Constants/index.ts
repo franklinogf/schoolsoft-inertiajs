@@ -22,47 +22,47 @@ export const LOGIN_FORO_TEACHER_PICTURE = LOGO_SCHOOLSOFT;
 export const LOGIN_FORO_STUDENT_PICTURE = LOGO_SCHOOLSOFT;
 type Constant<K extends keyof any> = Record<K, Translations>;
 export const TRIMESTERS: Constant<TrimesterEnum> = {
-  "Trimestre-1": "First Trimester",
-  "Trimestre-2": "Second Trimester",
-  "Trimestre-3": "Third Trimester",
-  "Trimestre-4": "Fourth Trimester",
-  Verano: "Summer",
+  "Trimestre-1": "Primer Trimestre",
+  "Trimestre-2": "Segundo Trimestre",
+  "Trimestre-3": "Tercer Trimestre",
+  "Trimestre-4": "Cuarto Trimestre",
+  Verano: "Verano",
 };
 
 export const PAGES: Constant<PagesEnum> = {
-  Notas: "Notes",
-  Notas2: "Notes 2",
-  "Pruebas-Cortas": "Short Tests",
-  "Trab-Diarios": "Daily Work",
-  "Trab-Libreta": "Notebook Work",
-  "Cond-Asis": "Conduct and Attendance",
-  "Ex-Final": "Final Exam",
-  "V-Nota": "Summer Grades",
+  Notas: "Notas",
+  Notas2: "Notas 2",
+  "Pruebas-Cortas": "Pruebas Cortas",
+  "Trab-Diarios": "Trabajos Diarios",
+  "Trab-Libreta": "Trabajos de Libreta",
+  "Cond-Asis": "Conducta y Asistencia",
+  "Ex-Final": "Examen Final",
+  "V-Nota": "Verano Notas",
 };
 
 export const YES_NO: Constant<YesNoEnum> = {
-  SI: "Yes",
+  SI: "Sí",
   NO: "No",
 };
 
 export const GENDERS: Constant<GenderEnum> = {
-  m: "Male",
-  f: "Female",
+  m: "Masculino",
+  f: "Femenino",
 };
 export const ABSENCES_ATTENDANCE: Constant<AbsenceEnum> = {
-  "1": "Home situation",
-  "2": "Home determination (trip)",
-  "3": "Parents activity",
-  "4": "Sickeness",
-  "5": "Appointment",
-  "6": "School activity",
-  "7": "No excuse",
+  "1": "Situación en el hogar",
+  "2": "Determinación en el hogar (viaje)",
+  "3": "Actividad con padres (open house)",
+  "4": "Enfermedad",
+  "5": "Cita",
+  "6": "Actividad educativa del colegio",
+  "7": "Sin excusa",
 };
 
 export const TARDINESS_ATTENDANCE: Constant<TardinessEnum> = {
-  "8": "No excuse",
-  "9": "Home situation",
-  "10": "Transportation problem",
-  "11": "Sickeness",
-  "12": "Appointment",
+  "8": "Sin excusa",
+  "9": "Situación en el hogar",
+  "10": "Problema de transporte",
+  "11": "Enfermedad",
+  "12": "Cita",
 };

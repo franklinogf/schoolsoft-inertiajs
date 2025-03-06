@@ -32,6 +32,6 @@ class ContactController extends Controller
             $validated['phone'],
         ));
 
-        return back()->with(FlashMessageKey::SUCCESS->value, __('Message sent successfully'));
+        return back()->with(FlashMessageKey::SUCCESS->value, __('Mensaje enviado con éxito'));
     }
 }

@@ -20,11 +20,11 @@ type TranslationList = TranslationTitle & { description: Translations; Icon: Luc
 
 export const MENU_LINKS: { label: Translations; path: string }[] = [
   {
-    label: "Home",
+    label: "Inicio",
     path: "home",
   },
   {
-    label: "Modules",
+    label: "Módulos",
     path: "modules",
   },
   {
@@ -35,110 +35,113 @@ export const MENU_LINKS: { label: Translations; path: string }[] = [
 
 export const SERVICES: TranslationList[] = [
   {
-    title: "Implementation Service",
+    title: "Servicio de Implementación",
     description:
-      "This includes coordination for training stages with implementation dates. Material (manuals, etc.) for staff training. Follow-up to ensure the tasks required to complete the implementation of the SchoolSoft system are carried out for the benefit of the institution.",
+      "Esto incluye la coordinación para las etapas de adiestramientos con sus fechas de implementación. Material (manuales, etc.) para el adiestramiento de personal. Seguimiento para que se realicen los trabajos requeridos para completar la implementación del sistema SchoolSoft para el beneficio de la institución.",
     Icon: Origami,
   },
   {
     title: "Regiweb",
     description:
-      "The new all-internet service, complete teacher registration, parents can view their children's grades, manage all accounts, and much more.",
+      "El nuevo servicio todo por internet, registro completo del maestro, los padres pueden ver las notas o calificaciones de sus hijos, puede controlar todas las cuentas y muchas mas.",
     Icon: Globe,
   },
   {
-    title: "Technical Support",
+    title: "Apoyo Técnico",
     description:
-      "Individual technical assistance for administrative and teaching staff, by phone, internet, or remote control. All these technical support access options are available according to the needs and facilities available at the institution.",
+      "Asistencia técnica individual para el personal administrativo y docente, por teléfono, por Internet, o control remoto. Todas estas opciones de acceso al apoyo técnico están disponibles de acuerdo a la necesidad y a las facilidades que estén disponibles en la institución.",
     Icon: MonitorSpeaker,
   },
   {
-    title: "Repair Service",
-    description: "Parts and service for school equipment installed by our company.",
+    title: "Servicio de Reparación",
+    description: "Piezas y servicio a los equipos de el colegio, instalados por nuestra compañía.",
     Icon: Wrench,
   },
   {
-    title: "Laboratory Rental",
+    title: "Alquiler de Laboratorio",
     description:
-      "Offer your students a modern lab with all applications such as Office 2018, class control, educational programs, antivirus, Windows 10, Windows Server 2018, among other options. Call us, and we will improve any written offer.",
+      "Ofrezca a sus estudiantes un laboratorio moderno con todas las aplicaciones como Office 2018, control de clases, programas educativos, Antivirus, Windows 10, Windows Server 2018 entre otras opciones. Llamenos, mejoramos cualquier oferta por es1rito.",
     Icon: Computer,
   },
 ];
 
 export const OTHER_SERVICES: TranslationTitle[] = [
   {
-    title: "Network configurations.",
+    title: "Configuraciones de network.",
   },
   {
-    title: "Sale of Computers and all types of accessories.",
+    title: "Venta de Computadoras y todo tipo de accesorios.",
   },
   {
-    title: "Computer Rental for laboratory.",
+    title: "Alquiler de Computadoras para laboratorio.",
   },
   {
-    title: "Wireless Connection throughout the school.",
+    title: "Conexión Inalambrica en todo el colegio.",
   },
   {
-    title: "Computer Maintenance Services.",
+    title: "Servicios Mantenimiento a las computadoras.",
   },
   {
-    title: "Website for your school.",
+    title: "Pagina Web para su colegio",
   },
 ];
+
 export const MODULES: TranslationList[] = [
   {
-    title: "Student Information",
+    title: "Información de estudiante",
     description:
-      "Student records, parent, guardian, teachers, vaccines, illnesses, disabilities, re-enrollment, homeroom, data control, indexes, record search, socioeconomic, medical, totals by grade, account lists, address reports, phone lists, work lists, parent lists, new student report, discount lists, labels, certified letters, and a variety of reports.",
+      "Record del estudiante, padre, madre encargado, maestros, vacunas, enfermedades, impedimentos, rematricula, salón hogar, control de data, índices, búsqueda de record, socio económico, médico, totales por grado, lista de cuentas, informe de direcciones, lista de teléfonos, lista de trabajo, lista de padres, informe de estudiantes nuevo, lista de descuentos, etiquetas, carta certificada y variedad de informes.",
     Icon: BadgeInfo,
   },
   {
-    title: "Grading System",
+    title: "Sistema de Calificación",
     description:
-      "Course catalog, subjects, special programs, entry of grades and behaviors by trimester, teacher records, calculation of trimester and semester grades, merits, demerits, failures, rankings, trimester averages, summer grades, report cards, comment section for report cards, messages for report cards, class schedule, grade distribution, grade records, cumulative data, and a variety of reports.",
+      "Catálogo de cursos, materias, programas especiales, entrada de notas y comportamientos por trimestre, registros de maestros, cálculo de notas de trimestre y semestre, méritos, deméritos, fallas, rankings, promedios de trimestre, notas de verano, boletas de calificaciones, sección de comentarios para boletas de calificaciones, mensajes para boletas de calificaciones, horario de clases, distribución de notas, registros de notas, datos acumulativos y variedad de informes.",
     Icon: NotebookPen,
   },
   {
-    title: "Electronic Record",
+    title: "Registro Electrónico",
     description:
-      "Entry of daily work grades, projects, notebook work, exams, trimester behaviors, trimester, semester, and final averages, trimester attendance, daily plans, and a variety of reports.",
+      "Entrada de notas de trabajos diarios, proyectos, trabajos de libreta, exámenes, comportamientos de trimestre, promedios de trimestre, semestre y finales, asistencia de trimestre, planes diarios y variedad de informes.",
     Icon: BriefcaseBusiness,
   },
   {
-    title: "Accounts Receivable",
+    title: "Cuentas por Cobrar",
     description:
-      "Budgeting, costs, discounts, payment screen, surcharges, payment booklet, debtor list, account statements, daily payments, creation of various collection letters, 30-60-90 reports, receipts, and a variety of reports.",
+      "Presupuesto, costos, descuentos, pantalla de pago, recargos, libreta de pago, lista de deudores, estados de cuenta, pagos diarios, creación de varias cartas de cobro, informes de 30-60-90, recibos y variedad de informes.",
     Icon: PieChart,
   },
   {
-    title: "Church System",
+    title: "Sistema de Iglesia",
     description:
-      "Certificates for Marriage, Baptism, Communion, Negative, Confirmation, and Notification, etc.",
+      "Certificados para Matrimonio, Bautismo, Comunión, Negativo, Confirmación, y Notificación, etc.",
     Icon: FileCheck,
   },
 ];
+
 export const REGIWEB: TranslationList[] = [
   {
     title: "Regiweb",
     description:
-      "Includes grade entry, allowing teachers to input various types of grades such as exams, quizzes, daily work, notebook assignments, attendance, behavior, and send homework. Teachers can communicate with parents via web, mobile, or email and print various reports.",
+      "Incluye entrada de notas, el maestro puede entrar los diferentes tipos de notas, tales como, exámen, pruebas cortas, trabajos diarios, trabajos de libreta, asistencia , conducta y enviar tareas. El profesor puede llevar una comunicación con los padres, ya sea a través de la web, Celular o E_Mail. Puede imprimir los diferentes informes.",
     Icon: Globe,
   },
   {
-    title: "Parent Module",
+    title: "Módulo de Padres",
     description:
-      "Parents can view their children's grades, communicate with teachers via web or email, update their information, enable or disable email notifications, and request appointments with teachers.",
+      "Los padres pueden ver las notas de sus hijos, comunicarce con los profesores por medio de la web o E-Mail, actualizar su información y permitir o denegar E_Mail, solicitar cita con los maestros.",
     Icon: Users,
   },
   {
-    title: "Administration",
+    title: "Administración",
     description:
-      "The school can manage modules, general school information, trimester start and end dates, import and export data, activate and deactivate users, send messages via web, mobile, or email, and generate a variety of reports.",
+      "La escuela puede administrar los módulos, información general de la escuela, fechas de inicio y fin de trimestre, importar y exportar datos, activar y desactivar usuarios, enviar mensajes a través de la web, celular o correo electrónico y generar una variedad de informes.",
     Icon: School,
   },
   {
-    title: "Calendar events",
-    description: "The school can create events, such as exams, meetings, holidays, etc.",
+    title: "Eventos del calendario",
+    description:
+      "La escuela puede crear eventos, tales como, exámenes, reuniones, días festivos, etc.",
     Icon: CalendarClock,
   },
 ];

@@ -32,16 +32,16 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
     <ModalForm
       onClose={reset}
       onSubmit={handleSubmit}
-      buttonLabel={t("Attendance Report")}
+      buttonLabel={t("Informe de Asistencia")}
       submitLabel={t("PDF")}
-      title={t("Attendance Report")}
+      title={t("Informe de Asistencia")}
     >
       <SelectField
         value={data.course}
         onChange={(value) => setData("course", value)}
-        label={t("Course")}
+        label={t("Curso")}
       >
-        <SelectItem value="home">{t("Home course")}</SelectItem>
+        <SelectItem value="home">{t("Salón hogar")}</SelectItem>
         {coursesSelect.map((item) => (
           <SelectItem key={item.key} value={item.key}>
             {item.value}
@@ -51,7 +51,7 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
       <SelectField
         value={data.trimester}
         onChange={(value) => setData("trimester", value)}
-        label={t("Trimester")}
+        label={t("Trimestre")}
         items={TRIMESTER_SELECT_WITHOUT_SUMMER}
       />
     </ModalForm>

@@ -35,17 +35,19 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
     get(route("regiweb.notes.show"));
   }
   return (
-    <RegiwebLayout title={t("Notes")}>
-      <h1 className="page-primary-title mt-4">{t("Notes")}</h1>
+    <RegiwebLayout title={t("Notas")}>
+      <h1 className="page-primary-title mt-4">{t("Notas")}</h1>
       <div className="mt-2 flex flex-col items-center gap-8 px-2 pb-10">
         <div className="bg-secondary w-full max-w-xl rounded-md p-4">
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
             <Button variant="outline" asChild>
-              <Link href={route("regiweb.notes.attendance.entry")}>{t("Attendance Entry")}</Link>
+              <Link href={route("regiweb.notes.attendance.entry")}>
+                {t("Entrada de Asistencia")}
+              </Link>
             </Button>
             <AttendanceDailyReportModalForm students={students} />
             <AttendanceReportModalForm courses={user.cursos} />
-            <Button variant="outline">{t("Preschool")}</Button>
+            <Button variant="outline">{t("Preescolar")}</Button>
           </div>
         </div>
         <form className="w-full max-w-lg" onSubmit={submit}>
@@ -56,11 +58,11 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
             <CardContent>
               <div className="space-y-4">
                 <SelectField
-                  placeholder={t("Select the course")}
+                  placeholder={t("Selecciona el curso")}
                   value={data.course}
                   onChange={(value) => setData("course", value)}
                   error={errors.course}
-                  label={t("Course")}
+                  label={t("Curso")}
                   items={createSelectItemsFromArrayOfObjects(user.cursos, {
                     separator: " - ",
                     key: "curso",
@@ -68,25 +70,25 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
                   })}
                 />
                 <SelectField
-                  placeholder={t("Select the trimester")}
+                  placeholder={t("Selecciona el trimestre")}
                   value={data.trimester}
                   onChange={(value) => setData("trimester", value)}
-                  label={t("Trimester")}
+                  label={t("Trimestre")}
                   items={TRIMESTER_SELECT}
                   error={errors.trimester}
                 />
                 <SelectField
-                  placeholder={t("Select the page")}
+                  placeholder={t("Selecciona la página")}
                   value={data.page}
                   onChange={(value) => setData("page", value)}
-                  label={t("Pages")}
+                  label={t("Página")}
                   items={PAGES_SELECT}
                   error={errors.page}
                 />
               </div>
             </CardContent>
             <CardFooter className="flex justify-center">
-              <SubmitButton disabled={processing}>{t("Continue")}</SubmitButton>
+              <SubmitButton disabled={processing}>{t("Continuar")}</SubmitButton>
             </CardFooter>
           </Card>
         </form>

@@ -40,7 +40,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
     put(route("regiweb.notes.values.save", id), {
       preserveScroll: true,
       onSuccess: () => {
-        toast.success(t("Values saved successfully"));
+        toast.success(t("Valores guardados con éxito"));
       },
     });
   }
@@ -48,7 +48,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
     <form onSubmit={handleValuesSubmit}>
       <Card>
         <CardHeader>
-          <CardTitle>{t("Values")}</CardTitle>
+          <CardTitle>{t("Valores")}</CardTitle>
           <CardDescription hidden></CardDescription>
         </CardHeader>
         <CardContent>
@@ -56,9 +56,9 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
             <Table>
               <TableHeader>
                 <TableRow className="[&>th]:text-center">
-                  <TableHead>{t("Topic")}</TableHead>
-                  <TableHead>{t("Value")}</TableHead>
-                  <TableHead>{t("Date")}</TableHead>
+                  <TableHead>{t("Tema")}</TableHead>
+                  <TableHead>{t("Valor")}</TableHead>
+                  <TableHead>{t("Fecha")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -74,7 +74,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
                           value={data[tema]}
                           name={tema}
                           onChange={(value) => setData(tema, value)}
-                          placeholder={t("Topic") + " " + index}
+                          placeholder={t("Tema") + " " + index}
                           error={errors[tema as keyof typeof errors]}
                         />
                       </TableCell>
@@ -84,7 +84,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
                           removeArrows
                           value={data[val]}
                           onChange={(value) => setData(val, value)}
-                          placeholder={t("Value") + " " + index}
+                          placeholder={t("Valor") + " " + index}
                           type="number"
                           error={errors[val as keyof typeof errors]}
                           onBlur={(e) => {
@@ -96,7 +96,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
                         <DateField
                           value={data[fec]}
                           onChange={(value) => setData(fec, value)}
-                          placeholder={t("Date") + " " + index}
+                          placeholder={t("Fecha") + " " + index}
                           error={errors[fec]}
                         />
                       </TableCell>
@@ -109,7 +109,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
         </CardContent>
         <CardFooter className="justify-center">
           <SubmitButton size="lg" disabled={processing}>
-            {t("Save")}
+            {t("Guardar")}
           </SubmitButton>
         </CardFooter>
       </Card>

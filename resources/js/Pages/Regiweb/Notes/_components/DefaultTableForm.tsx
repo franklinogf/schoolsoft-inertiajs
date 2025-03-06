@@ -175,6 +175,7 @@ export function DefaultTableForm({
         preserveScroll: true,
         onSuccess: () => {
           setStudentsChangedToFalse();
+          toast.success(t("Notas guardadas con éxito"));
         },
         onError: () => {
           toast.error(<AlertDestructive message={errors} />);
@@ -195,16 +196,16 @@ export function DefaultTableForm({
           <TableHeader>
             <TableRow className="bg-primary hover:bg-primary [&>th]:text-primary-foreground [&>th]:text-center">
               <TableHead>#</TableHead>
-              <TableHead>{t("Student")}</TableHead>
+              <TableHead>{t("Estudiante")}</TableHead>
               {Array.from({ length: amountOfGrades }, (_, i) => i + 1).map((_, i) => (
                 <TableHead key={i}>
-                  {t("Note")} {i + 1}
+                  {t("Nota")} {i + 1}
                 </TableHead>
               ))}
               {columns?.map((column, i) => <TableHead key={i}>{column}</TableHead>)}
               <TableHead>{t("TPA")}</TableHead>
               <TableHead>{t("TDP")}</TableHead>
-              <TableHead>{t("Note")}</TableHead>
+              <TableHead>{t("Nota")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
