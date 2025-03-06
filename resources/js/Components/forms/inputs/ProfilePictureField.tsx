@@ -50,7 +50,7 @@ export function ProfilePictureField({
         }
       }
     };
-  }, []);
+  }, [value]);
   return (
     <div className="flex flex-col items-center justify-center">
       <div
