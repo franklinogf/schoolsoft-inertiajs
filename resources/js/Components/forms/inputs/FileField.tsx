@@ -18,7 +18,7 @@ export interface FileFieldProps
     FilePondProps,
     "server" | "onupdatefiles" | "onprocessfiles" | "onremovefile" | "files" | "credits"
   > {
-  onChange?: (files: string[]) => void;
+  onChange?: (value: string[]) => void;
   initialFiles?: string[];
   label?: string;
   error?: string;
@@ -52,6 +52,10 @@ export function FileField({
     }
   }, []);
 
+  function handleFileChange() {
+    onChange?.(filePondRef.current?.getFiles().map((file) => file.serverId) ?? []);
+  }
+
   return (
     <FieldContainer className={cn(className)}>
       <FieldLabel label={label} error={error} />
@@ -77,12 +81,8 @@ export function FileField({
         onupdatefiles={(fileItems) => {
           setFiles(fileItems.map((fileItem) => fileItem));
         }}
-        onprocessfiles={() => {
-          onChange?.(filePondRef.current?.getFiles().map((file) => file.serverId) ?? []);
-        }}
-        onremovefile={() => {
-          onChange?.(filePondRef.current?.getFiles().map((file) => file.serverId) ?? []);
-        }}
+        onprocessfiles={handleFileChange}
+        onremovefile={handleFileChange}
         {...props}
       />
       <FieldError error={error} />
