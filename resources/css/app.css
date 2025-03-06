@@ -195,7 +195,7 @@
   }
 }
 .filepond--panel-root {
-  @apply bg-muted! border-primary/80! rounded-lg! border-2! shadow-sm!;
+  @apply bg-muted! rounded-lg! border-2! shadow-sm!;
 }
 .filepond--drop-label {
   @apply text-muted-foreground!;
