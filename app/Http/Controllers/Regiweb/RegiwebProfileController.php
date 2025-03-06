@@ -16,6 +16,7 @@ class RegiwebProfileController extends Controller
      */
     public function show()
     {
+        // dd(tenant_asset('profile_pictures/teacher/240.jpg'));
 
         return Inertia::render('Regiweb/Profile');
     }
@@ -43,12 +44,7 @@ class RegiwebProfileController extends Controller
 
             $picturePath = StoragePathEnum::TEACHERS_PROFILE_PICTURES->value.'/'.$user->id.get_extension($temporaryFile->filename);
 
-            Storage::disk('local')->move(
-                "tmp/{$temporaryFile->folder}/{$temporaryFile->filename}",
-                'public/'.tenant('id').'/'.$picturePath
-            );
-
-            $temporaryFile->delete();
+            $temporaryFile->moveTo(public_tenant_path($picturePath));
 
             $user->foto_name = $picturePath;
         }
