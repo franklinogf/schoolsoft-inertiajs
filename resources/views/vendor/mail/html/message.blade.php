@@ -2,7 +2,7 @@
 <x-mail::layout>
 {{-- Header --}}
 <x-slot:header>
-<x-mail::header :url="$school === config('app.name') ? config('app.url') : route('home.index')">
+<x-mail::header :url="$school === config('app.name') ? config('app.url') : route('home.index', ['school' => tenant('id')])">
 {{ $school }}
 </x-mail::header>
 </x-slot:header>
