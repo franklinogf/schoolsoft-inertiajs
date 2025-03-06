@@ -61,6 +61,8 @@ class MessagesEmailController extends Controller
             'subject' => ['required', 'string'],
             'message' => ['required', 'string'],
             'selected' => ['required', 'string', 'in:students,admin,courses'],
+            'files' => ['array'],
+            'files.*' => ['string'],
         ]);
 
         $to = $validated['to'];
@@ -83,7 +85,8 @@ class MessagesEmailController extends Controller
         }
 
         foreach ($tos as $to) {
-            Mail::to($to['email'], $to['name'])->send((new PersonalEmail($message))->subject($subject));
+            $personalEmail = (new PersonalEmail($message, $validated['files']))->subject($subject);
+            Mail::to($to['email'], $to['name'])->queue($personalEmail);
         }
 
         return to_route('regiweb.options.messages.email.index', ['selected' => $selected])->with(FlashMessageKey::SUCCESS->value, 'Correo enviado correctamente');
