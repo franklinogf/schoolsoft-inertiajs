@@ -33,7 +33,6 @@ class TeacherResource extends JsonResource
             'preparacion1' => $this->preparacion1,
             'preparacion2' => $this->preparacion2,
             'grado' => $this->grado,
-
             'email1' => $this->email1,
             'email2' => $this->email2,
             'dir1' => $this->dir1,
