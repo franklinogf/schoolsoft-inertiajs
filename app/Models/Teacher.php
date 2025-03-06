@@ -36,6 +36,8 @@ class Teacher extends Model
     protected function casts(): array
     {
         $nullToEmptyStringColumns = [
+            'tel_res',
+            'tel_emer',
             'email2',
             'preparacion1',
             'preparacion2',
