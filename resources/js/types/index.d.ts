@@ -19,6 +19,8 @@ export type PageProps = {
     errorList: Errors | null;
   };
   errors: Errors;
+  locale: string;
+  csrf_token: string;
 };
 export type PagePropsWithUser<T> = PageProps & {
   auth: {
