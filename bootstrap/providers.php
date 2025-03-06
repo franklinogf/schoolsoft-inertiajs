@@ -5,4 +5,5 @@ return [
     App\Providers\Filament\AdminPanelProvider::class,
     App\Providers\TelescopeServiceProvider::class,
     App\Providers\TenancyServiceProvider::class,
+    App\Providers\TenantProvider::class,
 ];
