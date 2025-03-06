@@ -5,7 +5,7 @@ interface ProfilePictureFieldProps {
   error?: string;
   initialFile?: string;
   disabled?: boolean;
-  onChange?: (value: string[]) => void;
+  onChange?: (value: string) => void;
 }
 
 export function ProfilePictureField({
@@ -26,16 +26,21 @@ export function ProfilePictureField({
       imagePreviewHeight={100}
       allowMultiple={false}
       initialFiles={initialFile ? [initialFile] : []}
-      onChange={onChange}
+      onChange={(files) => {
+        onChange?.(files[0] ?? "");
+      }}
+      //   imagePreviewHeight={100}
       //   imageCropAspectRatio="1:1"
       //   imageResizeTargetWidth={200}
       //   imageResizeTargetHeight={200}
       //   imageResizeMode="compact circle"
       stylePanelLayout={"compact circle"}
-      styleLoadIndicatorPosition="center bottom"
+      styleLoadIndicatorPosition="center"
       styleProgressIndicatorPosition="center bottom"
       styleButtonRemoveItemPosition="center bottom"
       styleButtonProcessItemPosition="center bottom"
+      allowProcess={false}
+      allowReplace={true}
     />
   );
 }
