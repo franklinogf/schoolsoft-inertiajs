@@ -16,8 +16,8 @@ export function UserProfileDropdownButton({
 }: UserProfileDropdownButtonProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Avatar className="size-10 border border-primary">
+      <DropdownMenuTrigger className="cursor-pointer">
+        <Avatar className="border-primary size-10 border">
           <AvatarImage src={avatar} alt="User profile picture" className="object-contain" />
           <AvatarFallback className="text-sm font-bold">{avatarFallback}</AvatarFallback>
         </Avatar>
