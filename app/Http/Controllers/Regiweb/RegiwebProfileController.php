@@ -16,7 +16,6 @@ class RegiwebProfileController extends Controller
      */
     public function show()
     {
-        // dd(tenant_asset('profile_pictures/teacher/240.jpg'));
 
         return Inertia::render('Regiweb/Profile');
     }
