@@ -2,6 +2,7 @@ import { useTranslations } from "@/hooks/translations";
 import { PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { FilePondFile } from "filepond";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import "filepond/dist/filepond.min.css";
@@ -10,7 +11,7 @@ import { FilePond, FilePondProps, registerPlugin } from "react-filepond";
 import { FieldContainer } from "./FieldContainer";
 import { FieldError } from "./FieldError";
 import { FieldLabel } from "./FieldLabel";
-registerPlugin(FilePondPluginImagePreview);
+registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
 interface FileFieldProps
   extends Pick<
     FilePondProps,
