@@ -22,9 +22,9 @@ class TenantProvider extends ServiceProvider
     public function boot(): void
     {
         Tenancy\Features\TenantConfig::$storageToConfigMap = [
-            'mail_from' => 'mail.from.address',
-            'enviroments.resend_key.value' => 'services.resend.key',
             'default_mailer' => 'mail.default',
+            'mail_from' => 'mail.from.address',
+            'resend_key' => 'services.resend.key',
         ];
         Tenancy\Middleware\InitializeTenancyByPath::$onFail = function () {
             return abort(Response::HTTP_NOT_FOUND);
