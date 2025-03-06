@@ -15,7 +15,7 @@ type Buttons = Button | ButtonWithChildren;
 
 const buttons: Buttons[] = [
   {
-    label: "Administration",
+    label: "Administración",
     route: route("admin.login.index"),
   },
   {
@@ -23,39 +23,39 @@ const buttons: Buttons[] = [
     route: route("regiweb.login.index"),
   },
   {
-    label: "Parents",
+    label: "Padres",
     route: route("parents.login.index"),
   },
   {
-    label: "Forum",
+    label: "Foro",
     children: [
       {
-        label: "Students",
+        label: "Estudiantes",
         route: route("foro.student.login.index"),
       },
       {
-        label: "Teachers",
+        label: "Profesores",
         route: route("foro.teacher.login.index"),
       },
     ],
   },
   {
-    label: "Calendar",
+    label: "Calendario",
     route: "#",
   },
   {
-    label: "Requests",
+    label: "Solicitudes",
     route: "#",
   },
   {
-    label: "Documents",
+    label: "Documentos",
     route: route("home.documents"),
   },
   {
-    label: "Cafeteria",
+    label: "Cafetería",
     children: [
-      { label: "Cash Register", route: "#" },
-      { label: "Auto Service", route: "#" },
+      { label: "Caja registradora", route: "#" },
+      { label: "Auto servicio", route: "#" },
     ],
   },
 ];

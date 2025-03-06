@@ -6,10 +6,10 @@ import RootLayout from "@/Layouts/Root/RootLayout";
 export default function Page() {
   const { t } = useTranslations();
   return (
-    <RootLayout title={t("Modules")}>
+    <RootLayout title={t("Módulos")}>
       <MaxWidthSection>
         <div className="cointainer mx-auto max-w-4xl">
-          <h2 className="title">{t("Modules")}</h2>
+          <h2 className="title">{t("Módulos")}</h2>
           <List items={MODULES} />
         </div>
       </MaxWidthSection>

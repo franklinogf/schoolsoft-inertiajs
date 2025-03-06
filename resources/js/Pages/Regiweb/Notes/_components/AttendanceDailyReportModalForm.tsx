@@ -33,45 +33,45 @@ export function AttendanceDailyReportModalForm({ students }: AttendanceDailyRepo
     <ModalForm
       onClose={reset}
       onSubmit={handleSubmit}
-      buttonLabel={t("Daily Attendance Report")}
+      buttonLabel={t("Informe de Asistencia Diaria")}
       submitLabel={t("PDF")}
-      title={t("Daily Attendance Report")}
+      title={t("Informe de Asistencia Diaria")}
     >
       <FieldsGrid cols={1}>
         <DateField
-          label={t("Initial Date")}
+          label={t("Fecha Inicial")}
           clearable={false}
           value={data.initialDate}
           onChange={(value) => setData("initialDate", value)}
         />
         <DateField
-          label={t("Final Date")}
+          label={t("Fecha Final")}
           clearable={false}
           value={data.finalDate}
           onChange={(value) => setData("finalDate", value)}
         />
       </FieldsGrid>
       <SelectField
-        label={t("Option")}
+        label={t("Opción")}
         value={data.option}
         onChange={(value) => setData("option", value)}
       >
-        <SelectItem value="home">{t("Home course")}</SelectItem>
-        <SelectItem value="student">{t("Per student")}</SelectItem>
+        <SelectItem value="home">{t("Salón hogar")}</SelectItem>
+        <SelectItem value="student">{t("Por estudiante")}</SelectItem>
       </SelectField>
       {data.option === "home" && (
         <SelectField
-          label={t("Type")}
+          label={t("Tipo")}
           value={data.type}
           onChange={(value) => setData("type", value)}
         >
-          <SelectItem value="list">{t("List")}</SelectItem>
-          <SelectItem value="summary">{t("Summary")}</SelectItem>
+          <SelectItem value="list">{t("Lista")}</SelectItem>
+          <SelectItem value="summary">{t("Resumen")}</SelectItem>
         </SelectField>
       )}
       {data.option === "student" && (
         <SelectField
-          label={t("Student")}
+          label={t("Estudiante")}
           value={data.student}
           onChange={(value) => setData("student", value)}
         >

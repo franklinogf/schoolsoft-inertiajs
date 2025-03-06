@@ -37,7 +37,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
       ? `${students[0].nombre} ${students[0].apellidos}`
       : selected === SelectedEnum.STUDENTS && students !== null && students?.length > 1
         ? `${students[0].nombre} ${students[0].apellidos} ` +
-          tChoice("and :amount more student|and :amount more students", students.length - 1, {
+          tChoice("y :amount estudiante más|y :amount estudiantes más", students.length - 1, {
             amount: students.length - 1,
           })
         : selected === SelectedEnum.COURSES && courses !== null
@@ -55,19 +55,21 @@ export default function Page({ students, courses, admins, selected, data: rowsId
   };
 
   return (
-    <RegiwebLayout title={t("Send email")}>
+    <RegiwebLayout title={t("Enviar correo electrónico")}>
       <div className="mx-auto w-full max-w-2xl">
-        <h1 className="mb-2 text-center text-2xl font-semibold">{t("Send email")}</h1>
+        <h1 className="mb-2 text-center text-2xl font-semibold">
+          {t("Enviar correo electrónico")}
+        </h1>
         <div className="flex justify-end">
           <Button asChild variant="outline" className="mb-4">
             <Link href={route("regiweb.options.messages.email.index", { selected })}>
-              {t("Go back")}
+              {t("Ir atrás")}
             </Link>
           </Button>
         </div>
         <form onSubmit={onSubmit}>
           <div className="space-y-2 rounded-lg bg-white p-4 shadow">
-            <InputField label={t("To")} name="to" disabled value={to} />
+            <InputField label={t("Para")} name="to" disabled value={to} />
             <InputField
               required
               value={data.subject}
@@ -75,11 +77,11 @@ export default function Page({ students, courses, admins, selected, data: rowsId
                 setData("subject", value);
               }}
               error={errors.subject}
-              label={t("Subject")}
+              label={t("Asunto")}
               name="subject"
             />
             <RichTextField
-              label={t("Message")}
+              label={t("Mensaje")}
               value={data.message}
               onChange={(value) => {
                 setData("message", value);
@@ -87,7 +89,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
               error={errors.message}
             />
             <FileField
-              label={t("Attachments")}
+              label={t("Adjuntos")}
               allowMultiple
               onChange={(values) => {
                 setData("files", values);
@@ -99,7 +101,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
               loadingIcon={<MailIcon className="animate-bounce" />}
               disabled={processing}
             >
-              {t("Send")}
+              {t("Enviar")}
             </SubmitButton>
           </div>
         </form>

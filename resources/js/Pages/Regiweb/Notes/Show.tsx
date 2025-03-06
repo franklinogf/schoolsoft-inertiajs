@@ -77,62 +77,65 @@ export default function Page({
     setValues(updatedValues);
   }
   return (
-    <RegiwebLayout title={t("Notes entry")}>
+    <RegiwebLayout title={t("Entrada de notas")}>
       <section className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>{t("Information")}</CardTitle>
+            <CardTitle>{t("Información")}</CardTitle>
             <CardDescription hidden></CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              <InfoBadge label={t("Course")} value={course} />
-              <InfoBadge label={t("Trimester")} value={TRIMESTERS[trimester]} />
-              <InfoBadge label={t("Adding notes to")} value={PAGES[page]} />
+              <InfoBadge label={t("Curso")} value={course} />
+              <InfoBadge label={t("Trimestre")} value={TRIMESTERS[trimester]} />
+              <InfoBadge label={t("Añadiendo notas a")} value={PAGES[page]} />
               <Deferred
                 data="studentsGrades"
-                fallback={<InfoBadge label={t("Students total")} value={0} />}
+                fallback={<InfoBadge label={t("Total de estudiantes")} value={0} />}
               >
-                <InfoBadge label={t("Students total")} value={studentsGrades?.length} />
+                <InfoBadge label={t("Total de estudiantes")} value={studentsGrades?.length} />
               </Deferred>
               <InfoBadge
-                label={t("Initial Date")}
+                label={t("Fecha Inicial")}
                 value={formatDate(initialDate, { dateStyle: "long" })}
               />
               <InfoBadge
-                label={t("Final Date")}
+                label={t("Fecha Final")}
                 value={formatDate(finalDate, { dateStyle: "long" })}
               />
-              <InfoBadge label={t("Note type")} value={isPercent ? t("Percentage") : t("Sum")} />
+              <InfoBadge
+                label={t("Tipo de nota")}
+                value={isPercent ? t("Porcentaje") : t("Suma")}
+              />
             </div>
           </CardContent>
         </Card>
         {(page === PagesEnum.GRADES || page === PagesEnum.SUMMER_GRADES) && (
           <Card>
             <CardHeader>
-              <CardTitle>{t("Options")}</CardTitle>
+              <CardTitle>{t("Opciones")}</CardTitle>
               <CardDescription hidden></CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <SwitchCheckbox
                   checked={isLetter}
-                  label={t("Convert to letters")}
-                  description={t("Applied to the Grade column :number exclusively", {
+                  label={t("Convertir a letras")}
+                  description={t("Aplicado a la columna de Nota :number exclusivamente", {
                     number: page === PagesEnum.GRADES ? 9 : 7,
                   })}
                 />
                 <SwitchCheckbox
                   checked={convert}
                   onChange={setConvert}
-                  label={t("Convert")}
-                  description={t("Convert numbers to letters")}
+                  label={t("Convertir")}
+                  description={t("Convertir números a letras")}
                 />
                 {canEnd && (
                   <SwitchCheckbox
                     checked={hasEnded}
-                    label={t("Notification")}
-                    description={t("Mark when the trimester end")}
+                    label={t("Notificación")}
+                    description={t("Marcar cuando termine el trimestre")}
                   />
                 )}
               </div>
@@ -145,9 +148,9 @@ export default function Page({
         page !== PagesEnum.CONDUCT_ATTENDANCE ? (
           <Alert variant="warning">
             <Info className="size-4" />
-            <AlertTitle>{t("Important") + "!"}</AlertTitle>
+            <AlertTitle>{t("Importante") + "!"}</AlertTitle>
             <AlertDescription>
-              {t("Rembember to go to the grades page and save to get the correct averages")}
+              {t("Recuerda ir a la página de notas y guardar para obtener los promedios correctos")}
             </AlertDescription>
           </Alert>
         ) : null}

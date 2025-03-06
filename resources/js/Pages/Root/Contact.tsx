@@ -8,9 +8,9 @@ export default function Page() {
   const { t } = useTranslations();
   console.log(usePage().props);
   return (
-    <RootLayout title={t("Contact us")}>
+    <RootLayout title={t("Contáctenos")}>
       <MaxWidthSection>
-        <h1 className="title">{t("Contact Form")}</h1>
+        <h1 className="title">{t("Formulario de Contacto")}</h1>
         <ContactForm />
       </MaxWidthSection>
     </RootLayout>

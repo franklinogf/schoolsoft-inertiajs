@@ -127,11 +127,11 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   }
 
   return (
-    <RegiwebLayout title={t("My Profile")}>
+    <RegiwebLayout title={t("Mi Perfil")}>
       <form onSubmit={handleSubmit}>
         <div className="flex grow flex-col gap-8 px-2 pt-5 pb-10">
           <h1 className="page-primary-title flex items-center gap-2">
-            {t("My Profile")}
+            {t("Mi Perfil")}
             <User2 className="size-8" />
           </h1>
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -146,12 +146,12 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             <div className="hidden md:flex md:items-center md:justify-center">
               <Card className="border-accent bg-accent">
                 <CardHeader className="p-2">
-                  <CardTitle className="text-lg">{t("Information")}</CardTitle>
+                  <CardTitle className="text-lg">{t("Información")}</CardTitle>
                 </CardHeader>
                 <CardContent className="bg-background flex flex-col gap-2 rounded-b-md pt-2">
                   <InfoBadge label="ID" value={user.id} />
-                  <InfoBadge label={t("User")} value={user.usuario} />
-                  {user.grado && <InfoBadge label={t("Home course")} value={user.grado} />}
+                  <InfoBadge label={t("Usuario")} value={user.usuario} />
+                  {user.grado && <InfoBadge label={t("Salón hogar")} value={user.grado} />}
                 </CardContent>
               </Card>
             </div>
@@ -160,19 +160,19 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>{t("Personal Information")}</CardTitle>
+                <CardTitle>{t("Información Personal")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col gap-4">
                   <FieldsGrid>
                     <InputField
-                      label={t("Name")}
+                      label={t("Nombre")}
                       value={data.nombre}
                       onChange={(value) => setData("nombre", value)}
                       error={errors.nombre}
                     />
                     <InputField
-                      label={t("Last names")}
+                      label={t("Apellidos")}
                       value={data.apellidos}
                       onChange={(value) => setData("apellidos", value)}
                       error={errors.apellidos}
@@ -180,21 +180,21 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                   </FieldsGrid>
                   <FieldsGrid>
                     <SelectField
-                      label={t("Gender")}
+                      label={t("Género")}
                       value={data.genero}
                       onChange={(value) => setData("genero", value)}
                       error={errors.genero}
                       items={GENDERS_SELECT}
                     />
                     <DateField
-                      label={t("Date of birth")}
+                      label={t("Fecha de nacimiento")}
                       value={data.fecha_nac}
                       onChange={(value) => setData("fecha_nac", value)}
                       error={errors.fecha_nac}
                     />
                   </FieldsGrid>
                   <InputField
-                    label={t("Primary email")}
+                    label={t("Correo electrónico principal")}
                     value={data.email1}
                     onChange={(value) => setData("email1", value)}
                     type="email"
@@ -202,7 +202,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                   />
                   <InputField
                     onChange={(value) => setData("email2", value)}
-                    label={t("Secondary email")}
+                    label={t("Correo electrónico secundario")}
                     type="email"
                     error={errors.email2}
                   />
@@ -210,13 +210,13 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <PhoneField
                       value={data.tel_res}
                       onChange={(value) => setData("tel_res", value)}
-                      label={t("Residence phone")}
+                      label={t("Teléfono residencial")}
                       error={errors.tel_res}
                     />
                     <PhoneField
                       value={data.tel_emer}
                       onChange={(value) => setData("tel_emer", value)}
-                      label={t("Emergency contact")}
+                      label={t("Contacto de emergencia")}
                       error={errors.tel_emer}
                     />
                   </FieldsGrid>
@@ -224,13 +224,13 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                     <PhoneField
                       value={data.cel}
                       onChange={(value) => setData("cel", value)}
-                      label={t("Mobile phone")}
+                      label={t("Teléfono celular")}
                       error={errors.cel}
                     />
                     <SelectField
                       value={data.cel_com}
                       onChange={(value) => setData("cel_com", value)}
-                      label={t("Mobile phone company")}
+                      label={t("Compañía de teléfono celular")}
                       error={errors.cel_com}
                       items={PHONE_COMPANIES_SELECT}
                     />
@@ -244,41 +244,41 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             <div className="flex flex-col gap-8">
               <Card>
                 <CardHeader>
-                  <CardTitle>{t("Addresses")}</CardTitle>
+                  <CardTitle>{t("Direcciones")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col gap-4">
                     <div className="space-y-1">
-                      <h2 className="font-semibold">{t("Residential Address")}</h2>
+                      <h2 className="font-semibold">{t("Dirección Residencial")}</h2>
                       <InputField
                         value={data.dir1}
                         onChange={(value) => setData("dir1", value)}
-                        placeholder={t("Address 1")}
+                        placeholder={t("Dirección 1")}
                         error={errors.dir1}
                       />
                       <InputField
                         value={data.dir2}
                         onChange={(value) => setData("dir2", value)}
-                        placeholder={t("Address 2")}
+                        placeholder={t("Dirección 2")}
                         error={errors.dir2}
                       />
                       <FieldsGrid cols={3}>
                         <InputField
                           value={data.pueblo1}
                           onChange={(value) => setData("pueblo1", value)}
-                          placeholder={t("City")}
+                          placeholder={t("Ciudad")}
                           error={errors.pueblo1}
                         />
                         <InputField
                           value={data.esta1}
                           onChange={(value) => setData("esta1", value)}
-                          placeholder={t("Country")}
+                          placeholder={t("País")}
                           error={errors.esta1}
                         />
                         <InputField
                           value={data.zip1}
                           onChange={(value) => setData("zip1", value)}
-                          placeholder={t("Zip code")}
+                          placeholder={t("Código postal")}
                           error={errors.zip1}
                         />
                       </FieldsGrid>
@@ -297,41 +297,41 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                           <ArrowUpDown />
                         </Button>
                         <small className="text-secondary-foreground text-xs">
-                          {t("Use the same address for the postal address")}?
+                          {t("Usar la misma dirección para la dirección postal")}?
                         </small>
                       </div>
 
-                      <h2 className="font-semibold">{t("Residential Address")}</h2>
+                      <h2 className="font-semibold">{t("Dirección Postal")}</h2>
 
                       <InputField
                         value={data.dir3}
                         onChange={(value) => setData("dir3", value)}
-                        placeholder={t("Address 1")}
+                        placeholder={t("Dirección 1")}
                         error={errors.dir3}
                       />
                       <InputField
                         value={data.dir4}
                         onChange={(value) => setData("dir4", value)}
-                        placeholder={t("Address 2")}
+                        placeholder={t("Dirección 2")}
                         error={errors.dir4}
                       />
                       <FieldsGrid cols={3}>
                         <InputField
                           value={data.pueblo2}
                           onChange={(value) => setData("pueblo2", value)}
-                          placeholder={t("City")}
+                          placeholder={t("Ciudad")}
                           error={errors.pueblo2}
                         />
                         <InputField
                           value={data.esta2}
                           onChange={(value) => setData("esta2", value)}
-                          placeholder={t("Country")}
+                          placeholder={t("País")}
                           error={errors.esta2}
                         />
                         <InputField
                           value={data.zip2}
                           onChange={(value) => setData("zip2", value)}
-                          placeholder={t("Zip code")}
+                          placeholder={t("Código postal")}
                           error={errors.zip2}
                         />
                       </FieldsGrid>
@@ -341,7 +341,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle>{t("Others")}</CardTitle>
+                  <CardTitle>{t("Otros")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-col gap-4">
@@ -355,30 +355,30 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       <InputField
                         value={data.posicion}
                         onChange={(value) => setData("posicion", value)}
-                        label={t("Position")}
+                        label={t("Posición")}
                         error={errors.posicion}
                       />
                       <SelectField
                         value={data.nivel}
                         onChange={(value) => setData("nivel", value)}
-                        label={t("Level")}
+                        label={t("Nivel")}
                         error={errors.nivel}
                         items={TEACHER_LEVEL_SELECT}
                       />
                     </FieldsGrid>
                     <div>
-                      <h2 className="text-sm font-medium">{t("Preparation")}</h2>
+                      <h2 className="text-sm font-medium">{t("Preparación")}</h2>
                       <div className="space-y-1">
                         <InputField
                           value={data.preparacion1}
                           onChange={(value) => setData("preparacion1", value)}
-                          placeholder={t("Preparation :number", { number: 1 })}
+                          placeholder={t("Preparación :number", { number: 1 })}
                           error={errors.preparacion1}
                         />
                         <InputField
                           value={data.preparacion2}
                           onChange={(value) => setData("preparacion2", value)}
-                          placeholder={t("Preparation :number", { number: 2 })}
+                          placeholder={t("Preparación :number", { number: 2 })}
                           error={errors.preparacion2}
                         />
                       </div>
@@ -388,20 +388,20 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       <DateField
                         value={data.fecha_ini}
                         onChange={(value) => setData("fecha_ini", value)}
-                        label={t("Initial Date")}
+                        label={t("Fecha de inicio")}
                         error={errors.fecha_ini}
                       />
                       <DateField
                         value={data.fecha_daja}
                         onChange={(value) => setData("fecha_daja", value)}
-                        label={t("Final Date")}
+                        label={t("Fecha de baja")}
                         error={errors.fecha_daja}
                       />
                     </FieldsGrid>
                     <SelectField
                       value={data.re_e}
                       onChange={(value) => setData("re_e", value)}
-                      label={t("Receive emails")}
+                      label={t("Recibir correos electrónicos")}
                       items={YES_NO_SELECT}
                       error={errors.re_e}
                     />
@@ -413,7 +413,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
           <section>
             <Accordion className="rounded-md bg-white shadow-xs" type="single" collapsible>
               <AccordionItem value="club">
-                <AccordionTrigger className="cursor-pointer px-6">{t("Clubs")}</AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer px-6">{t("Clubes")}</AccordionTrigger>
                 <AccordionContent className="space-y-2 px-6">
                   {[1, 2, 3, 4, 5].map((number) => {
                     const club = `club${number}` as "club1";
@@ -425,25 +425,25 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                         <InputField
                           value={data[club]}
                           onChange={(value) => setData(club, value)}
-                          label={t("Name")}
+                          label={t("Nombre")}
                           error={errors[club]}
                         />
                         <InputField
                           value={data[pre]}
                           onChange={(value) => setData(pre, value)}
-                          label={t("President")}
+                          label={t("Presidente")}
                           error={errors[pre]}
                         />
                         <InputField
                           value={data[vi]}
                           onChange={(value) => setData(vi, value)}
-                          label={t("Vice president")}
+                          label={t("Vice presidente")}
                           error={errors[vi]}
                         />
                         <InputField
                           value={data[se]}
                           onChange={(value) => setData(se, value)}
-                          label={t("Secretary")}
+                          label={t("Secretario")}
                           error={errors[se]}
                         />
                       </FieldsGrid>
@@ -452,7 +452,9 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="licens">
-                <AccordionTrigger className="cursor-pointer px-6">{t("Licenses")}</AccordionTrigger>
+                <AccordionTrigger className="cursor-pointer px-6">
+                  {t("Licencias")}
+                </AccordionTrigger>
                 <AccordionContent className="space-y-2 px-6 pt-2">
                   {[1, 2, 3, 4].map((number) => {
                     const lic = `lic${number}` as "lic1";
@@ -468,7 +470,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
 
                         <div className="grid grid-flow-col place-items-start gap-2 md:place-items-center">
                           <CheckboxField
-                            label={t("Expires")}
+                            label={t("Expira")}
                             value={data[lp]}
                             onChange={(value) => setData(lp, value)}
                             error={errors[lp]}
@@ -489,7 +491,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             </Accordion>
           </section>
           <SubmitButton disabled={processing} size="lg">
-            {t("Save")}
+            {t("Guardar")}
           </SubmitButton>
         </div>
       </form>

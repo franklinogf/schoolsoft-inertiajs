@@ -66,7 +66,7 @@ export function AttendaceTableForm({ students }: AttendanceTableFormProps) {
       {
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(t("Attendance saved successfully"));
+          toast.success(t("Asistencia guardada con éxito"));
           setStudentsChangedToFalse();
         },
         onError: () => {
@@ -106,11 +106,11 @@ export function AttendaceTableForm({ students }: AttendanceTableFormProps) {
           <TableHeader>
             <TableRow className="bg-primary hover:bg-primary [&>th]:text-primary-foreground [&>th]:text-center">
               <TableHead className="text-left!">#</TableHead>
-              <TableHead>{t("Student")}</TableHead>
-              <TableHead>{t("Conduct")}</TableHead>
-              <TableHead>{t("Absences")}</TableHead>
-              <TableHead>{t("Tardies")}</TableHead>
-              <TableHead>{t("Demerits")}</TableHead>
+              <TableHead>{t("Estudiante")}</TableHead>
+              <TableHead>{t("Conducta")}</TableHead>
+              <TableHead>{t("Ausencias")}</TableHead>
+              <TableHead>{t("Tardanzas")}</TableHead>
+              <TableHead>{t("Deméritos")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

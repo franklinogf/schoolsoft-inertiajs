@@ -6,7 +6,7 @@ export function FormSubmit({ isSubmitting }: { isSubmitting: boolean }) {
   return (
     <div className="flex justify-center">
       <SubmitButton size="lg" disabled={isSubmitting} className="mt-4">
-        {t("Save")}
+        {t("Guardar")}
       </SubmitButton>
     </div>
   );

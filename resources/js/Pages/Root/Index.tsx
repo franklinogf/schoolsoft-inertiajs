@@ -27,9 +27,9 @@ export default function Page() {
   const { t } = useTranslations();
   return (
     <RootLayout
-      title={t("Administrative system for schools")}
+      title={t("Sistema administrativo para colegios")}
       description={t(
-        "SchoolSoft is an administrative system for schools designed in Spanish and English with a sophisticated security system for access control.",
+        "SchoolSoft es un sistema administrativo para colegios diseñado en español e inglés con un sistema sofisticado de seguridad para control de acceso.",
       )}
     >
       <div className="absolute top-0 z-[-2] h-full w-full bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
@@ -42,7 +42,7 @@ export default function Page() {
               transition={{ delay: 0.3 }}
               className="mb-4 max-w-2xl text-center text-4xl leading-none font-extrabold tracking-tight md:mb-6 md:text-4xl xl:text-5xl"
             >
-              {t("Administrative system for schools")}
+              {t("Sistema administrativo para colegios")}
             </motion.h1>
             <motion.p
               transition={{ delay: 0.5 }}
@@ -51,7 +51,7 @@ export default function Page() {
               className="text-muted-foreground mb-6 max-w-prose font-light text-pretty lg:mb-8"
             >
               {t(
-                "Program designed in Spanish and English with a sophisticated security system for access control. This administrative system facilitates administrative tasks, increasing efficiency and providing more time to focus on the supervision phase of educational processes.",
+                "Programa diseñado en español e inglés con un sistema sofisticado de seguridad para control de acceso. Este sistema administrativo facilita las labores administrativas aumentando la eficiencia de los trabajos proveyendo mas tiempo para concentrarse en la fase de supervisión de los procesos educativos.",
               )}
             </motion.p>
             <motion.div
@@ -61,7 +61,7 @@ export default function Page() {
               className="flex justify-center"
             >
               <Button asChild>
-                <Link href="/">{t("Request a demonstration")}</Link>
+                <Link href="/">{t("Solicita una demostración")}</Link>
               </Button>
             </motion.div>
           </div>
@@ -86,7 +86,7 @@ export default function Page() {
             variants={listVariants}
             className="title mb-8"
           >
-            {t("Services")}
+            {t("Servicios")}
           </motion.h2>
           <div className="space-y-8 md:grid md:grid-cols-2 md:gap-10 md:space-y-0 lg:grid-cols-3">
             {SERVICES.map(({ title, description, Icon }, i) => (
@@ -118,7 +118,7 @@ export default function Page() {
             variants={listVariants}
             className="title mb-8"
           >
-            {t("Others Services")}
+            {t("Otros Servicios")}
           </motion.h2>
           <div className="grid max-w-3xl grid-cols-1 gap-2 md:mx-auto md:mb-2 md:grid-cols-2">
             {OTHER_SERVICES.map(({ title }) => (

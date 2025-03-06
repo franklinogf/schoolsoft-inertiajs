@@ -61,7 +61,7 @@ export function ExamForm({ students }: ExamTableFormProps) {
       {
         preserveScroll: true,
         onSuccess: () => {
-          toast.success(t("Exam note saved successfully"));
+          toast.success(t("Nota de examen guardada con éxito"));
           setStudentsChangedToFalse();
         },
         onError: () => {
@@ -101,8 +101,8 @@ export function ExamForm({ students }: ExamTableFormProps) {
           <TableHeader>
             <TableRow className="bg-primary hover:bg-primary [&>th]:text-primary-foreground [&>th]:text-center">
               <TableHead className="text-left!">#</TableHead>
-              <TableHead>{t("Student")}</TableHead>
-              <TableHead>{t("Note")}</TableHead>
+              <TableHead>{t("Estudiante")}</TableHead>
+              <TableHead>{t("Nota")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
