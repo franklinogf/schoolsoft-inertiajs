@@ -22,15 +22,23 @@ class TenantProvider extends ServiceProvider
     public function boot(): void
     {
         Tenancy\Features\TenantConfig::$storageToConfigMap = [
+            'locale' => 'app.locale',
             'default_mailer' => 'mail.default',
-            'mail_from' => 'mail.from.address',
+            'default_mail_from' => 'mail.from.address',
             'resend_key' => 'services.resend.key',
+            'smtp_host' => 'mail.mailers.smtp.host',
+            'smtp_port' => 'mail.mailers.smtp.port',
+            'smtp_username' => 'mail.mailers.smtp.username',
+            'smtp_password' => 'mail.mailers.smtp.password',
+            'smtp_encryption' => 'mail.mailers.smtp.encryption',
         ];
+
         Tenancy\Middleware\InitializeTenancyByPath::$onFail = function () {
             return abort(Response::HTTP_NOT_FOUND);
         };
 
         Tenancy\Controllers\TenantAssetsController::$tenancyMiddleware = Tenancy\Middleware\InitializeTenancyByPath::class;
+
         Tenancy\Resolvers\PathTenantResolver::$tenantParameterName = 'school';
     }
 }
