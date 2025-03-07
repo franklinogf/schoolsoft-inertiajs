@@ -17,9 +17,9 @@ import { Link } from "@inertiajs/react";
 import { Menu, UserCircle } from "lucide-react";
 // i18n.loadNamespaces("pages");
 const menuItems: { label: Translations; route: string }[] = [
-  { label: "Grades", route: route("regiweb.notes.index") },
-  { label: "Options", route: route("regiweb.options.index") },
-  { label: "Reports", route: route("regiweb.reports.index") },
+  { label: "Grados", route: route("regiweb.notes.index") },
+  { label: "Opciones", route: route("regiweb.options.index") },
+  { label: "Informes", route: route("regiweb.reports.index") },
 ] as const;
 interface HeaderProps {
   user: Teacher;
@@ -62,7 +62,7 @@ export default function Header({ user }: HeaderProps) {
               className="flex w-full cursor-pointer items-center gap-1"
             >
               <UserCircle className="size-4" />
-              {t("Profile")}
+              {t("Perfil")}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
@@ -72,7 +72,7 @@ export default function Header({ user }: HeaderProps) {
               as="button"
               href={route("regiweb.logout")}
             >
-              {t("Log out")}
+              {t("Cerrar sesión")}
             </Link>
           </DropdownMenuItem>
         </UserProfileDropdownButton>
@@ -116,12 +116,12 @@ export default function Header({ user }: HeaderProps) {
                       className="flex w-full grow items-center"
                     >
                       <UserCircle className="mr-1 size-4" />
-                      {t("Profile")}
+                      {t("Perfil")}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link method="delete" as="button" href={route("regiweb.logout")}>
-                      {t("Log out")}
+                      {t("Cerrar sesión")}
                     </Link>
                   </DropdownMenuItem>
                 </UserProfileDropdownButton>

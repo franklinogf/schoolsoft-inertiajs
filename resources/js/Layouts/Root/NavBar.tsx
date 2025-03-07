@@ -68,7 +68,7 @@ export function NavBar() {
       <NavLinks />
 
       <Button size="sm" asChild>
-        <Link href={route("contact.index")}>{t("Contact us")}</Link>
+        <Link href={route("contact.index")}>{t("Contáctanos")}</Link>
       </Button>
     </header>
   );
