@@ -47,7 +47,7 @@ export function DateField({
           locale={currentLocale() === "es" ? es : enUS}
           displayFormat={displayFormat}
           granularity="day"
-          placeholder={placeholder ?? t("Select a date")}
+          placeholder={placeholder ?? t("Seleccione una fecha")}
           value={formatStringToDate(value)}
           onChange={(value) => {
             onChange && onChange(formatDateToString(value));

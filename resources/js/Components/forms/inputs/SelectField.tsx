@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/Components/ui/select";
+import { Translations, useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
 import React, { useId } from "react";
 export type SelectItemType = { key: string; value: string };
@@ -47,6 +48,7 @@ export function SelectField({
   clearable = false,
   onChange,
 }: SelectFieldProps) {
+  const { t } = useTranslations();
   const id = useId();
   return (
     <FieldContainer className={className}>
@@ -64,7 +66,7 @@ export function SelectField({
           {items
             ? items.map((item) => (
                 <SelectItem key={item.key} value={item.key}>
-                  {item.value}
+                  {t(item.value as Translations)}
                 </SelectItem>
               ))
             : children}
@@ -79,7 +81,7 @@ export function SelectField({
                 className="w-full"
                 variant="secondary"
               >
-                Deseleccionar
+                {t("Deseleccionar")}
               </Button>
             </>
           )}

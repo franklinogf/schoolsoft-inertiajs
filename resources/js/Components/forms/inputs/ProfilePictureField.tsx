@@ -1,3 +1,5 @@
+import { useTranslations } from "@/hooks/translations";
+import { cn } from "@/lib/utils";
 import { FileField } from "./FileField";
 
 interface ProfilePictureFieldProps {
@@ -6,6 +8,7 @@ interface ProfilePictureFieldProps {
   initialFile?: string;
   disabled?: boolean;
   onChange?: (value: string) => void;
+  className?: string;
 }
 
 export function ProfilePictureField({
@@ -14,15 +17,19 @@ export function ProfilePictureField({
   error,
   disabled,
   onChange,
+  className,
 }: ProfilePictureFieldProps) {
-  label = label ?? "Profile Picture";
+  const { t } = useTranslations();
+  label = label ?? t("Foto de Perfil");
   return (
     <FileField
       label={label}
       error={error}
       disabled={disabled}
-      className="size-50 text-center"
-      labelIdle="Drag and drop your picture here"
+      className={cn(className, "size-50 text-center")}
+      labelIdle={t(
+        'Arrastra y suelta tu foto aquí o haz <span class="filepond--label-action"> clic </span> para seleccionarla',
+      )}
       imagePreviewHeight={100}
       allowMultiple={false}
       initialFiles={initialFile ? [initialFile] : []}

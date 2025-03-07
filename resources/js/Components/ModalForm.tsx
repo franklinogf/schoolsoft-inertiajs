@@ -69,7 +69,7 @@ export function ModalForm({
           <DialogFooter className="gap-2">
             <DialogClose asChild>
               <Button type="button" variant="secondary">
-                {t("Close")}
+                {t("Cerrar")}
               </Button>
             </DialogClose>
             <SubmitButton disabled={submitting}>{submitLabel}</SubmitButton>

@@ -21,7 +21,7 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
   });
 
   const { data, setData, reset } = useForm({
-    course: coursesSelect[0].key,
+    course: coursesSelect[0]?.key,
     trimester: TRIMESTER_SELECT_WITHOUT_SUMMER[0].key,
   });
   const { t } = useTranslations();

@@ -11,16 +11,18 @@ export function ChangePasswordForm({ route }: { route: string }) {
   });
   return (
     <div className="mt-5 space-y-4">
-      <h3 className="text-2xl leading-none font-semibold tracking-tight">{t("Change Password")}</h3>
+      <h3 className="text-2xl leading-none font-semibold tracking-tight">
+        {t("Cambiar Contraseña")}
+      </h3>
       <InputField
-        label={t("New password")}
+        label={t("Nueva contraseña")}
         value={data.clave}
         onChange={(value) => setData("clave", value)}
         error={errors.clave}
         type="password"
       />
       <InputField
-        label={t("Confirm new password")}
+        label={t("Confirmar nueva contraseña")}
         value={data.clave_confirmation}
         onChange={(value) => setData("clave_confirmation", value)}
         error={errors.clave_confirmation}
@@ -38,7 +40,7 @@ export function ChangePasswordForm({ route }: { route: string }) {
         disabled={processing}
         size="sm"
       >
-        {t("Change Password")}
+        {t("Cambiar Contraseña")}
       </Button>
     </div>
   );
