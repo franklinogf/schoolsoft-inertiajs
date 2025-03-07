@@ -260,11 +260,11 @@ function Calendar({
         nav: "space-x-1 flex items-center ",
         button_previous: cn(
           buttonVariants({ variant: "outline" }),
-          "absolute left-5 top-5 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+          "absolute top-5 left-5 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
         ),
         button_next: cn(
           buttonVariants({ variant: "outline" }),
-          "absolute right-5 top-5 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+          "absolute top-5 right-5 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
         ),
         month_grid: "w-full border-collapse space-y-1",
         weekdays: cn("flex", props.showWeekNumber && "justify-end"),
@@ -304,7 +304,7 @@ function Calendar({
                   props.onMonthChange?.(newDate);
                 }}
               >
-                <SelectTrigger className="w-fit gap-1 border-none p-0 focus:bg-accent focus:text-accent-foreground">
+                <SelectTrigger className="focus:bg-accent focus:text-accent-foreground w-fit gap-1 border-none p-0">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -323,7 +323,7 @@ function Calendar({
                   props.onMonthChange?.(newDate);
                 }}
               >
-                <SelectTrigger className="w-fit gap-1 border-none p-0 focus:bg-accent focus:text-accent-foreground">
+                <SelectTrigger className="focus:bg-accent focus:text-accent-foreground w-fit gap-1 border-none p-0">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -381,7 +381,7 @@ const TimePeriodSelect = React.forwardRef<HTMLButtonElement, PeriodSelectorProps
         <Select defaultValue={period} onValueChange={(value: Period) => handleValueChange(value)}>
           <SelectTrigger
             ref={ref}
-            className="w-[65px] focus:bg-accent focus:text-accent-foreground"
+            className="focus:bg-accent focus:text-accent-foreground w-[65px]"
             onKeyDown={handleKeyDown}
           >
             <SelectValue />
@@ -489,7 +489,7 @@ const TimePickerInput = React.forwardRef<HTMLInputElement, TimePickerInputProps>
         id={id || picker}
         name={name || picker}
         className={cn(
-          "w-[48px] text-center font-mono text-base tabular-nums caret-transparent focus:bg-accent focus:text-accent-foreground [&::-webkit-inner-spin-button]:appearance-none",
+          "focus:bg-accent focus:text-accent-foreground w-[48px] text-center font-mono text-base tabular-nums caret-transparent [&::-webkit-inner-spin-button]:appearance-none",
           className,
         )}
         value={value || calculatedValue}
@@ -750,7 +750,7 @@ const DateTimePicker = React.forwardRef<Partial<DateTimePickerRef>, DateTimePick
             {...props}
           />
           {granularity !== "day" && (
-            <div className="border-t border-border p-3">
+            <div className="border-border border-t p-3">
               <TimePicker
                 onChange={onChange}
                 date={value}

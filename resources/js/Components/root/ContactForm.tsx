@@ -35,14 +35,14 @@ export function ContactForm() {
             <FieldsGrid>
               <InputField
                 autoComplete="name"
-                label={t("Name")}
+                label={t("Nombre")}
                 value={data.name}
                 onChange={(value) => setData("name", value)}
                 error={errors.name}
               />
               <InputField
                 autoComplete="family-name"
-                label={t("Last name")}
+                label={t("Apellido")}
                 value={data.lastname}
                 onChange={(value) => setData("lastname", value)}
                 error={errors.lastname}
@@ -50,14 +50,14 @@ export function ContactForm() {
             </FieldsGrid>
             <InputField
               autoComplete="email"
-              label={t("Email")}
+              label={t("Correo electrónico")}
               value={data.email}
               onChange={(value) => setData("email", value)}
               type="email"
               error={errors.email}
             />
             <PhoneField
-              label={t("Phone")}
+              label={t("Teléfono")}
               value={data.phone}
               onChange={(value) => setData("phone", value)}
               error={errors.phone}
@@ -65,12 +65,12 @@ export function ContactForm() {
             <TextareaField
               value={data.message}
               onChange={(value) => setData("message", value)}
-              label={t("Message")}
-              placeholder={t("Write a message") + "..."}
+              label={t("Mensaje")}
+              placeholder={t("Escribe un mensaje") + "..."}
               error={errors.message}
             />
             <div className="grid w-full">
-              <SubmitButton disabled={processing}>{t("Send message")}</SubmitButton>
+              <SubmitButton disabled={processing}>{t("Enviar mensaje")}</SubmitButton>
             </div>
           </form>
         </CardContent>
