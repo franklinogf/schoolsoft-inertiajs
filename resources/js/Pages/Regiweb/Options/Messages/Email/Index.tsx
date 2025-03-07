@@ -8,6 +8,7 @@ import { Admin } from "@/types/auth";
 import { Student } from "@/types/student";
 import { Course } from "@/types/teacher";
 import { router } from "@inertiajs/react";
+import { useState } from "react";
 
 export enum SelectedEnum {
   STUDENTS = "students",
@@ -23,8 +24,9 @@ interface PageProps {
 }
 
 export default function Page({ students, courses, admins, selected }: PageProps) {
+  const [selectedTab, setSelectedTab] = useState<SelectedEnum>(selected);
   const handleButtonClick = (data: string[]) => {
-    router.get(route("regiweb.options.messages.email.form"), { data, selected });
+    router.get(route("regiweb.options.messages.email.form"), { data, selected: selectedTab });
   };
 
   return (
@@ -32,8 +34,9 @@ export default function Page({ students, courses, admins, selected }: PageProps)
       <section className="mx-auto w-full max-w-4xl">
         <h1 className="pb-4 text-center text-2xl font-semibold">Mensajes de correo electrónico</h1>
         <Tabs
-          defaultValue={selected}
+          value={selectedTab}
           onValueChange={(value) => {
+            setSelectedTab(value as SelectedEnum);
             router.reload({ data: { selected: value }, replace: true });
           }}
         >
