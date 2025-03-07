@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import { Translations } from "@/hooks/translations";
+import { Translations, useTranslations } from "@/hooks/translations";
 import { HomeLayout } from "@/Layouts/Home/HomeLayout";
 import type { PagePropsWithSchool } from "@/types";
 import { Link } from "@inertiajs/react";
@@ -61,6 +61,7 @@ const buttons: Buttons[] = [
 ];
 
 export default function HomePage({ school }: PagePropsWithSchool) {
+  const { t } = useTranslations();
   return (
     <HomeLayout school={school} title={school.colegio}>
       <section className="flex min-h-80 items-center justify-center" id="buttons">
@@ -70,13 +71,13 @@ export default function HomePage({ school }: PagePropsWithSchool) {
               {"children" in button ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button className="w-full">{button.label}</Button>
+                    <Button className="w-full">{t(button.label)}</Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     {button.children.map((child) => (
                       <DropdownMenuItem key={child.label} asChild>
                         <Link className="cursor-pointer" href={child.route}>
-                          {child.label}
+                          {t(child.label)}
                         </Link>
                       </DropdownMenuItem>
                     ))}
@@ -84,7 +85,7 @@ export default function HomePage({ school }: PagePropsWithSchool) {
                 </DropdownMenu>
               ) : (
                 <Button className="w-full" asChild>
-                  <Link href={button.route ?? ""}>{button.label}</Link>
+                  <Link href={button.route ?? ""}>{t(button.label)}</Link>
                 </Button>
               )}
             </li>

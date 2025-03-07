@@ -13,7 +13,7 @@ class SchoolDocumentController extends Controller
 {
     public function index()
     {
-        $school = Admin::getPrimaryAdmin();
+        $school = Admin::getPrimaryAdmin()->first();
         $documents = DB::table('T_ing')->get();
 
         // $documents = DB::table('T_ing')
@@ -33,6 +33,6 @@ class SchoolDocumentController extends Controller
             return Storage::download($document->archivo);
         }
 
-        return back()->with(FlashMessageKey::ERROR->value, __('The file does not exist or has been deleted.'));
+        return back()->with(FlashMessageKey::ERROR->value, __('Este archivo no existe.'));
     }
 }
