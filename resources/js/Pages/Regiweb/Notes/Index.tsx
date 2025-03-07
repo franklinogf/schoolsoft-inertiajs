@@ -25,7 +25,7 @@ type PageProps = PagePropsWithUser<Teacher> & {
 export default function Page({ auth: { user }, errors: pageErrors, students }: PageProps) {
   const { t } = useTranslations();
   const { data, setData, get, processing, errors } = useForm({
-    course: user.cursos?.[0].curso ?? "",
+    course: user.cursos?.[0]?.curso ?? "",
     trimester: TRIMESTER_SELECT[0].key,
     page: PAGES_SELECT[0].key,
   });
