@@ -47,12 +47,12 @@ export default function DocumentsPage({ school, documents }: DocumentsPageProps)
                   </CardDescription>
                   <CardContent className="flex items-center justify-center py-2">
                     <Button asChild>
-                      <a
+                      <Link
                         className="d-block"
                         href={route("home.documents.download", { id: document.id })}
                       >
                         {t("Descargar")}
-                      </a>
+                      </Link>
                     </Button>
                   </CardContent>
                   <CardFooter className="flex justify-around p-0">
