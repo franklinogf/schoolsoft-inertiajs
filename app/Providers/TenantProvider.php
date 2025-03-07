@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Stancl\Tenancy;
+use Stancl\Tenancy\Resolvers\PathTenantResolver;
 use Symfony\Component\HttpFoundation\Response;
 
 class TenantProvider extends ServiceProvider
@@ -40,5 +41,11 @@ class TenantProvider extends ServiceProvider
         Tenancy\Controllers\TenantAssetsController::$tenancyMiddleware = Tenancy\Middleware\InitializeTenancyByPath::class;
 
         Tenancy\Resolvers\PathTenantResolver::$tenantParameterName = 'school';
+
+        // enable cache
+        PathTenantResolver::$shouldCache = true;
+
+        // cache for 1 hour
+        PathTenantResolver::$cacheTTL = 60 * 60;
     }
 }
