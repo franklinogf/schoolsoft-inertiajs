@@ -161,7 +161,7 @@ class SchoolResource extends Resource
                 Tables\Actions\Action::make('school_website')
                     ->label('Go to school')
                     ->color(Color::Emerald)
-                    ->url(fn (School $record): string => app()->isLocal() ? "http://localhost:8000/{$record->id}" : config('app.url')."/{$record->id}")
+                    ->url(fn (School $record): string => config('app.url')."/{$record->id}")
                     ->openUrlInNewTab(),
                 /* ------------------------------- new website ------------------------------ */
                 // Tables\Actions\Action::make('school_website')
