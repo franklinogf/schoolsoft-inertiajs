@@ -52,7 +52,7 @@ class AttendanceReportPDFController extends Controller
             $teacher = $course->teacher;
             $students = Student::ofCourse($validated['course'])->get();
         }
-        $school = Admin::getPrimaryAdmin();
+        $school = Admin::getPrimaryAdmin()->first();
         $date1 = $school->{"asis{$selectedTrimesterValue[0]}"};
         $date2 = $school->{"asis{$selectedTrimesterValue[1]}"};
 
