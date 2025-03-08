@@ -17,8 +17,9 @@ export function AttendanceDailyReportModalForm({ students }: AttendanceDailyRepo
     finalDate: formatDateToString(),
     option: "home",
     type: "list",
-    student: students[0].mt.toString(),
+    student: students[0]?.mt.toString(),
   });
+
   const { t } = useTranslations();
   const handleSubmit = () => {
     const dataToSend: Partial<typeof data> = {
