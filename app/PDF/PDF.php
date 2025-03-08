@@ -16,15 +16,14 @@ class PDF extends BasePDF
 
     public $headerFirstPage = false;
 
-    public function __construct(?string $title = null, $orientation = 'P', $unit = 'mm', $size = 'A4')
+    public function __construct(string $title, $orientation = 'P', $unit = 'mm', $size = 'A4')
     {
         $this->school = Admin::getPrimaryAdmin()->first();
         parent::__construct($orientation, $unit, $size);
         $this->SetFillColor(89, 171, 227);
-        $this->SetTitle($title);
-        $this->SetAuthor($this->school->colegio);
-        $this->SetCreator(config('app.name'));
-
+        $this->SetTitle($title, true);
+        $this->SetAuthor($this->school->colegio, true);
+        $this->SetCreator(config('app.name'), true);
     }
 
     public function header()
