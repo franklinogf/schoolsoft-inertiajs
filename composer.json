@@ -7,8 +7,15 @@
         "framework"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/laravel-fpdf.git"
+        }
+    ],
     "require": {
         "php": "^8.2",
+        "codedge/laravel-fpdf": "dev-l12-compatibility",
         "fakerphp/faker": "^1.24",
         "filament/filament": "^3.2",
         "inertiajs/inertia-laravel": "^2.0",
