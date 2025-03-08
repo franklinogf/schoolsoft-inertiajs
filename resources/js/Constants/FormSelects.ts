@@ -8,9 +8,11 @@ export function createSelectItemsFromArrayOfObjects(
 ): SelectItemType[] {
   if (!array) return [];
   return array.map((item) => ({
-    key: item[key],
+    key: item[key] ?? "",
     value:
-      values instanceof Array ? values.map((value) => item[value]).join(separator) : item[values],
+      values instanceof Array
+        ? values.map((value) => item[value]).join(separator)
+        : (item[values] ?? ""),
   }));
 }
 export function createSelectItems(

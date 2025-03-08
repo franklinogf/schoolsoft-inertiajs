@@ -48,7 +48,7 @@ export function DefaultTableForm({
       Array.from({ length: amountOfGrades }).forEach((_, i) => {
         const number = i + 1;
         const val: string | undefined = values[`val${number}`];
-        const grade = student.notas[`nota${number}`].value;
+        const grade = student.notas[`nota${number}`]?.value;
         if (grade === "") return;
         if (val === "" || val === undefined) return;
         tdp += Number(val);
@@ -76,7 +76,7 @@ export function DefaultTableForm({
           : 0;
       Array.from({ length: amountOfGrades + 1 }).forEach((_, i) => {
         const number = i + 1;
-        const grade = student.notas[`nota${number}`].value;
+        const grade = student.notas[`nota${number}`]?.value;
         tpa += Number(grade);
       });
 
@@ -117,7 +117,7 @@ export function DefaultTableForm({
 
   function handleGradeChange(id: number, gradeNumber: number, value: string, isBonus: boolean) {
     const gradeKey = `nota${gradeNumber}`;
-    const val = values[`val${gradeNumber}`];
+    const val = values[`val${gradeNumber}`] ?? "";
 
     if (!isBonus && (val === "" || !val)) return;
     if (!isBonus && Number(value) > Number(val)) {
@@ -132,7 +132,7 @@ export function DefaultTableForm({
             notas: {
               ...student.notas,
               [gradeKey]: {
-                ...student.notas[gradeKey],
+                ...student.notas[gradeKey]!,
                 value,
               },
             },
@@ -233,7 +233,7 @@ export function DefaultTableForm({
                             removeArrows
                             fieldClassName="px-1 text-center"
                             type={convert ? "text" : "number"}
-                            value={notas[`nota${number}`].value}
+                            value={notas[`nota${number}`]?.value}
                           />
                         </TableCell>
                       );

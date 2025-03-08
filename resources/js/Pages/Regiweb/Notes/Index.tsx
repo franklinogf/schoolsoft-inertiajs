@@ -26,8 +26,8 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
   const { t } = useTranslations();
   const { data, setData, get, processing, errors } = useForm({
     course: user.cursos?.[0]?.curso ?? "",
-    trimester: TRIMESTER_SELECT[0].key,
-    page: PAGES_SELECT[0].key,
+    trimester: TRIMESTER_SELECT[0]?.key,
+    page: PAGES_SELECT[0]?.key,
   });
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
