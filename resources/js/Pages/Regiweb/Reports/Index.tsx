@@ -13,8 +13,8 @@ import { useForm } from "@inertiajs/react";
 export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   const { data, setData, processing, get } = useForm({
     course: user.cursos?.[0]?.curso ?? "",
-    trimester: TRIMESTER_SELECT[0].key,
-    page: PAGES_SELECT[0].key,
+    trimester: TRIMESTER_SELECT[0]?.key,
+    page: PAGES_SELECT[0]?.key,
   });
   const handleSubmit = () => {
     get(

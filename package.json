@@ -7,7 +7,8 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
-        "format": "npx prettier ./resources/js --write"
+        "format": "npx prettier ./resources/js --write",
+        "type-check": "tsc --noEmit"
     },
     "devDependencies": {
         "@headlessui/react": "^2.2.0",

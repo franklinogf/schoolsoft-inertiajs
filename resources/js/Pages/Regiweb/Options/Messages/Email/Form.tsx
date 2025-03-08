@@ -34,9 +34,9 @@ export default function Page({ students, courses, admins, selected, data: rowsId
 
   const to =
     selected === SelectedEnum.STUDENTS && students !== null && students?.length === 1
-      ? `${students[0].nombre} ${students[0].apellidos}`
+      ? `${students[0]?.nombre} ${students[0]?.apellidos}`
       : selected === SelectedEnum.STUDENTS && students !== null && students?.length > 1
-        ? `${students[0].nombre} ${students[0].apellidos} ` +
+        ? `${students[0]?.nombre} ${students[0]?.apellidos} ` +
           tChoice("y :amount estudiante más|y :amount estudiantes más", students.length - 1, {
             amount: students.length - 1,
           })
