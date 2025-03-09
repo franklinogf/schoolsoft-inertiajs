@@ -25,10 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (app()->environment('local')) {
+        if (app()->isLocal()) {
             Mail::alwaysTo('franklinomarflores@gmail.com');
             Mail::alwaysFrom('onboarding@resend.dev', 'Franklin Omar Flores');
-            config(['services.resend.key' => env('RESEND_KEY')]);
         }
 
         Model::unguard();
