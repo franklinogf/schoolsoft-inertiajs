@@ -50,7 +50,7 @@ class RegiwebProfileController extends Controller
 
         $user->save();
 
-        return back()->with('success', __('Profile updated successfully'));
+        return back()->with('success', __('Perfil actualizado con éxito'));
 
     }
 }
