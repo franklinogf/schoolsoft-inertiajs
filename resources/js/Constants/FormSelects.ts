@@ -3,12 +3,12 @@ import { PhoneCompaniesEnum, TeacherLevelEnum } from "@/Enums";
 import { GENDERS, PAGES, TRIMESTERS, YES_NO } from ".";
 
 export function createSelectItemsFromArrayOfObjects(
-  array: Record<string, string>[] | undefined,
+  array: Record<string, any>[] | undefined | null,
   { key, values, separator = " " }: { key: string; values: string[] | string; separator?: string },
 ): SelectItemType[] {
-  if (!array) return [];
+  if (!array || array.length === 0) return [];
   return array.map((item) => ({
-    key: item[key] ?? "",
+    key: item[key],
     value:
       values instanceof Array
         ? values.map((value) => item[value]).join(separator)
