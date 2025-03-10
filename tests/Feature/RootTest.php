@@ -1,38 +1,46 @@
 <?php
 
-test('Home page returns a successful response', function () {
+use App\Mail\Root\Contact;
+use Illuminate\Support\Facades\Mail;
+
+test('Can access Home page', function () {
     $response = $this->get(route('home'));
 
     $response->assertStatus(200);
 });
 
-test('Modules page returns a successful response', function () {
+test('Can access Modules page', function () {
     $response = $this->get(route('modules'));
 
     $response->assertStatus(200);
 });
 
-test('Regiweb page returns a successful response', function () {
+test('Can access Regiweb page', function () {
     $response = $this->get(route('regiweb'));
 
     $response->assertStatus(200);
 });
 
-test('Contact page returns a successful response', function () {
+test('Can access Contact page', function () {
     $response = $this->get(route('contact.index'));
 
     $response->assertStatus(200);
 });
 
 test('Contact page can submit a form', function () {
-    $response = $this->post(route('contact.submit'), [
+    Mail::fake();
+    $emailData = [
         'name' => 'Franklin',
         'lastname' => 'Flores',
         'email' => 'test@test.com',
         'message' => 'Hello, this is a test message',
         'phone' => '9293394306',
-    ]);
-    $response->assertRedirect();
+    ];
+    $response = $this->post(route('contact.submit'), $emailData);
+    Mail::assertSent(function (Contact $mail) use ($emailData) {
+        return $mail->hasTo('franklinomarflores@gmail.com') && $mail->name === $emailData['name'];
+    });
+    $response->assertRedirect(route('contact.index'));
 });
 
 test('Contact page cannot submit a form with invalid email', function () {
