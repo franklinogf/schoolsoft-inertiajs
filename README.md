@@ -1,5 +1,5 @@
 # Schoolsoft
-Schoolsoft website with Laravel + Inertiajs (React)
+Schoolsoft website with Laravel + Inertiajs (React) using TypeScript
 
 ## 1- Install composer packages
 ```
