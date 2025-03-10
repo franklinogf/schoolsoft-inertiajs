@@ -11,9 +11,11 @@ import {
 import { useTranslations } from "@/hooks/translations";
 import { HomeLayout } from "@/Layouts/Home/HomeLayout";
 
-import type { Document, PagePropsWithSchool } from "@/types";
+import type { Document } from "@/types";
+import type { Admin } from "@/types/auth";
 import { Link } from "@inertiajs/react";
-interface DocumentsPageProps extends PagePropsWithSchool {
+interface DocumentsPageProps {
+  school: Admin;
   documents: Document[];
 }
 export default function DocumentsPage({ school, documents }: DocumentsPageProps) {
