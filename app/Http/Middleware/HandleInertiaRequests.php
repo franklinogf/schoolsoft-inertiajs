@@ -53,7 +53,7 @@ class HandleInertiaRequests extends Middleware
             'regiweb' => 'teacher',
             'teacher' => 'teacher',
             'student' => 'student',
-            default => null,
+            default => 'web',
         };
     }
 
