@@ -1,5 +1,3 @@
-import { type Admin } from "@/types/auth";
-
 export interface Document {
   id: number;
   categoria: string;
@@ -12,7 +10,8 @@ export interface Document {
   grado_hasta: string;
 }
 export type Errors = { [key: string]: string };
-export type PageProps = {
+
+export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
   flash: {
     success: string | null;
     error: string | null;
@@ -22,13 +21,12 @@ export type PageProps = {
   locale: string;
   csrf_token: string;
 };
-export type PagePropsWithUser<T> = PageProps & {
+
+export type PagePropsWithUser<
+  U,
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = PageProps<T> & {
   auth: {
-    user: T;
+    user: U;
   };
 };
-export type PagePropsWithSchool = PageProps & {
-  school: Admin;
-};
-
-export type PagePropsWithSchoolAndUser<T> = PagePropsWithSchool & PagePropsWithUser<T>;

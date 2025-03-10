@@ -7,7 +7,7 @@ import {
 } from "@/Components/ui/dropdown-menu";
 import { Translations, useTranslations } from "@/hooks/translations";
 import { HomeLayout } from "@/Layouts/Home/HomeLayout";
-import type { PagePropsWithSchool } from "@/types";
+import { Admin } from "@/types/auth";
 import { Link } from "@inertiajs/react";
 type Button = { label: Translations; route: string };
 type ButtonWithChildren = { label: Translations; children: Button[] };
@@ -60,7 +60,7 @@ const buttons: Buttons[] = [
   },
 ];
 
-export default function HomePage({ school }: PagePropsWithSchool) {
+export default function HomePage({ school }: { school: Admin }) {
   const { t } = useTranslations();
   return (
     <HomeLayout school={school} title={school.colegio}>
