@@ -13,16 +13,7 @@ npm install
 
 ## 3- Run de app
 ```
-php artisan serve
-```
-
-Open another terminal and run
-```
-npm run dev
-```
-One command for both (new)
-```
-composer dev
+composer run dev
 ```
 
 ## Dev features (urls)
