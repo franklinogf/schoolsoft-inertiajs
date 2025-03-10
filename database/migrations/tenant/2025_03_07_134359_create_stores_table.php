@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('prefix_code')->comment('Used for everteck to identify the store');
             $table->string('picture_url')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('store_items', function (Blueprint $table) {
