@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectUsersTo(function (Request $request) {
             $subPath = $request->segment(2);
 
-            return route($subPath.'.home');
+            return route($subPath.'.index');
 
         });
     })
