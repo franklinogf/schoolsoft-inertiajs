@@ -2,7 +2,9 @@
 
 namespace Tests;
 
+use App\Models\Admin;
 use App\Models\School;
+use App\Models\Teacher;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -25,5 +27,15 @@ abstract class TenantCase extends BaseTestCase
         DB::disconnect();
         tenancy()->end();
         parent::tearDown();
+    }
+
+    public function getPrimaryAdmin()
+    {
+        return Admin::getPrimaryAdmin()->first();
+    }
+
+    public function getRegiwebUser()
+    {
+        return Teacher::where('usuario', 'rvelez')->first();
     }
 }
