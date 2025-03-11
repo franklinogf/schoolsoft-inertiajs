@@ -37,7 +37,7 @@ jobs:
           script: |
             cd domains
             cd ${{ vars.SITE_NAME }}
-            git pull
+            git pull origin main
             ~/composer.phar install --no-dev
             php artisan optimize
             php artisan queue:listen --tries=1
