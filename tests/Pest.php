@@ -1,5 +1,6 @@
 <?php
 
+use Tests\TenantCase;
 use Tests\TestCase;
 
 /*
@@ -14,6 +15,7 @@ use Tests\TestCase;
 */
 
 uses(TestCase::class)->in('Feature');
+uses(TenantCase::class)->in('Tenant');
 
 /*
 |--------------------------------------------------------------------------
