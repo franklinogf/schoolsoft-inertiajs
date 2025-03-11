@@ -34,13 +34,13 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          script_stop: true
           script: |
             cd domains
             cd ${{ vars.SITE_NAME }}
             git pull
             ~/composer.phar install --no-dev
             php artisan optimize
+            php artisan queue:listen --tries=1
 
       - name: Install SSH key
         run: |
