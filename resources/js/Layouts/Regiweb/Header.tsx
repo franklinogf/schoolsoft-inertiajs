@@ -40,8 +40,9 @@ export default function Header() {
   const {
     auth: { user },
   } = usePage<PagePropsWithUser<Teacher>>().props;
-  console.log(route().current());
+
   const { t } = useTranslations();
+
   return (
     <header className="bg-secondary flex h-16 items-center px-4 shadow-sm">
       <div className="mr-8">
