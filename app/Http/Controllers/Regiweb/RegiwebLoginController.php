@@ -31,7 +31,7 @@ class RegiwebLoginController extends Controller
             return redirect()->intended(route('regiweb.index'));
         }
 
-        return to_route('regiweb.login.index')->with(FlashMessageKey::ERROR->value, __('Invalid credentials'));
+        return to_route('regiweb.login.index')->with(FlashMessageKey::ERROR->value, __('Credenciales inválidas'));
     }
 
     public function destroy(Request $request)
@@ -50,7 +50,7 @@ class RegiwebLoginController extends Controller
         $request->user()->fill($request->validated());
         $request->user()->save();
 
-        return back()->with(FlashMessageKey::SUCCESS->value, __('Password changed successfully'));
+        return back()->with(FlashMessageKey::SUCCESS->value, __('Contraseña cambiada con éxito'));
 
     }
 }
