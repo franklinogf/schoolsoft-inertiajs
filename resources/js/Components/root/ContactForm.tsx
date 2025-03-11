@@ -57,6 +57,7 @@ export function ContactForm() {
               error={errors.email}
             />
             <PhoneField
+              countries={[]}
               label={t("Teléfono")}
               value={data.phone}
               onChange={(value) => setData("phone", value)}

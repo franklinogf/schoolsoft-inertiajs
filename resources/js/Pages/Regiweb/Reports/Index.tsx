@@ -17,13 +17,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
     page: PAGES_SELECT[0]?.key,
   });
   const handleSubmit = () => {
-    get(
-      route("regiweb.reports.index", {
-        course: data.course,
-        trimester: data.trimester,
-        page: data.page,
-      }),
-    );
+    get(route("regiweb.reports.index"));
   };
   return (
     <RegiwebLayout title="Informes">

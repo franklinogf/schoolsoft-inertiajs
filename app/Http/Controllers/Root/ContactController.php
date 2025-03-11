@@ -21,7 +21,7 @@ class ContactController extends Controller
             'lastname' => ['required'],
             'email' => ['required', 'email'],
             'message' => ['required'],
-            'phone' => ['phone:US,INTERNATIONAL'],
+            'phone' => ['phone:INTERNATIONAL,US'],
         ]);
 
         Mail::to('franklinomarflores@gmail.com')->send(new \App\Mail\Root\Contact(
@@ -32,6 +32,6 @@ class ContactController extends Controller
             $validated['phone'],
         ));
 
-        return back()->with(FlashMessageKey::SUCCESS->value, __('Mensaje enviado con éxito'));
+        return to_route('contact.index')->with(FlashMessageKey::SUCCESS->value, __('Mensaje enviado con éxito'));
     }
 }

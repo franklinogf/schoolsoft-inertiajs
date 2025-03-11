@@ -2,7 +2,7 @@ import { FieldContainer } from "@/Components/forms/inputs/FieldContainer";
 import { FieldError } from "@/Components/forms/inputs/FieldError";
 import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
 import { useId } from "react";
-import PhoneInput, { type Value as E164Number } from "react-phone-number-input";
+import PhoneInput, { Country, type Value as E164Number } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 interface PhoneFieldProps {
   error?: string;
@@ -11,6 +11,7 @@ interface PhoneFieldProps {
   className?: string;
   placeholder?: string;
   value?: string | E164Number;
+  countries?: Country[];
   onChange?: (value: string) => void;
 }
 export function PhoneField({
@@ -20,6 +21,7 @@ export function PhoneField({
   className,
   placeholder,
   value,
+  countries = ["US", "PR"],
   onChange,
 }: PhoneFieldProps) {
   const id = useId();
@@ -30,7 +32,7 @@ export function PhoneField({
         countrySelectProps={{ id: `${id}-country` }}
         numberInputProps={{ id }}
         international
-        countries={["US", "PR"]}
+        countries={countries}
         countryCallingCodeEditable={false}
         placeholder={placeholder}
         defaultCountry="PR"

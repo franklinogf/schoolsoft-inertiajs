@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
+use Tests\TenantCase;
 use Tests\TestCase;
 
 /*
@@ -14,7 +15,12 @@ use Tests\TestCase;
 |
 */
 
-uses(TestCase::class, RefreshDatabase::class)->in('Feature');
+uses(TestCase::class)->in('Feature');
+uses(TenantCase::class)->in('Tenant');
+
+pest()->beforeEach(function () {
+    Auth::shouldUse('teacher');
+})->in('Tenant/Regiweb');
 
 /*
 |--------------------------------------------------------------------------

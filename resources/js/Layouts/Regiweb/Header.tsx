@@ -12,20 +12,37 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/Co
 import { LOGO_REGIWEB } from "@/Constants";
 import { Translations, useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
+import { PagePropsWithUser } from "@/types";
 import { Teacher } from "@/types/teacher";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { Menu, UserCircle } from "lucide-react";
-// i18n.loadNamespaces("pages");
-const menuItems: { label: Translations; route: string }[] = [
-  { label: "Grados", route: route("regiweb.notes.index") },
-  { label: "Opciones", route: route("regiweb.options.index") },
-  { label: "Informes", route: route("regiweb.reports.index") },
+import { RouteName } from "ziggy-js";
+
+const menuItems: { label: Translations; route: RouteName; current: string }[] = [
+  {
+    label: "Grados",
+    route: "regiweb.notes.index",
+    current: "regiweb.notes.*",
+  },
+  {
+    label: "Opciones",
+    route: "regiweb.options.index",
+    current: "regiweb.options.*",
+  },
+  {
+    label: "Informes",
+    route: "regiweb.reports.index",
+    current: "regiweb.reports.*",
+  },
 ] as const;
-interface HeaderProps {
-  user: Teacher;
-}
-export default function Header({ user }: HeaderProps) {
+
+export default function Header() {
+  const {
+    auth: { user },
+  } = usePage<PagePropsWithUser<Teacher>>().props;
+
   const { t } = useTranslations();
+
   return (
     <header className="bg-secondary flex h-16 items-center px-4 shadow-sm">
       <div className="mr-8">
@@ -41,11 +58,11 @@ export default function Header({ user }: HeaderProps) {
                 asChild
                 className={navigationMenuTriggerStyle({
                   className: cn("bg-transparent text-xl", {
-                    "bg-primary/80": route().current(item.route),
+                    "bg-primary/80": route().current(item.current),
                   }),
                 })}
               >
-                <Link href={item.route}>{t(item.label)}</Link>
+                <Link href={route(item.route)}>{t(item.label)}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           ))}
@@ -95,13 +112,13 @@ export default function Header({ user }: HeaderProps) {
                 {menuItems.map((item) => (
                   <Button
                     className={cn("text-lg font-bold", {
-                      "bg-accent/80": route().current(item.route),
+                      "bg-accent/80": route().current(item.current),
                     })}
                     variant="ghost"
                     key={item.label}
                     asChild
                   >
-                    <Link href={item.route}>{t(item.label)}</Link>
+                    <Link href={route(item.route)}>{t(item.label)}</Link>
                   </Button>
                 ))}
               </div>

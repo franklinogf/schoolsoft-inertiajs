@@ -1,4 +1,5 @@
 import SubmitButton from "@/Components/forms/SubmitButton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 
 interface OptionsFormProps {
   title: string;
@@ -15,9 +16,11 @@ export function OptionsForm({
   submitting,
 }: OptionsFormProps) {
   return (
-    <>
-      <h1 className="page-primary-title">{title}</h1>
-      <div className="mx-auto mt-8 w-full max-w-lg">
+    <Card className="mx-auto w-full max-w-lg">
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
         <form
           className="space-y-4"
           onSubmit={(e) => {
@@ -30,7 +33,7 @@ export function OptionsForm({
             <SubmitButton disabled={submitting}>{submitLabel}</SubmitButton>
           </div>
         </form>
-      </div>
-    </>
+      </CardContent>
+    </Card>
   );
 }
