@@ -143,11 +143,11 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             />
 
             <div className="hidden md:flex md:items-center md:justify-center">
-              <Card className="border-accent bg-accent">
-                <CardHeader className="p-2">
+              <Card>
+                <CardHeader>
                   <CardTitle className="text-lg">{t("Información")}</CardTitle>
                 </CardHeader>
-                <CardContent className="bg-background flex flex-col gap-2 rounded-b-md pt-2">
+                <CardContent className="flex flex-col gap-2">
                   <InfoBadge label="ID" value={user.id} />
                   <InfoBadge label={t("Usuario")} value={user.usuario} />
                   {user.grado && <InfoBadge label={t("Salón hogar")} value={user.grado} />}
@@ -410,7 +410,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             </div>
           </section>
           <section>
-            <Accordion className="rounded-md bg-white shadow-xs" type="single" collapsible>
+            <Accordion className="rounded-md shadow-sm" type="single" collapsible>
               <AccordionItem value="club">
                 <AccordionTrigger className="cursor-pointer px-6">{t("Clubes")}</AccordionTrigger>
                 <AccordionContent className="space-y-2 px-6">
