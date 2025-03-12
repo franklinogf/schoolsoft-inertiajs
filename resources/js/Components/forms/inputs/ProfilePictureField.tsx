@@ -26,11 +26,11 @@ export function ProfilePictureField({
       label={label}
       error={error}
       disabled={disabled}
-      className={cn(className, "size-50 text-center")}
+      className={cn(className, "size-50")}
+      labelClassName="block text-center"
       labelIdle={t(
         "Arrastra y suelta tu foto aquí o haz <span class='filepond--label-action'>clic</span> para seleccionarla",
       )}
-      imagePreviewHeight={100}
       allowMultiple={false}
       initialFiles={initialFile ? [initialFile] : []}
       onChange={(files) => {

@@ -135,13 +135,12 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
             <User2 className="size-8" />
           </h1>
           <section className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="mx-auto">
-              <ProfilePictureField
-                initialFile={user.foto_name}
-                onChange={(value) => setData("picture", value)}
-                error={errors.picture}
-              />
-            </div>
+            <ProfilePictureField
+              className="mx-auto"
+              initialFile={user.foto_name}
+              onChange={(value) => setData("picture", value)}
+              error={errors.picture}
+            />
 
             <div className="hidden md:flex md:items-center md:justify-center">
               <Card className="border-accent bg-accent">

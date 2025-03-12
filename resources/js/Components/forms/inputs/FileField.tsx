@@ -1,5 +1,4 @@
 import { useTranslations } from "@/hooks/translations";
-import { cn } from "@/lib/utils";
 import { PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { FilePondFile } from "filepond";
@@ -16,12 +15,20 @@ registerPlugin(FilePondPluginImagePreview, FilePondPluginImageExifOrientation);
 export interface FileFieldProps
   extends Omit<
     FilePondProps,
-    "server" | "onupdatefiles" | "onprocessfiles" | "onremovefile" | "files" | "credits"
+    | "server"
+    | "onupdatefiles"
+    | "onprocessfiles"
+    | "onremovefile"
+    | "files"
+    | "credits"
+    | "className"
   > {
   onChange?: (value: string[]) => void;
   initialFiles?: string[];
   label?: string;
   error?: string;
+  labelClassName?: string;
+  className?: string;
 }
 export function FileField({
   label,
@@ -32,6 +39,7 @@ export function FileField({
   onChange,
   allowImagePreview = true,
   className,
+  labelClassName,
   ...props
 }: FileFieldProps) {
   const { t } = useTranslations();
@@ -57,8 +65,8 @@ export function FileField({
   }
 
   return (
-    <FieldContainer className={cn(className)}>
-      <FieldLabel label={label} error={error} />
+    <FieldContainer className={className}>
+      <FieldLabel className={labelClassName} label={label} error={error} />
       <FilePond
         disabled={disabled}
         allowImagePreview={allowImagePreview}
