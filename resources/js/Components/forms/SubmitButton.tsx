@@ -1,7 +1,7 @@
-import { Button, ButtonProps } from "@/Components/ui/button";
+import { Button } from "@/Components/ui/button";
 import { cn } from "@/lib/utils";
 import { LoadingTextSwap } from "../LoadingTextSwap";
-interface SubmitButtonProps extends ButtonProps {
+interface SubmitButtonProps extends React.ComponentProps<typeof Button> {
   children: React.ReactNode;
   loadingIcon?: React.ReactNode;
 }
