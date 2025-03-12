@@ -1,3 +1,5 @@
+import { DataTablePagination } from "@/Components/datatables/DataTablePagination";
+import { InputField } from "@/Components/forms/inputs/InputField";
 import { Button } from "@/Components/ui/button";
 import {
   Table,
@@ -20,9 +22,6 @@ import {
 import { XSquare } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { DataTablePagination } from "@/Components/datatables/DataTablePagination";
-import { InputField } from "@/Components/forms/inputs/InputField";
-import { cn } from "@/lib/utils"
 
 interface DataTableProps<Tdata, TValue> {
   columns: ColumnDef<Tdata, TValue>[];
@@ -44,7 +43,7 @@ export function DataTable<Tdata, TValue>({
   rowId,
 }: DataTableProps<Tdata, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState<string>('');
+  const [globalFilter, setGlobalFilter] = useState<string>("");
   const [rowSelection, setRowSelection] = useState({});
   const table = useReactTable({
     columns,
@@ -77,14 +76,14 @@ export function DataTable<Tdata, TValue>({
             {globalFilter && (
               <Button
                 onClick={() => {
-                  table.setGlobalFilter('');
+                  table.setGlobalFilter("");
                 }}
                 asChild
                 className="size-4"
                 size="icon"
                 variant="ghost"
               >
-                <XSquare className="absolute top-1/2 right-2 -translate-y-1/2 hover:cursor-pointer" />
+                <XSquare className="hover:text-primary absolute top-1/2 right-2 -translate-y-1/2 hover:cursor-pointer" />
               </Button>
             )}
           </div>
@@ -92,11 +91,11 @@ export function DataTable<Tdata, TValue>({
       )}
       <div className="rounded-md border">
         <Table>
-          <TableHeader >
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="bg-primary/80 hover:bg-primary/80">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className='py-1 text-primary-foreground'>
+                  <TableHead key={header.id} className="text-primary-foreground py-1">
                     {header.isPlaceholder
                       ? null
                       : header.id === "select" && selectOne
