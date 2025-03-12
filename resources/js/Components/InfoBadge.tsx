@@ -1,7 +1,7 @@
-import { Badge, BadgeProps } from "@/Components/ui/badge";
+import { Badge } from "@/Components/ui/badge";
 import { cn } from "@/lib/utils";
 
-interface InfoBadgeProps extends BadgeProps {
+interface InfoBadgeProps extends React.ComponentProps<typeof Badge> {
   label: string;
   value: string | number | undefined;
 }

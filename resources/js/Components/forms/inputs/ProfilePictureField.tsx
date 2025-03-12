@@ -28,7 +28,7 @@ export function ProfilePictureField({
       disabled={disabled}
       className={cn(className, "size-50 text-center")}
       labelIdle={t(
-        'Arrastra y suelta tu foto aquí o haz <span class="filepond--label-action"> clic </span> para seleccionarla',
+        "Arrastra y suelta tu foto aquí o haz <span class='filepond--label-action'>clic</span> para seleccionarla",
       )}
       imagePreviewHeight={100}
       allowMultiple={false}

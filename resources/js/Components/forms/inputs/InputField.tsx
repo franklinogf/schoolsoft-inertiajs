@@ -1,16 +1,17 @@
 import { FieldContainer } from "@/Components/forms/inputs/FieldContainer";
 import { FieldError } from "@/Components/forms/inputs/FieldError";
 import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
-import { Input, type InputProps } from "@/Components/ui/input";
+import { Input } from "@/Components/ui/input";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
-interface InputFieldProps extends Omit<InputProps, "onChange" | "id"> {
+interface InputFieldProps extends Omit<React.ComponentProps<typeof Input>, "onChange" | "id"> {
   onChange?: (value: string) => void;
   error?: string;
   label?: string;
   removeArrows?: boolean;
   fieldClassName?: string;
 }
+
 export function InputField({
   error,
   label,

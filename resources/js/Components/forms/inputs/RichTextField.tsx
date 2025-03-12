@@ -1,7 +1,6 @@
 import { RichTextEditor } from "@/Components/custom-ui/RichTextEditor";
 import { FieldContainer } from "@/Components/forms/inputs/FieldContainer";
 import { FieldError } from "@/Components/forms/inputs/FieldError";
-import { labelVariants } from "@/Components/ui/label";
 import { cn } from "@/lib/utils";
 
 interface RichTextFieldProps {
@@ -23,10 +22,13 @@ export function RichTextField({
   return (
     <FieldContainer className={className}>
       <p
-        className={cn(labelVariants(), {
-          "text-destructive": error,
-          "text-muted-foreground/80": disabled,
-        })}
+        className={cn(
+          "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+          {
+            "text-destructive": error,
+            "text-muted-foreground/80": disabled,
+          },
+        )}
       >
         {label}
       </p>

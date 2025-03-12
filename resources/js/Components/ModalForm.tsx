@@ -1,5 +1,5 @@
 import SubmitButton from "@/Components/forms/SubmitButton";
-import { Button, ButtonProps } from "@/Components/ui/button";
+import { Button } from "@/Components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -12,12 +12,13 @@ import {
 } from "@/Components/ui/dialog";
 import { useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
+import React from "react";
 
 interface ModalFormProps {
   children?: React.ReactNode;
   buttonLabel: string;
   buttonClassname?: string;
-  buttonVariant?: ButtonProps["variant"];
+  buttonVariant?: React.ComponentProps<typeof Button>["variant"];
   className?: string;
   title: string;
   description?: string;

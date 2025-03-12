@@ -40,7 +40,7 @@ export function FileField({
 
   labelIdle =
     labelIdle ??
-    t('Arrastra y suelta tus archivos o <span class="filepond--label-action"> Buscar </span>');
+    t("Arrastra y suelta tus archivos o <span class='filepond--label-action'>Buscar</span>");
 
   const filePondRef = useRef<FilePond | null>(null);
 
