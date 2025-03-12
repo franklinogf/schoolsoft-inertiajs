@@ -6,11 +6,12 @@ use App\Filament\Resources\SchoolResource\Pages;
 use App\Models\Enviroment;
 use App\Models\Feature;
 use App\Models\School;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
@@ -134,46 +135,58 @@ class SchoolResource extends Resource
                         )->visible(fn ($state) => $state['default_mailer'] === 'resend'),
                     ]),
                     Tab::make('Theme')
-                        ->statePath('theme.themes')
+                        ->statePath('theme')
                         ->icon('heroicon-o-swatch')
                         ->schema([
-                            Placeholder::make('')
-                                ->content('You can customize the theme colors here.')
-                                ->hint('You can use HSL for colors. Example: hsl(0 0% 100%)')
-                                ->columns(1),
-                            Grid::make([
-                                'default' => 1,
-                                'sm' => 2,
-                            ])->schema(function () {
-                                $theme = collect(config('theme.themes'));
+                            Radio::make('current')
+                                ->label('Current theme')
+                                ->options([
+                                    'light' => 'Light',
+                                    'dark' => 'Dark',
+                                ])
+                                ->inline()
+                                ->inlineLabel(false)
+                                ->columns(2)
+                                ->default('light')
+                                ->required(),
+                            Section::make('You can customize the theme colors here.')
+                                ->description('You can use HSL for colors. Example: hsl(0 0% 100%)')
+                                ->statePath('themes')
+                                ->compact()
+                                ->columns([
+                                    'default' => 1,
+                                    'sm' => 2,
+                                ])
+                                ->schema(function () {
+                                    $theme = collect(config('theme.themes'));
 
-                                return $theme->map(function ($items, $mode) use ($theme) {
-                                    $colorItems = collect($items)
-                                        ->filter(fn ($_, $key) => ! in_array($key, ['radius']));
+                                    return $theme->map(function ($items, $mode) use ($theme) {
+                                        $colorItems = collect($items)
+                                            ->filter(fn ($_, $key) => ! in_array($key, ['radius']));
 
-                                    return FieldSet::make(ucfirst($mode))
-                                        ->columns(2)
-                                        ->columnSpan(1)
-                                        ->statePath($mode)
-                                        ->schema(
-                                            [
-                                                ...$colorItems->map(function ($color, $key) {
-                                                    return static::colorPicker($key, ucfirst($key), $color);
-                                                })->toArray(),
-                                                TextInput::make('radius')
-                                                    ->label('Radius')
-                                                    ->required()
-                                                    ->hint('Example: 0.5rem, 10px')
-                                                    ->endsWith(['rem', 'px'])
-                                                    ->afterStateHydrated(function (TextInput $component, $state) use ($theme, $mode) {
-                                                        if ($state === null) {
-                                                            $component->state($theme->get($mode)['radius']);
-                                                        }
-                                                    }),
-                                            ]
-                                        );
-                                })->toArray();
-                            }),
+                                        return FieldSet::make(ucfirst($mode))
+                                            ->columns(2)
+                                            ->columnSpan(1)
+                                            ->statePath($mode)
+                                            ->schema(
+                                                [
+                                                    ...$colorItems->map(function ($color, $key) {
+                                                        return static::colorPicker($key, ucfirst($key), $color);
+                                                    })->toArray(),
+                                                    TextInput::make('radius')
+                                                        ->label('Radius')
+                                                        ->required()
+                                                        ->hint('Example: 0.5rem, 10px')
+                                                        ->endsWith(['rem', 'px'])
+                                                        ->afterStateHydrated(function (TextInput $component, $state) use ($theme, $mode) {
+                                                            if ($state === null) {
+                                                                $component->state($theme->get($mode)['radius']);
+                                                            }
+                                                        }),
+                                                ]
+                                            );
+                                    })->toArray();
+                                }),
                         ])->columns(2),
                 ])
                     ->persistTabInQueryString()
@@ -186,15 +199,22 @@ class SchoolResource extends Resource
 
     private static function colorPicker(string $path, string $label, ?string $default = null): ColorPicker
     {
+        $default = str_replace(' ', ', ', $default);
 
         return ColorPicker::make($path)
             ->label(Str::ucfirst(Str::lower(Str::headline($label))))
             ->hsl()
-            ->afterStateHydrated(function (ColorPicker $component, $state) use ($default) {
-                if ($state === null) {
-                    $component->state(str_replace(' ', ', ', $default));
-                }
-            })
+            ->default($default)
+            ->placeholder($default)
+            ->hintAction(
+                Action::make('pasteColor')
+                    ->label('')
+                    ->icon('heroicon-o-clipboard')
+                    ->tooltip('Paste default color')
+                    ->action(function (ColorPicker $component) use ($default) {
+                        $component->state($default);
+                    }))
+
             ->regex('/hsl\(\s*(?:\d{1,3}(?:\.\d+)?)\s*,\s*(?:\d{1,2}(?:\.\d+)?|100(?:\.0+)?)%\s*,\s*(?:\d{1,2}(?:\.\d+)?|100(?:\.0+)?)%\s*\)/')
             ->required();
     }
