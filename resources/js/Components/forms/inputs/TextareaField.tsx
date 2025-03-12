@@ -27,7 +27,7 @@ export function TextareaField({
       <Textarea
         disabled={disabled}
         id={id}
-        className={cn({
+        className={cn("bg-input", {
           "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
         })}
         onChange={(e) => {

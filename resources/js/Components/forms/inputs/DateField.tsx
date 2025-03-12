@@ -41,6 +41,7 @@ export function DateField({
       <FieldLabel disabled={disabled} error={error} id={id} label={label} />
       <div className="relative w-full">
         <DateTimePicker
+          className="bg-input"
           disabled={disabled}
           id={id}
           yearRange={yearRange}

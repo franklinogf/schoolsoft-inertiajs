@@ -37,7 +37,7 @@ export function CheckboxField({
       />
       <div className="space-y-1 leading-none">
         <FieldLabel disabled={disabled} error={error} id={id} label={label} />
-        {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}
+        {description ? <p className="text-muted-foreground text-sm">{description}</p> : null}
       </div>
       <FieldError error={error} />
     </FieldContainer>

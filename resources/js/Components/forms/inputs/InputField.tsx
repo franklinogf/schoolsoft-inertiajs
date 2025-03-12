@@ -33,6 +33,7 @@ export function InputField({
         value={value}
         className={cn(
           fieldClassName,
+          "bg-input",
           {
             "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
           },
