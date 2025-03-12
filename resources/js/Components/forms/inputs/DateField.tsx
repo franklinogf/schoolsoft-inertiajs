@@ -9,7 +9,7 @@ import { enUS, es } from "date-fns/locale";
 import { XSquare } from "lucide-react";
 import { useId } from "react";
 interface DatePickerInputProps
-  extends Pick<DateTimePickerProps, "yearRange" | "displayFormat" | "showOutsideDays"> {
+  extends Pick<DateTimePickerProps, "startYear" | "endYear" | "displayFormat" | "showOutsideDays"> {
   error?: string;
   label?: string;
   disabled?: boolean;
@@ -25,7 +25,8 @@ export function DateField({
   className,
   disabled,
   placeholder,
-  yearRange = 50,
+  startYear = 30,
+  endYear = 5,
   displayFormat = { hour24: "PP" },
   clearable = true,
   value,
@@ -44,7 +45,8 @@ export function DateField({
           className="bg-input"
           disabled={disabled}
           id={id}
-          yearRange={yearRange}
+          startYear={startYear}
+          endYear={endYear}
           locale={currentLocale() === "es" ? es : enUS}
           displayFormat={displayFormat}
           granularity="day"
