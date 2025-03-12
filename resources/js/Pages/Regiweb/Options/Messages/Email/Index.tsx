@@ -1,7 +1,7 @@
+import { DataTable } from "@/Components/custom-ui/data-table";
 import { columns } from "@/Components/datatables/columns/admins";
 import { columns as coursesColumns } from "@/Components/datatables/columns/courses";
 import { columns as studentsColumns } from "@/Components/datatables/columns/students";
-import { DataTable } from "@/Components/ui/data-table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { Admin } from "@/types/auth";

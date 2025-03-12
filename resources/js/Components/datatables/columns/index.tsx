@@ -8,7 +8,7 @@ export const selectionHeader: ColumnDef<RowData> = {
     <div className="flex flex-col space-y-2">
       <Label className="flex items-center space-x-1">
         <Checkbox
-          className="bg-background data-[state=checked]:bg-background data-[state=checked]:text-primary"
+          className="bg-input data-[state=checked]:bg-input data-[state=checked]:text-primary"
           checked={
             table.getIsAllRowsSelected() || (table.getIsSomeRowsSelected() && "indeterminate")
           }
@@ -19,7 +19,7 @@ export const selectionHeader: ColumnDef<RowData> = {
       </Label>
       <Label className="flex items-center space-x-1">
         <Checkbox
-          className="bg-background data-[state=checked]:bg-background data-[state=checked]:text-primary"
+          className="bg-input data-[state=checked]:bg-input data-[state=checked]:text-primary"
           checked={
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
@@ -34,6 +34,7 @@ export const selectionHeader: ColumnDef<RowData> = {
 
   cell: ({ row }) => (
     <Checkbox
+      className="bg-input"
       checked={row.getIsSelected()}
       onCheckedChange={(value) => row.toggleSelected(!!value)}
       aria-label="Select row"
