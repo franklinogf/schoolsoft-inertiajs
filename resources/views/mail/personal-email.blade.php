@@ -2,6 +2,6 @@
 
 {{ Illuminate\Mail\Markdown::parse($message) }}
 
-{{__('Thanks')}},<br>
+{{__('Gracias')}},<br>
 {{ $school }}
 </x-mail::message>
