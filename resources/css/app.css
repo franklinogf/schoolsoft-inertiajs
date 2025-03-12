@@ -115,9 +115,9 @@
 }
 
 @utility input-phone {
-  @apply border-input! bg-background! placeholder:text-foreground! h-10! rounded-md! border! px-3! text-sm!;
+  @apply border-input! bg-background! text-foreground! placeholder:text-foreground! h-10! rounded-md! border! px-3! text-sm!;
   input {
-    @apply h-9 border-0 focus:ring-0;
+    @apply bg-background! h-9 border-0 focus:ring-0;
   }
 }
 
