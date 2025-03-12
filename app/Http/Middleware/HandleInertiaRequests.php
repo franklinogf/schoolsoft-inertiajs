@@ -43,6 +43,8 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user,
             ],
             'flash' => $this->getFlashMessages($request),
+            'theme' => config('theme'),
+
         ];
     }
 

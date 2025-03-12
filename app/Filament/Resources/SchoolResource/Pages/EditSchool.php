@@ -7,6 +7,7 @@ use App\Models\School;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Facades\Artisan;
 
 class EditSchool extends EditRecord
 {
@@ -18,9 +19,18 @@ class EditSchool extends EditRecord
             Actions\Action::make('school_website')
                 ->label('Go to school')
                 ->color(Color::Emerald)
-                ->url(fn (School $record): string => app()->isLocal() ? "http://localhost:8000/{$record->id}" : config('app.url')."/{$record->id}")
+                ->url(fn (School $record): string => config('app.url')."/{$record->id}")
                 ->openUrlInNewTab(),
             Actions\DeleteAction::make(),
         ];
+    }
+
+    protected function afterSave()
+    {
+        Artisan::call('tenants:run',
+            [
+                'commandname' => 'cache:clear',
+                '--tenants' => [$this->record->id],
+            ]);
     }
 }

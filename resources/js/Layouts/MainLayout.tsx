@@ -1,95 +1,96 @@
 import ConfirmationDialog from "@/Components/ConfirmationDialog";
 import { Toaster } from "@/Components/ui/sonner";
 import { useFlashToaster } from "@/hooks/flashToaster";
-import { Head } from "@inertiajs/react";
+import { PageProps } from "@/types";
+import { Head, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
 interface MainLayoutProps {
   children: React.ReactNode;
   title: string;
   description?: string;
-  theme?: {
-    background?: string;
-    foreground?: string;
-    muted?: string;
-    mutedForeground?: string;
-    popover?: string;
-    popoverForeground?: string;
-    card?: string;
-    cardForeground?: string;
-    primary?: string;
-    primaryForeground?: string;
-    secondary?: string;
-    secondaryForeground?: string;
-    accent?: string;
-    accentForeground?: string;
-    destructive?: string;
-    destructiveForeground?: string;
-    border?: string;
-    input?: string;
-    ring?: string;
-    radius?: string;
-  };
 }
-export default function MainLayout({ children, title, description, theme }: MainLayoutProps) {
+export default function MainLayout({ children, title, description }: MainLayoutProps) {
   useFlashToaster();
   const {
-    background = "214 52% 100%",
-    foreground = "214 80% 4%",
-    muted = "214 24% 92%",
-    mutedForeground = "214 6% 35%",
-    popover = "214 52% 100%",
-    popoverForeground = "214 80% 4%",
-    card = "214 52% 100%",
-    cardForeground = "214 80% 4%",
-    primary = "214 47% 41%",
-    primaryForeground = "0 0% 100%",
-    secondary = "214 4% 87%",
-    secondaryForeground = "214 4% 27%",
-    accent = "214 4% 87%",
-    accentForeground = "214 4% 27%",
-    destructive = "6 99% 29%",
-    destructiveForeground = "6 99% 89%",
-    border = "214 4% 90%",
-    input = "214 4% 90%",
-    ring = "214 47% 41%",
-    radius = "0.5rem",
-  } = theme || {};
+    themes: { light, dark },
+    current,
+  } = usePage<PageProps>().props.theme;
+  console.log(usePage<PageProps>().props);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", current);
+  }, [current]);
+
   return (
     <>
       <Head>
+        {/* <html data-theme={current} /> */}
         <title>{title}</title>
         {description && <meta name="description" content={description} />}
         <style>
           {`
             :root {
-                --background: ${background};
-                --foreground: ${foreground};
+                --background: ${light.background};
+                --foreground: ${light.foreground};
 
-                --muted: ${muted};
-                --muted-foreground: ${mutedForeground};
+                --muted: ${light.muted};
+                --muted-foreground: ${light.mutedForeground};
 
-                --popover: ${popover};
-                --popover-foreground: ${popoverForeground};
+                --popover: ${light.popover};
+                --popover-foreground: ${light.popoverForeground};
 
-                --card: ${card};
-                --card-foreground: ${cardForeground};
+                --card: ${light.card};
+                --card-foreground: ${light.cardForeground};
 
-                --primary: ${primary};
-                --primary-foreground: ${primaryForeground};
+                --primary: ${light.primary};
+                --primary-foreground: ${light.primaryForeground};
 
-                --secondary: ${secondary};
-                --secondary-foreground: ${secondaryForeground};
+                --secondary: ${light.secondary};
+                --secondary-foreground: ${light.secondaryForeground};
 
-                --accent: ${accent};
-                --accent-foreground: ${accentForeground};
+                --accent: ${light.accent};
+                --accent-foreground: ${light.accentForeground};
 
-                --destructive: ${destructive};
-                --destructive-foreground: ${destructiveForeground};
+                --destructive: ${light.destructive};
+                --destructive-foreground: ${light.destructiveForeground};
 
-                --border: ${border};
-                --input: ${input};
-                --ring: ${ring};
+                --border: ${light.border};
+                --input: ${light.input};
+                --ring: ${light.ring};
 
-                --radius: ${radius};
+                --radius: ${light.radius};
+            }
+
+            [data-theme="dark"] {
+                --background: ${dark.background};
+                --foreground: ${dark.foreground};
+
+                --muted: ${dark.muted};
+                --muted-foreground: ${dark.mutedForeground};
+
+                --popover: ${dark.popover};
+                --popover-foreground: ${dark.popoverForeground};
+
+                --card: ${dark.card};
+                --card-foreground: ${dark.cardForeground};
+
+                --primary: ${dark.primary};
+                --primary-foreground: ${dark.primaryForeground};
+
+                --secondary: ${dark.secondary};
+                --secondary-foreground: ${dark.secondaryForeground};
+
+                --accent: ${dark.accent};
+                --accent-foreground: ${dark.accentForeground};
+
+                --destructive: ${dark.destructive};
+                --destructive-foreground: ${dark.destructiveForeground};
+
+                --border: ${dark.border};
+                --input: ${dark.input};
+                --ring: ${dark.ring};
+
+                --radius: ${dark.radius};
             }
             `}
         </style>

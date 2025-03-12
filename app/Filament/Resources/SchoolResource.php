@@ -6,9 +6,11 @@ use App\Filament\Resources\SchoolResource\Pages;
 use App\Models\Enviroment;
 use App\Models\Feature;
 use App\Models\School;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
@@ -21,6 +23,7 @@ use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class SchoolResource extends Resource
 {
@@ -89,7 +92,7 @@ class SchoolResource extends Resource
                                 TextInput::make('tenancy_db_password')->label('Database password (auto filled)')->default(env('TENANT_DB_PASSWORD'))->required(),
 
                             ])->columns(3),
-                    ]),
+                    ])->icon('heroicon-o-building-library'),
 
                     Tab::make('Enviroments')->schema([
                         Group::make()->statePath('enviroments')
@@ -130,9 +133,70 @@ class SchoolResource extends Resource
                             ]
                         )->visible(fn ($state) => $state['default_mailer'] === 'resend'),
                     ]),
-                ])->columnSpanFull(),
+                    Tab::make('Theme')
+                        ->statePath('theme.themes')
+                        ->icon('heroicon-o-swatch')
+                        ->schema([
+                            Placeholder::make('')
+                                ->content('You can customize the theme colors here.')
+                                ->hint('You can use HSL for colors. Example: hsl(0 0% 100%)')
+                                ->columns(1),
+                            Grid::make([
+                                'default' => 1,
+                                'sm' => 2,
+                            ])->schema(function () {
+                                $theme = collect(config('theme.themes'));
+
+                                return $theme->map(function ($items, $mode) use ($theme) {
+                                    $colorItems = collect($items)
+                                        ->filter(fn ($_, $key) => ! in_array($key, ['radius']));
+
+                                    return FieldSet::make(ucfirst($mode))
+                                        ->columns(2)
+                                        ->columnSpan(1)
+                                        ->statePath($mode)
+                                        ->schema(
+                                            [
+                                                ...$colorItems->map(function ($color, $key) {
+                                                    return static::colorPicker($key, ucfirst($key), $color);
+                                                })->toArray(),
+                                                TextInput::make('radius')
+                                                    ->label('Radius')
+                                                    ->required()
+                                                    ->hint('Example: 0.5rem, 10px')
+                                                    ->endsWith(['rem', 'px'])
+                                                    ->afterStateHydrated(function (TextInput $component, $state) use ($theme, $mode) {
+                                                        if ($state === null) {
+                                                            $component->state($theme->get($mode)['radius']);
+                                                        }
+                                                    }),
+                                            ]
+                                        );
+                                })->toArray();
+                            }),
+                        ])->columns(2),
+                ])
+                    ->persistTabInQueryString()
+                    ->id('tab')
+                    ->columnSpanFull(),
 
             ]);
+
+    }
+
+    private static function colorPicker(string $path, string $label, ?string $default = null): ColorPicker
+    {
+
+        return ColorPicker::make($path)
+            ->label(Str::ucfirst(Str::lower(Str::headline($label))))
+            ->hsl()
+            ->afterStateHydrated(function (ColorPicker $component, $state) use ($default) {
+                if ($state === null) {
+                    $component->state(str_replace(' ', ', ', $default));
+                }
+            })
+            ->regex('/hsl\(\s*(?:\d{1,3}(?:\.\d+)?)\s*,\s*(?:\d{1,2}(?:\.\d+)?|100(?:\.0+)?)%\s*,\s*(?:\d{1,2}(?:\.\d+)?|100(?:\.0+)?)%\s*\)/')
+            ->required();
     }
 
     public static function table(Table $table): Table
@@ -161,13 +225,8 @@ class SchoolResource extends Resource
                 Tables\Actions\Action::make('school_website')
                     ->label('Go to school')
                     ->color(Color::Emerald)
-                    ->url(fn (School $record): string => config('app.url')."/{$record->id}")
+                    ->url(fn (School $record): string => route('home.index', ['school' => $record->id]))
                     ->openUrlInNewTab(),
-                /* ------------------------------- new website ------------------------------ */
-                // Tables\Actions\Action::make('school_website')
-                //     ->label('Go to school')
-                //     ->url(fn(School $record): string => route('home.index', ['school' => $record->id]))
-                //     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([

@@ -33,6 +33,7 @@ class School extends Tenant implements TenantWithDatabase
             'features',
             'created_at',
             'updated_at',
+            'theme',
         ];
     }
 
@@ -46,6 +47,7 @@ class School extends Tenant implements TenantWithDatabase
         return [
             'enviroments' => 'array',
             'features' => 'array',
+            'theme' => 'json',
         ];
     }
 }
