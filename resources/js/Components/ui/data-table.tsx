@@ -20,8 +20,9 @@ import {
 import { XSquare } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { DataTablePagination } from "../datatables/DataTablePagination";
-import { InputField } from "../forms/inputs/InputField";
+import { DataTablePagination } from "@/Components/datatables/DataTablePagination";
+import { InputField } from "@/Components/forms/inputs/InputField";
+import { cn } from "@/lib/utils"
 
 interface DataTableProps<Tdata, TValue> {
   columns: ColumnDef<Tdata, TValue>[];
@@ -91,11 +92,11 @@ export function DataTable<Tdata, TValue>({
       )}
       <div className="rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader >
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="bg-primary/80 hover:bg-primary/80">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className='py-1 text-primary-foreground'>
                     {header.isPlaceholder
                       ? null
                       : header.id === "select" && selectOne
