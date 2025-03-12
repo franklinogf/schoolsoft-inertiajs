@@ -3,6 +3,7 @@ import { columns } from "@/Components/datatables/columns/admins";
 import { columns as coursesColumns } from "@/Components/datatables/columns/courses";
 import { columns as studentsColumns } from "@/Components/datatables/columns/students";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { Admin } from "@/types/auth";
 import { Student } from "@/types/student";
@@ -28,11 +29,14 @@ export default function Page({ students, courses, admins, selected }: PageProps)
   const handleButtonClick = (data: string[]) => {
     router.get(route("regiweb.options.messages.email.form"), { data, selected: selectedTab });
   };
+  const { t } = useTranslations();
 
   return (
     <RegiwebLayout title="Mensajes de correo electrónico">
       <section className="mx-auto w-full max-w-4xl">
-        <h1 className="pb-4 text-center text-2xl font-semibold">Mensajes de correo electrónico</h1>
+        <h1 className="pb-4 text-center text-2xl font-semibold">
+          {t("Mensajes de correo electrónico")}
+        </h1>
         <Tabs
           value={selectedTab}
           onValueChange={(value) => {
@@ -41,16 +45,16 @@ export default function Page({ students, courses, admins, selected }: PageProps)
           }}
         >
           <TabsList className="mx-auto">
-            <TabsTrigger value={SelectedEnum.STUDENTS}>Estudiantes</TabsTrigger>
-            <TabsTrigger value={SelectedEnum.COURSES}>Cursos</TabsTrigger>
-            <TabsTrigger value={SelectedEnum.ADMIN}>Administradores</TabsTrigger>
+            <TabsTrigger value={SelectedEnum.STUDENTS}>{t("Estudiantes")}</TabsTrigger>
+            <TabsTrigger value={SelectedEnum.COURSES}>{t("Cursos")}</TabsTrigger>
+            <TabsTrigger value={SelectedEnum.ADMIN}>{t("Administradores")}</TabsTrigger>
           </TabsList>
           <TabsContent value={SelectedEnum.STUDENTS}>
             <DataTable
               rowId="ss"
               columns={studentsColumns}
               data={students}
-              buttonLabel="Continuar"
+              buttonLabel={t("Continuar")}
               onButtonClick={handleButtonClick}
             />
           </TabsContent>
@@ -59,7 +63,7 @@ export default function Page({ students, courses, admins, selected }: PageProps)
               rowId="curso"
               columns={coursesColumns}
               data={courses}
-              buttonLabel="Continuar"
+              buttonLabel={t("Continuar")}
               onButtonClick={handleButtonClick}
             />
           </TabsContent>
@@ -68,7 +72,7 @@ export default function Page({ students, courses, admins, selected }: PageProps)
               rowId="usuario"
               columns={columns}
               data={admins}
-              buttonLabel="Continuar"
+              buttonLabel={t("Continuar")}
               onButtonClick={handleButtonClick}
             />
           </TabsContent>
