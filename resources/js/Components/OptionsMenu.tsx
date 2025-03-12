@@ -11,7 +11,7 @@ export function OptionsMenu({ title, options }: OptionsMenuProps) {
       <h1 className="page-primary-title">{title}</h1>
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {options.map((option, index) => (
-          <fieldset key={index} className="border-2 border-primary p-2">
+          <fieldset key={index} className="border-input border-2 p-2">
             <legend className="text-lg font-semibold">{option.title}</legend>
             <ul className="space-y-4">
               {option.items.map((item, index) => (
