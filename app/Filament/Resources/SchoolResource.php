@@ -16,6 +16,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -25,6 +26,7 @@ use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Livewire\Component as Livewire;
 
 class SchoolResource extends Resource
 {
@@ -157,6 +159,9 @@ class SchoolResource extends Resource
                                     'default' => 1,
                                     'sm' => 2,
                                 ])
+                                ->headerActions([
+                                    static::importAction(),
+                                ])
                                 ->schema(function () {
                                     $theme = collect(config('theme.themes'));
 
@@ -197,11 +202,105 @@ class SchoolResource extends Resource
 
     }
 
+    private static function formatThemeKeyToCSS(string $key): string
+    {
+        return '--'.Str::slug(Str::headline($key));
+    }
+
+    private static function formatThemeKey(string $key): string
+    {
+        return Str::camel($key);
+    }
+
+    private static function formatThemeValueToCSS(string $value): string
+    {
+        return Str::replace(['hsl', '(', ')', ','], '', $value);
+    }
+
+    private static function formatThemeValue(string $value): string
+    {
+        $isHsl = preg_match('/(\d+(\.\d+)?)\s+(\d+(\.\d+)?)%\s+(\d+(\.\d+)?)%/', $value);
+
+        if ($isHsl) {
+            $value = static::formatThemeValueToCSS($value);
+
+            return 'hsl('.str_replace(' ', ', ', $value).')';
+        }
+
+        return $value;
+    }
+
+    private static function importAction(): Action
+    {
+
+        return Action::make('importTheme')
+            ->slideOver()
+            ->fillForm(function (School $record) {
+                $themes = '';
+                collect(json_decode(json_encode($record->theme['themes'])))
+                    ->each(function ($items, string $mode) use (&$themes) {
+                        $head = $mode === 'light' ? 'root:' : "[data-theme='{$mode}']";
+                        $themes .= "$head { \r\n";
+                        collect($items)
+                            ->each(function ($color, string $key) use (&$themes) {
+                                $formattedKey = static::formatThemeKeyToCSS($key);
+                                $themes .= "\t $formattedKey: ".static::formatThemeValueToCSS($color)."; \r\n";
+                            });
+                        $themes .= "} \r\n";
+                    });
+
+                return [
+                    'theme' => $themes,
+                ];
+            })
+            ->form([
+                Textarea::make('theme')
+                    ->label('Theme')
+                    ->live(onBlur: true)
+                    ->required()
+                    ->autosize(),
+            ])
+            ->action(function (array $data, School $record, Livewire $livewire) {
+
+                $theme = $data['theme'];
+                $json = [];
+
+                collect(config('theme.themes'))->keys()->each(function ($mode) use ($theme, &$json) {
+
+                    $replaceHead = $mode === 'light' ? 'root:' : "[data-theme='{$mode}']";
+
+                    $cssVariables = Str::betweenFirst($theme, $replaceHead, '}');
+                    $cssVariables = Str::betweenFirst($cssVariables, '{', '}');
+                    $cssVariables = Str::replaceMatches('/\t/', '', $cssVariables);
+                    $cssVariables = trim(Str::replaceMatches('/\r\n/', '', $cssVariables));
+                    $eachCssVariable = explode(';', $cssVariables);
+                    $css = [];
+                    foreach ($eachCssVariable as $key => $value) {
+                        if ($value === '') {
+                            continue;
+                        }
+                        $exploded = explode(':', trim($value));
+
+                        $css[static::formatThemeKey(trim($exploded[0]))] = static::formatThemeValue(trim($exploded[1]));
+                    }
+
+                    $json[$mode] = $css;
+
+                });
+                $record->update([
+                    'theme->themes' => $json,
+                ]);
+                $livewire->refreshFormData(['theme']);
+
+            });
+    }
+
     private static function colorPicker(string $path, string $label, ?string $default = null): ColorPicker
     {
         $default = str_replace(' ', ', ', $default);
 
         return ColorPicker::make($path)
+            ->live(onBlur: true)
             ->label(Str::ucfirst(Str::lower(Str::headline($label))))
             ->hsl()
             ->default($default)
