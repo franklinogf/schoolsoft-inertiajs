@@ -5,6 +5,7 @@ import {
   PAGES_SELECT,
   TRIMESTER_SELECT,
 } from "@/Constants/FormSelects";
+import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PagePropsWithUser } from "@/types";
 import { Teacher } from "@/types/teacher";
@@ -19,16 +20,17 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   const handleSubmit = () => {
     get(route("regiweb.reports.index"));
   };
+  const { t } = useTranslations();
   return (
-    <RegiwebLayout title="Informes">
+    <RegiwebLayout title={t("Informes")}>
       <OptionsForm
         submitting={processing}
         onSubmit={handleSubmit}
-        submitLabel="Ver informe"
-        title="Seleccionar informe"
+        submitLabel={t("Ver informe")}
+        title={t("Seleccionar informe")}
       >
         <SelectField
-          label="Curso"
+          label={t("Curso")}
           items={createSelectItemsFromArrayOfObjects(user.cursos, {
             separator: " - ",
             key: "curso",
@@ -38,13 +40,13 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
           onChange={(value) => setData("course", value)}
         />
         <SelectField
-          label="Trimestre"
+          label={t("Trimestre")}
           items={TRIMESTER_SELECT}
           value={data.trimester}
           onChange={(value) => setData("trimester", value)}
         />
         <SelectField
-          label="Pagina"
+          label={t("Página")}
           items={PAGES_SELECT}
           value={data.page}
           onChange={(value) => setData("page", value)}
