@@ -5,8 +5,8 @@ import { OTHER_SERVICES, SERVICES } from "@/Constants/root";
 import { useTranslations } from "@/hooks/translations";
 import RootLayout from "@/Layouts/Root/RootLayout";
 import { Link } from "@inertiajs/react";
-import { motion, type Variants } from "framer-motion";
 import { CircleCheckBig } from "lucide-react";
+import { motion, type Variants } from "motion/react";
 const listVariants: Variants = {
   offScreen: {
     y: 50,

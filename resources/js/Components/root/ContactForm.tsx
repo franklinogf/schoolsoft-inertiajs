@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/Components/ui/card";
 import { useTranslations } from "@/hooks/translations";
 import { PageProps } from "@/types";
 import { useForm, usePage } from "@inertiajs/react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 export function ContactForm() {
   usePage<PageProps>().props.flash.success;

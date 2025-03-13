@@ -1,4 +1,4 @@
-import { motion, type Variants } from "framer-motion";
+import { motion, type Variants } from "motion/react";
 interface ListProps {
   items: {
     title: string;
@@ -33,8 +33,8 @@ export function List({ items }: ListProps) {
           variants={item}
           className="flex w-full flex-col items-center p-10 sm:flex-row"
         >
-          <div className="icon inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-secondary sm:mr-10">
-            {Icon && <Icon className="size-8 bg-secondary stroke-2 text-primary" />}
+          <div className="icon bg-secondary inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full sm:mr-10">
+            {Icon && <Icon className="bg-secondary text-primary size-8 stroke-2" />}
           </div>
           <div className="mt-6 w-full grow text-center sm:mt-0 sm:text-left">
             <h3 className="mb-2 text-xl font-bold md:mb-1">{title}</h3>
