@@ -12,6 +12,7 @@ import {
 } from "@/Components/ui/table";
 import { ABSENCES_ATTENDANCE, TARDINESS_ATTENDANCE } from "@/Constants";
 import { createSelectItems } from "@/Constants/FormSelects";
+import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { Link, router } from "@inertiajs/react";
 import { useState } from "react";
@@ -67,10 +68,11 @@ export default function Page({
       },
     );
   };
+  const { t } = useTranslations();
   return (
     <RegiwebLayout title="Attendance Entry">
       <section className="mx-auto max-w-xl">
-        <h1 className="page-primary-title">Entrada de asistencias</h1>
+        <h1 className="page-primary-title">{t("Entrada de asistencias")}</h1>
         <div className="my-8">
           <DateField clearable={false} value={date} onChange={handleChangeDate} />
         </div>
@@ -106,8 +108,8 @@ export default function Page({
           <TableHeader>
             <TableRow>
               <TableHead></TableHead>
-              <TableHead>Estudiante</TableHead>
-              <TableHead>Asistencia</TableHead>
+              <TableHead>{t("Estudiante")}</TableHead>
+              <TableHead>{t("Asistencia")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -125,7 +127,7 @@ export default function Page({
                     placeholder="Select"
                   >
                     <SelectGroup>
-                      <SelectLabel>Ausencias</SelectLabel>
+                      <SelectLabel>{t("Ausencias")}</SelectLabel>
                       {createSelectItems(ABSENCES_ATTENDANCE).map((absence) => (
                         <SelectItem key={absence.key} value={absence.key}>
                           {absence.value}
@@ -133,7 +135,7 @@ export default function Page({
                       ))}
                     </SelectGroup>
                     <SelectGroup>
-                      <SelectLabel>Tardanzas</SelectLabel>
+                      <SelectLabel>{t("Tardanzas")}</SelectLabel>
                       {createSelectItems(TARDINESS_ATTENDANCE).map((absence) => (
                         <SelectItem key={absence.key} value={absence.key}>
                           {absence.value}

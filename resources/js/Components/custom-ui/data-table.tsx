@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
+import { useTranslations } from "@/hooks/translations";
 import {
   ColumnDef,
   flexRender,
@@ -60,7 +61,7 @@ export function DataTable<Tdata, TValue>({
     state: { sorting, globalFilter, rowSelection },
     getRowId: (row: Tdata) => row[rowId as keyof Tdata] as string,
   });
-
+  const { t } = useTranslations();
   return (
     <div>
       {filter && (
@@ -126,7 +127,7 @@ export function DataTable<Tdata, TValue>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results
+                  {t("No hay resultados")}
                 </TableCell>
               </TableRow>
             )}
