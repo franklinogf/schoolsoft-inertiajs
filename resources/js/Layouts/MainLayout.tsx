@@ -41,7 +41,7 @@ export default function MainLayout({ children, title, description }: MainLayoutP
       </Head>
       {children}
       <ConfirmationDialog />
-      <Toaster richColors closeButton theme="light" duration={3000} position="top-center" />
+      <Toaster richColors theme="light" duration={3000} position="top-center" />
     </>
   );
 }
