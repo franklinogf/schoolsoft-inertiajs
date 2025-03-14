@@ -16,10 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('active')->default(false);
-            $table->string('prefix_code')->comment('Used for everteck to identify the store');
+            $table->string('prefix_code')->unique()->comment('Used for everteck to identify the store');
             $table->string('picture_url')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('store_items', function (Blueprint $table) {
@@ -27,6 +26,7 @@ return new class extends Migration
             $table->foreignId('store_id')->constrained('stores')->cascadeOnDelete();
             $table->string('name');
             $table->float('price');
+            $table->json('options')->nullable();
             $table->boolean('buy_multiple')->default(false);
             $table->string('picture_url')->nullable();
             $table->timestamps();
