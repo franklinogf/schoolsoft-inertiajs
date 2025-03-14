@@ -20,7 +20,6 @@ export default function MainLayout({ children, title, description }: MainLayoutP
   function slugify(text: string) {
     return "--" + text.replace(/([A-Z])/g, "-$1").toLowerCase() + ": ";
   }
-  const th: keyof themes = "light";
   return (
     <>
       <Head>
