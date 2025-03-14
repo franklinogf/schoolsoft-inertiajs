@@ -1,4 +1,6 @@
-import { ToggleGroup, ToggleGroupItem } from "@/Components/ui/toggle-group";
+import { Button } from "@/Components/ui/button";
+import { ScrollArea, ScrollBar } from "@/Components/ui/scroll-area";
+import { Separator } from "@/Components/ui/separator";
 import { cn } from "@/lib/utils";
 import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";
@@ -15,7 +17,6 @@ import {
   AlignLeft,
   AlignRight,
   Bold,
-  Code,
   Heading1,
   Heading2,
   Heading3,
@@ -25,15 +26,10 @@ import {
   Link as LinkIcon,
   List,
   ListOrdered,
-  Minus,
-  Quote,
-  Redo,
-  RemoveFormattingIcon,
+  RedoIcon,
   Strikethrough,
-  Subscript,
-  Superscript as SuperscriptIcon,
   Underline as UnderlineIcon,
-  Undo,
+  UndoIcon,
   Unlink,
 } from "lucide-react";
 import { useEffect } from "react";
@@ -80,9 +76,8 @@ export function RichTextEditor({
     editorProps: {
       attributes: {
         class: cn(
-          "border-input focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive block field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+          "border-input block field-sizing-content min-h-16 w-full bg-transparent px-3 py-2 text-base transition-[color,box-shadow] outline-none focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
           "prose prose-sm sm:prose-base max-w-full",
-          "bg-input",
         ),
       },
     },
@@ -97,184 +92,158 @@ export function RichTextEditor({
   }
 
   return (
-    <div className={className}>
-      <div className="mb-1 flex flex-wrap items-center gap-x-1 gap-y-1">
+    <div className={cn("relative w-full overflow-hidden rounded-md border pb-3", className)}>
+      <div className="sticky top-0 left-0 z-20 flex w-full items-center justify-between border-b bg-transparent">
         <ToolBar editor={editor} />
       </div>
       <EditorContent editor={editor} />
     </div>
   );
 }
-
+function ToolBarButton({
+  onClick,
+  disabled,
+  icon,
+  active,
+}: {
+  onClick: () => void;
+  disabled: boolean;
+  icon: React.ReactNode;
+  active?: boolean;
+}) {
+  return (
+    <Button
+      className={cn("size-8 cursor-pointer rounded-none", {
+        "bg-accent": active,
+      })}
+      variant="ghost"
+      size="icon"
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {icon}
+    </Button>
+  );
+}
 function ToolBar({ editor }: { editor: Editor }) {
   return (
-    <div className="mb-1 flex flex-wrap items-center gap-x-1 gap-y-1">
-      <ToggleGroup disabled={!editor.isEditable} type="multiple" size="sm" variant="outline">
-        <ToggleGroupItem
-          value="bold"
-          aria-label="Toggle bold"
+    <ScrollArea className="w-full pb-0.5 whitespace-nowrap">
+      <div className="flex w-max items-center">
+        <ToolBarButton
+          onClick={() => editor.chain().focus().undo().run()}
+          disabled={!editor.can().chain().focus().undo().run()}
+          icon={<UndoIcon className="size-4" />}
+        />
+        <ToolBarButton
+          onClick={() => editor.chain().focus().redo().run()}
+          disabled={!editor.can().chain().focus().redo().run()}
+          icon={<RedoIcon className="size-4" />}
+        />
+
+        <Separator orientation="vertical" className="h-6!" />
+
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
-          data-state={editor.isActive("bold") ? "on" : "off"}
-        >
-          <Bold className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="strike"
-          aria-label="Toggle strikethrough"
+          icon={<Bold className="size-4" />}
+          active={editor.isActive("bold")}
+        />
+
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={!editor.can().chain().focus().toggleStrike().run()}
-          data-state={editor.isActive("strike") ? "on" : "off"}
-        >
-          <Strikethrough className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="italic"
-          aria-label="Toggle italic"
+          active={editor.isActive("strike")}
+          icon={<Strikethrough className="size-4" />}
+        />
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
-          data-state={editor.isActive("italic") ? "on" : "off"}
-        >
-          <Italic className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="underline"
-          aria-label="Toggle underline"
+          active={editor.isActive("italic")}
+          icon={<Italic className="size-4" />}
+        />
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleUnderline().run()}
           disabled={!editor.can().chain().focus().toggleUnderline().run()}
-          data-state={editor.isActive("underline") ? "on" : "off"}
-        >
-          <UnderlineIcon className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="code"
-          aria-label="Toggle code"
-          onClick={() => editor.chain().focus().toggleCode().run()}
-          disabled={!editor.can().chain().focus().toggleCode().run()}
-          data-state={editor.isActive("code") ? "on" : "off"}
-        >
-          <Code className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="highlight"
-          aria-label="Toggle highlight"
+          active={editor.isActive("underline")}
+          icon={<UnderlineIcon className="size-4" />}
+        />
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleHighlight().run()}
           disabled={!editor.can().chain().focus().toggleHighlight().run()}
-          data-state={editor.isActive("highlight") ? "on" : "off"}
-        >
-          <Highlighter className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="clear"
-          aria-label="Clear formatting"
-          onClick={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}
-          disabled={!editor.can().chain().focus().clearNodes().unsetAllMarks().run()}
-          data-state="off"
-        >
-          <RemoveFormattingIcon className="size-4" />
-        </ToggleGroupItem>
-      </ToggleGroup>
-
-      <ToggleGroup disabled={!editor.isEditable} type="single" size="sm" variant="outline">
-        <ToggleGroupItem
-          value="h1"
-          aria-label="Heading 1"
+          active={editor.isActive("highlight")}
+          icon={<Highlighter className="size-4" />}
+        />
+        <Separator orientation="vertical" className="h-6!" />
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           disabled={!editor.can().chain().focus().toggleHeading({ level: 1 }).run()}
-          data-state={editor.isActive("heading", { level: 1 }) ? "on" : "off"}
-        >
-          <Heading1 className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="h2"
-          aria-label="Heading 2"
+          active={editor.isActive("heading", { level: 1 })}
+          icon={<Heading1 className="size-4" />}
+        />
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           disabled={!editor.can().chain().focus().toggleHeading({ level: 2 }).run()}
-          data-state={editor.isActive("heading", { level: 2 }) ? "on" : "off"}
-        >
-          <Heading2 className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="h3"
-          aria-label="Heading 3"
+          active={editor.isActive("heading", { level: 2 })}
+          icon={<Heading2 className="size-4" />}
+        />
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           disabled={!editor.can().chain().focus().toggleHeading({ level: 3 }).run()}
-          data-state={editor.isActive("heading", { level: 3 }) ? "on" : "off"}
-        >
-          <Heading3 className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="h4"
-          aria-label="Heading 4"
+          active={editor.isActive("heading", { level: 3 })}
+          icon={<Heading3 className="size-4" />}
+        />
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
           disabled={!editor.can().chain().focus().toggleHeading({ level: 4 }).run()}
-          data-state={editor.isActive("heading", { level: 4 }) ? "on" : "off"}
-        >
-          <Heading4 className="size-4" />
-        </ToggleGroupItem>
-      </ToggleGroup>
+          active={editor.isActive("heading", { level: 4 })}
+          icon={<Heading4 className="size-4" />}
+        />
+        <Separator orientation="vertical" className="h-6!" />
 
-      <ToggleGroup disabled={!editor.isEditable} type="multiple" size="sm" variant="outline">
-        <ToggleGroupItem
-          value="blockquote"
-          aria-label="Toggle blockquote"
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          disabled={!editor.can().chain().focus().toggleBlockquote().run()}
-          data-state={editor.isActive("blockquote") ? "on" : "off"}
-        >
-          <Quote className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="bulletList"
-          aria-label="Toggle bullet list"
+        <ToolBarButton
+          onClick={() => editor.chain().focus().setTextAlign("left").run()}
+          disabled={!editor.can().chain().focus().setTextAlign("left").run()}
+          active={editor.isActive({ textAlign: "left" })}
+          icon={<AlignLeft className="size-4" />}
+        />
+
+        <ToolBarButton
+          onClick={() => editor.chain().focus().setTextAlign("center").run()}
+          disabled={!editor.can().chain().focus().setTextAlign("center").run()}
+          active={editor.isActive({ textAlign: "center" })}
+          icon={<AlignCenter className="size-4" />}
+        />
+
+        <ToolBarButton
+          onClick={() => editor.chain().focus().setTextAlign("right").run()}
+          disabled={!editor.can().chain().focus().setTextAlign("right").run()}
+          active={editor.isActive({ textAlign: "right" })}
+          icon={<AlignRight className="size-4" />}
+        />
+
+        <ToolBarButton
+          aria-label="Align justify"
+          onClick={() => editor.chain().focus().setTextAlign("justify").run()}
+          disabled={!editor.can().chain().focus().setTextAlign("justify").run()}
+          active={editor.isActive({ textAlign: "justify" })}
+          icon={<AlignJustify className="size-4" />}
+        />
+        <Separator orientation="vertical" className="h-6!" />
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           disabled={!editor.can().chain().focus().toggleBulletList().run()}
-          data-state={editor.isActive("bulletList") ? "on" : "off"}
-        >
-          <List className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="orderedList"
-          aria-label="Toggle ordered list"
+          active={editor.isActive("bulletList")}
+          icon={<List className="size-4" />}
+        />
+
+        <ToolBarButton
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           disabled={!editor.can().chain().focus().toggleOrderedList().run()}
-          data-state={editor.isActive("orderedList") ? "on" : "off"}
-        >
-          <ListOrdered className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="horizontalRule"
-          aria-label="Add horizontal rule"
-          onClick={() => editor.chain().focus().setHorizontalRule().run()}
-          disabled={!editor.can().chain().focus().setHorizontalRule().run()}
-          data-state="off"
-        >
-          <Minus className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="superscript"
-          aria-label="Toggle superscript"
-          onClick={() => editor.chain().focus().toggleSuperscript().run()}
-          disabled={!editor.can().chain().focus().toggleSuperscript().run()}
-          data-state={editor.isActive("superscript") ? "on" : "off"}
-        >
-          <SuperscriptIcon className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="subscript"
-          aria-label="Toggle subscript"
-          onClick={() => editor.chain().focus().toggleSubscript().run()}
-          disabled={!editor.can().chain().focus().toggleSubscript().run()}
-          data-state={editor.isActive("subscript") ? "on" : "off"}
-        >
-          <Subscript className="size-4" />
-        </ToggleGroupItem>
-      </ToggleGroup>
-
-      <ToggleGroup disabled={!editor.isEditable} type="single" size="sm" variant="outline">
-        <ToggleGroupItem
-          value="link"
-          aria-label="Add link"
+          active={editor.isActive("orderedList")}
+          icon={<ListOrdered className="size-4" />}
+        />
+        <Separator orientation="vertical" className="h-6!" />
+        <ToolBarButton
           onClick={() => {
             const url = window.prompt("Enter URL");
             if (url) {
@@ -291,78 +260,18 @@ function ToolBar({ editor }: { editor: Editor }) {
           }}
           disabled={!editor.can().chain().focus().setLink({ href: "https://example.com" }).run()}
           data-state={editor.isActive("link") ? "on" : "off"}
-        >
-          <LinkIcon className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="link"
-          aria-label="Add link"
+          icon={<LinkIcon className="size-4" />}
+        />
+
+        <ToolBarButton
           onClick={() => {
             editor.chain().focus().unsetLink().run();
           }}
           disabled={!editor.can().chain().focus().unsetLink().run()}
-        >
-          <Unlink className="size-4" />
-        </ToggleGroupItem>
-      </ToggleGroup>
-
-      <ToggleGroup disabled={!editor.isEditable} type="single" size="sm" variant="outline">
-        <ToggleGroupItem
-          value="left"
-          aria-label="Align left"
-          onClick={() => editor.chain().focus().setTextAlign("left").run()}
-          disabled={!editor.can().chain().focus().setTextAlign("left").run()}
-          data-state={editor.isActive({ textAlign: "left" }) ? "on" : "off"}
-        >
-          <AlignLeft className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="center"
-          aria-label="Align center"
-          onClick={() => editor.chain().focus().setTextAlign("center").run()}
-          disabled={!editor.can().chain().focus().setTextAlign("center").run()}
-          data-state={editor.isActive({ textAlign: "center" }) ? "on" : "off"}
-        >
-          <AlignCenter className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="right"
-          aria-label="Align right"
-          onClick={() => editor.chain().focus().setTextAlign("right").run()}
-          disabled={!editor.can().chain().focus().setTextAlign("right").run()}
-          data-state={editor.isActive({ textAlign: "right" }) ? "on" : "off"}
-        >
-          <AlignRight className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="justify"
-          aria-label="Align justify"
-          onClick={() => editor.chain().focus().setTextAlign("justify").run()}
-          disabled={!editor.can().chain().focus().setTextAlign("justify").run()}
-          data-state={editor.isActive({ textAlign: "justify" }) ? "on" : "off"}
-        >
-          <AlignJustify className="size-4" />
-        </ToggleGroupItem>
-      </ToggleGroup>
-
-      <ToggleGroup disabled={!editor.isEditable} type="single" size="sm" variant="outline">
-        <ToggleGroupItem
-          value="undo"
-          aria-label="Undo"
-          onClick={() => editor.chain().focus().undo().run()}
-          disabled={!editor.can().chain().focus().undo().run()}
-        >
-          <Undo className="size-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="redo"
-          aria-label="Redo"
-          onClick={() => editor.chain().focus().redo().run()}
-          disabled={!editor.can().chain().focus().redo().run()}
-        >
-          <Redo className="size-4" />
-        </ToggleGroupItem>
-      </ToggleGroup>
-    </div>
+          icon={<Unlink className="size-4" />}
+        />
+      </div>
+      <ScrollBar orientation="horizontal" className="h-1.5!" />
+    </ScrollArea>
   );
 }
