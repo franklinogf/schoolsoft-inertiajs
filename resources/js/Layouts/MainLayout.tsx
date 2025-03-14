@@ -15,7 +15,6 @@ export default function MainLayout({ children, title, description }: MainLayoutP
     themes: { light, dark },
     current,
   } = usePage<PageProps>().props.theme;
-  console.log(usePage<PageProps>().props);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", current);
