@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->boolean('active')->default(false);
             $table->string('prefix_code')->unique()->comment('Used for everteck to identify the store');
-            $table->string('picture_url')->nullable();
             $table->timestamps();
         });
 
