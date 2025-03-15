@@ -41,7 +41,6 @@ jobs:
             ~/composer.phar install --no-dev
             php artisan optimize
             php artisan queue:restart
-            php artisan queue:work --sleep=3 --tries=3 --timeout=90
 
       - name: Install SSH key
         run: |
