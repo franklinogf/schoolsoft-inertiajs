@@ -1,8 +1,8 @@
-@props(['school' => config('app.name')])
+@props(['school' => null])
 <x-mail::layout>
 {{-- Header --}}
 <x-slot:header>
-<x-mail::header :url="$school === config('app.name') ? config('app.url') : route('home.index', ['school' => tenant('id')])">
+<x-mail::header :url="$school === null ? config('app.url') : route('home.index', ['school' => tenant('id')])">
 {{ $school }}
 </x-mail::header>
 </x-slot:header>
@@ -22,7 +22,7 @@
 {{-- Footer --}}
 <x-slot:footer>
 <x-mail::footer>
-© {{ date('Y') }} {{ config('app.name') }}. {{ __('All rights reserved.') }}
+© {{ date('Y') }} {{ config('app.name') }}. {{ __('Todos los derechos reservados.') }}
 </x-mail::footer>
 </x-slot:footer>
 </x-mail::layout>
