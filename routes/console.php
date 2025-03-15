@@ -6,4 +6,4 @@ Schedule::command('telescope:prune --hours=48')->description('Delete entries fro
 
 Schedule::command(DeleteTempUploadedFiles::class)->hourly();
 
-Schedule::command('queue:work --stop-when-empty --tries=3 --timeout=90')->everyMinute();
+// Schedule::command('queue:work --stop-when-empty --tries=3 --timeout=90')->everyMinute();
