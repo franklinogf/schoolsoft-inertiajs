@@ -56,7 +56,7 @@ export function SelectField({
       <Select name={id} disabled={disabled} defaultValue={value} onValueChange={onChange}>
         <SelectTrigger
           id={id}
-          className={cn({
+          className={cn("bg-input w-full", {
             "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
           })}
         >

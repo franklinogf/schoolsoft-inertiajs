@@ -1,3 +1,5 @@
+import { DataTablePagination } from "@/Components/datatables/DataTablePagination";
+import { InputField } from "@/Components/forms/inputs/InputField";
 import { Button } from "@/Components/ui/button";
 import {
   Table,
@@ -7,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
+import { useTranslations } from "@/hooks/translations";
 import {
   ColumnDef,
   flexRender,
@@ -20,8 +23,6 @@ import {
 import { XSquare } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { DataTablePagination } from "../datatables/DataTablePagination";
-import { InputField } from "../forms/inputs/InputField";
 
 interface DataTableProps<Tdata, TValue> {
   columns: ColumnDef<Tdata, TValue>[];
@@ -43,7 +44,7 @@ export function DataTable<Tdata, TValue>({
   rowId,
 }: DataTableProps<Tdata, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState<string>('');
+  const [globalFilter, setGlobalFilter] = useState<string>("");
   const [rowSelection, setRowSelection] = useState({});
   const table = useReactTable({
     columns,
@@ -60,7 +61,7 @@ export function DataTable<Tdata, TValue>({
     state: { sorting, globalFilter, rowSelection },
     getRowId: (row: Tdata) => row[rowId as keyof Tdata] as string,
   });
-
+  const { t } = useTranslations();
   return (
     <div>
       {filter && (
@@ -76,14 +77,14 @@ export function DataTable<Tdata, TValue>({
             {globalFilter && (
               <Button
                 onClick={() => {
-                  table.setGlobalFilter('');
+                  table.setGlobalFilter("");
                 }}
                 asChild
                 className="size-4"
                 size="icon"
                 variant="ghost"
               >
-                <XSquare className="absolute top-1/2 right-2 -translate-y-1/2 hover:cursor-pointer" />
+                <XSquare className="hover:text-primary absolute top-1/2 right-2 -translate-y-1/2 hover:cursor-pointer" />
               </Button>
             )}
           </div>
@@ -93,9 +94,9 @@ export function DataTable<Tdata, TValue>({
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="bg-primary/80 hover:bg-primary/80">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-primary-foreground py-1">
                     {header.isPlaceholder
                       ? null
                       : header.id === "select" && selectOne
@@ -126,7 +127,7 @@ export function DataTable<Tdata, TValue>({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results
+                  {t("No hay resultados")}
                 </TableCell>
               </TableRow>
             )}

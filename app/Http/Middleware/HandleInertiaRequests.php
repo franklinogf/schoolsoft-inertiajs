@@ -43,6 +43,8 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user,
             ],
             'flash' => $this->getFlashMessages($request),
+            'theme' => config('theme'),
+
         ];
     }
 
@@ -53,7 +55,7 @@ class HandleInertiaRequests extends Middleware
             'regiweb' => 'teacher',
             'teacher' => 'teacher',
             'student' => 'student',
-            default => 'web',
+            default => null,
         };
     }
 

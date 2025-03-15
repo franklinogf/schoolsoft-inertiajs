@@ -7,5 +7,5 @@ export function FieldContainer({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={cn("space-y-0.5", className)}>{children}</div>;
+  return <div className={cn("space-y-1", className)}>{children}</div>;
 }

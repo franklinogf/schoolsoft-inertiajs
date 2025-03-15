@@ -3,6 +3,7 @@ import { InputField } from "@/Components/forms/inputs/InputField";
 import { RichTextField } from "@/Components/forms/inputs/RichTextField";
 import SubmitButton from "@/Components/forms/SubmitButton";
 import { Button } from "@/Components/ui/button";
+import { Card, CardContent } from "@/Components/ui/card";
 import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { SelectedEnum } from "@/Pages/Regiweb/Options/Messages/Email/Index";
@@ -68,34 +69,36 @@ export default function Page({ students, courses, admins, selected, data: rowsId
           </Button>
         </div>
         <form onSubmit={onSubmit}>
-          <div className="space-y-2 rounded-lg bg-white p-4 shadow">
-            <InputField label={t("Para")} name="to" disabled value={to} />
-            <InputField
-              required
-              value={data.subject}
-              onChange={(value) => {
-                setData("subject", value);
-              }}
-              error={errors.subject}
-              label={t("Asunto")}
-              name="subject"
-            />
-            <RichTextField
-              label={t("Mensaje")}
-              value={data.message}
-              onChange={(value) => {
-                setData("message", value);
-              }}
-              error={errors.message}
-            />
-            <FileField
-              label={t("Adjuntos")}
-              allowMultiple
-              onChange={(values) => {
-                setData("files", values);
-              }}
-            />
-          </div>
+          <Card>
+            <CardContent className="space-y-2">
+              <InputField label={t("Para")} name="to" disabled value={to} />
+              <InputField
+                required
+                value={data.subject}
+                onChange={(value) => {
+                  setData("subject", value);
+                }}
+                error={errors.subject}
+                label={t("Asunto")}
+                name="subject"
+              />
+              <RichTextField
+                label={t("Mensaje")}
+                value={data.message}
+                onChange={(value) => {
+                  setData("message", value);
+                }}
+                error={errors.message}
+              />
+              <FileField
+                label={t("Adjuntos")}
+                allowMultiple
+                onChange={(values) => {
+                  setData("files", values);
+                }}
+              />
+            </CardContent>
+          </Card>
           <div className="mt-4 flex justify-center">
             <SubmitButton
               loadingIcon={<MailIcon className="animate-bounce" />}

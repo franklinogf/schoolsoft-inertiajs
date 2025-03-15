@@ -1,10 +1,11 @@
 import { FieldContainer } from "@/Components/forms/inputs/FieldContainer";
 import { FieldError } from "@/Components/forms/inputs/FieldError";
 import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
-import { Textarea, type TextareaProps } from "@/Components/ui/textarea";
+import { Textarea } from "@/Components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
-interface TextareaFieldProps extends Omit<TextareaProps, "onChange" | "id"> {
+interface TextareaFieldProps
+  extends Omit<React.ComponentProps<typeof Textarea>, "onChange" | "id"> {
   error?: string;
   label?: string;
   disabled?: boolean;
@@ -26,7 +27,7 @@ export function TextareaField({
       <Textarea
         disabled={disabled}
         id={id}
-        className={cn({
+        className={cn("bg-input", {
           "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
         })}
         onChange={(e) => {

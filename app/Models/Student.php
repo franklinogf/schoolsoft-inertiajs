@@ -39,11 +39,11 @@ class Student extends Model
         // static::addGlobalScope('year', function (Builder $builder) {
         //     $builder->where("year.year", Admin::admin()->year);
         // });
-        //Siempre buscar los que estan activos
+        // Siempre buscar los que estan activos
         // static::addGlobalScope('active', function (Builder $builder) {
         //     $builder->where('year.fecha_baja', '0000-00-00');
         // });
-        //Siempre ordernar por apellidos
+        // Siempre ordernar por apellidos
         static::addGlobalScope('orderByLastname', function (Builder $builder) {
             $builder->orderBy('year.apellidos')->orderBy('year.nombre');
         });

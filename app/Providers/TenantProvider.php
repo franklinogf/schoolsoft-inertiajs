@@ -17,6 +17,18 @@ class TenantProvider extends ServiceProvider
         //
     }
 
+    private function theme(): array
+    {
+        $theme = [];
+        foreach (config('theme.themes') as $mode => $variables) {
+            foreach ($variables as $variable => $_) {
+                $theme["theme.themes.{$mode}.{$variable}"] = "theme.themes.{$mode}.{$variable}";
+            }
+        }
+
+        return $theme;
+    }
+
     /**
      * Bootstrap services.
      */
@@ -24,7 +36,10 @@ class TenantProvider extends ServiceProvider
     {
         $configs = [
             'locale' => 'app.locale',
+            ...$this->theme(),
+            'theme.current' => 'theme.current',
         ];
+
         if (! app()->isLocal()) {
             $configs = array_merge($configs, [
                 'default_mailer' => 'mail.default',
@@ -36,6 +51,7 @@ class TenantProvider extends ServiceProvider
                 'smtp_password' => 'mail.mailers.smtp.password',
                 'smtp_encryption' => 'mail.mailers.smtp.encryption',
             ]);
+
         }
 
         Tenancy\Features\TenantConfig::$storageToConfigMap = $configs;
@@ -47,7 +63,6 @@ class TenantProvider extends ServiceProvider
         Tenancy\Controllers\TenantAssetsController::$tenancyMiddleware = Tenancy\Middleware\InitializeTenancyByPath::class;
 
         Tenancy\Resolvers\PathTenantResolver::$tenantParameterName = 'school';
-
         // enable cache
         PathTenantResolver::$shouldCache = true;
 
