@@ -13,8 +13,8 @@ Route::middleware(
     [
         'web',
         InitializeTenancyByPath::class,
-        SetDefaultTenant::class]
-)
+        SetDefaultTenant::class,
+    ])
     ->prefix('{'.PathTenantResolver::$tenantParameterName.'}')
     ->group(function () {
         Route::name('home.')->group(function () {
