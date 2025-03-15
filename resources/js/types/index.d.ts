@@ -10,7 +10,7 @@ export interface Document {
   grado_hasta: string;
 }
 export type Errors = { [key: string]: string };
-type theme = {
+type Theme = {
   background: string;
   foreground: string;
   muted: string;
@@ -32,9 +32,9 @@ type theme = {
   ring: string;
   radius: string;
 };
-type themes = {
-  light: theme;
-  dark: theme;
+type Themes = {
+  light: Theme;
+  dark: Theme;
 };
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
   flash: {
@@ -46,8 +46,8 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
   locale: string;
   csrf_token: string;
   theme: {
-    current: keyof themes;
-    themes: themes;
+    current: keyof Themes;
+    themes: Themes;
   };
 };
 
