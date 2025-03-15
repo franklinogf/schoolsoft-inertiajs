@@ -239,7 +239,7 @@ class SchoolResource extends Resource
                 $themes = '';
                 collect(json_decode(json_encode($record->theme['themes'])))
                     ->each(function ($items, string $mode) use (&$themes) {
-                        $head = $mode === 'light' ? 'root:' : ".{$mode}";
+                        $head = $mode === 'light' ? ':root' : ".{$mode}";
                         $themes .= "$head { \r\n";
                         collect($items)
                             ->each(function ($color, string $key) use (&$themes) {
@@ -267,7 +267,7 @@ class SchoolResource extends Resource
 
                 collect(config('theme.themes'))->keys()->each(function ($mode) use ($theme, &$json) {
 
-                    $replaceHead = $mode === 'light' ? 'root:' : ".{$mode}";
+                    $replaceHead = $mode === 'light' ? ':root' : ".{$mode}";
 
                     $cssVariables = Str::betweenFirst($theme, $replaceHead, '}');
                     $cssVariables = Str::betweenFirst($cssVariables, '{', '}');
