@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
@@ -25,6 +26,10 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
                 $entry->isFailedJob() ||
                 $entry->isScheduledTask() ||
                 $entry->isSlowQuery() ||
+                $entry->isEvent() ||
+                $entry->isDump() ||
+                $entry->isLog() ||
+                $entry->type === EntryType::MAIL ||
                 $entry->hasMonitoredTag();
         });
     }
