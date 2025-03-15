@@ -1,11 +1,17 @@
 <?php
 
+use Inertia\Testing\AssertableInertia as Assert;
+
 test('renders school home page', function () {
     /** @var \Tests\TenantCase $this */
-    $schoolInfo = $this->getPrimaryAdmin();
+    $school = $this->getPrimaryAdmin();
 
-    $response = $this->get(route('home.index'));
+    $this->get(route('home.index'))
+        ->assertStatus(200)
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('Home/Index')
+            ->has('school')
+            ->where('school.colegio', $school->colegio)
+        );
 
-    $response->assertStatus(200);
-    $response->assertSee($schoolInfo->colegio);
 });
