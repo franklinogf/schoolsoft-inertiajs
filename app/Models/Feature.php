@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 class Feature extends Model
 {
     use HasFactory;
-    use HasFactory;
 
     protected $primaryKey = 'name';
 
