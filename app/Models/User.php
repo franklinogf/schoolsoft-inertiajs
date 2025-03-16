@@ -10,7 +10,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Gate;
 
-class User extends Authenticatable implements FilamentUser
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property \Illuminate\Support\Carbon $email_verified_at
+ * @property string $password
+ * @property string $remember_token
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property string $lang
+ */ class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
 

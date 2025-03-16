@@ -8,7 +8,26 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-#[ScopedBy(SchoolYear::class)]
+/**
+ * @property string $id
+ * @property string $curso
+ * @property string $year
+ * @property string $desc1
+ * @property string $desc2
+ * @property float $credito
+ * @property float $peso
+ * @property string $entrada
+ * @property string $salida
+ * @property string $dias
+ * @property string $maestro
+ * @property float $matri
+ * @property float $total
+ * @property string $ava
+ * @property float $valor
+ * @property string $orden
+ * @property string $verano
+ * @property int $mt
+ */ #[ScopedBy(SchoolYear::class)]
 class Course extends Model
 {
     public $timestamps = false;
