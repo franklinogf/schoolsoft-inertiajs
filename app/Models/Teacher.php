@@ -7,11 +7,16 @@ use App\Casts\Gender;
 use App\Casts\NullToEmptyString;
 use App\Casts\ProfilePicture;
 use App\Casts\YesNo;
+use App\Enums\MediaCollectionEnum;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Teacher extends Model
+class Teacher extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     public $timestamps = false;
 
     protected $table = 'profesor';
@@ -90,5 +95,14 @@ class Teacher extends Model
         }
 
         return $array;
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(MediaCollectionEnum::PROFILE_PICTURE->value)
+            ->useFallbackUrl(asset('assets/no-picture-teacher.png'))
+            ->useFallbackPath(public_path('assets/no-picture-teacher.png'))
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
+            ->singleFile();
     }
 }
