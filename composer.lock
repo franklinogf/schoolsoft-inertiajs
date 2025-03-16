@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d381135fabc291bb6f7d45ca52eadd9",
+    "content-hash": "ae09368b870e174eefce7c10413a2b73",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -353,25 +353,25 @@
         },
         {
             "name": "codedge/laravel-fpdf",
-            "version": "dev-l12-compatibility",
+            "version": "1.12.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/laravel-shift/laravel-fpdf.git",
-                "reference": "17f2739d8b355af7fdec2044378a6e8ad066a52d"
+                "url": "https://github.com/codedge/laravel-fpdf.git",
+                "reference": "98b01bc4c61f2ec70a5ec120106507961481d593"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-shift/laravel-fpdf/zipball/17f2739d8b355af7fdec2044378a6e8ad066a52d",
-                "reference": "17f2739d8b355af7fdec2044378a6e8ad066a52d",
+                "url": "https://api.github.com/repos/codedge/laravel-fpdf/zipball/98b01bc4c61f2ec70a5ec120106507961481d593",
+                "reference": "98b01bc4c61f2ec70a5ec120106507961481d593",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "^10.0 || ^11.0 || ^12.0",
+                "illuminate/support": "^11.0 || ^12.0",
                 "php": "~8.3 || ~8.4"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.39",
-                "orchestra/testbench": "^8.0 || ^9.0 || ^10.0",
+                "orchestra/testbench": "^9.0 || ^10.0",
                 "phpunit/phpunit": "^10.5 || ^11.5.3"
             },
             "type": "library",
@@ -390,16 +390,7 @@
                     "Codedge\\Fpdf\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Codedge\\Fpdf\\Test\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "phpunit --coverage-clover coverage.xml"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -421,11 +412,11 @@
             },
             "funding": [
                 {
-                    "type": "github",
-                    "url": "https://github.com/codedge"
+                    "url": "https://github.com/codedge",
+                    "type": "github"
                 }
             ],
-            "time": "2025-02-16T23:06:41+00:00"
+            "time": "2025-03-14T15:54:58+00:00"
         },
         {
             "name": "composer/semver",
@@ -12005,9 +11996,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "codedge/laravel-fpdf": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

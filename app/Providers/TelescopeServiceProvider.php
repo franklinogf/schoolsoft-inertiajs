@@ -29,6 +29,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
                 $entry->isEvent() ||
                 $entry->isDump() ||
                 $entry->isLog() ||
+                $entry->type === EntryType::JOB ||
                 $entry->type === EntryType::MAIL ||
                 $entry->hasMonitoredTag();
         });

@@ -6,6 +6,17 @@ use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Models\Tenant;
 
+/**
+ * @property string $id
+ * @property string $name
+ * @property array $enviroments
+ * @property array $features
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property object $theme
+ * @property string $tenancy_db_username
+ * @property string $tenancy_db_password
+ */
 class School extends Tenant implements TenantWithDatabase
 {
     use HasDatabase;

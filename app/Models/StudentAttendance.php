@@ -8,7 +8,26 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[ScopedBy(SchoolYear::class)]
+/**
+ * @property int $id
+ * @property string $ss
+ * @property string $grado
+ * @property string $year
+ * @property \Illuminate\Support\Carbon $fecha
+ * @property string $p1
+ * @property string $p2
+ * @property string $p3
+ * @property string $p4
+ * @property string $p5
+ * @property string $p6
+ * @property string $codigo
+ * @property string $nombre
+ * @property string $apellidos
+ * @property string $baja
+ * @property string $p7
+ * @property string $p8
+ * @property string $curso
+ */ #[ScopedBy(SchoolYear::class)]
 class StudentAttendance extends Model
 {
     protected $table = 'asispp';
