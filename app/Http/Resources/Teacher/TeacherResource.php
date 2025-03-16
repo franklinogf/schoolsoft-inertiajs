@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Teacher;
 
+use App\Enums\MediaCollectionEnum;
 use App\Http\Resources\CoursesResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -102,7 +103,7 @@ class TeacherResource extends JsonResource
             'dep' => $this->dep,
             'dep_des' => $this->dep_des,
             'docente' => $this->docente,
-            'foto_name' => $this->foto_name ? tenant_file_url($this->foto_name) : null,
+            'foto_name' => $this->getFirstMediaUrl(MediaCollectionEnum::PROFILE_PICTURE->value),
             'email_smtp' => $this->email_smtp,
             'clave_email' => $this->clave_email,
             'host_smtp' => $this->host_smtp,

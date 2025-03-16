@@ -100,6 +100,8 @@ class Teacher extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(MediaCollectionEnum::PROFILE_PICTURE->value)
+            ->useFallbackUrl(asset('assets/no-picture-teacher.png'))
+            ->useFallbackPath(public_path('assets/no-picture-teacher.png'))
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
             ->singleFile();
     }
