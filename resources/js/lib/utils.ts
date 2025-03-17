@@ -1,4 +1,6 @@
+import { PhoneCompaniesEnum } from "@/Enums";
 import { useTranslations } from "@/hooks/translations";
+import { PhoneCompany } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { format, intlFormat, parse } from "date-fns";
 import { twMerge } from "tailwind-merge";
@@ -71,4 +73,8 @@ export function ucwords(str: string): string {
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+}
+
+export function createPhoneEmail(phone: string, company: PhoneCompany): string {
+  return `${phone}${PhoneCompaniesEnum[company]}`;
 }
