@@ -3,7 +3,6 @@ import { FieldContainer } from "@/Components/forms/inputs/FieldContainer";
 import { FieldError } from "@/Components/forms/inputs/FieldError";
 import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
 import { useId } from "react";
-import { formatPhoneNumberIntl } from "react-phone-number-input";
 interface PhoneFieldProps {
   error?: string;
   label?: string;
@@ -36,7 +35,7 @@ export function PhoneField({
         disabled={disabled}
         value={value}
         onChange={(value) => {
-          onChange?.(formatPhoneNumberIntl(value));
+          onChange?.(value);
         }}
       />
       <FieldError error={error} />
