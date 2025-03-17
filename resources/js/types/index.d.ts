@@ -1,3 +1,5 @@
+import { PhoneCompaniesEnum } from "@/Enums";
+
 export interface Document {
   id: number;
   categoria: string;
@@ -59,3 +61,5 @@ export type PagePropsWithUser<
     user: U;
   };
 };
+
+export type PhoneCompany = keyof typeof PhoneCompaniesEnum;
