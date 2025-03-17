@@ -11,7 +11,7 @@ import { Course } from "@/types/teacher";
 import { router } from "@inertiajs/react";
 import { useState } from "react";
 
-export enum SelectedEnum {
+export enum EmailSelectedEnum {
   STUDENTS = "students",
   COURSES = "courses",
   ADMIN = "admin",
@@ -21,18 +21,18 @@ interface PageProps {
   students: Student[];
   courses: Course[];
   admins: Admin[];
-  selected: SelectedEnum;
+  selected: EmailSelectedEnum;
 }
 
 export default function Page({ students, courses, admins, selected }: PageProps) {
-  const [selectedTab, setSelectedTab] = useState<SelectedEnum>(selected);
+  const [selectedTab, setSelectedTab] = useState<EmailSelectedEnum>(selected);
   const handleButtonClick = (data: string[]) => {
     router.get(route("regiweb.options.messages.email.form"), { data, selected: selectedTab });
   };
   const { t } = useTranslations();
 
   return (
-    <RegiwebLayout title="Mensajes de correo electrónico">
+    <RegiwebLayout title={t("Mensajes de correo electrónico")}>
       <section className="mx-auto w-full max-w-4xl">
         <h1 className="pb-4 text-center text-2xl font-semibold">
           {t("Mensajes de correo electrónico")}
@@ -40,16 +40,16 @@ export default function Page({ students, courses, admins, selected }: PageProps)
         <Tabs
           value={selectedTab}
           onValueChange={(value) => {
-            setSelectedTab(value as SelectedEnum);
+            setSelectedTab(value as EmailSelectedEnum);
             router.reload({ data: { selected: value }, replace: true });
           }}
         >
           <TabsList className="mx-auto">
-            <TabsTrigger value={SelectedEnum.STUDENTS}>{t("Estudiantes")}</TabsTrigger>
-            <TabsTrigger value={SelectedEnum.COURSES}>{t("Cursos")}</TabsTrigger>
-            <TabsTrigger value={SelectedEnum.ADMIN}>{t("Administradores")}</TabsTrigger>
+            <TabsTrigger value={EmailSelectedEnum.STUDENTS}>{t("Estudiantes")}</TabsTrigger>
+            <TabsTrigger value={EmailSelectedEnum.COURSES}>{t("Cursos")}</TabsTrigger>
+            <TabsTrigger value={EmailSelectedEnum.ADMIN}>{t("Administradores")}</TabsTrigger>
           </TabsList>
-          <TabsContent value={SelectedEnum.STUDENTS}>
+          <TabsContent value={EmailSelectedEnum.STUDENTS}>
             <DataTable
               rowId="ss"
               columns={studentsColumns}
@@ -58,7 +58,7 @@ export default function Page({ students, courses, admins, selected }: PageProps)
               onButtonClick={handleButtonClick}
             />
           </TabsContent>
-          <TabsContent value={SelectedEnum.COURSES}>
+          <TabsContent value={EmailSelectedEnum.COURSES}>
             <DataTable
               rowId="curso"
               columns={coursesColumns}
@@ -67,7 +67,7 @@ export default function Page({ students, courses, admins, selected }: PageProps)
               onButtonClick={handleButtonClick}
             />
           </TabsContent>
-          <TabsContent value={SelectedEnum.ADMIN}>
+          <TabsContent value={EmailSelectedEnum.ADMIN}>
             <DataTable
               rowId="usuario"
               columns={columns}

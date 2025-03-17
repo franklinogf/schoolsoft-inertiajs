@@ -6,7 +6,7 @@ import { Button } from "@/Components/ui/button";
 import { Card, CardContent } from "@/Components/ui/card";
 import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
-import { SelectedEnum } from "@/Pages/Regiweb/Options/Messages/Email/Index";
+import { EmailSelectedEnum } from "@/Pages/Regiweb/Options/Messages/Email/Index";
 import { Admin } from "@/types/auth";
 import { Student } from "@/types/student";
 import { Course } from "@/types/teacher";
@@ -19,7 +19,7 @@ interface PageProps {
   courses: Course[];
   admins: Admin[];
   data: string[];
-  selected: SelectedEnum;
+  selected: EmailSelectedEnum;
 }
 export default function Page({ students, courses, admins, selected, data: rowsId }: PageProps) {
   const { t, tChoice } = useTranslations();
@@ -34,16 +34,16 @@ export default function Page({ students, courses, admins, selected, data: rowsId
   });
 
   const to =
-    selected === SelectedEnum.STUDENTS && students !== null && students?.length === 1
+    selected === EmailSelectedEnum.STUDENTS && students !== null && students?.length === 1
       ? `${students[0]?.nombre} ${students[0]?.apellidos}`
-      : selected === SelectedEnum.STUDENTS && students !== null && students?.length > 1
+      : selected === EmailSelectedEnum.STUDENTS && students !== null && students?.length > 1
         ? `${students[0]?.nombre} ${students[0]?.apellidos} ` +
           tChoice("y :amount estudiante más|y :amount estudiantes más", students.length - 1, {
             amount: students.length - 1,
           })
-        : selected === SelectedEnum.COURSES && courses !== null
+        : selected === EmailSelectedEnum.COURSES && courses !== null
           ? courses.map((course) => course.curso).join(", ")
-          : selected === SelectedEnum.ADMIN && admins !== null
+          : selected === EmailSelectedEnum.ADMIN && admins !== null
             ? admins.map((admin) => admin.director).join(", ")
             : "";
 

@@ -22,12 +22,9 @@ class MessagesEmailController extends Controller
 
         $selected = request()->query('selected', 'students');
 
-        return inertia('Regiweb/Options/Messages/Email/Index', [
-            'students' => $students,
-            'courses' => $courses,
-            'admins' => $admins,
-            'selected' => $selected,
-        ]);
+        return inertia('Regiweb/Options/Messages/Email/Index',
+            compact('students', 'selected', 'courses', 'admins')
+        );
     }
 
     public function form(Request $request)
@@ -44,13 +41,17 @@ class MessagesEmailController extends Controller
         }
 
         $validated = $validator->validated();
+
         $data = $validated['data'];
         $selected = $validated['selected'];
+
         $students = $selected === 'students' ? StudentGrade::studentsDataTable($data) : null;
         $admins = $selected === 'admin' ? Admin::whereIn('usuario', $data)->get() : null;
         $courses = $selected === 'courses' ? auth()->user()->courses()->whereIn('curso', $data)->get() : null;
 
-        return inertia('Regiweb/Options/Messages/Email/Form', compact('students', 'selected', 'data', 'admins', 'courses'));
+        return inertia('Regiweb/Options/Messages/Email/Form',
+            compact('students', 'selected', 'data', 'admins', 'courses')
+        );
     }
 
     public function send(Request $request)
@@ -85,6 +86,9 @@ class MessagesEmailController extends Controller
         }
 
         foreach ($tos as $to) {
+            if ($to['email'] === null) {
+                continue;
+            }
             $personalEmail = (new PersonalEmail($message, $validated['files']))->subject($subject);
             Mail::to($to['email'], $to['name'])->queue($personalEmail);
         }
