@@ -15,7 +15,7 @@ const options: MenuOption[] = [
       },
       {
         label: "Mensajes",
-        route: route("regiweb.options.index"),
+        route: route("regiweb.options.messages.index"),
       },
     ],
   },

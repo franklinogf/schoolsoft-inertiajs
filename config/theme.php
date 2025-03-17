@@ -29,6 +29,14 @@ return [
             'chart3' => 'hsl(197 37% 24%)',
             'chart4' => 'hsl(43 74% 66%)',
             'chart5' => 'hsl(27 87% 67%)',
+            'sidebar' => 'hsl(0 0% 98%)',
+            'sidebarForeground' => 'hsl(240 5.3% 26.1%)',
+            'sidebarPrimary' => 'hsl(240 5.9% 10%)',
+            'sidebarPrimaryForeground' => 'hsl(0 0% 98%)',
+            'sidebarAccent' => 'hsl(240 4.8% 95.9%)',
+            'sidebarAccentForeground' => 'hsl(240 5.9% 10%)',
+            'sidebarBorder' => 'hsl(220 13% 91%)',
+            'sidebarRing' => 'hsl(217.2 91.2% 59.8%)',
 
         ],
         'dark' => [
@@ -57,7 +65,14 @@ return [
             'chart3' => 'hsl(30 80% 55%)',
             'chart4' => 'hsl(280 65% 60%)',
             'chart5' => 'hsl(340 75% 55%)',
-
+            'sidebar' => 'hsl(240 5.9% 10%)',
+            'sidebarForeground' => 'hsl(240 4.8% 95.9%)',
+            'sidebarPrimary' => 'hsl(224.3 76.3% 48%)',
+            'sidebarPrimaryForeground' => 'hsl(0 0% 100%)',
+            'sidebarAccent' => 'hsl(240 3.7% 15.9%)',
+            'sidebarAccentForeground' => 'hsl(240 4.8% 95.9%)',
+            'sidebarBorder' => 'hsl(240 3.7% 15.9%)',
+            'sidebarRing' => 'hsl(217.2 91.2% 59.8%)',
         ],
     ],
 ];

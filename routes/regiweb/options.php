@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Regiweb\Options\MessagesController;
 use App\Http\Controllers\Regiweb\Options\MessagesEmailController;
 use App\Http\Controllers\Regiweb\Options\MessagesSmscontroller;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +11,11 @@ Route::name('options.')->prefix('options')->group(function () {
     Route::name('messages.')
         ->prefix('messages')
         ->group(function () {
+
+            Route::controller(MessagesController::class)
+                ->group(function () {
+                    Route::get('/', 'index')->name('index');
+                });
 
             Route::name('email.')
                 ->prefix('email')
