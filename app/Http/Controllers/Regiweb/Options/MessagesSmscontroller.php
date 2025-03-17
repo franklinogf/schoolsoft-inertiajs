@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Regiweb\Options;
 
 use App\Enums\FlashMessageKey;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CoursesResource;
 use App\Mail\PersonalEmail;
 use App\Models\Student;
 use App\Models\StudentGrade;
@@ -16,7 +17,7 @@ class MessagesSmscontroller extends Controller
     public function index()
     {
         $students = StudentGrade::studentsDataTable();
-        $courses = auth()->user()->courses;
+        $courses = CoursesResource::collection(auth()->user()->courses);
 
         $selected = request()->query('selected', 'students');
 
@@ -50,7 +51,7 @@ class MessagesSmscontroller extends Controller
         $selected = $validated['selected'];
 
         $students = $selected === 'students' ? StudentGrade::studentsDataTable($data) : null;
-        $courses = $selected === 'courses' ? auth()->user()->courses()->whereIn('curso', $data)->get() : null;
+        $courses = $selected === 'courses' ? CoursesResource::collection(auth()->user()->courses()->whereIn('curso', $data)->get()) : null;
         $phone = $selected === 'individual' ? $validated['phone'] : null;
         $company = $selected === 'individual' ? $validated['company'] : null;
 

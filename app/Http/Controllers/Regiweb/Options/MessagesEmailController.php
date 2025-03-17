@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Regiweb\Options;
 
 use App\Enums\FlashMessageKey;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CoursesResource;
 use App\Mail\PersonalEmail;
 use App\Models\Admin;
 use App\Models\Student;
@@ -17,7 +18,7 @@ class MessagesEmailController extends Controller
     public function index()
     {
         $students = StudentGrade::studentsDataTable();
-        $courses = auth()->user()->courses;
+        $courses = CoursesResource::collection(auth()->user()->courses);
         $admins = Admin::all();
 
         $selected = request()->query('selected', 'students');
@@ -47,7 +48,7 @@ class MessagesEmailController extends Controller
 
         $students = $selected === 'students' ? StudentGrade::studentsDataTable($data) : null;
         $admins = $selected === 'admin' ? Admin::whereIn('usuario', $data)->get() : null;
-        $courses = $selected === 'courses' ? auth()->user()->courses()->whereIn('curso', $data)->get() : null;
+        $courses = $selected === 'courses' ? CoursesResource::collection(auth()->user()->courses()->whereIn('curso', $data)->get()) : null;
 
         return inertia('Regiweb/Options/Messages/Email/Form',
             compact('students', 'selected', 'data', 'admins', 'courses')
