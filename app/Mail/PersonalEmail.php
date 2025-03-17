@@ -53,6 +53,10 @@ class PersonalEmail extends Mailable
      */
     public function attachments(): array
     {
+        if ($this->files === null) {
+            return [];
+        }
+
         $attachments = [];
 
         tenancy()->central(function () use (&$attachments) {
