@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Regiweb\Options;
 
+use App\Enums\MediaCollectionEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CoursesResource;
 use App\Http\Resources\InboxResource;
 use App\Models\Inbox;
 use App\Models\Student;
+use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
 
 class MessagesController extends Controller
@@ -73,16 +75,31 @@ class MessagesController extends Controller
             'subject' => 'required|string',
             'message' => 'required|string',
             'students' => 'required',
+            'files' => ['array'],
+            'files.*' => ['string'],
         ]);
+        $folders = $validated['files'];
 
         /**
-         * @var \App\Models\Teacher $teacher
+         * @var \App\Models\Teacher $teacher         *
          */
         $teacher = auth()->user();
+        /**
+         * @var \App\Models\Inbox $inbox
+         */
         $inbox = $teacher->inboxes()->create([
             'subject' => $validated['subject'],
             'message' => $validated['message'],
         ]);
+        $temporaryFiles = tenancy()->central(function () use ($folders) {
+            return TemporaryFile::whereIn('folder', $folders)->get();
+        });
+
+        foreach ($temporaryFiles as $temporaryFile) {
+            $inbox->addMediaFromDisk(tmp_path($temporaryFile->folder, $temporaryFile->filename), 'local')
+                ->toMediaCollection(MediaCollectionEnum::INBOX_ATTACHMENT->value);
+            $temporaryFile->delete();
+        }
 
         $students = Student::ofCourse($course)
             ->whereIn('year.ss', $validated['students'])

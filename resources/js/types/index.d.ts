@@ -80,6 +80,13 @@ export type InboxSideBarMenu = {
     type: InboxType;
   }[];
 };
+export type InboxAttachment = {
+  id: number;
+  name: string;
+  size: number;
+  type: string;
+  url: string;
+};
 export type Inbox<TReceiver, TSender> = {
   id: number;
   subject: string;
@@ -92,7 +99,7 @@ export type Inbox<TReceiver, TSender> = {
   datetime_human_readeable: string;
   receivers: TReceiver[];
   sender: TSender;
-  attachments: string[];
+  attachments: InboxAttachment[];
 };
 export type InboxType = "inbox" | "sent" | "trash";
 

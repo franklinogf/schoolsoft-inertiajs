@@ -4,12 +4,12 @@ import { Separator } from "@/Components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/Components/ui/sidebar";
 import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
-import { formatDate, formatTime, isAdmin } from "@/lib/utils";
+import { formatDate, formatTime, isAdmin, isImage } from "@/lib/utils";
 import useConfirmationStore from "@/stores/confirmationStore";
 import type { InboxSideBarMenu, InboxType, PagePropsWithUser, TeacherInbox } from "@/types";
 import { Teacher } from "@/types/teacher";
 import { router } from "@inertiajs/react";
-import { InboxIcon, PlusCircleIcon, ReplyIcon, SendIcon, Trash2Icon } from "lucide-react";
+import { FileIcon, InboxIcon, PlusCircleIcon, ReplyIcon, SendIcon, Trash2Icon } from "lucide-react";
 
 export default function Page({
   mails,
@@ -24,6 +24,7 @@ export default function Page({
     type: InboxType;
   }
 >) {
+  console.log(mail);
   const { t } = useTranslations();
   const { openConfirmation } = useConfirmationStore();
   function handleDeleteMail(id: number) {
@@ -149,12 +150,28 @@ export default function Page({
                   <Separator />
 
                   <ul className="flex gap-2">
-                    <li className="flex items-center gap-2">
-                      <span className="text-sm font-medium">Archivo 1</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <span className="text-sm font-medium">Archivo 2</span>
-                    </li>
+                    {mail.attachments.map((attachment) => (
+                      <li key={attachment.id} className="gap-2">
+                        <div className="bg-muted/80 aspect-square w-20">
+                          {isImage(attachment.type) ? (
+                            <img
+                              src={attachment.url}
+                              alt={attachment.name}
+                              className="aspect-square w-full object-contain"
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center">
+                              <FileIcon />
+                            </div>
+                          )}
+                          <a href={route("media.download", { media: attachment.id })}>
+                            <span className="line-clamp-1 text-center text-sm font-medium">
+                              {attachment.name}
+                            </span>
+                          </a>
+                        </div>
+                      </li>
+                    ))}
                   </ul>
                 </section>
 

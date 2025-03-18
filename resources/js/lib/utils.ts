@@ -92,3 +92,7 @@ export function isAdmin(user: Teacher | Student | Admin): user is Admin {
   }
   return false;
 }
+
+export function isImage(mime_type: string) {
+  return mime_type.startsWith("image/");
+}

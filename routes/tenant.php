@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\DownloadMediaController;
 use App\Http\Controllers\Home\SchoolDocumentController;
 use App\Http\Controllers\Home\SchoolHomeController;
 use App\Http\Middleware\SetDefaultTenant;
@@ -22,6 +23,8 @@ Route::middleware(
             Route::get('/documents', [SchoolDocumentController::class, 'index'])->name('documents');
             Route::get('/documents/download/{id}', [SchoolDocumentController::class, 'download'])->name('documents.download');
         });
+
+        Route::get('/download/{media}', DownloadMediaController::class)->name('media.download');
 
         require __DIR__.'/admin.php';
         require __DIR__.'/regiweb/index.php';
