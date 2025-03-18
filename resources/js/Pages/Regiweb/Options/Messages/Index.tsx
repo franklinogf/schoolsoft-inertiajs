@@ -6,30 +6,33 @@ import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { formatDate, formatTime, isAdmin } from "@/lib/utils";
 import useConfirmationStore from "@/stores/confirmationStore";
-import type { InboxSideBarMenu, InboxType, PageProps, TeacherInbox } from "@/types";
+import type { InboxSideBarMenu, InboxType, PagePropsWithUser, TeacherInbox } from "@/types";
+import { Teacher } from "@/types/teacher";
 import { router } from "@inertiajs/react";
-import { InboxIcon, PlusCircleIcon, SendIcon, Trash2Icon } from "lucide-react";
+import { InboxIcon, PlusCircleIcon, ReplyIcon, SendIcon, Trash2Icon } from "lucide-react";
 
 export default function Page({
   mails,
   mail,
   type,
-}: PageProps<{
-  mails: TeacherInbox[];
-  mail: TeacherInbox | null;
-  type: InboxType;
-}>) {
-  console.log(mails);
+  auth,
+}: PagePropsWithUser<
+  Teacher,
+  {
+    mails: TeacherInbox[];
+    mail: TeacherInbox | null;
+    type: InboxType;
+  }
+>) {
   const { t } = useTranslations();
   const { openConfirmation } = useConfirmationStore();
   function handleDeleteMail(id: number) {
-    router.delete(route("regiweb.options.messages.destroy", { id }), {
-      preserveState: true,
-      preserveScroll: true,
-      onSuccess: () => {
-        router.reload();
-      },
+    router.delete(route("regiweb.options.messages.destroy", { type }), {
+      data: { id },
     });
+  }
+  function handleRestoreMail(id: number) {
+    router.post(route("regiweb.options.messages.restore", { type }), { id });
   }
   const sideBarNav: InboxSideBarMenu = {
     header: {
@@ -74,39 +77,45 @@ export default function Page({
             mails={mails}
             type={type}
             onDeleteMail={handleDeleteMail}
-            onRestoreMail={(id) => {}}
+            onRestoreMail={handleRestoreMail}
           />
           <SidebarInset>
             <header className="bg-card sticky top-0 flex shrink-0 items-center gap-2 border-b border-l p-4">
               <SidebarTrigger className="-ml-1" />
               {mail && (
-                <>
+                <div className="flex w-full items-center">
                   <Separator
                     orientation="vertical"
                     className="mr-2 data-[orientation=vertical]:h-4"
                   />
                   <h2 className="text-foreground text-base font-medium">{mail.subject}</h2>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="hover:bg-destructive hover:text-destructive-foreground text-destructive absolute right-2 bottom-3 size-8 cursor-pointer"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      openConfirmation({
-                        title: t("Eliminar mensaje"),
-                        description: t("¿Está seguro de que desea eliminar este mensaje?"),
-                        actionLabel: t("Eliminar"),
-                        cancelLabel: t("Cancelar"),
-                        onAction: () => {
-                          handleDeleteMail(mail.id);
-                        },
-                      });
-                    }}
-                  >
-                    <Trash2Icon />
-                  </Button>
-                </>
+
+                  <div className="ml-auto flex items-center gap-2">
+                    {mail.sender.id !== auth.user.id && (
+                      <Button className="size-8" size="icon">
+                        <ReplyIcon />
+                      </Button>
+                    )}
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      className="size-8"
+                      onClick={() => {
+                        openConfirmation({
+                          title: t("Eliminar mensaje"),
+                          description: t("¿Está seguro de que desea eliminar este mensaje?"),
+                          actionLabel: t("Eliminar"),
+                          cancelLabel: t("Cancelar"),
+                          onAction: () => {
+                            handleDeleteMail(mail.id);
+                          },
+                        });
+                      }}
+                    >
+                      <Trash2Icon />
+                    </Button>
+                  </div>
+                </div>
               )}
             </header>
 

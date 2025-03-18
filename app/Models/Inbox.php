@@ -6,7 +6,6 @@ use App\Models\Scopes\DescendingScope;
 use App\Observers\InboxObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -58,15 +57,5 @@ class Inbox extends Model implements HasMedia
     {
         return $this->morphedByMany(Admin::class, 'receiver', 'inboxebles')
             ->withPivot('is_read', 'is_deleted');
-    }
-
-    public function scopeDeleted(Builder $builder): Builder
-    {
-        return $builder->where($this->table.'is_deleted', true);
-    }
-
-    public function scopeNotDeleted(Builder $builder): Builder
-    {
-        return $builder->where($this->table.'is_deleted', false);
     }
 }

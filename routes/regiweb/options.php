@@ -16,8 +16,9 @@ Route::name('options.')->prefix('options')->group(function () {
                 ->group(function () {
                     Route::get('/new/{course?}', 'create')->name('create');
                     Route::post('/new/{course}', 'store')->name('store');
+                    Route::delete('/message', 'destroy')->name('destroy');
+                    Route::post('/message', 'restore')->name('restore');
                     Route::get('/{inbox?}', 'index')->name('index');
-                    Route::delete('/{id}', 'destroy')->name('destroy');
                 });
 
             Route::name('email.')

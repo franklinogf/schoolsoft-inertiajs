@@ -1,11 +1,8 @@
 import { DataTable } from "@/Components/custom-ui/data-table";
 import { coursesListingColumns } from "@/Components/datatables/columns/courses";
 import { studentsSelectionColumns } from "@/Components/datatables/columns/students";
-import { InputField } from "@/Components/forms/inputs/InputField";
-import { RichTextField } from "@/Components/forms/inputs/RichTextField";
-import SubmitButton from "@/Components/forms/SubmitButton";
+import { MessageForm } from "@/Components/forms/MessageForm";
 import { Button } from "@/Components/ui/button";
-import { Card, CardContent } from "@/Components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -18,7 +15,7 @@ import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { PageProps } from "@/types";
 import { Student } from "@/types/student";
 import { Course } from "@/types/teacher";
-import { Link, useForm } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 
@@ -57,11 +54,6 @@ export default function Page({
   const [open, setOpen] = useState(false);
   const { t, tChoice } = useTranslations();
 
-  const { data, setData, errors, processing, post } = useForm({
-    subject: "",
-    message: "",
-  });
-
   const to =
     selectedStudents.length === 1
       ? `${selectedStudents[0]?.nombre} ${selectedStudents[0]?.apellidos}`
@@ -69,15 +61,6 @@ export default function Page({
         tChoice("y :amount estudiante más|y :amount estudiantes más", selectedStudents.length - 1, {
           amount: selectedStudents.length - 1,
         });
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    post(
-      route("regiweb.options.messages.store", {
-        course,
-        students: selectedStudents.map((student) => student.ss ?? ""),
-      }),
-    );
-  }
 
   return (
     <RegiwebLayout title={t("Nuevo mensaje")}>
@@ -108,34 +91,17 @@ export default function Page({
                     <DialogDescription></DialogDescription>
                   </DialogHeader>
 
-                  <form onSubmit={handleSubmit}>
-                    <Card>
-                      <CardContent className="space-y-2">
-                        <InputField label={t("Para")} name="to" disabled defaultValue={to} />
-                        <InputField
-                          required
-                          value={data.subject}
-                          onChange={(value) => {
-                            setData("subject", value);
-                          }}
-                          error={errors.subject}
-                          label={t("Asunto")}
-                          name="subject"
-                        />
-                        <RichTextField
-                          label={t("Mensaje")}
-                          value={data.message}
-                          onChange={(value) => {
-                            setData("message", value);
-                          }}
-                          error={errors.message}
-                        />
-                      </CardContent>
-                    </Card>
-                    <div className="mt-2 flex justify-center">
-                      <SubmitButton disabled={processing}>{t("Enviar")}</SubmitButton>
-                    </div>
-                  </form>
+                  <MessageForm
+                    to={to}
+                    extras={{ students: selectedStudents.map((student) => student.ss ?? "") }}
+                    onSubmit={(post) => {
+                      post(
+                        route("regiweb.options.messages.store", {
+                          course,
+                        }),
+                      );
+                    }}
+                  />
                 </DialogContent>
               </Dialog>
             </>

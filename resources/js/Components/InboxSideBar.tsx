@@ -25,7 +25,6 @@ import { Button } from "./ui/button";
 interface InboxSideBarProps extends React.ComponentProps<typeof Sidebar> {
   sideBarNav: InboxSideBarMenu;
   mails: TeacherInbox[];
-
   type: InboxType;
   onDeleteMail: (id: number) => void;
   onRestoreMail: (id: number) => void;
@@ -120,73 +119,79 @@ export function InboxSideBar({
         <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
-              {mails.map((mail) => (
-                <Link
-                  href={route("regiweb.options.messages.index", { type, inbox: mail })}
-                  key={mail.id}
-                  className={cn(
-                    "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground relative flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0",
-                    { "bg-primary/80 text-primary-foreground": false },
-                  )}
-                >
-                  <div className="flex w-full items-center gap-2">
-                    <span>{mail.subject}</span>
-                    <span className="ml-auto text-xs">{mail.datetime_human_readeable}</span>
-                  </div>
-                  <span className="text-xs font-bold">
-                    {isAdmin(mail.sender)
-                      ? mail.sender.usuario
-                      : `${mail.sender.nombre} ${mail.sender.apellidos}`}
-                  </span>
-                  <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
-                    {mail.preview}
-                  </span>
-                  {/* delete button icon */}
-                  {type === "trash" ? (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="hover:bg-destructive hover:text-destructive-foreground text-destructive absolute right-2 bottom-3 size-8 cursor-pointer"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        openConfirmation({
-                          title: t("Restaurar mensaje"),
-                          description: t("¿Está seguro de que desea restaurar este mensaje?"),
-                          actionLabel: t("Restaurar"),
-                          cancelLabel: t("Cancelar"),
-                          onAction: () => {
-                            onRestoreMail(mail.id);
-                          },
-                        });
-                      }}
-                    >
-                      <ArchiveRestoreIcon />
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="hover:bg-destructive hover:text-destructive-foreground text-destructive absolute right-2 bottom-3 size-8 cursor-pointer"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        openConfirmation({
-                          title: t("Eliminar mensaje"),
-                          description: t("¿Está seguro de que desea eliminar este mensaje?"),
-                          actionLabel: t("Eliminar"),
-                          cancelLabel: t("Cancelar"),
-                          onAction: () => {
-                            onDeleteMail(mail.id);
-                          },
-                        });
-                      }}
-                    >
-                      <Trash2Icon />
-                    </Button>
-                  )}
-                </Link>
-              ))}
+              {mails.length > 0 ? (
+                mails.map((mail) => (
+                  <Link
+                    href={route("regiweb.options.messages.index", { type, inbox: mail })}
+                    key={mail.id}
+                    className={cn(
+                      "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground relative flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0",
+                      { "bg-primary/80 text-primary-foreground": false },
+                    )}
+                  >
+                    <div className="flex w-full items-center gap-2">
+                      <span>{mail.subject}</span>
+                      <span className="ml-auto text-xs">{mail.datetime_human_readeable}</span>
+                    </div>
+                    <span className="text-xs font-bold">
+                      {isAdmin(mail.sender)
+                        ? mail.sender.usuario
+                        : `${mail.sender.nombre} ${mail.sender.apellidos}`}
+                    </span>
+                    <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
+                      {mail.preview}
+                    </span>
+
+                    {type === "trash" ? (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="absolute right-2 bottom-3 size-8 cursor-pointer text-blue-200 hover:bg-blue-200 hover:text-blue-400"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          openConfirmation({
+                            title: t("Restaurar mensaje"),
+                            description: t("¿Está seguro de que desea restaurar este mensaje?"),
+                            actionLabel: t("Restaurar"),
+                            cancelLabel: t("Cancelar"),
+                            onAction: () => {
+                              onRestoreMail(mail.id);
+                            },
+                          });
+                        }}
+                      >
+                        <ArchiveRestoreIcon />
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="hover:bg-destructive hover:text-destructive-foreground text-destructive absolute right-2 bottom-3 size-8 cursor-pointer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          openConfirmation({
+                            title: t("Eliminar mensaje"),
+                            description: t("¿Está seguro de que desea eliminar este mensaje?"),
+                            actionLabel: t("Eliminar"),
+                            cancelLabel: t("Cancelar"),
+                            onAction: () => {
+                              onDeleteMail(mail.id);
+                            },
+                          });
+                        }}
+                      >
+                        <Trash2Icon />
+                      </Button>
+                    )}
+                  </Link>
+                ))
+              ) : (
+                <div className="flex h-full w-full items-center justify-center p-4 text-sm">
+                  <span>{t("No hay mensajes")}</span>
+                </div>
+              )}
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>

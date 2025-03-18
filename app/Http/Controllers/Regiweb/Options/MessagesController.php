@@ -25,29 +25,25 @@ class MessagesController extends Controller
 
         if ($type === 'inbox') {
             $mails = $teacher->receivedMessages()
+                ->wherePivot('is_deleted', false)
                 ->get();
         } elseif ($type === 'sent') {
             $mails = $teacher->inboxes()
+                ->where('is_deleted', false)
                 ->get();
         } else {
 
             $mails = $teacher->receivedMessages()
+                ->wherePivot('is_deleted', true)
                 ->get()->merge(
                     $teacher->inboxes()
+                        ->where('is_deleted', true)
                         ->get()
                 );
         }
 
         $mails = $mails->count() > 0 ? InboxResource::collection($mails) : [];
-        // if ($inbox) {
-        //     if ($inbox->sender_id === auth()->user()->id) {
-        //         $inbox->is_read_by_sender = true;
-        //     } else {
-        //         $inbox->is_read_by_receiver = true;
-        //     }
-        //     $inbox->save();
 
-        // }
         $mail = $inbox ? new InboxResource($inbox) : null;
 
         return inertia('Regiweb/Options/Messages/Index',
@@ -97,16 +93,41 @@ class MessagesController extends Controller
         return to_route('regiweb.options.messages.index')->with('success', 'Message sent successfully');
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
+        $id = $request->input('id');
+        $type = $request->query('type', 'inbox');
         $inbox = Inbox::findOrFail($id);
-        if ($inbox->sender_id === auth()->user()->id) {
-            $inbox->is_deleted_by_sender = true;
+        /**
+         * @var \App\Models\Teacher $teacher
+         */
+        $teacher = auth()->user();
+        if ($inbox->sender_id == $teacher->id) {
+            $inbox->update(['is_deleted' => true]);
         } else {
-            $inbox->is_deleted_by_receiver = true;
+            $teacher->receivedMessages()
+                ->updateExistingPivot($inbox->id, ['is_deleted' => true]);
         }
-        $inbox->save();
 
-        return to_route('regiweb.options.messages.index')->with('success', 'Message deleted successfully');
+        return to_route('regiweb.options.messages.index', ['type' => $type])->with('success', 'Message deleted successfully');
+    }
+
+    public function restore(Request $request)
+    {
+        $id = $request->input('id');
+        $type = $request->query('type', 'inbox');
+        $inbox = Inbox::findOrFail($id);
+        /**
+         * @var \App\Models\Teacher $teacher
+         */
+        $teacher = auth()->user();
+        if ($inbox->sender_id == $teacher->id) {
+            $inbox->update(['is_deleted' => false]);
+        } else {
+            $teacher->receivedMessages()
+                ->updateExistingPivot($inbox->id, ['is_deleted' => false]);
+        }
+
+        return to_route('regiweb.options.messages.index', ['type' => $type])->with('success', 'Message deleted successfully');
     }
 }
