@@ -1,4 +1,4 @@
-import { Inbox, Send, Trash2 } from "lucide-react";
+import { ArchiveRestoreIcon, Trash2Icon } from "lucide-react";
 import * as React from "react";
 
 import { Label } from "@/Components/ui/label";
@@ -9,168 +9,89 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
-  SidebarInput,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/Components/ui/sidebar";
 import { Switch } from "@/Components/ui/switch";
-import { cn } from "@/lib/utils";
+import { useTranslations } from "@/hooks/translations";
+import { cn, isAdmin, ucfirst } from "@/lib/utils";
+import useConfirmationStore from "@/stores/confirmationStore";
+import { InboxSideBarMenu, InboxType, TeacherInbox } from "@/types";
+import { Link } from "@inertiajs/react";
+import { Button } from "./ui/button";
 
-// This is sample data
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-      isActive: true,
-    },
-    {
-      title: "Sent",
-      url: "#",
-      icon: Send,
-      isActive: false,
-    },
-    {
-      title: "Trash",
-      url: "#",
-      icon: Trash2,
-      isActive: false,
-    },
-  ],
-  mails: [
-    {
-      name: "William Smith",
-      email: "williamsmith@example.com",
-      subject: "Meeting Tomorrow",
-      date: "09:34 AM",
-      teaser:
-        "Hi team, just a reminder about our meeting tomorrow at 10 AM.\nPlease come prepared with your project updates.",
-    },
-    {
-      name: "Alice Smith",
-      email: "alicesmith@example.com",
-      subject: "Re: Project Update",
-      date: "Yesterday",
-      teaser:
-        "Thanks for the update. The progress looks great so far.\nLet's schedule a call to discuss the next steps.",
-    },
-    {
-      name: "Bob Johnson",
-      email: "bobjohnson@example.com",
-      subject: "Weekend Plans",
-      date: "2 days ago",
-      teaser:
-        "Hey everyone! I'm thinking of organizing a team outing this weekend.\nWould you be interested in a hiking trip or a beach day?",
-    },
-    {
-      name: "Emily Davis",
-      email: "emilydavis@example.com",
-      subject: "Re: Question about Budget",
-      date: "2 days ago",
-      teaser:
-        "I've reviewed the budget numbers you sent over.\nCan we set up a quick call to discuss some potential adjustments?",
-    },
-    {
-      name: "Michael Wilson",
-      email: "michaelwilson@example.com",
-      subject: "Important Announcement",
-      date: "1 week ago",
-      teaser:
-        "Please join us for an all-hands meeting this Friday at 3 PM.\nWe have some exciting news to share about the company's future.",
-    },
-    {
-      name: "Sarah Brown",
-      email: "sarahbrown@example.com",
-      subject: "Re: Feedback on Proposal",
-      date: "1 week ago",
-      teaser:
-        "Thank you for sending over the proposal. I've reviewed it and have some thoughts.\nCould we schedule a meeting to discuss my feedback in detail?",
-    },
-    {
-      name: "David Lee",
-      email: "davidlee@example.com",
-      subject: "New Project Idea",
-      date: "1 week ago",
-      teaser:
-        "I've been brainstorming and came up with an interesting project concept.\nDo you have time this week to discuss its potential impact and feasibility?",
-    },
-    {
-      name: "Olivia Wilson",
-      email: "oliviawilson@example.com",
-      subject: "Vacation Plans",
-      date: "1 week ago",
-      teaser:
-        "Just a heads up that I'll be taking a two-week vacation next month.\nI'll make sure all my projects are up to date before I leave.",
-    },
-    {
-      name: "James Martin",
-      email: "jamesmartin@example.com",
-      subject: "Re: Conference Registration",
-      date: "1 week ago",
-      teaser:
-        "I've completed the registration for the upcoming tech conference.\nLet me know if you need any additional information from my end.",
-    },
-    {
-      name: "Sophia White",
-      email: "sophiawhite@example.com",
-      subject: "Team Dinner",
-      date: "1 week ago",
-      teaser:
-        "To celebrate our recent project success, I'd like to organize a team dinner.\nAre you available next Friday evening? Please let me know your preferences.",
-    },
-  ],
-};
+interface InboxSideBarProps extends React.ComponentProps<typeof Sidebar> {
+  sideBarNav: InboxSideBarMenu;
+  mails: TeacherInbox[];
 
-export function InboxSideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  // Note: I'm using state to show active item.
-  // IRL you should use the url/router.
-  const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
-  const [mails, setMails] = React.useState(data.mails);
+  type: InboxType;
+  onDeleteMail: (id: number) => void;
+  onRestoreMail: (id: number) => void;
+}
+export function InboxSideBar({
+  mails,
+  type,
+  sideBarNav,
+  onDeleteMail,
+  onRestoreMail,
+  ...props
+}: InboxSideBarProps) {
+  const { t } = useTranslations();
   const { setOpen } = useSidebar();
+  const { openConfirmation } = useConfirmationStore();
 
+  const activeMenu = sideBarNav.menu.find((item) => item.type === type);
   return (
     <Sidebar
       collapsible="icon"
       className="static overflow-hidden *:data-[sidebar=sidebar]:flex-row"
       {...props}
     >
-      {/* This is the first sidebar */}
-      {/* We disable collapsible and adjust width to icon. */}
-      {/* This will make the sidebar appear as icons. */}
       <Sidebar
         collapsible="none"
         className="bg-card text-card-foreground w-[calc(var(--sidebar-width-icon)+1px)]! border-r"
       >
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuButton
+              tooltip={{
+                children: t(sideBarNav.header.title),
+                hidden: false,
+              }}
+              className="px-2.5 md:px-2"
+              asChild
+            >
+              <Link href={sideBarNav.header.route}>
+                <sideBarNav.header.icon />
+                <span>{t(sideBarNav.header.title)}</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenu>
+        </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent className="px-1.5 md:px-0">
               <SidebarMenu>
-                {data.navMain.map((item) => (
+                {sideBarNav.menu.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
+                      asChild
                       tooltip={{
-                        children: item.title,
+                        children: t(item.title),
                         hidden: false,
                       }}
                       onClick={() => {
-                        setActiveItem(item);
-                        const mail = data.mails.sort(() => Math.random() - 0.5);
-                        setMails(mail.slice(0, Math.max(5, Math.floor(Math.random() * 10) + 1)));
                         setOpen(true);
                       }}
-                      isActive={activeItem?.title === item.title}
+                      isActive={activeMenu?.type === item.type}
                       className="data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground cursor-pointer px-2.5 md:px-2"
                     >
-                      <item.icon />
-                      <span>{item.title}</span>
+                      <Link href={item.route}>
+                        {<item.icon />}
+                        <span>{t(item.title)}</span>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
@@ -181,39 +102,90 @@ export function InboxSideBar({ ...props }: React.ComponentProps<typeof Sidebar>)
         <SidebarFooter></SidebarFooter>
       </Sidebar>
 
-      {/* This is the second sidebar */}
-      {/* We disable collapsible and let it fill remaining space */}
       <Sidebar collapsible="none" className="bg-card/80 text-card-foreground hidden flex-1 md:flex">
-        <SidebarHeader className="gap-3.5 border-b p-4">
+        <SidebarHeader className="gap-3.5 border-b p-4.5">
           <div className="flex w-full items-center justify-between">
-            <div className="text-foreground text-base font-medium">{activeItem?.title}</div>
-            <Label className="flex cursor-pointer items-center gap-2 text-sm">
-              <span>Unreads</span>
-              <Switch className="data-[checked=true]:bg-sidebar-primary shadow-none" />
-            </Label>
+            <div className="text-foreground text-base font-medium">
+              {ucfirst(activeMenu?.title || "")}
+            </div>
+            {type !== "sent" && (
+              <Label className="flex cursor-pointer items-center gap-2 text-sm">
+                <span>{t("Sin leer")}</span>
+                <Switch className="data-[checked=true]:bg-sidebar-primary shadow-none" />
+              </Label>
+            )}
           </div>
-          <SidebarInput placeholder="Type to search..." />
+          {/* <SidebarInput placeholder="Type to search..." /> */}
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
               {mails.map((mail) => (
-                <a
-                  href="#"
-                  key={mail.email}
+                <Link
+                  href={route("regiweb.options.messages.index", { type, inbox: mail })}
+                  key={mail.id}
                   className={cn(
-                    "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0",
-                    { "bg-sidebar-primary/60 text-sidebar-primary-foreground": false },
+                    "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground relative flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0",
+                    { "bg-primary/80 text-primary-foreground": false },
                   )}
                 >
                   <div className="flex w-full items-center gap-2">
-                    <span>{mail.name}</span> <span className="ml-auto text-xs">{mail.date}</span>
+                    <span>{mail.subject}</span>
+                    <span className="ml-auto text-xs">{mail.datetime_human_readeable}</span>
                   </div>
-                  <span className="font-medium">{mail.subject}</span>
-                  <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
-                    {mail.teaser}
+                  <span className="text-xs font-bold">
+                    {isAdmin(mail.sender)
+                      ? mail.sender.usuario
+                      : `${mail.sender.nombre} ${mail.sender.apellidos}`}
                   </span>
-                </a>
+                  <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
+                    {mail.preview}
+                  </span>
+                  {/* delete button icon */}
+                  {type === "trash" ? (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="hover:bg-destructive hover:text-destructive-foreground text-destructive absolute right-2 bottom-3 size-8 cursor-pointer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openConfirmation({
+                          title: t("Restaurar mensaje"),
+                          description: t("¿Está seguro de que desea restaurar este mensaje?"),
+                          actionLabel: t("Restaurar"),
+                          cancelLabel: t("Cancelar"),
+                          onAction: () => {
+                            onRestoreMail(mail.id);
+                          },
+                        });
+                      }}
+                    >
+                      <ArchiveRestoreIcon />
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="hover:bg-destructive hover:text-destructive-foreground text-destructive absolute right-2 bottom-3 size-8 cursor-pointer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openConfirmation({
+                          title: t("Eliminar mensaje"),
+                          description: t("¿Está seguro de que desea eliminar este mensaje?"),
+                          actionLabel: t("Eliminar"),
+                          cancelLabel: t("Cancelar"),
+                          onAction: () => {
+                            onDeleteMail(mail.id);
+                          },
+                        });
+                      }}
+                    >
+                      <Trash2Icon />
+                    </Button>
+                  )}
+                </Link>
               ))}
             </SidebarGroupContent>
           </SidebarGroup>

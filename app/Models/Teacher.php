@@ -9,6 +9,8 @@ use App\Casts\ProfilePicture;
 use App\Casts\YesNo;
 use App\Enums\MediaCollectionEnum;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -132,7 +134,17 @@ class Teacher extends Model implements HasMedia
     ];
 
     protected $guarded = [];
-    // protected $authPasswordName = 'clave';
+
+    public function inboxes(): MorphMany
+    {
+        return $this->morphMany(Inbox::class, 'sender');
+    }
+
+    public function receivedMessages(): MorphToMany
+    {
+        return $this->morphToMany(Inbox::class, 'receiver', 'inboxebles')
+            ->withPivot('is_read', 'is_deleted');
+    }
 
     public function students(): HasMany
     {

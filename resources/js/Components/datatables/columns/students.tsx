@@ -4,8 +4,7 @@ import { ucwords } from "@/lib/utils";
 import { Student } from "@/types/student";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<Partial<Student>>[] = [
-  { ...(selectionHeader as ColumnDef<Partial<Student>>) },
+export const studentsListingColumns: ColumnDef<Student>[] = [
   {
     header: ({ column }) => <DataTableColumnHeader column={column} title="Apellidos" />,
     accessorKey: "apellidos",
@@ -24,4 +23,9 @@ export const columns: ColumnDef<Partial<Student>>[] = [
       return ucwords(value);
     },
   },
+];
+
+export const studentsSelectionColumns: ColumnDef<Student>[] = [
+  { ...(selectionHeader as ColumnDef<Student>) },
+  ...studentsListingColumns,
 ];

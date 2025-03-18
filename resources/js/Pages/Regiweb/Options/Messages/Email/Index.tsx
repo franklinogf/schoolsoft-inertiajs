@@ -1,7 +1,7 @@
 import { DataTable } from "@/Components/custom-ui/data-table";
 import { columns } from "@/Components/datatables/columns/admins";
-import { columns as coursesColumns } from "@/Components/datatables/columns/courses";
-import { columns as studentsColumns } from "@/Components/datatables/columns/students";
+import { coursesSelectionColumns } from "@/Components/datatables/columns/courses";
+import { studentsSelectionColumns } from "@/Components/datatables/columns/students";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
@@ -26,9 +26,7 @@ interface PageProps {
 
 export default function Page({ students, courses, admins, selected }: PageProps) {
   const [selectedTab, setSelectedTab] = useState<EmailSelectedEnum>(selected);
-  const handleButtonClick = (data: string[]) => {
-    router.get(route("regiweb.options.messages.email.form"), { data, selected: selectedTab });
-  };
+
   const { t } = useTranslations();
 
   return (
@@ -52,19 +50,31 @@ export default function Page({ students, courses, admins, selected }: PageProps)
           <TabsContent value={EmailSelectedEnum.STUDENTS}>
             <DataTable
               rowId="ss"
-              columns={studentsColumns}
+              columns={studentsSelectionColumns}
               data={students}
               buttonLabel={t("Continuar")}
-              onButtonClick={handleButtonClick}
+              onButtonClick={(data) => {
+                const selectedStudents = data.map((student) => student.ss);
+                router.get(route("regiweb.options.messages.email.form"), {
+                  data: selectedStudents,
+                  selected: selectedTab,
+                });
+              }}
             />
           </TabsContent>
           <TabsContent value={EmailSelectedEnum.COURSES}>
             <DataTable
               rowId="curso"
-              columns={coursesColumns}
+              columns={coursesSelectionColumns}
               data={courses}
               buttonLabel={t("Continuar")}
-              onButtonClick={handleButtonClick}
+              onButtonClick={(data) => {
+                const selectedCourses = data.map((course) => course.curso);
+                router.get(route("regiweb.options.messages.email.form"), {
+                  data: selectedCourses,
+                  selected: selectedTab,
+                });
+              }}
             />
           </TabsContent>
           <TabsContent value={EmailSelectedEnum.ADMIN}>
@@ -73,7 +83,13 @@ export default function Page({ students, courses, admins, selected }: PageProps)
               columns={columns}
               data={admins}
               buttonLabel={t("Continuar")}
-              onButtonClick={handleButtonClick}
+              onButtonClick={(data) => {
+                const selectedAdmins = data.map((admin) => admin.usuario);
+                router.get(route("regiweb.options.messages.email.form"), {
+                  data: selectedAdmins,
+                  selected: selectedTab,
+                });
+              }}
             />
           </TabsContent>
         </Tabs>

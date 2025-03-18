@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
@@ -41,6 +42,13 @@ class AppServiceProvider extends ServiceProvider
                 ->mixedCase()
                 ->numbers();
         });
+
+        Relation::enforceMorphMap([
+            'teacher' => 'App\Models\Teacher',
+            'student' => 'App\Models\Student',
+            'admin' => 'App\Models\Admin',
+            'inbox' => 'App\Models\Inbox',
+        ]);
 
     }
 }

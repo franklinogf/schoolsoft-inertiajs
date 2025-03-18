@@ -1,6 +1,9 @@
 import { PhoneCompaniesEnum } from "@/Enums";
 import { useTranslations } from "@/hooks/translations";
 import { PhoneCompany } from "@/types";
+import { Admin } from "@/types/auth";
+import { Student } from "@/types/student";
+import { Teacher } from "@/types/teacher";
 import { clsx, type ClassValue } from "clsx";
 import { format, intlFormat, parse } from "date-fns";
 import { twMerge } from "tailwind-merge";
@@ -77,4 +80,15 @@ export function ucwords(str: string): string {
 
 export function createPhoneEmail(phone: string, company: PhoneCompany): string {
   return `${phone}${PhoneCompaniesEnum[company]}`;
+}
+
+export function ucfirst(value: string) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+export function isAdmin(user: Teacher | Student | Admin): user is Admin {
+  if ("colegio" in user) {
+    return true;
+  }
+  return false;
 }

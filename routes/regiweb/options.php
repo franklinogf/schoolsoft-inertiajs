@@ -14,7 +14,10 @@ Route::name('options.')->prefix('options')->group(function () {
 
             Route::controller(MessagesController::class)
                 ->group(function () {
-                    Route::get('/', 'index')->name('index');
+                    Route::get('/new/{course?}', 'create')->name('create');
+                    Route::post('/new/{course}', 'store')->name('store');
+                    Route::get('/{inbox?}', 'index')->name('index');
+                    Route::delete('/{id}', 'destroy')->name('destroy');
                 });
 
             Route::name('email.')

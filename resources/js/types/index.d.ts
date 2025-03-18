@@ -1,4 +1,7 @@
 import { PhoneCompaniesEnum } from "@/Enums";
+import { Admin } from "./auth";
+import { Student } from "./student";
+import { Teacher } from "./teacher";
 
 export interface Document {
   id: number;
@@ -63,3 +66,36 @@ export type PagePropsWithUser<
 };
 
 export type PhoneCompany = keyof typeof PhoneCompaniesEnum;
+
+export type InboxSideBarMenu = {
+  header: {
+    title: Translations;
+    icon: LucideIcon;
+    route: RouteName;
+  };
+  menu: {
+    title: Translations;
+    route: RouteName;
+    icon: LucideIcon;
+    type: InboxType;
+  }[];
+};
+export type Inbox<TReceiver, TSender> = {
+  id: number;
+  subject: string;
+  message: string;
+  preview: string;
+  is_deleted: string;
+  date: string;
+  time: string;
+  datetime: string;
+  datetime_human_readeable: string;
+  receivers: TReceiver[];
+  sender: TSender;
+  attachments: string[];
+};
+export type InboxType = "inbox" | "sent" | "trash";
+
+export type TeacherInbox = Inbox<Teacher, Student | Admin>;
+export type StudentInbox = Inbox<Student, Teacher | Admin>;
+export type AdminInbox = Inbox<Admin, Teacher | Student>;

@@ -8,11 +8,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import { Translations, useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
 
 interface DataTableColumnHeaderProps<TData, TValue> extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>;
-  title: string;
+  title: Translations;
 }
 
 export function DataTableColumnHeader<TData, TValue>({
@@ -20,8 +21,9 @@ export function DataTableColumnHeader<TData, TValue>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
+  const { t } = useTranslations();
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>;
+    return <div className={cn("text-foreground", className)}>{title}</div>;
   }
 
   return (
@@ -33,7 +35,7 @@ export function DataTableColumnHeader<TData, TValue>({
             size="sm"
             className="text-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground -ml-3 h-8"
           >
-            <span>{title}</span>
+            <span>{t(title)}</span>
             {column.getIsSorted() === "desc" ? (
               <ArrowDown className="size-4" />
             ) : column.getIsSorted() === "asc" ? (

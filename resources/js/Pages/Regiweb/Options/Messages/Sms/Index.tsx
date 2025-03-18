@@ -1,6 +1,6 @@
 import { DataTable } from "@/Components/custom-ui/data-table";
-import { columns as coursesColumns } from "@/Components/datatables/columns/courses";
-import { columns as studentsColumns } from "@/Components/datatables/columns/students";
+import { coursesSelectionColumns } from "@/Components/datatables/columns/courses";
+import { studentsSelectionColumns } from "@/Components/datatables/columns/students";
 import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
 import { PhoneField } from "@/Components/forms/inputs/PhoneField";
 import { SelectField } from "@/Components/forms/inputs/SelectField";
@@ -60,19 +60,31 @@ export default function Page({ students, courses, selected }: PageProps) {
           <TabsContent value={SmsSelectedEnum.STUDENTS}>
             <DataTable
               rowId="ss"
-              columns={studentsColumns}
+              columns={studentsSelectionColumns}
               data={students}
               buttonLabel={t("Continuar")}
-              onButtonClick={handleButtonClick}
+              onButtonClick={(data) => {
+                const selectedStudents = data.map((student) => student.ss);
+                router.get(route("regiweb.options.messages.sms.form"), {
+                  data: selectedStudents,
+                  selected: selectedTab,
+                });
+              }}
             />
           </TabsContent>
           <TabsContent value={SmsSelectedEnum.COURSES}>
             <DataTable
               rowId="curso"
-              columns={coursesColumns}
+              columns={coursesSelectionColumns}
               data={courses}
               buttonLabel={t("Continuar")}
-              onButtonClick={handleButtonClick}
+              onButtonClick={(data) => {
+                const selectedCourses = data.map((course) => course.curso);
+                router.get(route("regiweb.options.messages.sms.form"), {
+                  data: selectedCourses,
+                  selected: selectedTab,
+                });
+              }}
             />
           </TabsContent>
           <TabsContent value={SmsSelectedEnum.Individual}>
