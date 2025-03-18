@@ -129,10 +129,10 @@ export function InboxSideBar({
                       { "bg-primary/80 text-primary-foreground": false },
                     )}
                   >
-                    <div className="flex w-full items-center gap-2">
-                      <span>{mail.subject}</span>
-                      <span className="ml-auto text-xs">{mail.datetime_human_readeable}</span>
-                    </div>
+                    <span className="absolute top-0.5 right-1 ml-auto self-start text-xs">
+                      {mail.datetime_human_readeable}
+                    </span>
+                    <span className="line-clamp-1">{mail.subject}</span>
                     <span className="text-xs font-bold">
                       {isAdmin(mail.sender)
                         ? mail.sender.usuario

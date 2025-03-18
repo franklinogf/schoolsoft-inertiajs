@@ -147,32 +147,36 @@ export default function Page({
                     </div>
                   </div>
 
-                  <Separator />
+                  {mail.attachments.length > 0 && (
+                    <>
+                      <Separator />
 
-                  <ul className="flex gap-2">
-                    {mail.attachments.map((attachment) => (
-                      <li key={attachment.id} className="gap-2">
-                        <div className="bg-muted/80 aspect-square w-20">
-                          {isImage(attachment.type) ? (
-                            <img
-                              src={attachment.url}
-                              alt={attachment.name}
-                              className="aspect-square w-full object-contain"
-                            />
-                          ) : (
-                            <div className="flex h-full items-center justify-center">
-                              <FileIcon />
+                      <ul className="flex gap-2">
+                        {mail.attachments.map((attachment) => (
+                          <li key={attachment.id} className="gap-2">
+                            <div className="bg-muted/80 aspect-square w-20">
+                              {isImage(attachment.type) ? (
+                                <img
+                                  src={attachment.url}
+                                  alt={attachment.name}
+                                  className="aspect-square w-full object-contain"
+                                />
+                              ) : (
+                                <div className="flex h-full items-center justify-center">
+                                  <FileIcon />
+                                </div>
+                              )}
+                              <a href={route("media.download", { media: attachment.id })}>
+                                <span className="line-clamp-1 text-center text-sm font-medium">
+                                  {attachment.name}
+                                </span>
+                              </a>
                             </div>
-                          )}
-                          <a href={route("media.download", { media: attachment.id })}>
-                            <span className="line-clamp-1 text-center text-sm font-medium">
-                              {attachment.name}
-                            </span>
-                          </a>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
                 </section>
 
                 <Separator />
