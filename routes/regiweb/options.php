@@ -41,4 +41,11 @@ Route::name('options.')->prefix('options')->group(function () {
                     Route::get('/form', 'form')->name('form');
                 });
         });
+
+    Route::name('others.')->group(function () {
+        Route::get('/homeworks', function () {
+            return inertia('Regiweb/Options/Homeworks/Index');
+        })->name('homeworks.index');
+    });
+
 });

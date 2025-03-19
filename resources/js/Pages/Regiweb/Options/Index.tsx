@@ -45,7 +45,7 @@ const options: MenuOption[] = [
       },
       {
         label: "Crear tareas",
-        route: route("regiweb.options.index"),
+        route: route("regiweb.options.others.homeworks.index"),
       },
       {
         label: "Documentos",
