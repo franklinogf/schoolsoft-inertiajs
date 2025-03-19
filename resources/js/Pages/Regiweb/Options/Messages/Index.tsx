@@ -24,7 +24,6 @@ export default function Page({
     type: InboxType;
   }
 >) {
-  console.log(mail);
   const { t } = useTranslations();
   const { openConfirmation } = useConfirmationStore();
   function handleDeleteMail(id: number) {

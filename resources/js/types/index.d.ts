@@ -92,7 +92,8 @@ export type Inbox<TReceiver, TSender> = {
   subject: string;
   message: string;
   preview: string;
-  is_deleted: string;
+  is_deleted: boolean;
+  is_read: boolean;
   date: string;
   time: string;
   datetime: string;

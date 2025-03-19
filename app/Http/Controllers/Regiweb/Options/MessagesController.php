@@ -30,7 +30,7 @@ class MessagesController extends Controller
                 ->wherePivot('is_deleted', false)
                 ->get();
         } elseif ($type === 'sent') {
-            $mails = $teacher->inboxes()
+            $mails = $teacher->sentMessages()
                 ->where('is_deleted', false)
                 ->get();
         } else {
@@ -38,7 +38,7 @@ class MessagesController extends Controller
             $mails = $teacher->receivedMessages()
                 ->wherePivot('is_deleted', true)
                 ->get()->merge(
-                    $teacher->inboxes()
+                    $teacher->sentMessages()
                         ->where('is_deleted', true)
                         ->get()
                 );
@@ -47,6 +47,12 @@ class MessagesController extends Controller
         $mails = $mails->count() > 0 ? InboxResource::collection($mails) : [];
 
         $mail = $inbox ? new InboxResource($inbox) : null;
+        if ($mail) {
+            if ($inbox->sender_id !== $teacher->id) {
+                $teacher->receivedMessages()
+                    ->updateExistingPivot($inbox->id, ['is_read' => true]);
+            }
+        }
 
         return inertia('Regiweb/Options/Messages/Index',
             [
@@ -87,7 +93,7 @@ class MessagesController extends Controller
         /**
          * @var \App\Models\Inbox $inbox
          */
-        $inbox = $teacher->inboxes()->create([
+        $inbox = $teacher->sentMessages()->create([
             'subject' => $validated['subject'],
             'message' => $validated['message'],
         ]);
@@ -119,7 +125,7 @@ class MessagesController extends Controller
          * @var \App\Models\Teacher $teacher
          */
         $teacher = auth()->user();
-        if ($inbox->sender_id == $teacher->id) {
+        if ($inbox->sender_id === $teacher->id) {
             $inbox->update(['is_deleted' => true]);
         } else {
             $teacher->receivedMessages()
@@ -138,7 +144,7 @@ class MessagesController extends Controller
          * @var \App\Models\Teacher $teacher
          */
         $teacher = auth()->user();
-        if ($inbox->sender_id == $teacher->id) {
+        if ($inbox->sender_id === $teacher->id) {
             $inbox->update(['is_deleted' => false]);
         } else {
             $teacher->receivedMessages()

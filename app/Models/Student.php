@@ -262,7 +262,7 @@ class Student extends Model
         return $this->hasMany(StudentAttendance::class, 'ss', 'ss');
     }
 
-    public function inboxes(): MorphMany
+    public function sentMessages(): MorphMany
     {
         return $this->morphMany(Inbox::class, 'sender');
     }

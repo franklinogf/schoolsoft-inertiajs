@@ -126,7 +126,7 @@ export function InboxSideBar({
                     key={mail.id}
                     className={cn(
                       "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground relative flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0",
-                      { "bg-primary/80 text-primary-foreground": false },
+                      { "bg-primary/80 text-primary-foreground": !mail.is_read },
                     )}
                   >
                     <span className="absolute top-0.5 right-1 ml-auto self-start text-xs">

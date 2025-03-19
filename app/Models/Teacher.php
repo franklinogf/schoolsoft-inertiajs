@@ -135,7 +135,7 @@ class Teacher extends Model implements HasMedia
 
     protected $guarded = [];
 
-    public function inboxes(): MorphMany
+    public function sentMessages(): MorphMany
     {
         return $this->morphMany(Inbox::class, 'sender');
     }
