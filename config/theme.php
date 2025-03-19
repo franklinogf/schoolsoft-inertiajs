@@ -1,7 +1,11 @@
 <?php
 
 return [
-    'current' => 'dark',
+    /**
+     * The current theme.
+     *  (light|dark)
+     */
+    'current' => 'light',
     'themes' => [
         'light' => [
             'background' => 'hsl(0 0% 100%)',

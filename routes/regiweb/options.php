@@ -13,6 +13,7 @@ Route::name('options.')->prefix('options')->group(function () {
         ->group(function () {
 
             Route::controller(MessagesController::class)
+                ->prefix('inbox')
                 ->group(function () {
                     Route::get('/new/{course?}', 'create')->name('create');
                     Route::post('/new/{course}', 'store')->name('store');
