@@ -6,6 +6,7 @@ use App\Models\Scopes\DescendingScope;
 use App\Observers\InboxObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
+use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -20,12 +21,8 @@ class Inbox extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $casts = [
-        'is_read' => 'boolean',
-        'is_deleted_by_sender' => 'boolean',
-        'is_deleted_by_receiver' => 'boolean',
-        'is_read_by_sender' => 'boolean',
-        'is_read_by_receiver' => 'boolean',
-
+        'is_deleted' => 'boolean',
+        'subject' => AsStringable::class,
     ];
 
     public function sender(): MorphTo

@@ -8,8 +8,13 @@ use App\Http\Resources\CoursesResource;
 use App\Http\Resources\InboxResource;
 use App\Models\Inbox;
 use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\Support\MediaStream;
 
 class MessagesController extends Controller
 {
@@ -56,8 +61,8 @@ class MessagesController extends Controller
 
         return inertia('Regiweb/Options/Messages/Index',
             [
-                'mails' => $mails,
-                'mail' => $mail,
+                'mails' => Inertia::defer(fn () => $mails),
+                'mail' => Inertia::defer(fn () => $mail),
                 'type' => $type,
             ]);
     }
@@ -152,5 +157,26 @@ class MessagesController extends Controller
         }
 
         return to_route('regiweb.options.messages.index', ['type' => $type])->with('success', 'Message deleted successfully');
+    }
+
+    public function downloadAll(Inbox $inbox)
+    {
+
+        $media = $inbox->getMedia(MediaCollectionEnum::INBOX_ATTACHMENT->value);
+
+        Gate::allowIf(fn (Teacher $user) => $user->id === $inbox->sender_id
+        || $inbox->model->teachers()->where('receiver_id', $user->id)->exists()
+        );
+
+        return MediaStream::create($inbox->subject->lower()->snake().'.zip')->addMedia($media);
+    }
+
+    public function download(Media $media)
+    {
+        Gate::allowIf(fn (Teacher $user) => $user->id === $media->model->sender_id
+        || $media->model->teachers()->where('receiver_id', $user->id)->exists()
+        );
+
+        return $media;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\DownloadMediaController;
 use App\Http\Controllers\Regiweb\Options\MessagesController;
 use App\Http\Controllers\Regiweb\Options\MessagesEmailController;
 use App\Http\Controllers\Regiweb\Options\MessagesSmscontroller;
@@ -21,8 +20,8 @@ Route::name('options.')->prefix('options')->group(function () {
                     Route::delete('/message', 'destroy')->name('destroy');
                     Route::post('/message', 'restore')->name('restore');
                     Route::get('/{inbox?}', 'index')->name('index');
-                    Route::get('/{inbox}/media/download', 'download')->name('downloadAll');
-                    Route::get('/download/{media}', DownloadMediaController::class)->name('download');
+                    Route::get('/{inbox}/media/download', 'downloadAll')->name('downloadAll');
+                    Route::get('/download/{media}', 'download')->name('download');
                 });
 
             Route::name('email.')
