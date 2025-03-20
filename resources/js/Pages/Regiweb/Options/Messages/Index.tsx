@@ -165,7 +165,11 @@ export default function Page({
                                   <FileIcon />
                                 </div>
                               )}
-                              <a href={route("media.download", { media: attachment.id })}>
+                              <a
+                                href={route("regiweb.options.messages.download", {
+                                  media: attachment.id,
+                                })}
+                              >
                                 <span className="line-clamp-1 text-center text-sm font-medium">
                                   {attachment.name}
                                 </span>

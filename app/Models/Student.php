@@ -185,7 +185,8 @@ use Illuminate\Foundation\Auth\User as Model;
  * @property string $pm1_hora
  * @property string $pm2_hora
  * @property string $pm3_hora
- */ #[ScopedBy([Active::class, SchoolYear::class])]
+ */
+#[ScopedBy([Active::class, SchoolYear::class])]
 class Student extends Model
 {
     /**
