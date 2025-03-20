@@ -113,6 +113,7 @@ function ToolBarButton({
 }) {
   return (
     <Button
+      type="button"
       className={cn("size-8 cursor-pointer rounded-none", {
         "bg-accent": active,
       })}
@@ -128,7 +129,7 @@ function ToolBarButton({
 function ToolBar({ editor }: { editor: Editor }) {
   return (
     <ScrollArea className="w-full pb-0.5 whitespace-nowrap">
-      <div className="flex w-max items-center">
+      <div className="flex flex-wrap items-center">
         <ToolBarButton
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}

@@ -20,7 +20,7 @@ class Contact extends Mailable
         public string $lastname,
         public string $email,
         public string $message,
-        public string $phone
+        public string $phone,
     ) {}
 
     /**
@@ -29,7 +29,7 @@ class Contact extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact',
+            subject: __('Contacto desde el formulario'),
         );
     }
 

@@ -19,7 +19,7 @@ const initialState: ConfirmationState = {
   open: false,
   title: null,
   description: null,
-  cancelLabel: "Cancel",
+  cancelLabel: null,
   actionLabel: null,
   onAction: () => {},
   onCancel: () => {},

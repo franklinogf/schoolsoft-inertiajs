@@ -21,10 +21,10 @@ class ContactController extends Controller
             'lastname' => ['required'],
             'email' => ['required', 'email'],
             'message' => ['required'],
-            'phone' => ['phone:INTERNATIONAL,US'],
+            'phone' => ['phone'],
         ]);
 
-        Mail::to('franklinomarflores@gmail.com')->send(new \App\Mail\Root\Contact(
+        Mail::send(new \App\Mail\Root\Contact(
             $validated['name'],
             $validated['lastname'],
             $validated['email'],

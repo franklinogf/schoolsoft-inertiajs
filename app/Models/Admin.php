@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Model;
 
 /**
@@ -231,9 +233,17 @@ class Admin extends Model
 
     protected $guarded = [];
 
-    /**
-     * Scope a query to only include active users.
-     */
+    public function sentMessages(): MorphMany
+    {
+        return $this->morphMany(Inbox::class, 'sender');
+    }
+
+    public function receivedMessages(): MorphToMany
+    {
+        return $this->morphToMany(Inbox::class, 'receiver', 'inboxebles')
+            ->withPivot('is_read', 'is_deleted');
+    }
+
     public function scopeGetPrimaryAdmin(Builder $query)
     {
         return $query->where('usuario', 'administrador');

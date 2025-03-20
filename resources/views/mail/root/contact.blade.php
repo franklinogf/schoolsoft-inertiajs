@@ -1,12 +1,11 @@
 <x-mail::message>
-# {{ __('mail.contact.title') }}
 
-**{{ __('mail.contact.name') }}:** {{ $name }}
+**{{ __('Nombre') }}:** {{ $name }}
 
-**{{ __('mail.contact.email') }}:**  {{ $email }}
+**{{ __('Correo electrónico') }}:**  {{ $email }}
 
-**{{ __('mail.contact.message') }}:**  {{ $message }}
+**{{ __('Teléfono') }}:**  {{ $message }}
 
-**{{ __('mail.contact.phone') }}:**  {{ $phone }}
+**{{ __('Mensaje') }}:**  {{ $phone }}
 
 </x-mail::message>

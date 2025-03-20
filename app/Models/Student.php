@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Model;
 
 /**
@@ -183,7 +185,8 @@ use Illuminate\Foundation\Auth\User as Model;
  * @property string $pm1_hora
  * @property string $pm2_hora
  * @property string $pm3_hora
- */ #[ScopedBy([Active::class, SchoolYear::class])]
+ */
+#[ScopedBy([Active::class, SchoolYear::class])]
 class Student extends Model
 {
     /**
@@ -203,9 +206,6 @@ class Student extends Model
 
     protected $guarded = [];
 
-    /**
-     * The "booted" method of the model.
-     */
     protected static function booted(): void
     {
         // //Siempre utilizar el year del colegio
@@ -227,11 +227,15 @@ class Student extends Model
         $where = [
             ["$table.curso", $class],
             ["$table.baja", ''],
+            ["$table.year", app('year')],
+            ["{$this->table}.year", app('year')],
         ];
         if ($summer) {
             $where[] = ["$table.verano", '2'];
         }
-        $query->addSelect("{$this->table}.*")->join($table, "{$this->table}.ss", '=', "$table.ss")->where($where);
+        $query->addSelect("{$this->table}.*")
+            ->join($table, "{$this->table}.ss", '=', "$table.ss")
+            ->where($where);
     }
 
     public function scopeOfGrade(Builder $query, string $grade): void
@@ -257,5 +261,16 @@ class Student extends Model
     public function attendances(): HasMany
     {
         return $this->hasMany(StudentAttendance::class, 'ss', 'ss');
+    }
+
+    public function sentMessages(): MorphMany
+    {
+        return $this->morphMany(Inbox::class, 'sender');
+    }
+
+    public function receivedMessages(): MorphToMany
+    {
+        return $this->morphToMany(Inbox::class, 'receiver', 'inboxebles')
+            ->withPivot('is_read', 'is_deleted');
     }
 }

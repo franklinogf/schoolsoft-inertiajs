@@ -24,17 +24,17 @@ import { XSquare } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-interface DataTableProps<Tdata, TValue> {
-  columns: ColumnDef<Tdata, TValue>[];
-  data: Tdata[];
-  onButtonClick?: (data: string[]) => void;
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  onButtonClick?: (data: TData[]) => void;
   buttonLabel?: string;
   filter?: boolean;
   selectOne?: boolean;
-  rowId: string;
+  rowId: keyof TData;
 }
 
-export function DataTable<Tdata, TValue>({
+export function DataTable<TData, TValue>({
   columns,
   data,
   onButtonClick,
@@ -42,7 +42,7 @@ export function DataTable<Tdata, TValue>({
   filter = true,
   selectOne = false,
   rowId,
-}: DataTableProps<Tdata, TValue>) {
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState<string>("");
   const [rowSelection, setRowSelection] = useState({});
@@ -59,7 +59,7 @@ export function DataTable<Tdata, TValue>({
     onRowSelectionChange: setRowSelection,
     enableMultiRowSelection: !selectOne,
     state: { sorting, globalFilter, rowSelection },
-    getRowId: (row: Tdata) => row[rowId as keyof Tdata] as string,
+    getRowId: (row: TData) => row[rowId as keyof TData] as string,
   });
   const { t } = useTranslations();
   return (
@@ -96,7 +96,11 @@ export function DataTable<Tdata, TValue>({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="bg-primary/80 hover:bg-primary/80">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className="text-primary-foreground py-1">
+                  <TableHead
+                    key={header.id}
+                    className="text-primary-foreground py-1"
+                    style={{ width: `${header.getSize()}px` }}
+                  >
                     {header.isPlaceholder
                       ? null
                       : header.id === "select" && selectOne
@@ -146,7 +150,7 @@ export function DataTable<Tdata, TValue>({
               if (table.getSelectedRowModel().rows.length === 0) {
                 toast.info("Please select at least one row");
               } else {
-                onButtonClick(table.getSelectedRowModel().rows.flatMap((row) => row.id));
+                onButtonClick(table.getSelectedRowModel().rows.map((row) => row.original));
               }
             }}
           >

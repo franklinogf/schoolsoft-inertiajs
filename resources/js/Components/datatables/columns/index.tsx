@@ -25,7 +25,7 @@ export const selectionHeader: ColumnDef<RowData> = {
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
+          aria-label="Select all in page"
         />
         <span>All page</span>
       </Label>

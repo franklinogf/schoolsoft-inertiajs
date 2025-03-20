@@ -1,69 +1,71 @@
-import { FileField } from "@/Components/forms/inputs/FileField";
 import { InputField } from "@/Components/forms/inputs/InputField";
-import { RichTextField } from "@/Components/forms/inputs/RichTextField";
+import { TextareaField } from "@/Components/forms/inputs/TextareaField";
 import SubmitButton from "@/Components/forms/SubmitButton";
 import { Button } from "@/Components/ui/button";
 import { Card, CardContent } from "@/Components/ui/card";
 import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
-import { EmailSelectedEnum } from "@/Pages/Regiweb/Options/Messages/Email/Index";
-import { Admin } from "@/types/auth";
+import { createPhoneEmail } from "@/lib/utils";
+import { PhoneCompany } from "@/types";
 import { Student } from "@/types/student";
 import { Course } from "@/types/teacher";
 import { Link, useForm } from "@inertiajs/react";
-import { MailIcon } from "lucide-react";
+import { PhoneIcon } from "lucide-react";
 import { FormEvent } from "react";
+import { SmsSelectedEnum } from "./Index";
 
 interface PageProps {
   students: Pick<Student, "ss" | "nombre" | "apellidos">[] | null;
-  courses: Course[];
-  admins: Admin[];
+  courses: Course[] | null;
   data: string[];
-  selected: EmailSelectedEnum;
+  selected: SmsSelectedEnum;
+  phone: string | null;
+  company: PhoneCompany | null;
 }
-export default function Page({ students, courses, admins, selected, data: rowsId }: PageProps) {
+export default function Page({
+  students,
+  courses,
+  selected,
+  data: rowsId,
+  phone,
+  company,
+}: PageProps) {
   const { t, tChoice } = useTranslations();
-  const { data, setData, processing, errors, post } = useForm<{
-    subject: string;
-    message: string;
-    files: string[];
-  }>({
+  const { data, setData, processing, errors, post } = useForm({
     subject: "",
     message: "",
-    files: [],
   });
 
   const to =
-    selected === EmailSelectedEnum.STUDENTS && students !== null && students?.length === 1
+    selected === SmsSelectedEnum.STUDENTS && students !== null && students?.length === 1
       ? `${students[0]?.nombre} ${students[0]?.apellidos}`
-      : selected === EmailSelectedEnum.STUDENTS && students !== null && students?.length > 1
+      : selected === SmsSelectedEnum.STUDENTS && students !== null && students?.length > 1
         ? `${students[0]?.nombre} ${students[0]?.apellidos} ` +
           tChoice("y :amount estudiante más|y :amount estudiantes más", students.length - 1, {
             amount: students.length - 1,
           })
-        : selected === EmailSelectedEnum.COURSES && courses !== null
+        : selected === SmsSelectedEnum.COURSES && courses !== null
           ? courses.map((course) => course.curso).join(", ")
-          : selected === EmailSelectedEnum.ADMIN && admins !== null
-            ? admins.map((admin) => admin.director).join(", ")
+          : selected === SmsSelectedEnum.Individual && phone !== null && company !== null
+            ? `${phone} (${company})`
             : "";
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    post(route("regiweb.options.messages.email.send", { selected, to: rowsId }), {
+    const to =
+      selected === SmsSelectedEnum.Individual ? [createPhoneEmail(phone!, company!)] : rowsId;
+    post(route("regiweb.options.messages.sms.send", { selected, to }), {
       preserveState: true,
     });
   };
 
   return (
-    <RegiwebLayout title={t("Enviar correo electrónico")}>
+    <RegiwebLayout title={t("Enviar SMS")}>
       <div className="mx-auto w-full max-w-2xl">
-        <h1 className="mb-2 text-center text-2xl font-semibold">
-          {t("Enviar correo electrónico")}
-        </h1>
+        <h1 className="mb-2 text-center text-2xl font-semibold">{t("Enviar SMS")}</h1>
         <div className="flex justify-end">
           <Button asChild variant="outline" className="mb-4">
-            <Link href={route("regiweb.options.messages.email.index", { selected })}>
+            <Link href={route("regiweb.options.messages.sms.index", { selected })}>
               {t("Ir atrás")}
             </Link>
           </Button>
@@ -71,7 +73,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
         <form onSubmit={onSubmit}>
           <Card>
             <CardContent className="space-y-2">
-              <InputField label={t("Para")} name="to" disabled value={to} />
+              <InputField label={t("Para")} name="to" disabled defaultValue={to} />
               <InputField
                 required
                 value={data.subject}
@@ -82,7 +84,8 @@ export default function Page({ students, courses, admins, selected, data: rowsId
                 label={t("Asunto")}
                 name="subject"
               />
-              <RichTextField
+              <TextareaField
+                required
                 label={t("Mensaje")}
                 value={data.message}
                 onChange={(value) => {
@@ -90,18 +93,11 @@ export default function Page({ students, courses, admins, selected, data: rowsId
                 }}
                 error={errors.message}
               />
-              <FileField
-                label={t("Adjuntos")}
-                allowMultiple
-                onChange={(values) => {
-                  setData("files", values);
-                }}
-              />
             </CardContent>
           </Card>
           <div className="mt-4 flex justify-center">
             <SubmitButton
-              loadingIcon={<MailIcon className="animate-bounce" />}
+              loadingIcon={<PhoneIcon className="animate-bounce" />}
               disabled={processing}
             >
               {t("Enviar")}

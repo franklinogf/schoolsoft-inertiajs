@@ -2,6 +2,7 @@ export enum GenderEnum {
   MALE = "m",
   FEMALE = "f",
 }
+
 export enum PhoneCompaniesEnum {
   "AT&T" = "@txt.att.net",
   "T-Movil" = "@tmomail.net",
@@ -12,6 +13,7 @@ export enum PhoneCompaniesEnum {
   Suncom = "@tms.suncom.com",
   Boost = "@myboostmobile.com",
 }
+
 export enum TeacherLevelEnum {
   Elemental = "Elemental",
   "Pre-escolar" = "Pre escolar",

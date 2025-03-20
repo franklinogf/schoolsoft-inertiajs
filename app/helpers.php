@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PhoneCompanyEnum;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('tenant_file_url')) {
@@ -48,5 +49,12 @@ if (! function_exists('public_tenant_path')) {
         $cleanPath = ltrim($path, '/');
 
         return 'public/'.(tenant('id').'/'.$cleanPath);
+    }
+}
+
+if (! function_exists('create_phone_email')) {
+    function create_phone_email($phone, $company)
+    {
+        return $phone.PhoneCompanyEnum::from($company)->companyHost();
     }
 }
