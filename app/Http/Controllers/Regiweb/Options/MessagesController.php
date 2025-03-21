@@ -32,18 +32,22 @@ class MessagesController extends Controller
 
         if ($type === 'inbox') {
             $mails = $teacher->receivedMessages()
+                ->whereNull('parent_id')
                 ->wherePivot('is_deleted', false)
                 ->get();
         } elseif ($type === 'sent') {
             $mails = $teacher->sentMessages()
+                ->whereNull('parent_id')
                 ->where('is_deleted', false)
                 ->get();
         } else {
 
             $mails = $teacher->receivedMessages()
+                ->whereNull('parent_id')
                 ->wherePivot('is_deleted', true)
                 ->get()->merge(
                     $teacher->sentMessages()
+                        ->whereNull('parent_id')
                         ->where('is_deleted', true)
                         ->get()
                 );
@@ -119,6 +123,47 @@ class MessagesController extends Controller
         $inbox->students()->attach($students);
 
         return to_route('regiweb.options.messages.index')->with('success', 'Message sent successfully');
+    }
+
+    public function reply(Request $request, Inbox $inbox)
+    {
+        $validated = $request->validate([
+            'message' => 'required|string',
+            'files' => ['array'],
+            'files.*' => ['string'],
+        ]);
+        $folders = $validated['files'];
+
+        /**
+         * @var \App\Models\Teacher $teacher
+         */
+        $teacher = auth()->user();
+
+        $reply = $teacher->sentMessages()->create([
+            'subject' => 'Re: '.$inbox->subject,
+            'message' => $validated['message'],
+            'parent_id' => $inbox->id,
+        ]);
+        $sender_type = str($inbox->sender_type)->plural()->toString();
+        $reply->$sender_type()->attach($inbox->sender_id);
+
+        // $inbox = $teacher->sentMessages()->create([
+        //     'subject' => 'Re: '.$inbox->subject,
+        //     'message' => $validated['message'],
+        // ]);
+        // $temporaryFiles = tenancy()->central(function () use ($folders) {
+        //     return TemporaryFile::whereIn('folder', $folders)->get();
+        // });
+
+        // foreach ($temporaryFiles as $temporaryFile) {
+        //     $inbox->addMediaFromDisk(tmp_path($temporaryFile->folder, $temporaryFile->filename), 'local')
+        //         ->toMediaCollection(MediaCollectionEnum::INBOX_ATTACHMENT->value);
+        //     $temporaryFile->delete();
+        // }
+
+        // $inbox->students()->attach($inbox->sender_id);
+
+        // return to_route('regiweb.options.messages.index')->with('success', 'Message sent successfully');
     }
 
     public function destroy(Request $request)

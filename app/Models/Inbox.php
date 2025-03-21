@@ -23,6 +23,7 @@ class Inbox extends Model implements HasMedia
     protected $casts = [
         'is_deleted' => 'boolean',
         'subject' => AsStringable::class,
+        'message' => AsStringable::class,
     ];
 
     public function sender(): MorphTo

@@ -20,6 +20,7 @@ Route::name('options.')->prefix('options')->group(function () {
                     Route::delete('/message', 'destroy')->name('destroy');
                     Route::post('/message', 'restore')->name('restore');
                     Route::get('/{inbox?}', 'index')->name('index');
+                    Route::post('/{inbox}/replay', 'reply')->name('reply');
                     Route::get('/{inbox}/media/download', 'downloadAll')->name('downloadAll');
                     Route::get('/download/{media}', 'download')->name('download');
                 });

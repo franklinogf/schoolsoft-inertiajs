@@ -11,9 +11,11 @@ export function MessageForm({
   onSubmit,
   to,
   extras,
+  isReplying = false,
 }: {
   extras?: { [key: string]: any };
-  to: string;
+  to?: string;
+  isReplying?: boolean;
   onSubmit: (post: (url: string, options?: Omit<VisitOptions, "data">) => void) => void;
 }) {
   const { data, setData, errors, processing, post } = useForm<{
@@ -27,6 +29,7 @@ export function MessageForm({
     files: [],
     ...extras,
   });
+
   const { t } = useTranslations();
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -36,17 +39,21 @@ export function MessageForm({
     <form onSubmit={handleSubmit}>
       <Card>
         <CardContent className="space-y-2">
-          <InputField label={t("Para")} name="to" disabled defaultValue={to} />
-          <InputField
-            required
-            value={data.subject}
-            onChange={(value) => {
-              setData("subject", value);
-            }}
-            error={errors.subject}
-            label={t("Asunto")}
-            name="subject"
-          />
+          {!isReplying && (
+            <>
+              {to && <InputField label={t("Para")} name="to" disabled defaultValue={to} />}
+              <InputField
+                required
+                value={data.subject}
+                onChange={(value) => {
+                  setData("subject", value);
+                }}
+                error={errors.subject}
+                label={t("Asunto")}
+                name="subject"
+              />
+            </>
+          )}
           <RichTextField
             label={t("Mensaje")}
             value={data.message}
