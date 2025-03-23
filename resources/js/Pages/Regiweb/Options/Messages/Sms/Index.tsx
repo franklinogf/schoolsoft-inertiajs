@@ -5,6 +5,7 @@ import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
 import { PhoneField } from "@/Components/forms/inputs/PhoneField";
 import { SelectField } from "@/Components/forms/inputs/SelectField";
 import SubmitButton from "@/Components/forms/SubmitButton";
+import { PageTitle } from "@/Components/PageTitle";
 import { Card, CardContent, CardFooter } from "@/Components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import { PHONE_COMPANIES_SELECT } from "@/Constants/FormSelects";
@@ -43,7 +44,7 @@ export default function Page({ students, courses, selected }: PageProps) {
   return (
     <RegiwebLayout title={t("Mensajes de SMS")}>
       <section className="mx-auto w-full max-w-4xl">
-        <h1 className="pb-4 text-center text-2xl font-semibold">{t("Mensajes de SMS")}</h1>
+        <PageTitle>{t("Mensajes de SMS")}</PageTitle>
         <Tabs
           value={selectedTab}
           onValueChange={(value) => {

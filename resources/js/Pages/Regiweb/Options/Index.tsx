@@ -41,11 +41,11 @@ const options: MenuOption[] = [
     items: [
       {
         label: "Generador de exámenes",
-        route: route("regiweb.options.index"),
+        route: route("regiweb.options.exams.index"),
       },
       {
         label: "Crear tareas",
-        route: route("regiweb.options.others.homeworks.index"),
+        route: route("regiweb.options.homeworks.index"),
       },
       {
         label: "Documentos",

@@ -8,6 +8,7 @@ use App\Casts\NullToEmptyString;
 use App\Casts\ProfilePicture;
 use App\Casts\YesNo;
 use App\Enums\MediaCollectionEnum;
+use App\Models\Exams\Exam;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -134,6 +135,16 @@ class Teacher extends Model implements HasMedia
     ];
 
     protected $guarded = [];
+
+    public function exams(): HasMany
+    {
+        return $this->hasMany(Exam::class, 'id_maestro', 'id');
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->nombre.' '.$this->apellidos;
+    }
 
     public function sentMessages(): MorphMany
     {

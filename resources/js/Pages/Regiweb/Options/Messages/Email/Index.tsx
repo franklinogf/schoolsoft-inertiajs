@@ -2,6 +2,7 @@ import { DataTable } from "@/Components/custom-ui/data-table";
 import { columns } from "@/Components/datatables/columns/admins";
 import { coursesSelectionColumns } from "@/Components/datatables/columns/courses";
 import { studentsSelectionColumns } from "@/Components/datatables/columns/students";
+import { PageTitle } from "@/Components/PageTitle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
@@ -32,9 +33,7 @@ export default function Page({ students, courses, admins, selected }: PageProps)
   return (
     <RegiwebLayout title={t("Mensajes de correo electrónico")}>
       <section className="mx-auto w-full max-w-4xl">
-        <h1 className="pb-4 text-center text-2xl font-semibold">
-          {t("Mensajes de correo electrónico")}
-        </h1>
+        <PageTitle>{t("Mensajes de correo electrónico")}</PageTitle>
         <Tabs
           value={selectedTab}
           onValueChange={(value) => {
