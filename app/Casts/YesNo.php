@@ -14,7 +14,7 @@ class YesNo implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return ! $value ? 'NO' : $value;
+        return ! $value ? 'NO' : strtoupper($value);
     }
 
     /**
@@ -24,6 +24,6 @@ class YesNo implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return ! $value ? 'NO' : $value;
+        return ! $value ? 'NO' : strtoupper($value);
     }
 }
