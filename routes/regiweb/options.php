@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Regiweb\Options\ExamGeneratorController;
 use App\Http\Controllers\Regiweb\Options\MessagesController;
 use App\Http\Controllers\Regiweb\Options\MessagesEmailController;
 use App\Http\Controllers\Regiweb\Options\MessagesSmscontroller;
@@ -44,10 +45,14 @@ Route::name('options.')->prefix('options')->group(function () {
                 });
         });
 
-    Route::name('others.')->group(function () {
-        Route::get('/homeworks', function () {
-            return inertia('Regiweb/Options/Homeworks/Index');
-        })->name('homeworks.index');
-    });
+    Route::get('/homeworks', function () {
+        return inertia('Regiweb/Options/Homeworks/Index');
+    })->name('homeworks.index');
+
+    Route::resource('/exams', ExamGeneratorController::class)
+        ->except(['show', 'create'])
+        ->names('exams');
+    Route::match(['put', 'patch'], '/exams/{exam}/toggle', [ExamGeneratorController::class, 'toggle'])
+        ->name('exams.toggle');
 
 });
