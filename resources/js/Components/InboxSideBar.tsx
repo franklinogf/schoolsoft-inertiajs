@@ -18,7 +18,7 @@ import { Switch } from "@/Components/ui/switch";
 import { useTranslations } from "@/hooks/translations";
 import { cn, isAdmin, ucfirst } from "@/lib/utils";
 import useConfirmationStore from "@/stores/confirmationStore";
-import { InboxSideBarMenu, InboxType, TeacherInbox } from "@/types";
+import { InboxSideBarMenu, InboxType, TeacherInbox } from "@/types/inbox";
 import { Deferred, Link } from "@inertiajs/react";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
