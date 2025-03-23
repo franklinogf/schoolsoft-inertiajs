@@ -5,23 +5,21 @@ import { FieldLabel } from "@/Components/forms/inputs/FieldLabel";
 import { formatStringToTime, formatTimeToString } from "@/lib/utils";
 import { useId } from "react";
 interface TimeFieldProps extends Pick<TimePickerProps, "granularity" | "hourCycle"> {
-  data: any;
-  setData: (key: string, value: any) => void;
-  name: string;
   error?: string;
   label?: string;
   disabled?: boolean;
   className?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 export function TimeField({
-  data,
-  setData,
-  name,
   error,
   label,
   disabled,
   className,
   granularity = "minute",
+  value,
+  onChange,
   ...props
 }: TimeFieldProps) {
   const id = useId();
@@ -30,10 +28,11 @@ export function TimeField({
     <FieldContainer className={className}>
       <FieldLabel disabled={disabled} error={error} id={id} label={label} />
       <TimePicker
+        id={id}
         granularity={granularity}
-        date={formatStringToTime(data[name])}
+        date={formatStringToTime(value)}
         onChange={(value) => {
-          setData(name, formatTimeToString(value));
+          onChange?.(formatTimeToString(value));
         }}
         {...props}
       />
