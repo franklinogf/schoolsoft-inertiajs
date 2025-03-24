@@ -5,7 +5,7 @@ type TrueFalseTopic = {
   id: number;
   examen?: Exam;
   pregunta: string;
-  respuesta: string;
+  respuesta: "v" | "f";
   valor: number;
 };
 
@@ -13,7 +13,7 @@ type SelectTopic = {
   id: number;
   examen?: Exam;
   pregunta: string;
-  respuesta: string;
+  correcta: number;
   valor: number;
   respuestas: {
     respuesta1: string;

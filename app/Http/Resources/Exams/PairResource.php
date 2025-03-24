@@ -19,7 +19,7 @@ class PairResource extends JsonResource
             'examen' => $this->whenLoaded('exam'),
             'pregunta' => $this->pregunta,
             'valor' => $this->valor,
-            'repuesta_c' => $this->respuesta_c,
+            'respuesta_c' => $this->respuesta_c,
         ];
     }
 }
