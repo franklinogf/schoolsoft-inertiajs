@@ -60,7 +60,7 @@ type PairTopic = {
 type PairAnswer = {
   id: number;
   examen?: Exam;
-  respuesta: string;
+  respuesta: number;
 };
 
 type Topic<T> = {
