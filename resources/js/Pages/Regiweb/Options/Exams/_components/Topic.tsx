@@ -145,7 +145,7 @@ export function TopicDialog({
           <DialogDescription hidden></DialogDescription>
         </DialogHeader>
         <form
-          className="space-y-2"
+          className="space-y-4"
           onSubmit={(e) => {
             e.preventDefault();
             onSubmit();
