@@ -45,7 +45,7 @@ function FormModal({ examId, item }: { examId: number; item?: PairTopic }) {
     `pair${item?.id || ""}`,
     {
       pregunta: item?.pregunta || "",
-      //   respuesta: item?.respuesta || "v",
+      respuesta_c: item?.respuesta_c || "",
       valor: item?.valor || "",
     },
   );
