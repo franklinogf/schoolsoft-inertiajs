@@ -10,10 +10,19 @@ import {
   AlertDialogTitle,
 } from "@/Components/ui/alert-dialog";
 import useConfirmationStore from "@/stores/confirmationStore";
+import { buttonVariants } from "./ui/button";
 
 const ConfirmationDialog = () => {
-  const { open, title, description, cancelLabel, actionLabel, onAction, closeConfirmation } =
-    useConfirmationStore();
+  const {
+    open,
+    title,
+    description,
+    cancelLabel,
+    actionLabel,
+    onAction,
+    closeConfirmation,
+    actionVariant,
+  } = useConfirmationStore();
 
   return (
     <AlertDialog open={open} onOpenChange={closeConfirmation}>
@@ -24,7 +33,12 @@ const ConfirmationDialog = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{cancelLabel}</AlertDialogCancel>
-          <AlertDialogAction onClick={onAction}>{actionLabel}</AlertDialogAction>
+          <AlertDialogAction
+            className={buttonVariants({ variant: actionVariant })}
+            onClick={onAction}
+          >
+            {actionLabel}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
