@@ -26,9 +26,10 @@ export function CheckboxField({
   const id = useId();
   return (
     <FieldContainer
-      className={cn(className, "flex space-x-2", description ? "items-top" : "items-center")}
+      className={cn(className, "flex gap-x-2", description ? "items-top" : "items-center")}
     >
       <Checkbox
+        className="m-0"
         checked={value === YesNoEnum.YES}
         onCheckedChange={(checked) => {
           onChange && onChange(checked ? YesNoEnum.YES : YesNoEnum.NO);
