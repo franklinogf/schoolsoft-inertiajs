@@ -11,6 +11,12 @@ import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { Exam } from "@/types/exam";
 
 import { Badge } from "@/Components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/Components/ui/dropdown-menu";
 import { Line } from "./_components/Line";
 import { Pair } from "./_components/Pair";
 import { Question } from "./_components/Question";
@@ -32,8 +38,16 @@ export default function Page({ exam }: { exam: Exam }) {
             <Button variant="secondary">Opciones de notas</Button>
             <Button variant="secondary">Informe de examen</Button>
             <Button variant="secondary">Corregir examen</Button>
-            <Button variant="secondary">Imprimir</Button>
-            <Button variant="destructive">Eliminar</Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="secondary">{t("Imprimir")}</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>{t("Carta")}</DropdownMenuItem>
+                <DropdownMenuItem>{t("Hoja legal")}</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Button variant="destructive">{t("Eliminar")}</Button>
           </div>
         </section>
         <section className="flex flex-col gap-4">

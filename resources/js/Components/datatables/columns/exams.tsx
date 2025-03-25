@@ -4,6 +4,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { YesNoEnum } from "@/Enums";
@@ -12,7 +16,16 @@ import useConfirmationStore from "@/stores/confirmationStore";
 import { Exam } from "@/types/exam";
 import { Link, router } from "@inertiajs/react";
 import { ColumnDef } from "@tanstack/react-table";
-import { CheckIcon, MoreHorizontalIcon, XIcon } from "lucide-react";
+import {
+  CheckIcon,
+  Edit2Icon,
+  EyeIcon,
+  EyeOffIcon,
+  MoreHorizontalIcon,
+  PrinterIcon,
+  Trash2Icon,
+  XIcon,
+} from "lucide-react";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 
 export const examsListingColumns: ColumnDef<Exam>[] = [
@@ -59,14 +72,30 @@ export const examsListingColumns: ColumnDef<Exam>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem className="cursor-pointer" asChild>
+            <DropdownMenuItem className="cursor-pointer">
+              <Edit2Icon />
               <Link href={route("regiweb.options.exams.edit", exam.id)}>{t("Editar")}</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="w-full cursor-pointer" asChild>
+            <DropdownMenuItem className="w-full cursor-pointer">
+              {exam.activo === YesNoEnum.YES ? <EyeOffIcon /> : <EyeIcon />}
               <Link method="patch" href={route("regiweb.options.exams.toggle", exam.id)}>
                 {exam.activo === YesNoEnum.YES ? t("Desactivar") : t("Activar")}
               </Link>
             </DropdownMenuItem>
+
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <PrinterIcon />
+                {t("Imprimir")}
+              </DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem className="cursor-pointer">{t("Carta")}</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">{t("Hoja legal")}</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+
             <DropdownMenuItem
               className="cursor-pointer"
               onClick={() => {
@@ -84,6 +113,7 @@ export const examsListingColumns: ColumnDef<Exam>[] = [
                 });
               }}
             >
+              <Trash2Icon />
               {t("Eliminar")}
             </DropdownMenuItem>
           </DropdownMenuContent>
