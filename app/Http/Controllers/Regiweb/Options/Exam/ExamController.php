@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Regiweb\Options;
+namespace App\Http\Controllers\Regiweb\Options\Exam;
 
 use App\Enums\FlashMessageKey;
 use App\Enums\YesNoEnum;
@@ -11,7 +11,7 @@ use App\Http\Resources\Exams\ExamResource;
 use App\Models\Exams\Exam;
 use Illuminate\Http\Request;
 
-class ExamGeneratorController extends Controller
+class ExamController extends Controller
 {
     /**
      * Display a listing of the resource.
