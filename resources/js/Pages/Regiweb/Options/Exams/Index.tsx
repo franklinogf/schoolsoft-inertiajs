@@ -100,8 +100,8 @@ function CreateExamFormButton({ courses }: { courses: Course[] }) {
             <SelectField
               items={createSelectItemsFromArrayOfObjects(courses, {
                 separator: " - ",
-                key: "curso",
-                values: ["curso", "descripcion"],
+                value: "curso",
+                labels: ["curso", "descripcion"],
               })}
               label={t("Curso")}
               value={data.curso}
