@@ -13,7 +13,7 @@ import {
 import { Translations, useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
 import React, { useId } from "react";
-export type SelectItemType = { value: string; label: string };
+export type SelectItemType = { value: string | number; label: string };
 
 interface DefaultSelectFieldProps {
   required?: boolean;
@@ -59,7 +59,7 @@ export function SelectField({
         required={required}
         name={id}
         disabled={disabled}
-        defaultValue={value}
+        value={value}
         onValueChange={onChange}
       >
         <SelectTrigger
@@ -73,7 +73,7 @@ export function SelectField({
         <SelectContent>
           {items
             ? items.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
+                <SelectItem key={item.value} value={item.value.toString()}>
                   {t(item.label as Translations)}
                 </SelectItem>
               ))
