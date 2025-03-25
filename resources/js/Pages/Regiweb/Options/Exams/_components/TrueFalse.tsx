@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/Components/ui/dialog";
+import { useTranslations } from "@/hooks/translations";
 import { Topics, TrueFalseTopic } from "@/types/exam";
 import { router, useForm } from "@inertiajs/react";
 import { EditIcon, PlusCircleIcon } from "lucide-react";
@@ -47,6 +48,7 @@ export function TrueFalse({ topic, examId }: { topic: Topics["verdadero_falso"];
 }
 
 function FormModal({ examId, item }: { examId: number; item?: TrueFalseTopic }) {
+  const { t } = useTranslations();
   const { data, setData, processing, post, errors, reset, put, clearErrors } = useForm(
     `truefalse${item?.id || ""}`,
     {
@@ -82,12 +84,16 @@ function FormModal({ examId, item }: { examId: number; item?: TrueFalseTopic }) 
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{item ? "Editar pregunta" : "Nueva pregunta"}</DialogTitle>
+          <DialogTitle>
+            {item
+              ? t("Editar :label", { label: t("Pregunta").toLowerCase() })
+              : t("Nueva :label", { label: t("Pregunta").toLowerCase() })}
+          </DialogTitle>
           <DialogDescription hidden></DialogDescription>
         </DialogHeader>
         <form className="space-y-2" onSubmit={handleSubmit}>
           <InputField
-            label="Pregunta"
+            label={t("Pregunta")}
             value={data.pregunta}
             onChange={(value) => setData("pregunta", value)}
             error={errors.pregunta}
@@ -95,18 +101,18 @@ function FormModal({ examId, item }: { examId: number; item?: TrueFalseTopic }) 
           />
           <FieldsGrid>
             <SelectField
-              label="Respuesta"
+              label={t("Respuesta")}
               value={data.respuesta}
               onChange={(value) => setData("respuesta", value as TrueFalseTopic["respuesta"])}
               items={[
-                { label: "Verdadero", value: "v" },
-                { label: "Falso", value: "f" },
+                { label: t("Verdadero"), value: "v" },
+                { label: t("Falso"), value: "f" },
               ]}
               error={errors.respuesta}
               required
             />
             <InputField
-              label="Valor"
+              label={t("Valor")}
               type="number"
               value={data.valor}
               onChange={(value) => setData("valor", value)}
@@ -123,10 +129,10 @@ function FormModal({ examId, item }: { examId: number; item?: TrueFalseTopic }) 
                 }}
                 variant="outline"
               >
-                Cancelar
+                {t("Cancelar")}
               </Button>
             </DialogClose>
-            <SubmitButton disabled={processing}>{item ? "Editar" : "Agregar"}</SubmitButton>
+            <SubmitButton disabled={processing}>{item ? t("Editar") : t("Agregar")}</SubmitButton>
           </div>
         </form>
       </DialogContent>
