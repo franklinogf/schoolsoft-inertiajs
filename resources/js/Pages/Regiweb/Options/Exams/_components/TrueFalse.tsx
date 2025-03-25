@@ -14,23 +14,30 @@ import {
   DialogTrigger,
 } from "@/Components/ui/dialog";
 import { useTranslations } from "@/hooks/translations";
+import { InertiaHTTPMethod } from "@/types";
 import { Topics, TrueFalseTopic } from "@/types/exam";
 import { router, useForm } from "@inertiajs/react";
 import { EditIcon, PlusCircleIcon } from "lucide-react";
 import { Topic, TopicItem } from "./Topic";
 
 export function TrueFalse({ topic, examId }: { topic: Topics["verdadero_falso"]; examId: number }) {
+  const { t } = useTranslations();
+
+  function handleSubmit(put: InertiaHTTPMethod) {
+    put(route("regiweb.options.exams.truefalse.updateTitle", { exam: examId }));
+  }
   return (
     <Topic
-      amount={topic.preguntas.length}
+      onTitleSubmit={handleSubmit}
       addButton={<FormModal examId={examId} />}
       title={topic.titulo}
+      amount={topic.preguntas.length}
     >
       {topic.preguntas.map((question) => (
         <TopicItem
           key={question.id}
           label={question.pregunta}
-          answer={question.respuesta === "v" ? "Verdadero" : "Falso"}
+          answer={question.respuesta === "v" ? t("Verdadero") : t("Falso")}
           value={question.valor}
           editButton={<FormModal examId={examId} item={question} />}
           onDelete={() => {
@@ -77,7 +84,7 @@ function FormModal({ examId, item }: { examId: number; item?: TrueFalseTopic }) 
             <EditIcon />
           </button>
         ) : (
-          <Button className="size-6" size="icon">
+          <Button size="icon">
             <PlusCircleIcon />
           </Button>
         )}
@@ -132,7 +139,9 @@ function FormModal({ examId, item }: { examId: number; item?: TrueFalseTopic }) 
                 {t("Cancelar")}
               </Button>
             </DialogClose>
-            <SubmitButton disabled={processing}>{item ? t("Editar") : t("Agregar")}</SubmitButton>
+            <SubmitButton isSubmitting={processing}>
+              {item ? t("Editar") : t("Agregar")}
+            </SubmitButton>
           </div>
         </form>
       </DialogContent>
