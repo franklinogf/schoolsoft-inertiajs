@@ -1,13 +1,18 @@
+import { InputField } from "@/Components/forms/inputs/InputField";
+import SubmitButton from "@/Components/forms/SubmitButton";
 import { Badge, badgeVariants } from "@/Components/ui/badge";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/Components/ui/tooltip";
+import { useTranslations } from "@/hooks/translations";
 import useConfirmationStore from "@/stores/confirmationStore";
-import { Trash2Icon } from "lucide-react";
+import { InertiaHTTPMethod } from "@/types";
+import { useForm } from "@inertiajs/react";
+import { CheckCircle2Icon, SaveIcon, Trash2Icon } from "lucide-react";
 
 interface TopicProps {
   addButton: React.ReactNode;
   children: React.ReactNode;
   amount: number;
   title: string;
+  onTitleSubmit: (post: InertiaHTTPMethod) => void;
 }
 interface TopicItemProps {
   editButton: React.ReactNode;
@@ -16,21 +21,47 @@ interface TopicItemProps {
   answer?: string;
   value: number;
 }
-export function Topic({ addButton, children, amount, title }: TopicProps) {
+export function Topic({ addButton, children, amount, title, onTitleSubmit }: TopicProps) {
+  const { t } = useTranslations();
+  const { data, setData, processing, put, recentlySuccessful } = useForm({
+    titulo: title,
+  });
+
   return (
-    <TooltipProvider>
-      <div className="flex flex-col">
-        <header className="flex items-center gap-2 p-2">
-          {addButton}
-          <h3>{title}</h3>
-        </header>
-        {amount > 0 ? (
-          children
-        ) : (
-          <p className="text-muted-foreground text-center text-sm">No hay preguntas</p>
-        )}
-      </div>
-    </TooltipProvider>
+    <div className="flex flex-col">
+      <header className="flex items-center gap-2 p-2">
+        {addButton}
+        <form
+          className="flex w-full gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onTitleSubmit(put);
+          }}
+        >
+          <InputField
+            placeholder={t("Título")}
+            value={data.titulo}
+            onChange={(value) => {
+              setData("titulo", value);
+            }}
+            className="flex-1"
+          />
+          <SubmitButton
+            disabled={data.titulo === title}
+            isSubmitting={processing}
+            variant="outline"
+            size="icon"
+          >
+            {recentlySuccessful ? <CheckCircle2Icon /> : <SaveIcon />}
+          </SubmitButton>
+        </form>
+      </header>
+      {amount > 0 ? (
+        children
+      ) : (
+        <p className="text-muted-foreground text-center text-sm">No hay preguntas</p>
+      )}
+    </div>
   );
 }
 
@@ -46,34 +77,22 @@ export function TopicItem({ label, answer, value, editButton, onDelete }: TopicI
           </Badge>
         )}
         <Badge variant="outline">{value}</Badge>
-        <Tooltip>
-          <TooltipTrigger asChild>{editButton}</TooltipTrigger>
-          <TooltipContent>
-            <p>Editar</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              className={badgeVariants({ variant: "destructive", className: "h-5" })}
-              onClick={() => {
-                openConfirmation({
-                  title: "Eliminar pregunta",
-                  description: "¿Estás seguro de que deseas eliminar esta pregunta?",
-                  onAction: onDelete,
-                  actionVariant: "destructive",
-                  actionLabel: "Eliminar",
-                  cancelLabel: "Cancelar",
-                });
-              }}
-            >
-              <Trash2Icon />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Eliminar</p>
-          </TooltipContent>
-        </Tooltip>
+        {editButton}
+        <button
+          className={badgeVariants({ variant: "destructive", className: "h-5" })}
+          onClick={() => {
+            openConfirmation({
+              title: "Eliminar pregunta",
+              description: "¿Estás seguro de que deseas eliminar esta pregunta?",
+              onAction: onDelete,
+              actionVariant: "destructive",
+              actionLabel: "Eliminar",
+              cancelLabel: "Cancelar",
+            });
+          }}
+        >
+          <Trash2Icon />
+        </button>
       </div>
     </li>
   );
