@@ -32,6 +32,8 @@ export default function Page({ exam }: { exam: Exam }) {
             <Button variant="secondary">Opciones de notas</Button>
             <Button variant="secondary">Informe de examen</Button>
             <Button variant="secondary">Corregir examen</Button>
+            <Button variant="secondary">Imprimir</Button>
+            <Button variant="destructive">Eliminar</Button>
           </div>
         </section>
         <section className="flex flex-col gap-4">
