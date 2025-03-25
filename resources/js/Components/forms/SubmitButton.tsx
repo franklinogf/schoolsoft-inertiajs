@@ -4,11 +4,11 @@ import { LoadingTextSwap } from "../LoadingTextSwap";
 interface SubmitButtonProps extends React.ComponentProps<typeof Button> {
   children: React.ReactNode;
   loadingIcon?: React.ReactNode;
-  isSubmitting: boolean;
+  isSubmitting?: boolean;
 }
 export default function SubmitButton({
   children,
-  isSubmitting,
+  isSubmitting = false,
   className,
   loadingIcon,
   disabled,
