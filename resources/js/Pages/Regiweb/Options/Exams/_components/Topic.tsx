@@ -1,11 +1,21 @@
 import { InputField } from "@/Components/forms/inputs/InputField";
 import SubmitButton from "@/Components/forms/SubmitButton";
 import { Badge, badgeVariants } from "@/Components/ui/badge";
+import { Button } from "@/Components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/Components/ui/dialog";
 import { useTranslations } from "@/hooks/translations";
 import useConfirmationStore from "@/stores/confirmationStore";
 import { InertiaHTTPMethod } from "@/types";
 import { useForm } from "@inertiajs/react";
-import { CheckCircle2Icon, SaveIcon, Trash2Icon } from "lucide-react";
+import { CheckCircle2Icon, EditIcon, PlusCircleIcon, SaveIcon, Trash2Icon } from "lucide-react";
 
 interface TopicProps {
   addButton: React.ReactNode;
@@ -95,5 +105,65 @@ export function TopicItem({ label, answer, value, editButton, onDelete }: TopicI
         </button>
       </div>
     </li>
+  );
+}
+
+export function TopicDialog({
+  children,
+  edit = false,
+  onSubmit,
+  onCancel,
+  isSubmitting,
+}: {
+  children: React.ReactNode;
+  edit?: boolean;
+  onSubmit: () => void;
+  onCancel?: () => void;
+  isSubmitting?: boolean;
+}) {
+  const { t } = useTranslations();
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        {edit ? (
+          <button className={badgeVariants({ variant: "secondary", className: "h-5" })}>
+            <EditIcon />
+          </button>
+        ) : (
+          <Button size="icon">
+            <PlusCircleIcon />
+          </Button>
+        )}
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>
+            {edit
+              ? t("Editar :label", { label: t("Pregunta").toLowerCase() })
+              : t("Nueva :label", { label: t("Pregunta").toLowerCase() })}
+          </DialogTitle>
+          <DialogDescription hidden></DialogDescription>
+        </DialogHeader>
+        <form
+          className="space-y-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmit();
+          }}
+        >
+          {children}
+          <div className="mt-4 flex justify-end gap-2">
+            <DialogClose asChild>
+              <Button onClick={onCancel} variant="outline">
+                {t("Cancelar")}
+              </Button>
+            </DialogClose>
+            <SubmitButton isSubmitting={isSubmitting}>
+              {edit ? t("Editar") : t("Agregar")}
+            </SubmitButton>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

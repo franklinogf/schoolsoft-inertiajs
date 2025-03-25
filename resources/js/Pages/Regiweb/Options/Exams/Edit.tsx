@@ -56,19 +56,19 @@ export default function Page({ exam }: { exam: Exam }) {
               <AccordionItem value="pair">
                 <AccordionTrigger>Parea</AccordionTrigger>
                 <AccordionContent>
-                  <Pair topic={exam.temas.parea} />
+                  <Pair examId={exam.id} topic={exam.temas.parea} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="line">
                 <AccordionTrigger>Línea en blanco</AccordionTrigger>
                 <AccordionContent>
-                  <Line topic={exam.temas.lineas_blanco} />
+                  <Line examId={exam.id} topic={exam.temas.lineas_blanco} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="question">
                 <AccordionTrigger>Preguntas</AccordionTrigger>
                 <AccordionContent>
-                  <Question topic={exam.temas.preguntas} />
+                  <Question examId={exam.id} topic={exam.temas.preguntas} />
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

@@ -1,25 +1,12 @@
 import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
 import { InputField } from "@/Components/forms/inputs/InputField";
 import { SelectField, SelectItemType } from "@/Components/forms/inputs/SelectField";
-import SubmitButton from "@/Components/forms/SubmitButton";
-import { badgeVariants } from "@/Components/ui/badge";
-import { Button } from "@/Components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/Components/ui/dialog";
 import { SelectItem } from "@/Components/ui/select";
 import { useTranslations } from "@/hooks/translations";
 import { InertiaHTTPMethod } from "@/types";
 import { SelectTopic, Topics } from "@/types/exam";
 import { router, useForm } from "@inertiajs/react";
-import { EditIcon, PlusCircleIcon } from "lucide-react";
-import { Topic, TopicItem } from "./Topic";
+import { Topic, TopicDialog, TopicItem } from "./Topic";
 
 export function Select({ topic, examId }: { topic: Topics["selecciona"]; examId: number }) {
   function handleSubmit(put: InertiaHTTPMethod) {
@@ -76,8 +63,7 @@ function FormModal({ examId, item }: { examId: number; item?: SelectTopic }) {
     },
   );
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  function handleSubmit() {
     if (item) {
       put(route("regiweb.options.exams.select.update", { exam: examId, question: item.id }));
     } else {
@@ -89,6 +75,10 @@ function FormModal({ examId, item }: { examId: number; item?: SelectTopic }) {
     }
   }
 
+  function handleCancel() {
+    reset();
+    clearErrors();
+  }
   const amountOfanswers = 8;
 
   const options: SelectItemType[] = Array.from({ length: amountOfanswers }, (_, i) => ({
@@ -97,101 +87,66 @@ function FormModal({ examId, item }: { examId: number; item?: SelectTopic }) {
   }));
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {item ? (
-          <button className={badgeVariants({ variant: "secondary", className: "h-5" })}>
-            <EditIcon />
-          </button>
-        ) : (
-          <Button size="icon">
-            <PlusCircleIcon />
-          </Button>
-        )}
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>
-            {item
-              ? t("Editar :label", { label: t("Pregunta").toLowerCase() })
-              : t("Nueva :label", { label: t("Pregunta").toLowerCase() })}
-          </DialogTitle>
-          <DialogDescription hidden></DialogDescription>
-        </DialogHeader>
-        <form className="space-y-4" onSubmit={handleSubmit}>
+    <TopicDialog
+      edit={item !== undefined}
+      isSubmitting={processing}
+      onSubmit={handleSubmit}
+      onCancel={handleCancel}
+    >
+      <InputField
+        label={t("Pregunta")}
+        value={data.pregunta}
+        onChange={(value) => setData("pregunta", value)}
+        error={errors.pregunta}
+        required
+      />
+
+      <FieldsGrid>
+        {options.map((option) => (
           <InputField
-            label={t("Pregunta")}
-            value={data.pregunta}
-            onChange={(value) => setData("pregunta", value)}
-            error={errors.pregunta}
-            required
+            key={option.value}
+            label={option.label}
+            value={data.respuestas[`respuesta${option.value}` as keyof typeof data.respuestas]}
+            onChange={(value) =>
+              setData(`respuestas`, { ...data.respuestas, [`respuesta${option.value}`]: value })
+            }
+            error={errors[`respuestas.respuesta${option.value}` as keyof typeof errors]}
           />
-
-          <FieldsGrid>
-            {options.map((option) => (
-              <InputField
-                key={option.value}
-                label={option.label}
-                value={data.respuestas[`respuesta${option.value}` as keyof typeof data.respuestas]}
-                onChange={(value) =>
-                  setData(`respuestas`, { ...data.respuestas, [`respuesta${option.value}`]: value })
-                }
-                error={errors[`respuestas.respuesta${option.value}` as keyof typeof errors]}
-              />
-            ))}
-          </FieldsGrid>
-          <FieldsGrid>
-            <SelectField
-              label={t("Respuesta correcta")}
-              value={data.correcta}
-              onChange={(value) => {
-                setData("correcta", value);
-              }}
-              error={errors.correcta}
-              required
+        ))}
+      </FieldsGrid>
+      <FieldsGrid>
+        <SelectField
+          label={t("Respuesta correcta")}
+          value={data.correcta}
+          onChange={(value) => {
+            setData("correcta", value);
+          }}
+          error={errors.correcta}
+          required
+        >
+          {options.map((option) => (
+            <SelectItem
+              disabled={
+                data["respuestas"][`respuesta${option.value}` as keyof typeof data.respuestas] ===
+                ""
+              }
+              key={option.value}
+              value={option.value.toString()}
             >
-              {options.map((option) => (
-                <SelectItem
-                  disabled={
-                    data["respuestas"][
-                      `respuesta${option.value}` as keyof typeof data.respuestas
-                    ] === ""
-                  }
-                  key={option.value}
-                  value={option.value.toString()}
-                >
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectField>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectField>
 
-            <InputField
-              label={t("Valor")}
-              type="number"
-              value={data.valor}
-              onChange={(value) => setData("valor", value)}
-              error={errors.valor}
-              required
-            />
-          </FieldsGrid>
-          <div className="mt-4 flex justify-end gap-2">
-            <DialogClose asChild>
-              <Button
-                onClick={() => {
-                  reset();
-                  clearErrors();
-                }}
-                variant="outline"
-              >
-                {t("Cancelar")}
-              </Button>
-            </DialogClose>
-            <SubmitButton isSubmitting={processing}>
-              {item ? t("Editar") : t("Agregar")}
-            </SubmitButton>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+        <InputField
+          label={t("Valor")}
+          type="number"
+          value={data.valor}
+          onChange={(value) => setData("valor", value)}
+          error={errors.valor}
+          required
+        />
+      </FieldsGrid>
+    </TopicDialog>
   );
 }
