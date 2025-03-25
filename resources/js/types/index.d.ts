@@ -1,4 +1,5 @@
 import { PhoneCompaniesEnum } from "@/Enums";
+import { VisitOptions } from "@inertiajs/core";
 
 export interface Document {
   id: number;
@@ -63,3 +64,5 @@ export type PagePropsWithUser<
 };
 
 export type PhoneCompany = keyof typeof PhoneCompaniesEnum;
+
+export type InertiaHTTPMethod = (url: string, options?: Omit<VisitOptions, "data">) => void;

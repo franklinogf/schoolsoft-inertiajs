@@ -4,7 +4,7 @@ import { RichTextField } from "@/Components/forms/inputs/RichTextField";
 import SubmitButton from "@/Components/forms/SubmitButton";
 import { Card, CardContent } from "@/Components/ui/card";
 import { useTranslations } from "@/hooks/translations";
-import { VisitOptions } from "@inertiajs/core";
+import { InertiaHTTPMethod } from "@/types";
 import { useForm } from "@inertiajs/react";
 
 export function MessageForm({
@@ -16,7 +16,7 @@ export function MessageForm({
   extras?: { [key: string]: any };
   to?: string;
   isReplying?: boolean;
-  onSubmit: (post: (url: string, options?: Omit<VisitOptions, "data">) => void) => void;
+  onSubmit: (post: InertiaHTTPMethod) => void;
 }) {
   const { data, setData, errors, processing, post } = useForm<{
     subject: string;
