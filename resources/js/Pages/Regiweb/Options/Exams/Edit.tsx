@@ -50,7 +50,7 @@ export default function Page({ exam }: { exam: Exam }) {
               <AccordionItem value="select">
                 <AccordionTrigger>Selecciona la respuesta correcta</AccordionTrigger>
                 <AccordionContent>
-                  <Select topic={exam.temas.selecciona} />
+                  <Select examId={exam.id} topic={exam.temas.selecciona} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="pair">
