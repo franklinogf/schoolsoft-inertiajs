@@ -58,16 +58,26 @@ Route::name('options.')->prefix('options')->group(function () {
 
     Route::controller(ExamTopicController::class)
         ->name('exams.')
-        ->prefix('exams')
+        ->prefix('exams/{exam}/')
         ->group(function () {
-            Route::post('/{exam}/truefalse', 'storeTrueFalse')
-                ->name('truefalse.store');
 
-            Route::delete('/{exam}/truefalse/{question}', 'destroyTrueFalse')
-                ->name('truefalse.destroy');
+            Route::prefix('truefalse')
+                ->name('truefalse.')
+                ->group(function () {
+                    Route::post('/', 'storeTrueFalse')->name('store');
+                    Route::put('/title', 'updateTrueFalseTitle')->name('updateTitle');
+                    Route::delete('/{question}', 'destroyTrueFalse')->name('destroy');
+                    Route::put('/{question}', 'updateTrueFalse')->name('update');
+                });
 
-            Route::put('/{exam}/truefalse/{question}', 'updateTrueFalse')
-                ->name('truefalse.update');
+            Route::prefix('select')
+                ->name('select.')
+                ->group(function () {
+                    Route::post('/', 'storeSelect')->name('store');
+                    Route::put('/title', 'updateSelectTitle')->name('updateTitle');
+                    Route::delete('/{question}', 'destroySelect')->name('destroy');
+                    Route::put('/{question}', 'updateSelect')->name('update');
+                });
 
         });
 
