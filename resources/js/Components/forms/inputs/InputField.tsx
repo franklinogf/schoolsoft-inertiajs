@@ -32,15 +32,14 @@ export function InputField({
         id={id}
         value={value}
         className={cn(
-          fieldClassName,
-          "bg-input",
           {
             "border-destructive ring-offset-destructive focus-visible:ring-destructive": error,
           },
           { "remove-arrows": removeArrows },
+          fieldClassName,
         )}
         onChange={(e) => {
-          onChange && onChange(e.target.value);
+          onChange?.(e.target.value);
         }}
         {...props}
       />
