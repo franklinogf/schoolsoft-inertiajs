@@ -149,7 +149,7 @@ function CreateExamFormButton({ courses }: { courses: Course[] }) {
             onChange={(value) => setData("activo", value)}
           />
           <div className="flex justify-end">
-            <SubmitButton disabled={processing}>
+            <SubmitButton isSubmitting={processing}>
               {t("Crear :label", { label: t("Examen").toLowerCase() })}
             </SubmitButton>
           </div>
