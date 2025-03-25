@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\Regiweb\Options\ExamGeneratorController;
-use App\Http\Controllers\Regiweb\Options\ExamTopicController;
+use App\Http\Controllers\Regiweb\Options\Exam\BlankLineTopicController;
+use App\Http\Controllers\Regiweb\Options\Exam\ExamController;
+use App\Http\Controllers\Regiweb\Options\Exam\PairTopicController;
+use App\Http\Controllers\Regiweb\Options\Exam\QuestionTopicController;
+use App\Http\Controllers\Regiweb\Options\Exam\SelectTopicController;
+use App\Http\Controllers\Regiweb\Options\Exam\TrueFalseTopicController;
 use App\Http\Controllers\Regiweb\Options\MessagesController;
 use App\Http\Controllers\Regiweb\Options\MessagesEmailController;
 use App\Http\Controllers\Regiweb\Options\MessagesSmscontroller;
@@ -50,33 +54,64 @@ Route::name('options.')->prefix('options')->group(function () {
         return inertia('Regiweb/Options/Homeworks/Index');
     })->name('homeworks.index');
 
-    Route::resource('/exams', ExamGeneratorController::class)
+    Route::resource('/exams', ExamController::class)
         ->except(['show', 'create'])
         ->names('exams');
-    Route::match(['put', 'patch'], '/exams/{exam}/toggle', [ExamGeneratorController::class, 'toggle'])
+    Route::match(['put', 'patch'], '/exams/{exam}/toggle', [ExamController::class, 'toggle'])
         ->name('exams.toggle');
 
-    Route::controller(ExamTopicController::class)
-        ->name('exams.')
+    Route::name('exams.')
         ->prefix('exams/{exam}/')
         ->group(function () {
 
-            Route::prefix('truefalse')
+            Route::controller(TrueFalseTopicController::class)
+                ->prefix('truefalse')
                 ->name('truefalse.')
                 ->group(function () {
-                    Route::post('/', 'storeTrueFalse')->name('store');
-                    Route::put('/title', 'updateTrueFalseTitle')->name('updateTitle');
-                    Route::delete('/{question}', 'destroyTrueFalse')->name('destroy');
-                    Route::put('/{question}', 'updateTrueFalse')->name('update');
+                    Route::post('/', 'store')->name('store');
+                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::delete('/{question}', 'destroy')->name('destroy');
+                    Route::put('/{question}', 'update')->name('update');
                 });
 
-            Route::prefix('select')
+            Route::controller(SelectTopicController::class)
+                ->prefix('select')
                 ->name('select.')
                 ->group(function () {
-                    Route::post('/', 'storeSelect')->name('store');
-                    Route::put('/title', 'updateSelectTitle')->name('updateTitle');
-                    Route::delete('/{question}', 'destroySelect')->name('destroy');
-                    Route::put('/{question}', 'updateSelect')->name('update');
+                    Route::post('/', 'store')->name('store');
+                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::delete('/{question}', 'destroy')->name('destroy');
+                    Route::put('/{question}', 'update')->name('update');
+                });
+
+            Route::controller(PairTopicController::class)
+                ->prefix('pair')
+                ->name('pair.')
+                ->group(function () {
+                    Route::post('/', 'store')->name('store');
+                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::delete('/{question}', 'destroy')->name('destroy');
+                    Route::put('/{question}', 'update')->name('update');
+                });
+
+            Route::controller(BlankLineTopicController::class)
+                ->prefix('blankLine')
+                ->name('blankLine.')
+                ->group(function () {
+                    Route::post('/', 'store')->name('store');
+                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::delete('/{question}', 'destroy')->name('destroy');
+                    Route::put('/{question}', 'update')->name('update');
+                });
+
+            Route::controller(QuestionTopicController::class)
+                ->prefix('question')
+                ->name('question.')
+                ->group(function () {
+                    Route::post('/', 'store')->name('store');
+                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::delete('/{question}', 'destroy')->name('destroy');
+                    Route::put('/{question}', 'update')->name('update');
                 });
 
         });
