@@ -1,5 +1,6 @@
 import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
 import { InputField } from "@/Components/forms/inputs/InputField";
+import { TextareaField } from "@/Components/forms/inputs/TextareaField";
 import { useTranslations } from "@/hooks/translations";
 import { InertiaHTTPMethod } from "@/types";
 import { BlankLinesTopic, Topics } from "@/types/exam";
@@ -43,7 +44,13 @@ function FormModal({ examId, item }: { examId: number; item?: BlankLinesTopic })
     `blankLine${item?.id || ""}`,
     {
       pregunta: item?.pregunta || "",
-      //   respuesta: item?.respuesta || "v",
+      respuestas: {
+        repuesta1: item?.respuestas.respuesta1 || "",
+        repuesta2: item?.respuestas.respuesta2 || "",
+        repuesta3: item?.respuestas.respuesta3 || "",
+        repuesta4: item?.respuestas.respuesta4 || "",
+        repuesta5: item?.respuestas.respuesta5 || "",
+      },
       valor: item?.valor || "",
     },
   );
@@ -69,13 +76,36 @@ function FormModal({ examId, item }: { examId: number; item?: BlankLinesTopic })
       onSubmit={handleSubmit}
       onCancel={handleCancel}
     >
-      <InputField
-        label={t("Pregunta")}
-        value={data.pregunta}
-        onChange={(value) => setData("pregunta", value)}
-        error={errors.pregunta}
-        required
-      />
+      <div>
+        <TextareaField
+          label={t("Pregunta")}
+          value={data.pregunta}
+          onChange={(value) => setData("pregunta", value)}
+          error={errors.pregunta}
+          required
+        />
+        <small className="text-muted-foreground text-xs">
+          Utilice 3 _ (guion abajo) por cada respuesta
+        </small>
+      </div>
+      <div>
+        <small className="text-muted-foreground text-xs">Respuestas en orden de los guiones</small>
+        <FieldsGrid>
+          {Array.from({ length: 5 }, (_, i) => (
+            <InputField
+              key={i}
+              label={`${t("Respuesta")} ${i + 1}`}
+              type="text"
+              value={data.respuestas[`respuesta${i + 1}` as keyof typeof data.respuestas]}
+              onChange={(value) =>
+                setData("respuestas", { ...data.respuestas, [`respuesta${i + 1}`]: value })
+              }
+              error={errors[`respuestas.respuesta${i + 1}` as keyof typeof errors]}
+              required
+            />
+          ))}
+        </FieldsGrid>
+      </div>
       <FieldsGrid>
         <InputField
           label={t("Valor")}
