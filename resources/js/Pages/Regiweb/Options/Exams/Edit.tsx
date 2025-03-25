@@ -44,7 +44,7 @@ export default function Page({ exam }: { exam: Exam }) {
               <AccordionItem value="truefalse">
                 <AccordionTrigger>Preguntas de verdadero o falso</AccordionTrigger>
                 <AccordionContent>
-                  <TrueFalse topic={exam.temas.verdadero_falso} />
+                  <TrueFalse examId={exam.id} topic={exam.temas.verdadero_falso} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="select">
