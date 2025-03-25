@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Exams;
 
+use App\Enums\YesNoEnum;
 use App\Http\Resources\Teacher\TeacherResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,23 +31,23 @@ class ExamResource extends JsonResource
             'tiempo' => $this->tiempo,
             'temas' => [
                 'verdadero_falso' => [
-                    'titulo' => $this->desc1 === 'si' ? $this->desc1_1 : 'Preguntas verdadero o falso',
+                    'titulo' => $this->desc1 === YesNoEnum::YES->value ? $this->desc1_1 : 'Preguntas verdadero o falso',
                     'preguntas' => TrueOrFalseResource::collection($this->truesOrFalses),
                 ],
                 'selecciona' => [
-                    'titulo' => $this->desc2 === 'si' ? $this->desc2_1 : 'Preguntas de selección',
+                    'titulo' => $this->desc2 === YesNoEnum::YES->value ? $this->desc2_1 : 'Preguntas de selección',
                     'preguntas' => SelectResource::collection($this->selects),
                 ],
                 'preguntas' => [
-                    'titulo' => $this->desc3 === 'si' ? $this->desc3_1 : 'Preguntas de desarrollo',
+                    'titulo' => $this->desc3 === YesNoEnum::YES->value ? $this->desc3_1 : 'Preguntas de desarrollo',
                     'preguntas' => QuestionResource::collection($this->questions),
                 ],
                 'lineas_blanco' => [
-                    'titulo' => $this->desc4 === 'si' ? $this->desc4_1 : 'Preguntas de completar',
+                    'titulo' => $this->desc4 === YesNoEnum::YES->value ? $this->desc4_1 : 'Preguntas de completar',
                     'preguntas' => BlankLineResource::collection($this->blankLines),
                 ],
                 'parea' => [
-                    'titulo' => $this->desc5 === 'si' ? $this->desc5_1 : 'Preguntas de parear',
+                    'titulo' => $this->desc5 === YesNoEnum::YES->value ? $this->desc5_1 : 'Preguntas de parear',
                     'respuestas' => PairCodeResource::collection($this->pairsCodes),
                     'preguntas' => PairResource::collection($this->pairs),
                 ],
