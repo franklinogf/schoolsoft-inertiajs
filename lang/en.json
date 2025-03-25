@@ -1,4 +1,8 @@
 {
+    "Creada": "Created",
+    "Actualizada": "Updated",
+    "Eliminada": "Deleted",
+    "Pregunta :action": "Question :action",
     "Permitir ver la nota": "Allow to see the grade",
     "Duración": "Duration",
     "Formulario para crear :label": "Form to create :label",
