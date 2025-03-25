@@ -1,7 +1,7 @@
 import { YesNoEnum } from "@/Enums";
 import type { Teacher } from "./teacher";
 
-type TrueFalseTopic = {
+export type TrueFalseTopic = {
   id: number;
   examen?: Exam;
   pregunta: string;
@@ -9,7 +9,7 @@ type TrueFalseTopic = {
   valor: number;
 };
 
-type SelectTopic = {
+export type SelectTopic = {
   id: number;
   examen?: Exam;
   pregunta: string;
@@ -27,7 +27,7 @@ type SelectTopic = {
   };
 };
 
-type QuestionTopic = {
+export type QuestionTopic = {
   id: number;
   examen?: Exam;
   pregunta: string;
@@ -35,7 +35,7 @@ type QuestionTopic = {
   valor: number;
 };
 
-type BlankLinesTopic = {
+export type BlankLinesTopic = {
   id: number;
   examen?: Exam;
   pregunta: string;
@@ -49,7 +49,7 @@ type BlankLinesTopic = {
   };
 };
 
-type PairTopic = {
+export type PairTopic = {
   id: number;
   examen?: Exam;
   pregunta: string;
@@ -57,7 +57,7 @@ type PairTopic = {
   respuesta_c: number;
 };
 
-type PairAnswer = {
+export type PairAnswer = {
   id: number;
   examen?: Exam;
   respuesta: number;
@@ -68,7 +68,7 @@ type Topic<T> = {
   preguntas: T[];
 };
 
-type Topics = {
+export type Topics = {
   verdadero_falso: Topic<TrueFalseTopic>;
   selecciona: Topic<SelectTopic>;
   preguntas: Topic<QuestionTopic>;
@@ -78,7 +78,7 @@ type Topics = {
   };
 };
 
-interface Exam {
+export interface Exam {
   id: number;
   profesor: Teacher;
   titulo: string;
