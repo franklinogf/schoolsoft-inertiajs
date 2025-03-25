@@ -41,7 +41,7 @@ export function Pair({ topic, examId }: { topic: Topics["parea"]; examId: number
 
 function FormModal({ examId, item }: { examId: number; item?: PairTopic }) {
   const { t } = useTranslations();
-  const { data, setData, processing, post, errors, reset, put, clearErrors } = useForm(
+  const { data, setData, processing, post, errors, reset, put, clearErrors, hasErrors } = useForm(
     `pair${item?.id || ""}`,
     {
       pregunta: item?.pregunta || "",
@@ -61,7 +61,7 @@ function FormModal({ examId, item }: { examId: number; item?: PairTopic }) {
     }
   }
   function handleCancel() {
-    reset();
+    if (hasErrors) reset();
     clearErrors();
   }
   return (

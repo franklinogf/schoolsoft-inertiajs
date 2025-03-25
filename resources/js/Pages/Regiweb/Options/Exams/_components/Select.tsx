@@ -44,7 +44,7 @@ export function Select({ topic, examId }: { topic: Topics["selecciona"]; examId:
 
 function FormModal({ examId, item }: { examId: number; item?: SelectTopic }) {
   const { t } = useTranslations();
-  const { data, setData, processing, post, errors, reset, put, clearErrors } = useForm(
+  const { data, setData, processing, post, errors, reset, put, clearErrors, hasErrors } = useForm(
     `select${item?.id || ""}`,
     {
       pregunta: item?.pregunta || "",
@@ -76,7 +76,7 @@ function FormModal({ examId, item }: { examId: number; item?: SelectTopic }) {
   }
 
   function handleCancel() {
-    reset();
+    if (hasErrors) reset();
     clearErrors();
   }
   const amountOfanswers = 8;

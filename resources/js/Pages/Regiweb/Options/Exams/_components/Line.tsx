@@ -5,6 +5,7 @@ import { InertiaHTTPMethod } from "@/types";
 import { BlankLinesTopic, Topics } from "@/types/exam";
 import { router, useForm } from "@inertiajs/react";
 import { Topic, TopicDialog, TopicItem } from "./Topic";
+
 export function Line({ topic, examId }: { topic: Topics["lineas_blanco"]; examId: number }) {
   function handleSubmit(put: InertiaHTTPMethod) {
     put(route("regiweb.options.exams.blankLine.updateTitle", { exam: examId }));
@@ -38,7 +39,7 @@ export function Line({ topic, examId }: { topic: Topics["lineas_blanco"]; examId
 
 function FormModal({ examId, item }: { examId: number; item?: BlankLinesTopic }) {
   const { t } = useTranslations();
-  const { data, setData, processing, post, errors, reset, put, clearErrors } = useForm(
+  const { data, setData, processing, post, errors, reset, put, clearErrors, hasErrors } = useForm(
     `blankLine${item?.id || ""}`,
     {
       pregunta: item?.pregunta || "",
@@ -58,7 +59,7 @@ function FormModal({ examId, item }: { examId: number; item?: BlankLinesTopic })
     }
   }
   function handleCancel() {
-    reset();
+    if (hasErrors) reset();
     clearErrors();
   }
   return (

@@ -1,5 +1,6 @@
 import { FieldsGrid } from "@/Components/forms/inputs/FieldsGrid";
 import { InputField } from "@/Components/forms/inputs/InputField";
+import { TextareaField } from "@/Components/forms/inputs/TextareaField";
 import { useTranslations } from "@/hooks/translations";
 import { InertiaHTTPMethod } from "@/types";
 import { QuestionTopic, Topics } from "@/types/exam";
@@ -39,11 +40,11 @@ export function Question({ topic, examId }: { topic: Topics["preguntas"]; examId
 
 function FormModal({ examId, item }: { examId: number; item?: QuestionTopic }) {
   const { t } = useTranslations();
-  const { data, setData, processing, post, errors, reset, put, clearErrors } = useForm(
+  const { data, setData, processing, post, errors, reset, put, clearErrors, hasErrors } = useForm(
     `question${item?.id || ""}`,
     {
       pregunta: item?.pregunta || "",
-      //   respuesta: item?.respuesta || "v",
+      lineas: item?.lineas || "1",
       valor: item?.valor || "",
     },
   );
@@ -59,7 +60,7 @@ function FormModal({ examId, item }: { examId: number; item?: QuestionTopic }) {
     }
   }
   function handleCancel() {
-    reset();
+    if (hasErrors) reset();
     clearErrors();
   }
   return (
@@ -69,7 +70,7 @@ function FormModal({ examId, item }: { examId: number; item?: QuestionTopic }) {
       onSubmit={handleSubmit}
       onCancel={handleCancel}
     >
-      <InputField
+      <TextareaField
         label={t("Pregunta")}
         value={data.pregunta}
         onChange={(value) => setData("pregunta", value)}
@@ -77,17 +78,14 @@ function FormModal({ examId, item }: { examId: number; item?: QuestionTopic }) {
         required
       />
       <FieldsGrid>
-        {/* <SelectField
-          label={t("Respuesta")}
-          value={data.respuesta}
-          onChange={(value) => setData("respuesta", value as TrueFalseTopic["respuesta"])}
-          items={[
-            { label: t("Verdadero"), value: "v" },
-            { label: t("Falso"), value: "f" },
-          ]}
-          error={errors.respuesta}
+        <InputField
+          label={t("Cantidad de lineas")}
+          type="number"
+          value={data.lineas}
+          onChange={(value) => setData("lineas", value)}
+          error={errors.lineas}
           required
-        /> */}
+        />
         <InputField
           label={t("Valor")}
           type="number"

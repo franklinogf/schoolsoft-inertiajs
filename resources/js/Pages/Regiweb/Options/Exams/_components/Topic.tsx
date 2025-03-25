@@ -33,7 +33,7 @@ interface TopicItemProps {
 }
 export function Topic({ addButton, children, amount, title, onTitleSubmit }: TopicProps) {
   const { t } = useTranslations();
-  const { data, setData, processing, put, recentlySuccessful } = useForm({
+  const { data, setData, processing, put, recentlySuccessful, errors } = useForm({
     titulo: title,
   });
 
@@ -55,6 +55,7 @@ export function Topic({ addButton, children, amount, title, onTitleSubmit }: Top
               setData("titulo", value);
             }}
             className="flex-1"
+            error={errors.titulo}
           />
           <SubmitButton
             disabled={data.titulo === title}

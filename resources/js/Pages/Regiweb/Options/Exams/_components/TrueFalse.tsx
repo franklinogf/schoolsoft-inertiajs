@@ -43,7 +43,7 @@ export function TrueFalse({ topic, examId }: { topic: Topics["verdadero_falso"];
 
 function FormModal({ examId, item }: { examId: number; item?: TrueFalseTopic }) {
   const { t } = useTranslations();
-  const { data, setData, processing, post, errors, reset, put, clearErrors } = useForm(
+  const { data, setData, processing, post, errors, reset, put, clearErrors, hasErrors } = useForm(
     `truefalse${item?.id || ""}`,
     {
       pregunta: item?.pregunta || "",
@@ -63,7 +63,7 @@ function FormModal({ examId, item }: { examId: number; item?: TrueFalseTopic }) 
     }
   }
   function handleCancel() {
-    reset();
+    if (hasErrors) reset();
     clearErrors();
   }
   return (
