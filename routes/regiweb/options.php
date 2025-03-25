@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Regiweb\Options\ExamGeneratorController;
+use App\Http\Controllers\Regiweb\Options\ExamTopicController;
 use App\Http\Controllers\Regiweb\Options\MessagesController;
 use App\Http\Controllers\Regiweb\Options\MessagesEmailController;
 use App\Http\Controllers\Regiweb\Options\MessagesSmscontroller;
@@ -54,5 +55,20 @@ Route::name('options.')->prefix('options')->group(function () {
         ->names('exams');
     Route::match(['put', 'patch'], '/exams/{exam}/toggle', [ExamGeneratorController::class, 'toggle'])
         ->name('exams.toggle');
+
+    Route::controller(ExamTopicController::class)
+        ->name('exams.')
+        ->prefix('exams')
+        ->group(function () {
+            Route::post('/{exam}/truefalse', 'storeTrueFalse')
+                ->name('truefalse.store');
+
+            Route::delete('/{exam}/truefalse/{question}', 'destroyTrueFalse')
+                ->name('truefalse.destroy');
+
+            Route::put('/{exam}/truefalse/{question}', 'updateTrueFalse')
+                ->name('truefalse.update');
+
+        });
 
 });
