@@ -72,7 +72,7 @@ export function MessageForm({
         </CardContent>
       </Card>
       <div className="mt-2 flex justify-center">
-        <SubmitButton disabled={processing}>{t("Enviar")}</SubmitButton>
+        <SubmitButton isSubmitting={processing}>{t("Enviar")}</SubmitButton>
       </div>
     </form>
   );

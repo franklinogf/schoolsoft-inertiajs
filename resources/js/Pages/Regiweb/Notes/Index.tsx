@@ -88,7 +88,7 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
               </div>
             </CardContent>
             <CardFooter className="flex justify-center">
-              <SubmitButton disabled={processing}>{t("Continuar")}</SubmitButton>
+              <SubmitButton isSubmitting={processing}>{t("Continuar")}</SubmitButton>
             </CardFooter>
           </Card>
         </form>

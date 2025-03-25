@@ -51,7 +51,7 @@ export function LoginForm({ className, submitRoute }: LoginFormProps) {
           </div>
         </CardContent>
         <CardFooter className="grid gap-2">
-          <SubmitButton disabled={processing}>{t("Acceder")}</SubmitButton>
+          <SubmitButton isSubmitting={processing}>{t("Acceder")}</SubmitButton>
           <Button variant="outline" asChild>
             <Link href={route("home.index")}>{t("Ir atrás")}</Link>
           </Button>

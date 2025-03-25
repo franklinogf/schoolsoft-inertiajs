@@ -114,7 +114,7 @@ export default function Page({ students, courses, selected }: PageProps) {
                   </FieldsGrid>
                 </CardContent>
                 <CardFooter className="flex justify-center">
-                  <SubmitButton disabled={processing}>{t("Continuar")}</SubmitButton>
+                  <SubmitButton isSubmitting={processing}>{t("Continuar")}</SubmitButton>
                 </CardFooter>
               </Card>
             </form>

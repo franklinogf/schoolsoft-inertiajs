@@ -93,7 +93,7 @@ export default function Page({
           <div className="mt-4 flex justify-center">
             <SubmitButton
               loadingIcon={<PhoneIcon className="animate-bounce" />}
-              disabled={processing}
+              isSubmitting={processing}
             >
               {t("Enviar")}
             </SubmitButton>

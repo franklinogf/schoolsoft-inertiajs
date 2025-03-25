@@ -489,7 +489,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
               </AccordionItem>
             </Accordion>
           </section>
-          <SubmitButton disabled={processing} size="lg">
+          <SubmitButton isSubmitting={processing} size="lg">
             {t("Guardar")}
           </SubmitButton>
         </div>

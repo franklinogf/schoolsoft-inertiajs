@@ -73,7 +73,7 @@ export function ModalForm({
                 {t("Cerrar")}
               </Button>
             </DialogClose>
-            <SubmitButton disabled={submitting}>{submitLabel}</SubmitButton>
+            <SubmitButton isSubmitting={submitting}>{submitLabel}</SubmitButton>
           </DialogFooter>
         </form>
       </DialogContent>

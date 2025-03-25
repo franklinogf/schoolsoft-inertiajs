@@ -96,7 +96,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
           <div className="mt-4 flex justify-center">
             <SubmitButton
               loadingIcon={<MailIcon className="animate-bounce" />}
-              disabled={processing}
+              isSubmitting={processing}
             >
               {t("Enviar")}
             </SubmitButton>
