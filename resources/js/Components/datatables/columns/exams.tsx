@@ -59,13 +59,13 @@ export const examsListingColumns: ColumnDef<Exam>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link href={route("regiweb.options.exams.edit", exam.id)}>{t("Editar")}</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem className="w-full cursor-pointer" asChild>
               <Link method="patch" href={route("regiweb.options.exams.toggle", exam.id)}>
                 {exam.activo === YesNoEnum.YES ? t("Desactivar") : t("Activar")}
               </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link href={route("regiweb.options.exams.edit", exam.id)}>{t("Editar")}</Link>
             </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer"
