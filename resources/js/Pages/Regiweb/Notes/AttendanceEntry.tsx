@@ -129,16 +129,16 @@ export default function Page({
                     <SelectGroup>
                       <SelectLabel>{t("Ausencias")}</SelectLabel>
                       {createSelectItems(ABSENCES_ATTENDANCE).map((absence) => (
-                        <SelectItem key={absence.key} value={absence.key}>
-                          {absence.value}
+                        <SelectItem key={absence.value} value={absence.value}>
+                          {absence.label}
                         </SelectItem>
                       ))}
                     </SelectGroup>
                     <SelectGroup>
                       <SelectLabel>{t("Tardanzas")}</SelectLabel>
                       {createSelectItems(TARDINESS_ATTENDANCE).map((absence) => (
-                        <SelectItem key={absence.key} value={absence.key}>
-                          {absence.value}
+                        <SelectItem key={absence.value} value={absence.value}>
+                          {absence.label}
                         </SelectItem>
                       ))}
                     </SelectGroup>

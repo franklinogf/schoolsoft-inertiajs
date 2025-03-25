@@ -16,13 +16,13 @@ interface AttendanceReportModalFormProps {
 export function AttendanceReportModalForm({ courses }: AttendanceReportModalFormProps) {
   const coursesSelect = createSelectItemsFromArrayOfObjects(courses, {
     separator: " - ",
-    key: "curso",
-    values: ["curso", "descripcion"],
+    value: "curso",
+    labels: ["curso", "descripcion"],
   });
 
   const { data, setData, reset } = useForm({
-    course: coursesSelect[0]?.key,
-    trimester: TRIMESTER_SELECT_WITHOUT_SUMMER[0]?.key,
+    course: coursesSelect[0]?.value,
+    trimester: TRIMESTER_SELECT_WITHOUT_SUMMER[0]?.value,
   });
   const { t } = useTranslations();
   const handleSubmit = () => {
@@ -43,8 +43,8 @@ export function AttendanceReportModalForm({ courses }: AttendanceReportModalForm
       >
         <SelectItem value="home">{t("Salón hogar")}</SelectItem>
         {coursesSelect.map((item) => (
-          <SelectItem key={item.key} value={item.key}>
-            {item.value}
+          <SelectItem key={item.value} value={item.value}>
+            {item.label}
           </SelectItem>
         ))}
       </SelectField>
