@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/Components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/Components/ui/tooltip";
 import { useTranslations } from "@/hooks/translations";
 import useConfirmationStore from "@/stores/confirmationStore";
 import { InertiaHTTPMethod } from "@/types";
@@ -77,17 +78,28 @@ export function Topic({ addButton, children, amount, title, onTitleSubmit }: Top
 }
 
 export function TopicItem({ label, answer, value, editButton, onDelete }: TopicItemProps) {
+  const { t } = useTranslations();
   const { openConfirmation } = useConfirmationStore();
   return (
     <li className="hover:bg-accent/10 flex items-center justify-between gap-2 p-2">
       <span>{label}</span>
       <div className="flex items-center gap-2">
         {answer && (
-          <Badge variant="outline">
-            {answer.length > 20 ? `${answer.slice(0, 20)}...` : answer}
-          </Badge>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Badge variant="outline">
+                {answer.length > 20 ? `${answer.slice(0, 20)}...` : answer}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>{t("Respuesta")}</TooltipContent>
+          </Tooltip>
         )}
-        <Badge variant="outline">{value}</Badge>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Badge variant="outline">{value}</Badge>
+          </TooltipTrigger>
+          <TooltipContent>{t("Valor")}</TooltipContent>
+        </Tooltip>
         {editButton}
         <button
           className={badgeVariants({ variant: "destructive", className: "h-5" })}
