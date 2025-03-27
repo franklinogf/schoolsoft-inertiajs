@@ -18,25 +18,30 @@ export function TrueFalse({ topic, examId }: { topic: Topics["verdadero_falso"];
       onTitleSubmit={handleSubmit}
       addButton={<FormModal examId={examId} />}
       title={topic.titulo}
-      amount={topic.preguntas.length}
     >
-      {topic.preguntas.map((question) => (
-        <TopicItem
-          key={question.id}
-          label={question.pregunta}
-          answer={question.respuesta === "v" ? t("Verdadero") : t("Falso")}
-          value={question.valor}
-          editButton={<FormModal examId={examId} item={question} />}
-          onDelete={() => {
-            router.delete(
-              route("regiweb.options.exams.truefalse.destroy", {
-                exam: examId,
-                question: question.id,
-              }),
-            );
-          }}
-        />
-      ))}
+      {topic.preguntas.length > 0 ? (
+        topic.preguntas.map((question) => (
+          <TopicItem
+            key={question.id}
+            label={question.pregunta}
+            answer={question.respuesta === "v" ? t("Verdadero") : t("Falso")}
+            value={question.valor}
+            editButton={<FormModal examId={examId} item={question} />}
+            onDelete={() => {
+              router.delete(
+                route("regiweb.options.exams.truefalse.destroy", {
+                  question: question.id,
+                }),
+                { preserveScroll: true },
+              );
+            }}
+          />
+        ))
+      ) : (
+        <p className="text-muted-foreground text-center text-sm">
+          {t("No hay :label", { label: t("Preguntas").toLowerCase() })}
+        </p>
+      )}
     </Topic>
   );
 }
@@ -53,12 +58,15 @@ function FormModal({ examId, item }: { examId: number; item?: TrueFalseTopic }) 
   );
   function handleSubmit() {
     if (item) {
-      put(route("regiweb.options.exams.truefalse.update", { exam: examId, question: item.id }));
+      put(route("regiweb.options.exams.truefalse.update", { question: item.id }), {
+        preserveScroll: true,
+      });
     } else {
       post(route("regiweb.options.exams.truefalse.store", { exam: examId }), {
         onSuccess: () => {
           reset();
         },
+        preserveScroll: true,
       });
     }
   }

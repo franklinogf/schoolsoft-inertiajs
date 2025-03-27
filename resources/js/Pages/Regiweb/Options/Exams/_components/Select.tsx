@@ -9,6 +9,7 @@ import { router, useForm } from "@inertiajs/react";
 import { Topic, TopicDialog, TopicItem } from "./Topic";
 
 export function Select({ topic, examId }: { topic: Topics["selecciona"]; examId: number }) {
+  const { t } = useTranslations();
   function handleSubmit(put: InertiaHTTPMethod) {
     put(route("regiweb.options.exams.select.updateTitle", { exam: examId }));
   }
@@ -17,27 +18,34 @@ export function Select({ topic, examId }: { topic: Topics["selecciona"]; examId:
       onTitleSubmit={handleSubmit}
       addButton={<FormModal examId={examId} />}
       title={topic.titulo}
-      amount={topic.preguntas.length}
     >
-      {topic.preguntas.map((question) => (
-        <TopicItem
-          key={question.id}
-          label={question.pregunta}
-          answer={
-            question.respuestas[`respuesta${question.correcta}` as keyof typeof question.respuestas]
-          }
-          value={question.valor}
-          editButton={<FormModal examId={examId} item={question} />}
-          onDelete={() => {
-            router.delete(
-              route("regiweb.options.exams.select.destroy", {
-                exam: examId,
-                question: question.id,
-              }),
-            );
-          }}
-        />
-      ))}
+      {topic.preguntas.length > 0 ? (
+        topic.preguntas.map((question) => (
+          <TopicItem
+            key={question.id}
+            label={question.pregunta}
+            answer={
+              question.respuestas[
+                `respuesta${question.correcta}` as keyof typeof question.respuestas
+              ]
+            }
+            value={question.valor}
+            editButton={<FormModal examId={examId} item={question} />}
+            onDelete={() => {
+              router.delete(
+                route("regiweb.options.exams.select.destroy", {
+                  question: question.id,
+                }),
+                { preserveScroll: true },
+              );
+            }}
+          />
+        ))
+      ) : (
+        <p className="text-muted-foreground text-center text-sm">
+          {t("No hay :label", { label: t("Preguntas").toLowerCase() })}
+        </p>
+      )}
     </Topic>
   );
 }
@@ -65,12 +73,15 @@ function FormModal({ examId, item }: { examId: number; item?: SelectTopic }) {
 
   function handleSubmit() {
     if (item) {
-      put(route("regiweb.options.exams.select.update", { exam: examId, question: item.id }));
+      put(route("regiweb.options.exams.select.update", { question: item.id }), {
+        preserveScroll: true,
+      });
     } else {
       post(route("regiweb.options.exams.select.store", { exam: examId }), {
         onSuccess: () => {
           reset();
         },
+        preserveScroll: true,
       });
     }
   }

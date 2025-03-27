@@ -11,32 +11,38 @@ import { toast } from "sonner";
 import { Topic, TopicDialog, TopicItem } from "./Topic";
 
 export function Line({ topic, examId }: { topic: Topics["lineas_blanco"]; examId: number }) {
+  const { t } = useTranslations();
   function handleSubmit(put: InertiaHTTPMethod) {
     put(route("regiweb.options.exams.blankLine.updateTitle", { exam: examId }));
   }
   return (
     <Topic
       onTitleSubmit={handleSubmit}
-      amount={topic.preguntas.length}
       title={topic.titulo}
       addButton={<FormModal examId={examId} />}
     >
-      {topic.preguntas.map((question) => (
-        <TopicItem
-          key={question.id}
-          label={question.pregunta}
-          value={question.valor}
-          editButton={<FormModal examId={examId} item={question} />}
-          onDelete={() => {
-            router.delete(
-              route("regiweb.options.exams.blankLine.destroy", {
-                exam: examId,
-                question: question.id,
-              }),
-            );
-          }}
-        />
-      ))}
+      {topic.preguntas.length > 0 ? (
+        topic.preguntas.map((question) => (
+          <TopicItem
+            key={question.id}
+            label={question.pregunta}
+            value={question.valor}
+            editButton={<FormModal examId={examId} item={question} />}
+            onDelete={() => {
+              router.delete(
+                route("regiweb.options.exams.blankLine.destroy", {
+                  question: question.id,
+                }),
+                { preserveScroll: true },
+              );
+            }}
+          />
+        ))
+      ) : (
+        <p className="text-muted-foreground text-center text-sm">
+          {t("No hay :label", { label: t("Preguntas").toLowerCase() })}
+        </p>
+      )}
     </Topic>
   );
 }
@@ -61,12 +67,15 @@ function FormModal({ examId, item }: { examId: number; item?: BlankLinesTopic })
       return;
     }
     if (item) {
-      put(route("regiweb.options.exams.blankLine.update", { exam: examId, question: item.id }));
+      put(route("regiweb.options.exams.blankLine.update", { question: item.id }), {
+        preserveScroll: true,
+      });
     } else {
       post(route("regiweb.options.exams.blankLine.store", { exam: examId }), {
         onSuccess: () => {
           reset();
         },
+        preserveScroll: true,
       });
     }
   }
