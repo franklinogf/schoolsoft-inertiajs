@@ -12,16 +12,15 @@ import {
   DialogTrigger,
 } from "@/Components/ui/dialog";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/Components/ui/tooltip";
-import { useTranslations } from "@/hooks/translations";
+import { Translations, useTranslations } from "@/hooks/translations";
 import useConfirmationStore from "@/stores/confirmationStore";
 import { InertiaHTTPMethod } from "@/types";
 import { useForm } from "@inertiajs/react";
 import { CheckCircle2Icon, EditIcon, PlusCircleIcon, SaveIcon, Trash2Icon } from "lucide-react";
 
 interface TopicProps {
-  addButton: React.ReactNode;
+  addButton?: React.ReactNode;
   children: React.ReactNode;
-  amount: number;
   title: string;
   onTitleSubmit: (post: InertiaHTTPMethod) => void;
 }
@@ -30,9 +29,9 @@ interface TopicItemProps {
   onDelete: () => void;
   label: string;
   answer?: string;
-  value: number;
+  value?: string | number;
 }
-export function Topic({ addButton, children, amount, title, onTitleSubmit }: TopicProps) {
+export function Topic({ addButton, children, title, onTitleSubmit }: TopicProps) {
   const { t } = useTranslations();
   const { data, setData, processing, put, recentlySuccessful, errors } = useForm({
     titulo: title,
@@ -68,11 +67,7 @@ export function Topic({ addButton, children, amount, title, onTitleSubmit }: Top
           </SubmitButton>
         </form>
       </header>
-      {amount > 0 ? (
-        children
-      ) : (
-        <p className="text-muted-foreground text-center text-sm">No hay preguntas</p>
-      )}
+      {children}
     </div>
   );
 }
@@ -81,7 +76,7 @@ export function TopicItem({ label, answer, value, editButton, onDelete }: TopicI
   const { t } = useTranslations();
   const { openConfirmation } = useConfirmationStore();
   return (
-    <li className="hover:bg-accent/10 flex items-center justify-between gap-2 p-2">
+    <div className="hover:bg-accent/10 flex items-center justify-between gap-2 p-2">
       <span>{label}</span>
       <div className="flex items-center gap-2">
         {answer && (
@@ -94,12 +89,14 @@ export function TopicItem({ label, answer, value, editButton, onDelete }: TopicI
             <TooltipContent>{t("Respuesta")}</TooltipContent>
           </Tooltip>
         )}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Badge variant="outline">{value}</Badge>
-          </TooltipTrigger>
-          <TooltipContent>{t("Valor")}</TooltipContent>
-        </Tooltip>
+        {value && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Badge variant="outline">{value}</Badge>
+            </TooltipTrigger>
+            <TooltipContent>{t("Valor")}</TooltipContent>
+          </Tooltip>
+        )}
         {editButton}
         <button
           className={badgeVariants({ variant: "destructive", className: "h-5" })}
@@ -117,27 +114,31 @@ export function TopicItem({ label, answer, value, editButton, onDelete }: TopicI
           <Trash2Icon />
         </button>
       </div>
-    </li>
+    </div>
   );
 }
 
 export function TopicDialog({
+  title = "Pregunta",
   children,
   edit = false,
   onSubmit,
   onCancel,
   isSubmitting,
+  disabled,
 }: {
+  title?: Translations;
   children: React.ReactNode;
   edit?: boolean;
   onSubmit: () => void;
   onCancel?: () => void;
   isSubmitting?: boolean;
+  disabled?: boolean;
 }) {
   const { t } = useTranslations();
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger disabled={disabled} asChild>
         {edit ? (
           <button className={badgeVariants({ variant: "secondary", className: "h-5" })}>
             <EditIcon />
@@ -152,8 +153,8 @@ export function TopicDialog({
         <DialogHeader>
           <DialogTitle>
             {edit
-              ? t("Editar :label", { label: t("Pregunta").toLowerCase() })
-              : t("Nueva :label", { label: t("Pregunta").toLowerCase() })}
+              ? t("Editar :label", { label: t(title).toLowerCase() })
+              : t("Nueva :label", { label: t(title).toLowerCase() })}
           </DialogTitle>
           <DialogDescription hidden></DialogDescription>
         </DialogHeader>

@@ -25,6 +25,7 @@ import { TrueFalse } from "./_components/TrueFalse";
 
 export default function Page({ exam }: { exam: Exam }) {
   const { t } = useTranslations();
+
   return (
     <RegiwebLayout title={t("Editar :label", { label: t("Examen").toLowerCase() })}>
       <PageTitle backLink={route("regiweb.options.exams.index")}>
