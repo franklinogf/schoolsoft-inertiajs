@@ -14,4 +14,9 @@ class Pair extends Model
     {
         return $this->belongsTo(Exam::class, 'id_examen');
     }
+
+    public function answer()
+    {
+        return $this->hasOne(PairCode::class, 'id', 'respuesta_c');
+    }
 }
