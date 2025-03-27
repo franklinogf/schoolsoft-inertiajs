@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Admin;
+use App\Services\AdminService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
         JsonResource::withoutWrapping();
 
-        App::singleton('year', fn () => Admin::getPrimaryAdmin()->first()->getYear());
+        App::singleton('year', fn () => AdminService::getYear());
 
         Password::defaults(function () {
             return Password::min(8)->letters()

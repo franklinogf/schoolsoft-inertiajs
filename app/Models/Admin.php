@@ -248,9 +248,4 @@ class Admin extends Model
     {
         return $query->where('usuario', 'administrador');
     }
-
-    public function getYear(): string
-    {
-        return $this->year;
-    }
 }
