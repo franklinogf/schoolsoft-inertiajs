@@ -17,6 +17,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
+import useConfirmationStore from "@/stores/confirmationStore";
+import { router } from "@inertiajs/react";
 import { Line } from "./_components/Line";
 import { Pair } from "./_components/Pair";
 import { Question } from "./_components/Question";
@@ -35,20 +37,12 @@ export default function Page({ exam }: { exam: Exam }) {
         <section className="flex flex-col gap-4">
           <h2 className="text-center text-xl font-semibold">{exam.titulo}</h2>
           <div className="grid-cols1 grid gap-2 md:grid-cols-2">
-            <Button variant="secondary">informacíon del examen</Button>
-            <Button variant="secondary">Opciones de notas</Button>
-            <Button variant="secondary">Informe de examen</Button>
-            <Button variant="secondary">Corregir examen</Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="secondary">{t("Imprimir")}</Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>{t("Carta")}</DropdownMenuItem>
-                <DropdownMenuItem>{t("Hoja legal")}</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Button variant="destructive">{t("Eliminar")}</Button>
+            <ExamInformationButton />
+            <GradesOptionsButton />
+            <ExamReportButton />
+            <CorrectExamButton />
+            <PrintButton />
+            <DeleteButton id={exam.id} />
           </div>
         </section>
         <section className="flex flex-col gap-4">
@@ -93,5 +87,63 @@ export default function Page({ exam }: { exam: Exam }) {
         </section>
       </div>
     </RegiwebLayout>
+  );
+}
+function CorrectExamButton() {
+  const { t } = useTranslations();
+  return <Button variant="secondary">{t("Corregir examen")}</Button>;
+}
+
+function ExamReportButton() {
+  const { t } = useTranslations();
+  return <Button variant="secondary">{t("Informe de examen")}</Button>;
+}
+
+function GradesOptionsButton() {
+  const { t } = useTranslations();
+  return <Button variant="secondary">{t("Opciones de notas")}</Button>;
+}
+
+function ExamInformationButton() {
+  const { t } = useTranslations();
+  return <Button variant="secondary">{t("Información del examen")}</Button>;
+}
+function PrintButton() {
+  const { t } = useTranslations();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="secondary">{t("Imprimir")}</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>{t("Carta")}</DropdownMenuItem>
+        <DropdownMenuItem>{t("Hoja legal")}</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+function DeleteButton({ id }: { id: number }) {
+  const { t } = useTranslations();
+  const { openConfirmation } = useConfirmationStore();
+  return (
+    <Button
+      variant="destructive"
+      onClick={() => {
+        openConfirmation({
+          title: t("Eliminar :label", { label: t("Examen").toLowerCase() }),
+          description: t("¿Está seguro de que desea eliminar este :label?", {
+            label: t("Examen").toLowerCase(),
+          }),
+          actionLabel: t("Eliminar"),
+          cancelLabel: t("Cancelar"),
+          actionVariant: "destructive",
+          onAction: () => {
+            router.delete(route("regiweb.options.exams.destroy", id));
+          },
+        });
+      }}
+    >
+      {t("Eliminar")}
+    </Button>
   );
 }
