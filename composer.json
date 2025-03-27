@@ -24,6 +24,7 @@
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.15",
         "laravel/breeze": "^2.1",
         "laravel/pint": "^1.18",
         "laravel/sail": "^1.26",
