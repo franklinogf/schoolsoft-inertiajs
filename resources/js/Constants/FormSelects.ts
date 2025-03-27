@@ -1,6 +1,5 @@
 import { SelectItemType } from "@/Components/forms/inputs/SelectField";
-import { PhoneCompaniesEnum, TeacherLevelEnum } from "@/Enums";
-import { GENDERS, PAGES, TRIMESTERS, YES_NO } from ".";
+import { GENDERS, PAGES, PHONE_COMPANIE, TEACHER_LEVEL, TRIMESTERS, YES_NO } from ".";
 
 export function createSelectItemsFromArrayOfObjects(
   array: Record<string, any>[] | undefined | null,
@@ -32,11 +31,9 @@ export function createSelectItems(
 
 export const GENDERS_SELECT = createSelectItems(GENDERS);
 
-export const PHONE_COMPANIES_SELECT = createSelectItems(PhoneCompaniesEnum, {
-  onlyKey: true,
-});
+export const PHONE_COMPANIES_SELECT = createSelectItems(PHONE_COMPANIE);
 
-export const TEACHER_LEVEL_SELECT = createSelectItems(TeacherLevelEnum);
+export const TEACHER_LEVEL_SELECT = createSelectItems(TEACHER_LEVEL);
 
 export const YES_NO_SELECT = createSelectItems(YES_NO);
 

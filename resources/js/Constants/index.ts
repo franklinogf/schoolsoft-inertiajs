@@ -2,7 +2,9 @@ import {
   AbsenceEnum,
   GenderEnum,
   PagesEnum,
+  PhoneCompaniesEnum,
   TardinessEnum,
+  TeacherLevelEnum,
   TrimesterEnum,
   YesNoEnum,
 } from "@/Enums";
@@ -15,54 +17,86 @@ export const LOGO_REGIWEB = "/assets/logo-regiweb.gif";
 export const LOGO_SCHOOLSOFT = "/assets/logo-schoolsoft.gif";
 export const GLOBE_PICTURE = "/assets/globe.gif";
 
+export const EXAM_BLANK_LINE = " ___";
+
 /* --------------------------------- Logins --------------------------------- */
 export const LOGIN_REGIWEB_PICTURE = LOGO_REGIWEB;
 export const LOGIN_ADMIN_PICTURE = LOGO_SCHOOLSOFT;
 export const LOGIN_FORO_TEACHER_PICTURE = LOGO_SCHOOLSOFT;
 export const LOGIN_FORO_STUDENT_PICTURE = LOGO_SCHOOLSOFT;
+
 type Constant<K extends keyof any> = Record<K, Translations>;
+
 export const TRIMESTERS: Constant<TrimesterEnum> = {
-  "Trimestre-1": "Primer Trimestre",
-  "Trimestre-2": "Segundo Trimestre",
-  "Trimestre-3": "Tercer Trimestre",
-  "Trimestre-4": "Cuarto Trimestre",
-  Verano: "Verano",
+  [TrimesterEnum.FIRST_TRIMESTER]: "Primer Trimestre",
+  [TrimesterEnum.SECOND_TRIMESTER]: "Segundo Trimestre",
+  [TrimesterEnum.THIRD_TRIMESTER]: "Tercer Trimestre",
+  [TrimesterEnum.FOURTH_TRIMESTER]: "Cuarto Trimestre",
+  [TrimesterEnum.SUMMER]: "Verano",
 };
 
 export const PAGES: Constant<PagesEnum> = {
-  Notas: "Notas",
-  Notas2: "Notas 2",
-  "Pruebas-Cortas": "Pruebas Cortas",
-  "Trab-Diarios": "Trabajos Diarios",
-  "Trab-Libreta": "Trabajos de Libreta",
-  "Cond-Asis": "Conducta y Asistencia",
-  "Ex-Final": "Examen Final",
-  "V-Nota": "Verano Notas",
+  [PagesEnum.GRADES]: "Notas",
+  [PagesEnum.GRADES2]: "Notas 2",
+  [PagesEnum.SHORT_TESTS]: "Pruebas Cortas",
+  [PagesEnum.DAILY_WORKS]: "Trabajos Diarios",
+  [PagesEnum.NOTEBOOKS_WORKS]: "Trabajos de Libreta",
+  [PagesEnum.CONDUCT_ATTENDANCE]: "Conducta y Asistencia",
+  [PagesEnum.FINAL_EXAM]: "Examen Final",
+  [PagesEnum.SUMMER_GRADES]: "Verano Notas",
 };
 
 export const YES_NO: Constant<YesNoEnum> = {
-  SI: "Sí",
-  NO: "No",
+  [YesNoEnum.YES]: "Sí",
+  [YesNoEnum.NO]: "No",
 };
 
 export const GENDERS: Constant<GenderEnum> = {
-  m: "Masculino",
-  f: "Femenino",
+  [GenderEnum.MALE]: "Masculino",
+  [GenderEnum.FEMALE]: "Femenino",
 };
 export const ABSENCES_ATTENDANCE: Constant<AbsenceEnum> = {
-  "1": "Situación en el hogar",
-  "2": "Determinación en el hogar (viaje)",
-  "3": "Actividad con padres (open house)",
-  "4": "Enfermedad",
-  "5": "Cita",
-  "6": "Actividad educativa del colegio",
-  "7": "Sin excusa",
+  [AbsenceEnum.HOME]: "Situación en el hogar",
+  [AbsenceEnum.VACATION]: "Determinación en el hogar (viaje)",
+  [AbsenceEnum.PARENTS_ACTIVITY]: "Actividad con padres (open house)",
+  [AbsenceEnum.SICK]: "Enfermedad",
+  [AbsenceEnum.APPOINTMENT]: "Cita",
+  [AbsenceEnum.SCHOOL_ACTIVITY]: "Actividad educativa del colegio",
+  [AbsenceEnum.NO_EXCUSE]: "Sin excusa",
 };
 
 export const TARDINESS_ATTENDANCE: Constant<TardinessEnum> = {
-  "8": "Sin excusa",
-  "9": "Situación en el hogar",
-  "10": "Problema de transporte",
-  "11": "Enfermedad",
-  "12": "Cita",
+  [TardinessEnum.NO_EXCUSE]: "Sin excusa",
+  [TardinessEnum.HOME]: "Situación en el hogar",
+  [TardinessEnum.TRANSPORTATION]: "Problema de transporte",
+  [TardinessEnum.SICK]: "Enfermedad",
+  [TardinessEnum.APPOINTMENT]: "Cita",
+};
+
+export const TEACHER_LEVEL: Constant<TeacherLevelEnum> = {
+  [TeacherLevelEnum.ELEMENTAL]: "Elemental",
+  [TeacherLevelEnum.PRE_SCHOOL]: "Preescolar",
+  [TeacherLevelEnum.INTERMEDIATE]: "Intermedia",
+  [TeacherLevelEnum.SUPERIOR]: "Superior",
+};
+
+export const PHONE_COMPANIE: Record<PhoneCompaniesEnum, string> = {
+  [PhoneCompaniesEnum.ATT]: "AT&T",
+  [PhoneCompaniesEnum.TMOBILE]: "T-Mobile",
+  [PhoneCompaniesEnum.SPRINT]: "Sprint",
+  [PhoneCompaniesEnum.OPENM]: "Openm",
+  [PhoneCompaniesEnum.CLARO]: "Claro",
+  [PhoneCompaniesEnum.VERIZON]: "Verizon",
+  [PhoneCompaniesEnum.SUNCOM]: "Suncom",
+  [PhoneCompaniesEnum.BOOST]: "Boost",
+};
+export const PHONE_COMPANIE_HOST: Record<PhoneCompaniesEnum, string> = {
+  [PhoneCompaniesEnum.ATT]: "@txt.att.net",
+  [PhoneCompaniesEnum.TMOBILE]: "@tmomail.net",
+  [PhoneCompaniesEnum.SPRINT]: "@messaging.sprintpcs.com",
+  [PhoneCompaniesEnum.OPENM]: "@email.openmobilepr.com",
+  [PhoneCompaniesEnum.CLARO]: "@mms.claropr.com",
+  [PhoneCompaniesEnum.VERIZON]: "@vtext.com",
+  [PhoneCompaniesEnum.SUNCOM]: "@tms.suncom.com",
+  [PhoneCompaniesEnum.BOOST]: "@myboostmobile.com",
 };
