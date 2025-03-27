@@ -60,7 +60,7 @@ export type PairTopic = {
 export type PairAnswer = {
   id: number;
   examen?: Exam;
-  respuesta: number;
+  respuesta: string;
 };
 
 type Topic<T> = {
