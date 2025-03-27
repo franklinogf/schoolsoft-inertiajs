@@ -6,6 +6,8 @@ use App\Enums\FlashMessageKey;
 use App\Enums\YesNoEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Exams\Exam;
+use App\Models\Exams\Pair;
+use App\Models\Exams\PairCode;
 use App\Services\ExamService;
 use Illuminate\Http\Request;
 
@@ -47,7 +49,7 @@ class PairTopicController extends Controller
             );
     }
 
-    public function update(Request $request, Exam $exam, $question)
+    public function update(Request $request, Pair $question)
     {
         $validated = $request->validate([
             'pregunta' => ['required', 'string', 'max:255'],
@@ -55,9 +57,9 @@ class PairTopicController extends Controller
             'valor' => ['required', 'numeric', 'min:1'],
         ]);
 
-        $exam->pairs()->findOrFail($question)->update($validated);
+        $question->update($validated);
 
-        ExamService::updateExamTotal($exam);
+        ExamService::updateExamTotal($question->exam);
 
         return back()
             ->with(
@@ -66,16 +68,65 @@ class PairTopicController extends Controller
             );
     }
 
-    public function destroy(Exam $exam, $question)
+    public function destroy(Pair $question)
     {
-        $exam->pairs()->findOrFail($question)->delete();
+        $question->delete();
 
-        ExamService::updateExamTotal($exam);
+        ExamService::updateExamTotal($question->exam);
 
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
                 __('Pregunta :action', ['action' => strtolower(__('Eliminada'))])
+            );
+    }
+
+    public function storeCode(Request $request, Exam $exam)
+    {
+        $validated = $request->validate([
+            'respuesta' => ['required', 'string', 'max:255'],
+        ]);
+
+        $exam->pairsCodes()->create($validated);
+
+        return back()
+            ->with(
+                FlashMessageKey::SUCCESS->value,
+                __('Respuesta :action', ['action' => strtolower(__('Creada'))])
+            );
+    }
+
+    public function updateCode(Request $request, PairCode $answer)
+    {
+        $validated = $request->validate([
+            'respuesta' => ['required', 'string', 'max:255'],
+        ]);
+
+        $answer->update($validated);
+
+        return back()
+            ->with(
+                FlashMessageKey::SUCCESS->value,
+                __('Respuesta :action', ['action' => strtolower(__('Actualizada'))])
+            );
+    }
+
+    public function destroyCode(PairCode $answer)
+    {
+        $pairs = $answer->question()->count();
+        if ($pairs > 0) {
+            return back()
+                ->with(
+                    FlashMessageKey::ERROR->value,
+                    __('No se puede eliminar la respuesta porque está siendo utilizada en una pregunta')
+                );
+        }
+        $answer->delete();
+
+        return back()
+            ->with(
+                FlashMessageKey::SUCCESS->value,
+                __('Respuesta :action', ['action' => strtolower(__('Eliminada'))])
             );
     }
 }

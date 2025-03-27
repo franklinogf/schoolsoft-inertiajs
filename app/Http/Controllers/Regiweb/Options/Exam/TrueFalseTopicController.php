@@ -6,6 +6,7 @@ use App\Enums\FlashMessageKey;
 use App\Enums\YesNoEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Exams\Exam;
+use App\Models\Exams\TrueOrFalse;
 use App\Services\ExamService;
 use Illuminate\Http\Request;
 
@@ -47,7 +48,7 @@ class TrueFalseTopicController extends Controller
             );
     }
 
-    public function update(Request $request, Exam $exam, $question)
+    public function update(Request $request, TrueOrFalse $question)
     {
         $validated = $request->validate([
             'pregunta' => ['required', 'string', 'max:255'],
@@ -55,9 +56,9 @@ class TrueFalseTopicController extends Controller
             'valor' => ['required', 'numeric', 'min:1'],
         ]);
 
-        $exam->truesOrFalses()->findOrFail($question)->update($validated);
+        $question->update($validated);
 
-        ExamService::updateExamTotal($exam);
+        ExamService::updateExamTotal($question->exam);
 
         return back()
             ->with(
@@ -66,11 +67,11 @@ class TrueFalseTopicController extends Controller
             );
     }
 
-    public function destroy(Exam $exam, $question)
+    public function destroy(TrueOrFalse $question)
     {
-        $exam->truesOrFalses()->findOrFail($question)->delete();
+        $question->delete();
 
-        ExamService::updateExamTotal($exam);
+        ExamService::updateExamTotal($question->exam);
 
         return back()
             ->with(

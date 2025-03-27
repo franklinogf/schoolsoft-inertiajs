@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Regiweb\Options\Exam;
 use App\Enums\FlashMessageKey;
 use App\Enums\YesNoEnum;
 use App\Http\Controllers\Controller;
+use App\Models\Exams\BlankLine;
 use App\Models\Exams\Exam;
 use App\Services\ExamService;
 use Illuminate\Http\Request;
@@ -57,7 +58,7 @@ class BlankLineTopicController extends Controller
             );
     }
 
-    public function update(Request $request, Exam $exam, $question)
+    public function update(Request $request, BlankLine $question)
     {
         $validated = $request->validate([
             'pregunta' => ['required', 'string', 'max:255'],
@@ -70,13 +71,13 @@ class BlankLineTopicController extends Controller
             ->map(fn ($answer) => $answer ?? '')
             ->toArray();
 
-        $exam->blankLines()->findOrFail($question)->update([
+        $question->update([
             'pregunta' => $validated['pregunta'],
             'valor' => $validated['valor'],
             ...$answers,
         ]);
 
-        ExamService::updateExamTotal($exam);
+        ExamService::updateExamTotal($question->exam);
 
         return back()
             ->with(
@@ -85,11 +86,11 @@ class BlankLineTopicController extends Controller
             );
     }
 
-    public function destroy(Exam $exam, $question)
+    public function destroy(BlankLine $question)
     {
-        $exam->blankLines()->findOrFail($question)->delete();
+        $question->delete();
 
-        ExamService::updateExamTotal($exam);
+        ExamService::updateExamTotal($question->exam);
 
         return back()
             ->with(

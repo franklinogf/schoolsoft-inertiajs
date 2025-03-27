@@ -61,15 +61,15 @@ Route::name('options.')->prefix('options')->group(function () {
         ->name('exams.toggle');
 
     Route::name('exams.')
-        ->prefix('exams/{exam}/')
+        ->prefix('exams/')
         ->group(function () {
 
             Route::controller(TrueFalseTopicController::class)
                 ->prefix('truefalse')
                 ->name('truefalse.')
                 ->group(function () {
-                    Route::post('/', 'store')->name('store');
-                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::post('{exam}/', 'store')->name('store');
+                    Route::put('{exam}/title', 'updateTitle')->name('updateTitle');
                     Route::delete('/{question}', 'destroy')->name('destroy');
                     Route::put('/{question}', 'update')->name('update');
                 });
@@ -78,8 +78,8 @@ Route::name('options.')->prefix('options')->group(function () {
                 ->prefix('select')
                 ->name('select.')
                 ->group(function () {
-                    Route::post('/', 'store')->name('store');
-                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::post('{exam}/', 'store')->name('store');
+                    Route::put('{exam}/title', 'updateTitle')->name('updateTitle');
                     Route::delete('/{question}', 'destroy')->name('destroy');
                     Route::put('/{question}', 'update')->name('update');
                 });
@@ -88,18 +88,22 @@ Route::name('options.')->prefix('options')->group(function () {
                 ->prefix('pair')
                 ->name('pair.')
                 ->group(function () {
-                    Route::post('/', 'store')->name('store');
-                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::post('{exam}/', 'store')->name('store');
+                    Route::put('{exam}/title', 'updateTitle')->name('updateTitle');
                     Route::delete('/{question}', 'destroy')->name('destroy');
                     Route::put('/{question}', 'update')->name('update');
+
+                    Route::post('{exam}/code', 'storeCode')->name('code.store');
+                    Route::delete('/code/{answer}', 'destroyCode')->name('code.destroy');
+                    Route::put('/code/{answer}', 'updateCode')->name('code.update');
                 });
 
             Route::controller(BlankLineTopicController::class)
                 ->prefix('blankLine')
                 ->name('blankLine.')
                 ->group(function () {
-                    Route::post('/', 'store')->name('store');
-                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::post('{exam}/', 'store')->name('store');
+                    Route::put('{exam}/title', 'updateTitle')->name('updateTitle');
                     Route::delete('/{question}', 'destroy')->name('destroy');
                     Route::put('/{question}', 'update')->name('update');
                 });
@@ -108,8 +112,8 @@ Route::name('options.')->prefix('options')->group(function () {
                 ->prefix('question')
                 ->name('question.')
                 ->group(function () {
-                    Route::post('/', 'store')->name('store');
-                    Route::put('/title', 'updateTitle')->name('updateTitle');
+                    Route::post('{exam}/', 'store')->name('store');
+                    Route::put('{exam}/title', 'updateTitle')->name('updateTitle');
                     Route::delete('/{question}', 'destroy')->name('destroy');
                     Route::put('/{question}', 'update')->name('update');
                 });

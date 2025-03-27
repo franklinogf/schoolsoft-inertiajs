@@ -6,6 +6,7 @@ use App\Enums\FlashMessageKey;
 use App\Enums\YesNoEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Exams\Exam;
+use App\Models\Exams\Select;
 use App\Services\ExamService;
 use Illuminate\Http\Request;
 
@@ -61,7 +62,7 @@ class SelectTopicController extends Controller
             );
     }
 
-    public function update(Request $request, Exam $exam, $question)
+    public function update(Request $request, Select $question)
     {
         $validated = $request->validate([
             'pregunta' => ['required', 'string', 'max:255'],
@@ -77,14 +78,14 @@ class SelectTopicController extends Controller
             ->map(fn ($answer) => $answer)
             ->toArray();
 
-        $exam->selects()->findOrFail($question)->update([
+        $question->update([
             'pregunta' => $validated['pregunta'],
             'correcta' => $validated['correcta'],
             'valor' => $validated['valor'],
             ...$answers,
         ]);
 
-        ExamService::updateExamTotal($exam);
+        ExamService::updateExamTotal($question->exam);
 
         return back()
             ->with(
@@ -93,11 +94,11 @@ class SelectTopicController extends Controller
             );
     }
 
-    public function destroy(Exam $exam, $question)
+    public function destroy(Select $question)
     {
-        $exam->selects()->findOrFail($question)->delete();
+        $question->delete();
 
-        ExamService::updateExamTotal($exam);
+        ExamService::updateExamTotal($question->exam);
 
         return back()
             ->with(
