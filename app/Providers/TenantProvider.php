@@ -63,10 +63,14 @@ class TenantProvider extends ServiceProvider
         Tenancy\Controllers\TenantAssetsController::$tenancyMiddleware = Tenancy\Middleware\InitializeTenancyByPath::class;
 
         Tenancy\Resolvers\PathTenantResolver::$tenantParameterName = 'school';
+
         // enable cache
         PathTenantResolver::$shouldCache = true;
 
         // cache for 1 hour
         PathTenantResolver::$cacheTTL = 60 * 60;
+
+        // use the file cache store
+        PathTenantResolver::$cacheStore = 'file';
     }
 }
