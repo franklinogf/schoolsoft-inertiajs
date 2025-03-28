@@ -18,7 +18,10 @@ class ExamResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'profesor' => TeacherResource::make($this->teacher),
+            'profesor' => $this->whenLoaded(
+                'teacher',
+                TeacherResource::make($this->teacher)
+            ),
             'titulo' => $this->titulo,
             'curso' => $this->curso,
             'valor' => $this->valor,
