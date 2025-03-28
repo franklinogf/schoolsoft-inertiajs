@@ -8,3 +8,10 @@ it('renders regiweb home page', function () {
     $response->assertStatus(200);
 
 });
+
+it('redirects to login if not authenticated as a teacher', function () {
+    /** @var \Tests\TenantCase $this */
+    $response = $this->get(route('regiweb.home'));
+    $response->assertRedirect(route('home.index'));
+    $this->assertGuest('teacher');
+});
