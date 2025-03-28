@@ -80,7 +80,7 @@ export type Topics = {
 
 export interface Exam {
   id: number;
-  profesor: Teacher;
+  profesor?: Teacher;
   titulo: string;
   curso: string;
   valor: number;
