@@ -9,6 +9,7 @@ use App\Http\Requests\StoreExamRequest;
 use App\Http\Resources\CoursesResource;
 use App\Http\Resources\Exams\ExamResource;
 use App\Models\Exams\Exam;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
@@ -16,10 +17,8 @@ class ExamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(#[CurrentUser()] $teacher)
     {
-
-        $teacher = auth()->user()->load(['courses', 'exams']);
         $exams = $teacher->exams()
             ->with([
                 'teacher',
@@ -30,7 +29,7 @@ class ExamController extends Controller
                 'pairsCodes',
                 'blankLines',
             ])->orderByDesc('id')->get();
-        $courses = $teacher->courses()->get();
+        $courses = $teacher->courses;
 
         return inertia('Regiweb/Options/Exams/Index', [
             'exams' => ExamResource::collection($exams),
@@ -42,12 +41,8 @@ class ExamController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreExamRequest $request)
+    public function store(StoreExamRequest $request, #[CurrentUser()] $teacher)
     {
-        /**
-         * @var \App\Models\Teacher $teacher
-         */
-        $teacher = auth()->user();
         $exam = $teacher->exams()->create($request->validated());
 
         return to_route('regiweb.options.exams.edit', [
@@ -62,7 +57,6 @@ class ExamController extends Controller
     public function edit(Exam $exam)
     {
         $exam->load([
-            'teacher',
             'questions',
             'truesOrFalses',
             'selects',
@@ -72,7 +66,7 @@ class ExamController extends Controller
         ]);
 
         return inertia('Regiweb/Options/Exams/Edit', [
-            'exam' => new ExamResource($exam),
+            'exam' => ExamResource::make($exam),
         ]);
     }
 
