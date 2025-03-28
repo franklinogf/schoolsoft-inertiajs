@@ -60,7 +60,7 @@ return [
     |            "sublime", "atom", "nova", "macvim", "idea", "netbeans",
     |            "xdebug", "espresso"
     |
-    */
+     */
 
     'editor' => env('DEBUGBAR_EDITOR') ?: env('IGNITION_EDITOR', 'vscode'),
 
@@ -85,7 +85,7 @@ return [
     |
     | Example values: "/Users/<name>/Code", "C:\Users\<name>\Documents\Code"
     |
-    */
+     */
 
     'remote_sites_path' => env('DEBUGBAR_REMOTE_SITES_PATH'),
     'local_sites_path' => env('DEBUGBAR_LOCAL_SITES_PATH', env('IGNITION_LOCAL_SITES_PATH')),

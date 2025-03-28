@@ -12,7 +12,7 @@ class ExamService
         $exam->load($relations);
 
         $sum = collect($relations)
-            ->map(fn ($relation) => $exam->$relation->sum('valor'))
+            ->map(fn ($relation) => $exam->{$relation}->sum('valor'))
             ->sum();
 
         $exam->update([

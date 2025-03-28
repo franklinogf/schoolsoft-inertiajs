@@ -75,10 +75,11 @@ class MessagesSmscontroller extends Controller
         $message = $validated['message'];
         $selected = $validated['selected'];
         $tos = [];
+
         if ($selected === 'students') {
             // TODO
             $tos = Student::whereIn('ss', $to)->get()
-                ->map(fn ($student) => ['email' => create_phone_email($student->cel, $student->cel), 'name' => "$student->nombre $student->apellidos"]
+                ->map(fn ($student) => ['email' => create_phone_email($student->cel, $student->cel), 'name' => "{$student->nombre} {$student->apellidos}"]
                 );
         } elseif ($selected === 'courses') {
             // TODO
@@ -89,6 +90,7 @@ class MessagesSmscontroller extends Controller
 
         foreach ($tos as $to) {
             $personalEmail = (new PersonalEmail($message))->subject($subject);
+
             if ($to['email'] === null) {
                 continue;
             }

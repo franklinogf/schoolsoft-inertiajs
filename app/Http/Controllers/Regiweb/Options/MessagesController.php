@@ -22,9 +22,11 @@ class MessagesController extends Controller
     {
 
         $type = request()->query('type', 'inbox');
+
         if (! in_array($type, ['inbox', 'sent', 'trash'])) {
             $type = 'inbox';
         }
+
         /**
          * @var \App\Models\Teacher $teacher
          */
@@ -56,6 +58,7 @@ class MessagesController extends Controller
         $mails = $mails->count() > 0 ? InboxResource::collection($mails) : [];
 
         $mail = $inbox ? new InboxResource($inbox) : null;
+
         if ($mail) {
             if ($inbox->sender_id !== $teacher->id) {
                 $teacher->receivedMessages()
@@ -99,6 +102,7 @@ class MessagesController extends Controller
          * @var \App\Models\Teacher $teacher         *
          */
         $teacher = auth()->user();
+
         /**
          * @var \App\Models\Inbox $inbox
          */
@@ -145,7 +149,7 @@ class MessagesController extends Controller
             'parent_id' => $inbox->id,
         ]);
         $sender_type = str($inbox->sender_type)->plural()->toString();
-        $reply->$sender_type()->attach($inbox->sender_id);
+        $reply->{$sender_type}()->attach($inbox->sender_id);
 
         // $inbox = $teacher->sentMessages()->create([
         //     'subject' => 'Re: '.$inbox->subject,
@@ -171,10 +175,12 @@ class MessagesController extends Controller
         $id = $request->input('id');
         $type = $request->query('type', 'inbox');
         $inbox = Inbox::findOrFail($id);
+
         /**
          * @var \App\Models\Teacher $teacher
          */
         $teacher = auth()->user();
+
         if ($inbox->sender_id === $teacher->id) {
             $inbox->update(['is_deleted' => true]);
         } else {
@@ -190,10 +196,12 @@ class MessagesController extends Controller
         $id = $request->input('id');
         $type = $request->query('type', 'inbox');
         $inbox = Inbox::findOrFail($id);
+
         /**
          * @var \App\Models\Teacher $teacher
          */
         $teacher = auth()->user();
+
         if ($inbox->sender_id === $teacher->id) {
             $inbox->update(['is_deleted' => false]);
         } else {

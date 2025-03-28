@@ -44,6 +44,7 @@ class AttendanceReportPDFController extends Controller
         $isHomeCourse = $validated['course'] === 'home';
 
         $month = ucfirst(Utils::getMonthName($selectedTrimesterValue[2]));
+
         if ($isHomeCourse) {
             $teacher = Teacher::find(auth()->id());
             $students = Student::ofGrade($teacher->grado)->get();
@@ -69,14 +70,14 @@ class AttendanceReportPDFController extends Controller
         $pdf->Ln();
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->Cell(20, 5, __('pdf.attendanceReport.teacher'), 0, 0, 'C');
-        $pdf->Cell(75, 5, "$teacher->apellidos $teacher->nombre", 'B');
+        $pdf->Cell(75, 5, "{$teacher->apellidos} {$teacher->nombre}", 'B');
 
         if ($isHomeCourse) {
             $pdf->Cell(20, 5, __('pdf.attendanceReport.grade'), 0, 0, 'C');
             $pdf->Cell(15, 5, $teacher->grado, 'B', 1, 'C');
         } else {
             $pdf->Cell(25, 5, __('pdf.attendanceReport.subject'), 0, 0, 'C');
-            $pdf->Cell(0, 5, "$course->curso - $course->desc1", 'B', 1);
+            $pdf->Cell(0, 5, "{$course->curso} - {$course->desc1}", 'B', 1);
         }
 
         $pdf->Ln();
@@ -95,6 +96,7 @@ class AttendanceReportPDFController extends Controller
                 ->get();
             $attended = 0;
             $late = 0;
+
             foreach ($attendances as $attendance) {
                 if ($attendance->codigo <= 7) {
                     $attended++;
@@ -103,7 +105,7 @@ class AttendanceReportPDFController extends Controller
                 }
             }
             $pdf->Cell(10, 5, $index + 1, 1);
-            $pdf->Cell(70, 5, "$student->nombre $student->apellidos", 1);
+            $pdf->Cell(70, 5, "{$student->nombre} {$student->apellidos}", 1);
             $pdf->Cell(20, 5, '', 1, 0, 'C');
             $pdf->Cell(25, 5, $attended, 1, 0, 'C');
             $pdf->Cell(25, 5, $late, 1, 0, 'C');
@@ -111,6 +113,7 @@ class AttendanceReportPDFController extends Controller
         }
 
         $pdf->Output();
+
         exit;
 
     }
@@ -131,6 +134,7 @@ class AttendanceReportPDFController extends Controller
         $pdf->SetLeftMargin(5);
         $pdf->AddPage();
         $pdf->SetFont('Arial', 'B', 12);
+
         if ($isHomeCourse) {
             $title = $validated['type'] === 'list' ? 'Lista de asistencias diarias' : 'Resumen de asistencias diarias';
             $teacher = Teacher::find(auth()->id());
@@ -143,6 +147,7 @@ class AttendanceReportPDFController extends Controller
         $pdf->Cell(0, 5, "{$title} {$this->year}", 0, 1, 'C');
         $pdf->Cell(0, 10, "Desde: {$initialDate} / Hasta: {$finalDate}", 0, 1, 'C');
         $pdf->SetFont('Arial', 'B', 10);
+
         if ($isHomeCourse) {
 
             if (! $isList) {
@@ -151,6 +156,7 @@ class AttendanceReportPDFController extends Controller
             $pdf->Cell(10, 5, '', 'LTB', 0, 'C', true);
             $pdf->Cell(50, 5, 'Apellidos', 'RTB', 0, 'C', true);
             $pdf->Cell(50, 5, 'Nombre', 1, 0, 'C', true);
+
             if ($isList) {
                 $pdf->Cell(25, 5, 'Fecha', 1, 0, 'C', true);
                 $pdf->Cell(60, 5, 'Asistencia', 1, 0, 'C', true);
@@ -160,10 +166,12 @@ class AttendanceReportPDFController extends Controller
             }
             $pdf->Ln();
             $pdf->SetFont('Arial', '', 10);
+
             if ($isList) {
                 $studentAttendances = StudentAttendance::where([['codigo', '>', 0], ['grado', $grade]])
                     ->whereDatesBetween($validated['initialDate'], $validated['finalDate'])
                     ->orderBy('apellidos')->orderBy('nombre')->orderBy('fecha')->get();
+
                 foreach ($studentAttendances as $index => $attendance) {
                     $pdf->Cell(10, 5, $index + 1, 1, 0, 'C');
                     $pdf->Cell(50, 5, $attendance->apellidos, 1);
@@ -177,8 +185,10 @@ class AttendanceReportPDFController extends Controller
                     ->orderBy('apellidos')->orderBy('nombre')
                     ->get()->groupBy('ss');
                 $count = 1;
+
                 foreach ($studentAttendances as $ss => $attendances) {
                     $absences = $tardiness = 0;
+
                     foreach ($attendances as $attendance) {
                         $absences += intval($attendance->codigo) <= 7 ? 1 : 0;
                         $tardiness += intval($attendance->codigo) >= 8 ? 1 : 0;
@@ -206,6 +216,7 @@ class AttendanceReportPDFController extends Controller
             $pdf->Cell(35, 5, 'Fecha', 'RTB', 0, 'C', true);
             $pdf->Cell(70, 5, 'Asistencia', 1, 1, 'C', true);
             $pdf->SetFont('Arial', '', 10);
+
             foreach ($student->attendances as $index => $attendance) {
                 $pdf->Cell(40);
                 $pdf->Cell(10, 5, $index + 1, 1, 0, 'C');
@@ -216,6 +227,7 @@ class AttendanceReportPDFController extends Controller
         }
 
         $pdf->Output();
+
         exit;
     }
 }

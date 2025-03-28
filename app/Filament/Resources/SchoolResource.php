@@ -240,11 +240,11 @@ class SchoolResource extends Resource
                 collect(json_decode(json_encode($record->theme['themes'])))
                     ->each(function ($items, string $mode) use (&$themes) {
                         $head = $mode === 'light' ? ':root' : ".{$mode}";
-                        $themes .= "$head { \r\n";
+                        $themes .= "{$head} { \r\n";
                         collect($items)
                             ->each(function ($color, string $key) use (&$themes) {
                                 $formattedKey = static::formatThemeKeyToCSS($key);
-                                $themes .= "\t $formattedKey: ".static::formatThemeValueToCSS($color)."; \r\n";
+                                $themes .= "\t {$formattedKey}: ".static::formatThemeValueToCSS($color)."; \r\n";
                             });
                         $themes .= "} \r\n";
                     });
@@ -275,6 +275,7 @@ class SchoolResource extends Resource
                     $cssVariables = trim(Str::replaceMatches('/\r\n/', '', $cssVariables));
                     $eachCssVariable = explode(';', $cssVariables);
                     $css = [];
+
                     foreach ($eachCssVariable as $key => $value) {
                         if ($value === '') {
                             continue;

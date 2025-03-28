@@ -25,13 +25,13 @@ class StoreExamRequest extends FormRequest
     {
         return [
             'titulo' => ['required', 'string', 'max:255'],
-            'curso' => ['required', new TeacherCourse],
+            'curso' => ['required', new TeacherCourse()],
             'fecha' => ['required', 'date:Y-m-d'],
             'hora' => ['required', 'date_format:H:i'],
             'hora_final' => ['required', 'date_format:H:i'],
             'tiempo' => ['required', 'integer', 'min:1'],
-            'ver_nota' => ['required', new YesNo],
-            'activo' => ['required', new YesNo],
+            'ver_nota' => ['required', new YesNo()],
+            'activo' => ['required', new YesNo()],
         ];
     }
 }

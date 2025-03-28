@@ -27,6 +27,7 @@ class RegiwebProfileController extends Controller
     {
         $validated = $request->validated();
         $data = $request->safe()->except('picture');
+
         /**
          * @var \App\Models\Teacher $user
          */
@@ -34,6 +35,7 @@ class RegiwebProfileController extends Controller
         $user->fill($data);
 
         $folder = $validated['picture'];
+
         if ($folder !== null) {
 
             $temporaryFile = tenancy()->central(function () use ($folder): TemporaryFile|null {

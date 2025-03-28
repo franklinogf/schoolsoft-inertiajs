@@ -225,16 +225,17 @@ class Student extends Model
     public function scopeOfCourse(Builder $query, string $class, string $table = 'padres', $summer = false): void
     {
         $where = [
-            ["$table.curso", $class],
-            ["$table.baja", ''],
-            ["$table.year", app('year')],
+            ["{$table}.curso", $class],
+            ["{$table}.baja", ''],
+            ["{$table}.year", app('year')],
             ["{$this->table}.year", app('year')],
         ];
+
         if ($summer) {
-            $where[] = ["$table.verano", '2'];
+            $where[] = ["{$table}.verano", '2'];
         }
         $query->addSelect("{$this->table}.*")
-            ->join($table, "{$this->table}.ss", '=', "$table.ss")
+            ->join($table, "{$this->table}.ss", '=', "{$table}.ss")
             ->where($where);
     }
 

@@ -27,9 +27,11 @@ if (! function_exists('tmp_path')) {
     function tmp_path(?string $folder = null, ?string $filename = null)
     {
         $path = 'tmp';
+
         if ($folder !== null) {
             $folder = ltrim($folder, '/');
             $path .= "/{$folder}";
+
             if ($filename !== null) {
                 $filename = ltrim($filename, '/');
                 $path .= "/{$filename}";

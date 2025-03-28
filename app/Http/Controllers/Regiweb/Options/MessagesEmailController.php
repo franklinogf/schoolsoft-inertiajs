@@ -35,6 +35,7 @@ class MessagesEmailController extends Controller
             'data.*' => ['string'],
             'selected' => ['required', 'string', 'in:students,admin,courses'],
         ]);
+
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
 
@@ -72,10 +73,11 @@ class MessagesEmailController extends Controller
         $message = $validated['message'];
         $selected = $validated['selected'];
         $tos = [];
+
         if ($selected === 'students') {
             // TODO
             $tos = Student::whereIn('ss', $to)->get()->map(function ($student) {
-                return ['email' => $student->email, 'name' => "$student->nombre $student->apellidos"];
+                return ['email' => $student->email, 'name' => "{$student->nombre} {$student->apellidos}"];
             });
         } elseif ($selected === 'admin') {
             $tos = Admin::whereIn('usuario', $to)->get()->map(function ($admin) {

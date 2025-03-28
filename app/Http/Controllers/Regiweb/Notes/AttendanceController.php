@@ -26,6 +26,7 @@ class AttendanceController extends Controller
         $subjects = null;
 
         $attendanceOption = Admin::getPrimaryAdmin()->asist;
+
         if ($attendanceOption === '3') {
             $subjects = DB::table('cursos')->where('id', auth()->id())->orderBy('curso')->pluck('curso');
 
@@ -67,7 +68,7 @@ class AttendanceController extends Controller
             return [
                 'id' => $attendance->id ?? null,
                 'studentId' => $student->mt,
-                'name' => "$student->nombre $student->apellidos",
+                'name' => "{$student->nombre} {$student->apellidos}",
                 'attendance' => $attendance->codigo ?? '',
             ];
         });
@@ -96,6 +97,7 @@ class AttendanceController extends Controller
 
         ]);
         $student = Student::find($validated['studentId']);
+
         if ($validated['id'] === null) {
             $student->attendances()->create([
                 'nombre' => $student->nombre,

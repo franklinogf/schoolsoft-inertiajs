@@ -35,12 +35,15 @@ class PDF extends BasePDF
         $this->SetXY($this->leftMargin, 10);
         $this->SetMargins($this->leftMargin, 10);
         $this->SetFont('Times', 'B', 15);
+
         if (($this->headerFirstPage && $this->PageNo() === 1) || ! $this->headerFirstPage) {
             $this->Cell(0, 5, $this->school->colegio, 0, 1, 'C');
             $this->SetFont('Times', '', 9);
+
             if ($this->school->dir1 !== '') {
                 $this->Cell(0, 4, $this->school->dir1, 0, 1, 'C');
             }
+
             if ($this->school->dir2 !== '') {
                 $this->Cell(0, 4, $this->school->dir2, 0, 1, 'C');
             }

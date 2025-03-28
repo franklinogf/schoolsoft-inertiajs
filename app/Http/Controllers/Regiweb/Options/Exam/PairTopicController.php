@@ -114,6 +114,7 @@ class PairTopicController extends Controller
     public function destroyCode(PairCode $answer)
     {
         $pairs = $answer->question()->count();
+
         if ($pairs > 0) {
             return back()
                 ->with(

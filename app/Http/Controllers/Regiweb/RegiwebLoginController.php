@@ -24,6 +24,7 @@ class RegiwebLoginController extends Controller
             'clave' => ['required', 'min:6'],
         ]);
         $user = Teacher::where('usuario', $validated['usuario'])->where('clave', $validated['clave'])->first();
+
         if ($user) {
             Auth::guard('teacher')->login($user);
             $request->session()->regenerate();

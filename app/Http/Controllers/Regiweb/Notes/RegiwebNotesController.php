@@ -101,6 +101,7 @@ class RegiwebNotesController extends Controller
         $gradesValues = null;
         $gradesValuesId = null;
         $amountOfGrades = null;
+
         if (
             $page === PagesEnum::GRADES->value ||
             $page === PagesEnum::SUMMER_GRADES->value ||
@@ -126,9 +127,10 @@ class RegiwebNotesController extends Controller
             $studentsGrades = $students->map(function (StudentGrade $student) use ($thisReport, $trimester, $_info, $course, $values, $gradesNumbers) {
                 $grades = [];
                 $index = 1;
+
                 for ($i = $gradesNumbers[0]; $i <= $gradesNumbers[1]; $i++) {
-                    $grades["nota$index"]['value'] = trim($student->{"not$i"});
-                    $grades["nota$index"]['column'] = "not$i";
+                    $grades["nota{$index}"]['value'] = trim($student->{"not{$i}"});
+                    $grades["nota{$index}"]['column'] = "not{$i}";
                     $index++;
                 }
                 $tdiaData = $this->findValueFor($_info[PagesEnum::DAILY_WORKS->value]['table'], $course, $student->ss);
@@ -237,11 +239,13 @@ class RegiwebNotesController extends Controller
                 $values['tdp'] => $data['tdp'] ?? '',
                 $trimesterInfo['totalGrade'] => $data['total'] ?? '',
             ];
+
             if ($validated['page'] === PagesEnum::GRADES->value) {
                 $array[$values['tdia']] = $data['tdia'] ?? '';
                 $array[$values['tlib']] = $data['tlib'] ?? '';
                 $array[$values['pcor']] = $data['pcor'] ?? '';
             }
+
             foreach ($data['notas'] as $grade) {
                 $array[$grade['column']] = $grade['value'] ?? '';
             }
@@ -254,6 +258,7 @@ class RegiwebNotesController extends Controller
     public function saveAttendance(SaveAttendanceRequest $request)
     {
         $validated = $request->validated();
+
         foreach ($validated['data'] as $data) {
             $student = StudentGrade::fromTable('padres')->where('aa', $data['id']);
             $array = [
@@ -309,6 +314,7 @@ class RegiwebNotesController extends Controller
             ['trimestre', $trimester],
             ['nivel', $page],
         ])->first();
+
         if (! $gradesValuesData) {
             $id = DB::table('valores')->insertGetId([
                 'curso' => $course,
@@ -320,10 +326,11 @@ class RegiwebNotesController extends Controller
         }
         $gradesValuesId = $gradesValuesData->id;
         $gradesValues = [];
+
         for ($i = 1; $i <= $amountOfValues; $i++) {
-            $gradesValues["tema$i"] = $gradesValuesData->{"tema$i"} ?? '';
-            $gradesValues["val$i"] = $gradesValuesData->{"val$i"} ?? '';
-            $gradesValues["fec$i"] = $gradesValuesData->{"fec$i"} === '0000-00-00' ? '' : ($gradesValuesData->{"fec$i"} ?? '');
+            $gradesValues["tema{$i}"] = $gradesValuesData->{"tema{$i}"} ?? '';
+            $gradesValues["val{$i}"] = $gradesValuesData->{"val{$i}"} ?? '';
+            $gradesValues["fec{$i}"] = $gradesValuesData->{"fec{$i}"} === '0000-00-00' ? '' : ($gradesValuesData->{"fec{$i}"} ?? '');
         }
 
         return [$gradesValues, $gradesValuesId];
@@ -332,10 +339,11 @@ class RegiwebNotesController extends Controller
     public function saveValues(Request $request, int $id)
     {
         $valuesValidation = [];
+
         for ($i = 1; $i <= 12; $i++) {
-            $valuesValidation["tema$i"] = ['nullable', "required_with:val{$i},fec{$i}", 'string'];
-            $valuesValidation["val$i"] = ['nullable', "required_with:tema{$i},fec{$i}", 'numeric'];
-            $valuesValidation["fec$i"] = ['nullable', "required_with:tema{$i},val{$i}", 'date'];
+            $valuesValidation["tema{$i}"] = ['nullable', "required_with:val{$i},fec{$i}", 'string'];
+            $valuesValidation["val{$i}"] = ['nullable', "required_with:tema{$i},fec{$i}", 'numeric'];
+            $valuesValidation["fec{$i}"] = ['nullable', "required_with:tema{$i},val{$i}", 'date'];
         }
         $validated = $request->validate([
             ...$valuesValidation,
@@ -351,6 +359,7 @@ class RegiwebNotesController extends Controller
     {
         // TODO: Refactor this to use an enum
         $isCppd = $this->admin->cppd === YesNoEnum::YES->value;
+
         if ($isCppd) {
             return [
                 'Notas' => [

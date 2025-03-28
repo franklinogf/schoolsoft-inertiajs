@@ -13,6 +13,7 @@ trait HtmlPDF
         // HTML parser
         $html = str_replace("\n", ' ', $html);
         $a = preg_split('/<(.*)>/U', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
+
         foreach ($a as $i => $e) {
             if ($i % 2 == 0) {
                 // Text
@@ -32,6 +33,7 @@ trait HtmlPDF
                     $a2 = explode(' ', $e);
                     $tag = strtoupper(array_shift($a2));
                     $prop = [];
+
                     foreach ($a2 as $v) {
                         if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $a3)) {
                             $prop[strtoupper($a3[1])] = $a3[2];
@@ -49,15 +51,19 @@ trait HtmlPDF
         if ($tag == 'B' || $tag == 'I' || $tag == 'U') {
             $this->SetStyle($tag, true);
         }
+
         if ($tag == 'A') {
             $this->HREF = $prop['HREF'];
         }
+
         if ($tag == 'BR') {
             $this->Ln(5);
         }
+
         if ($tag == 'P') {
             $this->ALIGN = $prop['ALIGN'];
         }
+
         if ($tag == 'HR') {
             if (! empty($prop['WIDTH'])) {
                 $Width = $prop['WIDTH'];
@@ -80,9 +86,11 @@ trait HtmlPDF
         if ($tag == 'B' || $tag == 'I' || $tag == 'U') {
             $this->SetStyle($tag, false);
         }
+
         if ($tag == 'A') {
             $this->HREF = '';
         }
+
         if ($tag == 'P') {
             $this->ALIGN = '';
         }
@@ -91,10 +99,11 @@ trait HtmlPDF
     public function SetStyle($tag, $enable)
     {
         // Modify style and select corresponding font
-        $this->$tag += ($enable ? 1 : -1);
+        $this->{$tag} += ($enable ? 1 : -1);
         $style = '';
+
         foreach (['B', 'I', 'U'] as $s) {
-            if ($this->$s > 0) {
+            if ($this->{$s} > 0) {
                 $style .= $s;
             }
         }

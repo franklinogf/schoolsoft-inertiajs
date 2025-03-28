@@ -26,6 +26,7 @@ class ForoTeacherLoginController extends Controller
             'username' => ['required', 'min:2'],
             'password' => ['required', 'min:6'],
         ]);
+
         if (Auth::guard('teacher')->attempt(['usuario' => $validated['username'], 'clave' => $validated['password']])) {
             $request->session()->regenerate();
 

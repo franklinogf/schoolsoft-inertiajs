@@ -8,10 +8,11 @@ test('renders school home page', function () {
 
     $this->get(route('home.index'))
         ->assertStatus(200)
-        ->assertInertia(fn (Assert $page) => $page
-            ->component('Home/Index')
-            ->has('school')
-            ->where('school.colegio', $school->colegio)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Home/Index')
+                ->has('school')
+                ->where('school.colegio', $school->colegio)
         );
 
 });

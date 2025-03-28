@@ -38,11 +38,13 @@ class DeleteTempUploadedFiles extends Command
         $this->info('Deleting temporary uploaded files that still exist older than 24 hours.');
         $storage = Storage::disk('local');
         $directories = $storage->directories('tmp');
+
         if (empty($directories)) {
             $this->info('No temporary uploaded files older than 24 hours exist.');
 
             return;
         }
+
         foreach ($directories as $directory) {
             $directoryLastModified = Carbon::createFromTimestamp($storage->lastModified($directory));
 

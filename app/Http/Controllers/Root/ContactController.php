@@ -21,7 +21,7 @@ class ContactController extends Controller
             'lastname' => ['required'],
             'email' => ['required', 'email'],
             'message' => ['required'],
-            'phone' => ['phone'],
+            'phone' => ['phone:INTERNATIONAL'],
         ]);
 
         Mail::send(new \App\Mail\Root\Contact(

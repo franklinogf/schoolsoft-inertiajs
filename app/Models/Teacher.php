@@ -216,9 +216,11 @@ class Teacher extends Model implements HasMedia
             'lp3' => YesNo::class,
             'lp4' => YesNo::class,
         ];
+
         foreach ($datesColumns as $column) {
             $array[$column] = Date::class;
         }
+
         foreach ($nullToEmptyStringColumns as $column) {
             $array[$column] = NullToEmptyString::class;
         }

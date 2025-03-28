@@ -20,6 +20,7 @@ class TenantProvider extends ServiceProvider
     private function theme(): array
     {
         $theme = [];
+
         foreach (config('theme.themes') as $mode => $variables) {
             foreach ($variables as $variable => $_) {
                 $theme["theme.themes.{$mode}.{$variable}"] = "theme.themes.{$mode}.{$variable}";
