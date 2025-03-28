@@ -123,6 +123,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
       onSuccess: () => {
         setData("picture", "");
       },
+      method: "put", // Use PUT method for updating resources
     });
   }
 

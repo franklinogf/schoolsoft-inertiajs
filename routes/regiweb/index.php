@@ -21,7 +21,7 @@ Route::name('regiweb.')->prefix('regiweb')->group(function () {
         Route::get('/', [RegiwebHomeController::class, 'index'])->name('index');
         Route::get('/home', [RegiwebHomeController::class, 'home'])->name('home');
         Route::get('/profile', [RegiwebProfileController::class, 'show'])->name('profile.show');
-        Route::post('/profile', [RegiwebProfileController::class, 'update'])->name('profile.update');
+        Route::put('/profile', [RegiwebProfileController::class, 'update'])->name('profile.update');
 
         require __DIR__.'/notes.php';
         require __DIR__.'/options.php';
