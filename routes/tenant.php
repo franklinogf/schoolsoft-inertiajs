@@ -11,9 +11,9 @@ use Stancl\Tenancy\Resolvers\PathTenantResolver;
 
 Route::middleware(
     [
+        SetDefaultTenant::class,
         'web',
         InitializeTenancyByPath::class,
-        SetDefaultTenant::class,
     ])
     ->prefix('{'.PathTenantResolver::$tenantParameterName.'}')
     ->group(function () {
