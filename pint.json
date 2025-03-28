@@ -5,7 +5,7 @@
         "array_indentation": true,
         "new_with_parentheses": {
             "anonymous_class": false,
-            "named_class": true
+            "named_class": false
         },
         "align_multiline_comment": {
             "comment_type": "phpdocs_like"
