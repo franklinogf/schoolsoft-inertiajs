@@ -304,7 +304,11 @@ class SchoolResource extends Resource
             ->live(onBlur: true)
             ->label(Str::ucfirst(Str::lower(Str::headline($label))))
             ->hsl()
-            ->default($default)
+            ->afterStateHydrated(function (ColorPicker $component, $state) use ($default) {
+                if ($state === null) {
+                    $component->state($default);
+                }
+            })
             ->placeholder($default)
             ->hintAction(
                 Action::make('pasteColor')
