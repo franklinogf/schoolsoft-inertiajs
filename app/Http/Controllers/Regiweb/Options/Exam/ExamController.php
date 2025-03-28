@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Regiweb\Options\Exam;
 use App\Enums\FlashMessageKey;
 use App\Enums\YesNoEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreExamRequest;
+use App\Http\Requests\Regiweb\Exam\StoreExamRequest;
+use App\Http\Requests\Regiweb\Exam\UpdateExamRequest;
 use App\Http\Resources\CoursesResource;
 use App\Http\Resources\Exams\ExamResource;
 use App\Models\Exams\Exam;
 use Illuminate\Container\Attributes\CurrentUser;
-use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
@@ -54,7 +54,7 @@ class ExamController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Exam $exam)
+    public function edit(Exam $exam, #[CurrentUser()] $teacher)
     {
         $exam->load([
             'questions',
@@ -64,18 +64,23 @@ class ExamController extends Controller
             'pairsCodes',
             'blankLines',
         ]);
+        $courses = $teacher->courses;
 
         return inertia('Regiweb/Options/Exams/Edit', [
             'exam' => ExamResource::make($exam),
+            'courses' => CoursesResource::collection($courses),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Exam $exam)
+    public function update(UpdateExamRequest $request, Exam $exam)
     {
-        //
+        $exam->update($request->validated());
+
+        return back()
+            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => __('actualizado')]));
     }
 
     /**
