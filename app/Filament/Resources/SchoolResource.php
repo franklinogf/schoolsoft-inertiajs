@@ -260,6 +260,7 @@ class SchoolResource extends Resource
                     ->required()
                     ->autosize(),
             ])
+            ->modalSubmitActionLabel('Import Theme')
             ->action(function (array $data, School $record, Livewire $livewire) {
 
                 $theme = $data['theme'];
