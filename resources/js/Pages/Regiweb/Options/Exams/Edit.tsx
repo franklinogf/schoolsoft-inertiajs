@@ -18,14 +18,16 @@ import {
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import useConfirmationStore from "@/stores/confirmationStore";
+import { Course } from "@/types/teacher";
 import { router } from "@inertiajs/react";
+import { ExamInformationButton } from "./_components/ExamInformationButton";
 import { Line } from "./_components/Line";
 import { Pair } from "./_components/Pair";
 import { Question } from "./_components/Question";
 import { Select } from "./_components/Select";
 import { TrueFalse } from "./_components/TrueFalse";
 
-export default function Page({ exam }: { exam: Exam }) {
+export default function Page({ exam, courses }: { exam: Exam; courses: Course[] }) {
   const { t } = useTranslations();
 
   return (
@@ -37,7 +39,7 @@ export default function Page({ exam }: { exam: Exam }) {
         <section className="flex flex-col gap-4">
           <h2 className="text-center text-xl font-semibold">{exam.titulo}</h2>
           <div className="grid-cols1 grid gap-2 md:grid-cols-2">
-            <ExamInformationButton />
+            <ExamInformationButton exam={exam} courses={courses} />
             <GradesOptionsButton />
             <ExamReportButton />
             <CorrectExamButton />
@@ -104,10 +106,6 @@ function GradesOptionsButton() {
   return <Button variant="secondary">{t("Opciones de notas")}</Button>;
 }
 
-function ExamInformationButton() {
-  const { t } = useTranslations();
-  return <Button variant="secondary">{t("Información del examen")}</Button>;
-}
 function PrintButton() {
   const { t } = useTranslations();
   return (
