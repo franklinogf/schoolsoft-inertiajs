@@ -72,14 +72,20 @@ export const examsListingColumns: ColumnDef<Exam>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem className="cursor-pointer">
-              <Edit2Icon />
-              <Link href={route("regiweb.options.exams.edit", exam.id)}>{t("Editar")}</Link>
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link href={route("regiweb.options.exams.edit", exam.id)}>
+                <Edit2Icon />
+                <span>{t("Editar")}</span>
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="w-full cursor-pointer">
-              {exam.activo === YesNoEnum.YES ? <EyeOffIcon /> : <EyeIcon />}
-              <Link method="patch" href={route("regiweb.options.exams.toggle", exam.id)}>
-                {exam.activo === YesNoEnum.YES ? t("Desactivar") : t("Activar")}
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link
+                className="w-full"
+                method="patch"
+                href={route("regiweb.options.exams.toggle", exam.id)}
+              >
+                {exam.activo === YesNoEnum.YES ? <EyeOffIcon /> : <EyeIcon />}
+                <span>{exam.activo === YesNoEnum.YES ? t("Desactivar") : t("Activar")}</span>
               </Link>
             </DropdownMenuItem>
 
