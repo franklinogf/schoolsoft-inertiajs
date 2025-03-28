@@ -9,15 +9,20 @@ test('Can access Contact page', function () {
 });
 
 test('Contact page can submit a form', function () {
+    /** @var \Tests\TenantCase $this */
     Mail::fake();
+
     $emailData = [
         'name' => 'Franklin',
         'lastname' => 'Flores',
         'email' => 'test@test.com',
         'message' => 'Hello, this is a test message',
-        'phone' => '9293394306',
+        'phone' => '+19293394306',
     ];
+
     $response = $this->post(route('contact.submit'), $emailData);
+
+    $response->assertSessionHasNoErrors();
 
     Mail::assertSent(fn (Contact $mail): bool => $mail->name === $emailData['name']);
 
