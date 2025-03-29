@@ -55,14 +55,14 @@ Route::name('options.')->prefix('options')->group(function () {
     })->name('homeworks.index');
 
     Route::resource('/exams', ExamController::class)
-        ->except(['show', 'create'])
-        ->names('exams');
-    Route::match(['put', 'patch'], '/exams/{exam}/toggle', [ExamController::class, 'toggle'])
-        ->name('exams.toggle');
-
+        ->except(['show', 'create']);
     Route::name('exams.')
-        ->prefix('exams/')
+        ->prefix('exams')
         ->group(function () {
+
+            Route::put('/{exam}/toggle', [ExamController::class, 'toggle'])
+                ->name('toggle');
+            Route::post('/{exam}/duplicate', [ExamController::class, 'duplicate'])->name('duplicate');
 
             Route::controller(TrueFalseTopicController::class)
                 ->prefix('truefalse')
