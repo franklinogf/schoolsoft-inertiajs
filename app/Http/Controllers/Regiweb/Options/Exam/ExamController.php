@@ -10,7 +10,9 @@ use App\Http\Requests\Regiweb\Exam\UpdateExamRequest;
 use App\Http\Resources\CoursesResource;
 use App\Http\Resources\Exams\ExamResource;
 use App\Models\Exams\Exam;
+use App\Rules\TeacherCourse;
 use Illuminate\Container\Attributes\CurrentUser;
+use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
@@ -104,5 +106,43 @@ class ExamController extends Controller
             ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', [
                 'action' => $exam->activo === YesNoEnum::YES->value ? __('activado') : __('desactivado'),
             ]));
+    }
+
+    public function duplicate(Request $request, Exam $exam)
+    {
+        $validated = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'curso' => new TeacherCourse,
+        ]);
+
+        $newExam = $exam->replicate()->fill(
+            [
+                'titulo' => $validated['titulo'],
+                'curso' => $validated['curso'],
+                'activo' => YesNoEnum::NO->value,
+            ]);
+        $newExam->save();
+
+        $exam->questions->each(function ($question) use ($newExam) {
+            $newExam->questions()->save($question->replicate());
+        });
+        $exam->truesOrFalses->each(function ($question) use ($newExam) {
+            $newExam->truesOrFalses()->save($question->replicate());
+        });
+        $exam->selects->each(function ($question) use ($newExam) {
+            $newExam->selects()->save($question->replicate());
+        });
+        $exam->pairs->each(function ($question) use ($newExam) {
+            $newExam->pairs()->save($question->replicate());
+        });
+        $exam->pairsCodes->each(function ($question) use ($newExam) {
+            $newExam->pairsCodes()->save($question->replicate());
+        });
+        $exam->blankLines->each(function ($question) use ($newExam) {
+            $newExam->blankLines()->save($question->replicate());
+        });
+
+        return back()
+            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => __('duplicado')]));
     }
 }
