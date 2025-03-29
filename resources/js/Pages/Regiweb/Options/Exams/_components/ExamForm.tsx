@@ -133,12 +133,65 @@ export function ExamForm({
             value={data.activo}
             onChange={(value) => setData("activo", value)}
           />
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
+            {exam && <DuplicateExamForm courses={courses} exam={exam} />}
             <SubmitButton isSubmitting={processing}>
               {exam
                 ? t("Actualizar :label", { label: t("Examen").toLowerCase() })
                 : t("Crear :label", { label: t("Examen").toLowerCase() })}
             </SubmitButton>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function DuplicateExamForm({ courses, exam }: { courses: Course[]; exam: Exam }) {
+  const { t } = useTranslations();
+  const { data, setData, processing, transform, post, put, errors } = useForm({
+    titulo: exam.titulo,
+    curso: exam.curso,
+  });
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(data);
+    post(route("regiweb.options.exams.duplicate", { exam: exam.id }));
+  }
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">{t("Duplicar")}</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t("Duplicar")}</DialogTitle>
+          <DialogDescription hidden></DialogDescription>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <FieldsGrid>
+            <InputField
+              label={t("Título")}
+              value={data.titulo}
+              onChange={(value) => setData("titulo", value)}
+              error={errors.titulo}
+            />
+            <SelectField
+              items={createSelectItemsFromArrayOfObjects(courses, {
+                separator: " - ",
+                value: "curso",
+                labels: ["curso", "descripcion"],
+              })}
+              label={t("Curso")}
+              value={data.curso}
+              onChange={(value) => setData("curso", value)}
+              error={errors.curso}
+            />
+          </FieldsGrid>
+          <div className="flex justify-end gap-2">
+            <SubmitButton isSubmitting={processing}>{t("Duplicar")}</SubmitButton>
           </div>
         </form>
       </DialogContent>
