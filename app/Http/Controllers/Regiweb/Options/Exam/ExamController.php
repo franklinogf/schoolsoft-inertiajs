@@ -10,6 +10,7 @@ use App\Http\Requests\Regiweb\Exam\UpdateExamRequest;
 use App\Http\Resources\CoursesResource;
 use App\Http\Resources\Exams\ExamResource;
 use App\Models\Exams\Exam;
+use App\Models\Teacher;
 use App\Rules\TeacherCourse;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Request;
@@ -19,9 +20,9 @@ class ExamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(#[CurrentUser()] $teacher)
+    public function index(#[CurrentUser] Teacher $user)
     {
-        $exams = $teacher->exams()
+        $exams = $user->exams()
             ->with([
                 'teacher',
                 'questions',
@@ -31,11 +32,10 @@ class ExamController extends Controller
                 'pairsCodes',
                 'blankLines',
             ])->orderByDesc('id')->get();
-        $courses = $teacher->courses;
 
         return inertia('Regiweb/Options/Exams/Index', [
             'exams' => ExamResource::collection($exams),
-            'courses' => CoursesResource::collection($courses),
+            'courses' => CoursesResource::collection($user->courses),
         ]);
 
     }
@@ -43,9 +43,9 @@ class ExamController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreExamRequest $request, #[CurrentUser()] $teacher)
+    public function store(StoreExamRequest $request, #[CurrentUser] Teacher $user)
     {
-        $exam = $teacher->exams()->create($request->validated());
+        $exam = $user->exams()->create($request->validated());
 
         return to_route('regiweb.options.exams.edit', [
             'exam' => $exam,
@@ -56,7 +56,7 @@ class ExamController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Exam $exam, #[CurrentUser()] $teacher)
+    public function edit(Exam $exam, #[CurrentUser] Teacher $user)
     {
         $exam->load([
             'questions',
@@ -66,11 +66,10 @@ class ExamController extends Controller
             'pairsCodes',
             'blankLines',
         ]);
-        $courses = $teacher->courses;
 
         return inertia('Regiweb/Options/Exams/Edit', [
             'exam' => ExamResource::make($exam),
-            'courses' => CoursesResource::collection($courses),
+            'courses' => CoursesResource::collection($user->courses),
         ]);
     }
 
