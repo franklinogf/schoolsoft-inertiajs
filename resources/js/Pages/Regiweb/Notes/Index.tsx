@@ -71,7 +71,7 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
                 />
                 <SelectField
                   placeholder={t("Selecciona el trimestre")}
-                  value={data.trimester}
+                  value={data.trimester?.toString()}
                   onChange={(value) => setData("trimester", value)}
                   label={t("Trimestre")}
                   items={TRIMESTER_SELECT}
@@ -79,7 +79,7 @@ export default function Page({ auth: { user }, errors: pageErrors, students }: P
                 />
                 <SelectField
                   placeholder={t("Selecciona la página")}
-                  value={data.page}
+                  value={data.page?.toString()}
                   onChange={(value) => setData("page", value)}
                   label={t("Página")}
                   items={PAGES_SELECT}
