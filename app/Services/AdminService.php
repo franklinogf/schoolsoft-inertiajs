@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 class AdminService
 {
-    public static function getYear(): string
+    public function getYear(): string
     {
 
         return Cache::driver('database')->rememberForever(
@@ -15,7 +15,7 @@ class AdminService
             fn () => self::getPrimaryAdmin()?->year);
     }
 
-    public static function getPrimaryAdmin(): ?Admin
+    public function getPrimaryAdmin(): ?Admin
     {
         return Cache::driver('database')->rememberForever(
             'primary_admin',
