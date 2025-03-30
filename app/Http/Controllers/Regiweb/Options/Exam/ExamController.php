@@ -18,10 +18,6 @@ use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
-    public function __construct(
-        protected ExamService $examService
-    ) {}
-
     public function index(#[CurrentUser] Teacher $user)
     {
         $exams = $user->exams()
@@ -97,11 +93,9 @@ class ExamController extends Controller
             ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => strtolower(__('Eliminado'))]));
     }
 
-    public function toggle(Exam $exam)
+    public function toggle(Exam $exam, ExamService $examService)
     {
-        $exam->update([
-            'activo' => $exam->activo === YesNoEnum::YES->value ? YesNoEnum::NO->value : YesNoEnum::YES->value,
-        ]);
+        $examService->toggleVisibility($exam);
 
         return back()
             ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', [
@@ -109,14 +103,14 @@ class ExamController extends Controller
             ]));
     }
 
-    public function duplicate(Request $request, Exam $exam)
+    public function duplicate(Request $request, Exam $exam, ExamService $examService)
     {
         $validated = $request->validate([
             'titulo' => 'required|string|max:255',
             'curso' => new TeacherCourse,
         ]);
 
-        $this->examService->duplicate($exam, $validated['titulo'], $validated['curso']);
+        $examService->duplicate($exam, $validated['titulo'], $validated['curso']);
 
         return back()
             ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => strtolower(__('Duplicado'))]));

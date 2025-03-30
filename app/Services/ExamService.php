@@ -23,6 +23,15 @@ class ExamService
         return $sum;
     }
 
+    public function toggleVisibility(Exam $exam): Exam
+    {
+        $exam->update([
+            'activo' => $exam->activo === YesNoEnum::YES->value ? YesNoEnum::NO->value : YesNoEnum::YES->value,
+        ]);
+
+        return $exam;
+    }
+
     public function duplicate(Exam $exam, string $title, string $course): Exam
     {
 
