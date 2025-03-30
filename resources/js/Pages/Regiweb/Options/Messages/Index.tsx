@@ -31,14 +31,32 @@ export default function Page({
   mail: TeacherInbox | null;
   type: InboxType;
 }>) {
+  const { t } = useTranslations();
+  const { openConfirmation } = useConfirmationStore();
+
   function handleDeleteMail(id: number) {
-    router.delete(route("regiweb.options.messages.destroy", { type }), {
-      data: { id },
+    openConfirmation({
+      title: t("Eliminar mensaje"),
+      description: t("¿Está seguro de que desea eliminar este mensaje?"),
+      actionLabel: t("Eliminar"),
+      cancelLabel: t("Cancelar"),
+      actionVariant: "destructive",
+      onAction: () => {
+        router.delete(route("regiweb.options.messages.destroy", { inbox: id, type }));
+      },
     });
   }
 
   function handleRestoreMail(id: number) {
-    router.post(route("regiweb.options.messages.restore", { type }), { id });
+    openConfirmation({
+      title: t("Restaurar mensaje"),
+      description: t("¿Está seguro de que desea restaurar este mensaje?"),
+      actionLabel: t("Restaurar"),
+      cancelLabel: t("Cancelar"),
+      onAction: () => {
+        router.post(route("regiweb.options.messages.restore", { inbox: id, type }));
+      },
+    });
   }
 
   const sideBarNav: InboxSideBarMenu = {
@@ -147,6 +165,7 @@ function MailBody({ mail }: { mail: TeacherInbox | null }) {
                   <li key={attachment.id} className="bg-muted/50 hover:bg-muted/80">
                     <a
                       href={route("regiweb.options.messages.download", {
+                        inbox: mail.id,
                         media: attachment.id,
                       })}
                     >
@@ -261,15 +280,7 @@ function MailHeader({
           size="icon"
           className="size-8"
           onClick={() => {
-            openConfirmation({
-              title: t("Eliminar mensaje"),
-              description: t("¿Está seguro de que desea eliminar este mensaje?"),
-              actionLabel: t("Eliminar"),
-              cancelLabel: t("Cancelar"),
-              onAction: () => {
-                onDeleteMail(mail.id);
-              },
-            });
+            onDeleteMail(mail.id);
           }}
         >
           <Trash2Icon />

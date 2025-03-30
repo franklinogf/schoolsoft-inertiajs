@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\MediaStream;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MessagesController extends Controller
 {
@@ -155,11 +156,9 @@ class MessagesController extends Controller
         // return to_route('regiweb.options.messages.index')->with('success', 'Message sent successfully');
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, Inbox $inbox): RedirectResponse
     {
-        $id = $request->input('id');
         $type = $request->query('type', 'inbox');
-        $inbox = Inbox::findOrFail($id);
 
         /**
          * @var \App\Models\Teacher $teacher
@@ -176,11 +175,9 @@ class MessagesController extends Controller
         return to_route('regiweb.options.messages.index', ['type' => $type])->with('success', 'Message deleted successfully');
     }
 
-    public function restore(Request $request)
+    public function restore(Request $request, Inbox $inbox): RedirectResponse
     {
-        $id = $request->input('id');
         $type = $request->query('type', 'inbox');
-        $inbox = Inbox::findOrFail($id);
 
         /**
          * @var \App\Models\Teacher $teacher
@@ -194,10 +191,10 @@ class MessagesController extends Controller
                 ->updateExistingPivot($inbox->id, ['is_deleted' => false]);
         }
 
-        return to_route('regiweb.options.messages.index', ['type' => $type])->with('success', 'Message deleted successfully');
+        return to_route('regiweb.options.messages.index', ['type' => $type])->with('success', 'Message restored successfully');
     }
 
-    public function downloadAll(Inbox $inbox)
+    public function downloadAll(Inbox $inbox): MediaStream
     {
 
         $media = $inbox->getMedia(MediaCollectionEnum::INBOX_ATTACHMENT->value);
@@ -209,10 +206,10 @@ class MessagesController extends Controller
         return MediaStream::create($inbox->subject->lower()->snake().'.zip')->addMedia($media);
     }
 
-    public function download(Media $media)
+    public function download(Inbox $inbox, Media $media): Media
     {
-        Gate::allowIf(fn (Teacher $user) => $user->id === $media->model->sender_id
-        || $media->model->teachers()->where('receiver_id', $user->id)->exists()
+        Gate::allowIf(fn (Teacher $user) => $user->id === $inbox->sender_id
+        || $inbox->teachers()->where('receiver_id', $user->id)->exists()
         );
 
         return $media;

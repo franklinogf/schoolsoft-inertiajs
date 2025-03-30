@@ -191,15 +191,7 @@ function MailInbox({
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            openConfirmation({
-              title: t("Restaurar mensaje"),
-              description: t("¿Está seguro de que desea restaurar este mensaje?"),
-              actionLabel: t("Restaurar"),
-              cancelLabel: t("Cancelar"),
-              onAction: () => {
-                onRestoreMail(mail.id);
-              },
-            });
+            onRestoreMail(mail.id);
           }}
         >
           <ArchiveRestoreIcon />
@@ -212,15 +204,7 @@ function MailInbox({
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            openConfirmation({
-              title: t("Eliminar mensaje"),
-              description: t("¿Está seguro de que desea eliminar este mensaje?"),
-              actionLabel: t("Eliminar"),
-              cancelLabel: t("Cancelar"),
-              onAction: () => {
-                onDeleteMail(mail.id);
-              },
-            });
+            onDeleteMail(mail.id);
           }}
         >
           <Trash2Icon />
