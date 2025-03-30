@@ -8,6 +8,7 @@ import SubmitButton from "@/Components/forms/SubmitButton";
 import { Button } from "@/Components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -134,6 +135,9 @@ export function ExamForm({
             onChange={(value) => setData("activo", value)}
           />
           <div className="flex justify-end gap-2">
+            <DialogClose asChild>
+              <Button variant="outline">{t("Cancelar")}</Button>
+            </DialogClose>
             {exam && <DuplicateExamForm courses={courses} exam={exam} />}
             <SubmitButton isSubmitting={processing}>
               {exam
@@ -149,7 +153,7 @@ export function ExamForm({
 
 function DuplicateExamForm({ courses, exam }: { courses: Course[]; exam: Exam }) {
   const { t } = useTranslations();
-  const { data, setData, processing, transform, post, put, errors } = useForm({
+  const { data, setData, processing, post, errors } = useForm({
     titulo: exam.titulo,
     curso: exam.curso,
   });
@@ -157,13 +161,12 @@ function DuplicateExamForm({ courses, exam }: { courses: Course[]; exam: Exam })
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     e.stopPropagation();
-    console.log(data);
     post(route("regiweb.options.exams.duplicate", { exam: exam.id }));
   }
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">{t("Duplicar")}</Button>
+        <Button variant="secondary">{t("Duplicar")}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
