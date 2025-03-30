@@ -82,7 +82,7 @@ class ExamController extends Controller
         $exam->update($request->validated());
 
         return back()
-            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => __('actualizado')]));
+            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => strtolower(__('Actualizado'))]));
     }
 
     /**
@@ -93,7 +93,7 @@ class ExamController extends Controller
         $exam->delete();
 
         return back()
-            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => __('eliminado')]));
+            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => strtolower(__('Eliminado'))]));
     }
 
     public function toggle(Exam $exam)
@@ -104,7 +104,7 @@ class ExamController extends Controller
 
         return back()
             ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', [
-                'action' => $exam->activo === YesNoEnum::YES->value ? __('activado') : __('desactivado'),
+                'action' => $exam->activo === YesNoEnum::YES->value ? strtolower(__('Activado')) : strtolower(__('Desactivado')),
             ]));
     }
 
@@ -143,6 +143,6 @@ class ExamController extends Controller
         });
 
         return back()
-            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => __('duplicado')]));
+            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => strtolower(__('Duplicado'))]));
     }
 }
