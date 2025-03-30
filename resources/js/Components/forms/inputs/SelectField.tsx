@@ -13,7 +13,7 @@ import {
 import { Translations, useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
 import React, { useId } from "react";
-export type SelectItemType = { value: string | number; label: string };
+export type SelectItemType = { value: string; label: string };
 
 interface DefaultSelectFieldProps {
   required?: boolean;
