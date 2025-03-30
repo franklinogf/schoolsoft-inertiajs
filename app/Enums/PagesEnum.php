@@ -50,7 +50,7 @@ enum PagesEnum: string
         };
     }
 
-    public function trimesterInfo(TrimesterEnum $trimesterEnum): array
+    public function trimesterInfo(TrimesterEnum $trimesterEnum): array|string|null
     {
         return match ($this) {
             self::GRADES => match ($trimesterEnum) {
