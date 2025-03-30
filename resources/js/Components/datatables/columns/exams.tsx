@@ -81,7 +81,7 @@ export const examsListingColumns: ColumnDef<Exam>[] = [
             <DropdownMenuItem className="cursor-pointer" asChild>
               <Link
                 className="w-full"
-                method="patch"
+                method="post"
                 href={route("regiweb.options.exams.toggle", exam.id)}
               >
                 {exam.activo === YesNoEnum.YES ? <EyeOffIcon /> : <EyeIcon />}

@@ -60,7 +60,7 @@ Route::name('options.')->prefix('options')->group(function () {
         ->prefix('exams')
         ->group(function () {
 
-            Route::put('/{exam}/toggle', [ExamController::class, 'toggle'])
+            Route::post('/{exam}/toggle', [ExamController::class, 'toggle'])
                 ->name('toggle');
             Route::post('/{exam}/duplicate', [ExamController::class, 'duplicate'])->name('duplicate');
 
