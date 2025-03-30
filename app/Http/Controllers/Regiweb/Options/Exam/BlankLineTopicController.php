@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 
 class BlankLineTopicController extends Controller
 {
+    public function __construct(
+        protected ExamService $examService
+    ) {}
+
     public function store(Request $request, Exam $exam)
     {
         $validated = $request->validate([
@@ -31,7 +35,7 @@ class BlankLineTopicController extends Controller
             ...$answers,
         ]);
 
-        ExamService::updateExamTotal($exam);
+        $this->examService->updateExamTotal($exam);
 
         return back()
             ->with(
@@ -77,7 +81,7 @@ class BlankLineTopicController extends Controller
             ...$answers,
         ]);
 
-        ExamService::updateExamTotal($question->exam);
+        $this->examService->updateExamTotal($question->exam);
 
         return back()
             ->with(
@@ -90,7 +94,7 @@ class BlankLineTopicController extends Controller
     {
         $question->delete();
 
-        ExamService::updateExamTotal($question->exam);
+        $this->examService->updateExamTotal($question->exam);
 
         return back()
             ->with(

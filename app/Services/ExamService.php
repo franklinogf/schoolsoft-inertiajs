@@ -6,7 +6,7 @@ use App\Models\Exams\Exam;
 
 class ExamService
 {
-    public static function updateExamTotal(Exam $exam)
+    public function updateExamTotal(Exam $exam)
     {
         $relations = ['truesOrFalses', 'questions', 'selects', 'pairs', 'blankLines'];
         $exam->load($relations);

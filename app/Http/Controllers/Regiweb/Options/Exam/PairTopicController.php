@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 
 class PairTopicController extends Controller
 {
+    public function __construct(
+        protected ExamService $examService
+    ) {}
+
     public function store(Request $request, Exam $exam)
     {
         $validated = $request->validate([
@@ -22,7 +26,7 @@ class PairTopicController extends Controller
         ]);
 
         $exam->pairs()->create($validated);
-        ExamService::updateExamTotal($exam);
+        $this->examService->updateExamTotal($exam);
 
         return back()
             ->with(
@@ -59,7 +63,7 @@ class PairTopicController extends Controller
 
         $question->update($validated);
 
-        ExamService::updateExamTotal($question->exam);
+        $this->examService->updateExamTotal($question->exam);
 
         return back()
             ->with(
@@ -72,7 +76,7 @@ class PairTopicController extends Controller
     {
         $question->delete();
 
-        ExamService::updateExamTotal($question->exam);
+        $this->examService->updateExamTotal($question->exam);
 
         return back()
             ->with(
