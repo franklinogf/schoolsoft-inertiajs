@@ -71,7 +71,7 @@ class MessagesController extends Controller
         return inertia('Regiweb/Options/Messages/Index',
             [
                 'mails' => Inertia::defer(fn () => $mails),
-                'mail' => Inertia::defer(fn () => $mail),
+                'mail' => $mail,
                 'type' => $type,
             ]);
     }

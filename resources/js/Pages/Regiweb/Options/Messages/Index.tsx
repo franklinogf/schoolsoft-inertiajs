@@ -93,10 +93,7 @@ export default function Page({
                 <MailHeader mail={mail} onDeleteMail={handleDeleteMail} />
               </Deferred>
             </header>
-
-            <Deferred data="mail" fallback={<MailBodyFallback />}>
-              <MailBody mail={mail} />
-            </Deferred>
+            <MailBody mail={mail} />
           </SidebarInset>
         </SidebarProvider>
       </div>
@@ -292,19 +289,6 @@ function MailHeaderFallback() {
         <Skeleton className="h-8 w-8" />
         <Skeleton className="h-8 w-8" />
       </div>
-    </div>
-  );
-}
-
-function MailBodyFallback() {
-  return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
-      <Skeleton className="h-6 w-1/3" />
-      <Skeleton className="h-6 w-1/4" />
-      <Skeleton className="h-6 w-1/2" />
-      <Skeleton className="h-6 w-full" />
-      <Skeleton className="h-6 w-full" />
-      <Skeleton className="h-6 w-full" />
     </div>
   );
 }
