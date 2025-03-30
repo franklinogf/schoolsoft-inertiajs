@@ -30,23 +30,29 @@ class InboxService
         }
     }
 
-    private function send(Teacher|Student|Admin $sender, string $subject, string $message): Inbox
+    /**
+     * @param  array<string>  $attachments
+     */
+    private function send(Teacher|Student|Admin $sender, string $subject, string $message, array $attachments = []): Inbox
     {
         $inbox = $sender->sentMessages()->create([
             'subject' => $subject,
             'message' => $message,
         ]);
 
+        $this->addAttachments($inbox, $attachments);
+
         return $inbox;
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Student>  $to
+     * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Student>  $to.
+     * @param  array<string>  $attachments
      */
-    public function sendToStudents(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message): Inbox
+    public function sendToStudents(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message, array $attachments = []): Inbox
     {
 
-        $inbox = $this->send($sender, $subject, $message);
+        $inbox = $this->send($sender, $subject, $message, $attachments);
         $inbox->students()->attach($to);
 
         return $inbox;
@@ -54,10 +60,11 @@ class InboxService
 
     /**
      * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Teacher>  $to
+     * @param  array<string>  $attachments
      */
-    public function sendToTeachers(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message): Inbox
+    public function sendToTeachers(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message, array $attachments = []): Inbox
     {
-        $inbox = $this->send($sender, $subject, $message);
+        $inbox = $this->send($sender, $subject, $message, $attachments);
         $inbox->teachers()->attach($to);
 
         return $inbox;
@@ -65,10 +72,11 @@ class InboxService
 
     /**
      * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Admin>  $to
+     * @param  array<string>  $attachments
      */
-    public function sendToAdmins(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message): Inbox
+    public function sendToAdmins(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message, array $attachments = []): Inbox
     {
-        $inbox = $this->send($sender, $subject, $message);
+        $inbox = $this->send($sender, $subject, $message, $attachments);
         $inbox->admins()->attach($to);
 
         return $inbox;

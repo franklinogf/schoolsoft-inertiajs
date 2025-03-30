@@ -103,14 +103,13 @@ class MessagesController extends Controller
             ->whereIn('year.ss', $validated['students'])
             ->get();
 
-        $inbox = $inboxService->sendToStudents(
+        $inboxService->sendToStudents(
             $user,
             $students,
             $validated['subject'],
-            $validated['message']
+            $validated['message'],
+            $validated['files']
         );
-
-        $inboxService->addAttachments($inbox, $validated['files']);
 
         return to_route('regiweb.options.messages.index')->with('success', 'Message sent successfully');
     }

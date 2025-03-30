@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Enums\MediaCollectionEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class InboxResource extends JsonResource
 {
@@ -32,7 +33,7 @@ class InboxResource extends JsonResource
             'datetime_human_readeable' => $this->created_at->diffForHumans(),
             'date' => $this->created_at->format('Y-m-d'),
             'time' => $this->created_at->format('H:i:s'),
-            'attachments' => $this->getMedia(MediaCollectionEnum::INBOX_ATTACHMENT->value)->map(fn ($media) => [
+            'attachments' => $this->getMedia(MediaCollectionEnum::INBOX_ATTACHMENT->value)->map(fn (Media $media) => [
                 'id' => $media->id,
                 'name' => $media->name,
                 'url' => $media->getUrl(),
