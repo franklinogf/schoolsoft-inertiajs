@@ -10,6 +10,8 @@ use App\Models\Inbox;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\TemporaryFile;
+use App\Services\InboxService;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -87,7 +89,7 @@ class MessagesController extends Controller
             ]);
     }
 
-    public function store(Request $request, string $course)
+    public function store(Request $request, string $course, #[CurrentUser] Teacher $user, InboxService $inboxService)
     {
         $validated = $request->validate([
             'subject' => 'required|string',
@@ -96,35 +98,19 @@ class MessagesController extends Controller
             'files' => ['array'],
             'files.*' => ['string'],
         ]);
-        $folders = $validated['files'];
-
-        /**
-         * @var \App\Models\Teacher $teacher         *
-         */
-        $teacher = auth()->user();
-
-        /**
-         * @var \App\Models\Inbox $inbox
-         */
-        $inbox = $teacher->sentMessages()->create([
-            'subject' => $validated['subject'],
-            'message' => $validated['message'],
-        ]);
-        $temporaryFiles = tenancy()->central(function () use ($folders) {
-            return TemporaryFile::whereIn('folder', $folders)->get();
-        });
-
-        foreach ($temporaryFiles as $temporaryFile) {
-            $inbox->addMediaFromDisk(tmp_path($temporaryFile->folder, $temporaryFile->filename), 'local')
-                ->toMediaCollection(MediaCollectionEnum::INBOX_ATTACHMENT->value);
-            $temporaryFile->delete();
-        }
 
         $students = Student::ofCourse($course)
             ->whereIn('year.ss', $validated['students'])
             ->get();
 
-        $inbox->students()->attach($students);
+        $inbox = $inboxService->sendToStudents(
+            $user,
+            $students,
+            $validated['subject'],
+            $validated['message']
+        );
+
+        $inboxService->addAttachments($inbox, $validated['files']);
 
         return to_route('regiweb.options.messages.index')->with('success', 'Message sent successfully');
     }
@@ -144,7 +130,7 @@ class MessagesController extends Controller
         $teacher = auth()->user();
 
         $reply = $teacher->sentMessages()->create([
-            'subject' => 'Re: '.$inbox->subject,
+            'subject' => "Re: {$inbox->subject}",
             'message' => $validated['message'],
             'parent_id' => $inbox->id,
         ]);
