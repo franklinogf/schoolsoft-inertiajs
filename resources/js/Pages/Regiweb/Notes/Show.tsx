@@ -39,8 +39,8 @@ interface PageProps {
   isPercent: boolean;
   canEnd: boolean;
   hasEnded: boolean;
-  amountOfGrades: number | null;
-  columns: string[] | null;
+  amountOfGrades: number;
+  columns: string[];
   gradesValues: GradesValues | null;
   gradesValuesId: number | null;
 }
@@ -180,7 +180,7 @@ export default function Page({
           </OptionsContext.Provider>
         </Deferred>
       </section>
-      {values && gradesValuesId && amountOfGrades && (
+      {values && gradesValuesId && amountOfGrades > 0 && (
         <section className="mt-8">
           <ValuesForm
             values={values}
