@@ -94,7 +94,7 @@ function FormModal({ examId, item }: { examId: number; item?: SelectTopic }) {
 
   const options: SelectItemType[] = Array.from({ length: amountOfanswers }, (_, i) => ({
     label: `${t(`Respuesta`)} ${i + 1}`,
-    value: i + 1,
+    value: (i + 1).toString(),
   }));
 
   return (
