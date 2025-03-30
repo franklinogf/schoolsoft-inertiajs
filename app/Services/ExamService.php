@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
+use App\Enums\YesNoEnum;
 use App\Models\Exams\Exam;
 
 class ExamService
 {
-    public function updateExamTotal(Exam $exam)
+    public function updateTotal(Exam $exam): int
     {
         $relations = ['truesOrFalses', 'questions', 'selects', 'pairs', 'blankLines'];
         $exam->load($relations);
@@ -18,5 +19,41 @@ class ExamService
         $exam->update([
             'valor' => $sum,
         ]);
+
+        return $sum;
+    }
+
+    public function duplicate(Exam $exam, string $title, string $course): Exam
+    {
+
+        $newExam = $exam->replicate()->fill(
+            [
+                'titulo' => $title,
+                'curso' => $course,
+                'activo' => YesNoEnum::NO->value,
+            ]);
+
+        $newExam->save();
+
+        $exam->questions->each(function ($question) use ($newExam) {
+            $newExam->questions()->save($question->replicate());
+        });
+        $exam->truesOrFalses->each(function ($question) use ($newExam) {
+            $newExam->truesOrFalses()->save($question->replicate());
+        });
+        $exam->selects->each(function ($question) use ($newExam) {
+            $newExam->selects()->save($question->replicate());
+        });
+        $exam->pairs->each(function ($question) use ($newExam) {
+            $newExam->pairs()->save($question->replicate());
+        });
+        $exam->pairsCodes->each(function ($question) use ($newExam) {
+            $newExam->pairsCodes()->save($question->replicate());
+        });
+        $exam->blankLines->each(function ($question) use ($newExam) {
+            $newExam->blankLines()->save($question->replicate());
+        });
+
+        return $newExam;
     }
 }

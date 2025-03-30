@@ -26,7 +26,7 @@ class PairTopicController extends Controller
         ]);
 
         $exam->pairs()->create($validated);
-        $this->examService->updateExamTotal($exam);
+        $this->examService->updateTotal($exam);
 
         return back()
             ->with(
@@ -63,7 +63,7 @@ class PairTopicController extends Controller
 
         $question->update($validated);
 
-        $this->examService->updateExamTotal($question->exam);
+        $this->examService->updateTotal($question->exam);
 
         return back()
             ->with(
@@ -76,7 +76,7 @@ class PairTopicController extends Controller
     {
         $question->delete();
 
-        $this->examService->updateExamTotal($question->exam);
+        $this->examService->updateTotal($question->exam);
 
         return back()
             ->with(

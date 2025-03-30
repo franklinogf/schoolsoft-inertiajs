@@ -25,7 +25,7 @@ class QuestionTopicController extends Controller
         ]);
 
         $exam->questions()->create($validated);
-        $this->examService->updateExamTotal($exam);
+        $this->examService->updateTotal($exam);
 
         return back()
             ->with(
@@ -62,7 +62,7 @@ class QuestionTopicController extends Controller
 
         $question->update($validated);
 
-        $this->examService->updateExamTotal($question->exam);
+        $this->examService->updateTotal($question->exam);
 
         return back()
             ->with(
@@ -75,7 +75,7 @@ class QuestionTopicController extends Controller
     {
         $question->delete();
 
-        $this->examService->updateExamTotal($question->exam);
+        $this->examService->updateTotal($question->exam);
 
         return back()
             ->with(

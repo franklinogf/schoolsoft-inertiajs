@@ -35,7 +35,7 @@ class BlankLineTopicController extends Controller
             ...$answers,
         ]);
 
-        $this->examService->updateExamTotal($exam);
+        $this->examService->updateTotal($exam);
 
         return back()
             ->with(
@@ -81,7 +81,7 @@ class BlankLineTopicController extends Controller
             ...$answers,
         ]);
 
-        $this->examService->updateExamTotal($question->exam);
+        $this->examService->updateTotal($question->exam);
 
         return back()
             ->with(
@@ -94,7 +94,7 @@ class BlankLineTopicController extends Controller
     {
         $question->delete();
 
-        $this->examService->updateExamTotal($question->exam);
+        $this->examService->updateTotal($question->exam);
 
         return back()
             ->with(

@@ -12,14 +12,16 @@ use App\Http\Resources\Exams\ExamResource;
 use App\Models\Exams\Exam;
 use App\Models\Teacher;
 use App\Rules\TeacherCourse;
+use App\Services\ExamService;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(
+        protected ExamService $examService
+    ) {}
+
     public function index(#[CurrentUser] Teacher $user)
     {
         $exams = $user->exams()
@@ -114,32 +116,7 @@ class ExamController extends Controller
             'curso' => new TeacherCourse,
         ]);
 
-        $newExam = $exam->replicate()->fill(
-            [
-                'titulo' => $validated['titulo'],
-                'curso' => $validated['curso'],
-                'activo' => YesNoEnum::NO->value,
-            ]);
-        $newExam->save();
-
-        $exam->questions->each(function ($question) use ($newExam) {
-            $newExam->questions()->save($question->replicate());
-        });
-        $exam->truesOrFalses->each(function ($question) use ($newExam) {
-            $newExam->truesOrFalses()->save($question->replicate());
-        });
-        $exam->selects->each(function ($question) use ($newExam) {
-            $newExam->selects()->save($question->replicate());
-        });
-        $exam->pairs->each(function ($question) use ($newExam) {
-            $newExam->pairs()->save($question->replicate());
-        });
-        $exam->pairsCodes->each(function ($question) use ($newExam) {
-            $newExam->pairsCodes()->save($question->replicate());
-        });
-        $exam->blankLines->each(function ($question) use ($newExam) {
-            $newExam->blankLines()->save($question->replicate());
-        });
+        $this->examService->duplicate($exam, $validated['titulo'], $validated['curso']);
 
         return back()
             ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => strtolower(__('Duplicado'))]));
