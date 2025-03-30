@@ -15,7 +15,7 @@ import { PAGES, TRIMESTERS } from "@/Constants";
 import { useTranslations } from "@/hooks/translations";
 import { Deferred } from "@inertiajs/react";
 import { Info } from "lucide-react";
-import { AttendaceTableForm } from "./_components/AttendanceTableForm";
+import { AttendanceTableForm } from "./_components/AttendanceTableForm";
 import { DefaultTableForm } from "./_components/DefaultTableForm";
 import { ExamForm } from "./_components/ExamTableForm";
 import { TableFormFallback } from "./_components/TableFormFallback";
@@ -173,7 +173,7 @@ export default function Page({
                 students={studentsGrades as StudentsDefaultGrades[]}
               />
             ) : page === PagesEnum.CONDUCT_ATTENDANCE ? (
-              <AttendaceTableForm students={studentsGrades as StudentsAttendanceGrades[]} />
+              <AttendanceTableForm students={studentsGrades as StudentsAttendanceGrades[]} />
             ) : page === PagesEnum.FINAL_EXAM ? (
               <ExamForm students={studentsGrades as StudentsExamGrades[]} />
             ) : null}
