@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 class InboxService
 {
+    /**
+     * @param  array<string>  $folders
+     */
     public function addAttachments(Inbox $inbox, array $folders): void
     {
         if (empty($folders)) {
@@ -37,11 +40,36 @@ class InboxService
         return $inbox;
     }
 
+    /**
+     * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Student>  $to
+     */
     public function sendToStudents(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message): Inbox
     {
 
         $inbox = $this->send($sender, $subject, $message);
         $inbox->students()->attach($to);
+
+        return $inbox;
+    }
+
+    /**
+     * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Teacher>  $to
+     */
+    public function sendToTeachers(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message): Inbox
+    {
+        $inbox = $this->send($sender, $subject, $message);
+        $inbox->teachers()->attach($to);
+
+        return $inbox;
+    }
+
+    /**
+     * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Admin>  $to
+     */
+    public function sendToAdmins(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message): Inbox
+    {
+        $inbox = $this->send($sender, $subject, $message);
+        $inbox->admins()->attach($to);
 
         return $inbox;
     }
