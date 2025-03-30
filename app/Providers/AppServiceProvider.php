@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
         JsonResource::withoutWrapping();
 
-        App::singleton('year', fn () => AdminService::getYear());
+        App::singleton('year', fn () => (new AdminService)->getYear());
 
         Password::defaults(function () {
             return Password::min(8)->letters()
