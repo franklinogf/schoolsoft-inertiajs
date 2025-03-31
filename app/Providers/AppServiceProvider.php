@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Services\AdminService;
-use Carbon\CarbonInterface;
+use Carbon\CarbonImmutable;
 use Date;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -53,7 +53,7 @@ final class AppServiceProvider extends ServiceProvider
 
     private function configureDates(): void
     {
-        Date::use(CarbonInterface::class);
+        Date::use(CarbonImmutable::class);
     }
 
     private function configureModels(): void
