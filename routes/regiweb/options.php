@@ -21,16 +21,17 @@ Route::name('options.')->prefix('options')->group(function () {
             Route::controller(MessagesController::class)
                 ->prefix('inbox')
                 ->group(function () {
-                    Route::get('/new/{course?}', 'create')->name('create');
-                    Route::post('/new/{course}', 'store')->name('store');
+                    Route::get('new/{course?}', 'create')->name('create');
+                    Route::post('new/{course}', 'store')->name('store');
 
-                    Route::delete('/message/{inbox}', 'destroy')->name('destroy');
-                    Route::post('/message/{inbox}', 'restore')->name('restore');
-
-                    Route::get('/{inbox?}', 'index')->name('index');
-                    Route::post('/{inbox}/replay', 'reply')->name('reply');
-                    Route::get('/{inbox}/media/download', 'downloadAll')->name('downloadAll');
-                    Route::get('/{inbox}/media/download/{media}', 'download')->name('download');
+                    Route::get('{inbox?}', 'index')->name('index');
+                    Route::prefix('{inbox}')->group(function () {
+                        Route::delete('delete', 'destroy')->name('destroy');
+                        Route::post('restore', 'restore')->name('restore');
+                        Route::post('replay', 'reply')->name('reply');
+                        Route::get('media/download', 'downloadAll')->name('downloadAll');
+                        Route::get('media/download/{media}', 'download')->name('download');
+                    });
                 });
 
             Route::name('email.')
@@ -39,7 +40,7 @@ Route::name('options.')->prefix('options')->group(function () {
                 ->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::post('/', 'send')->name('send');
-                    Route::get('/form', 'form')->name('form');
+                    Route::get('form', 'form')->name('form');
                 });
 
             Route::name('sms.')
@@ -48,7 +49,7 @@ Route::name('options.')->prefix('options')->group(function () {
                 ->group(function () {
                     Route::get('/', 'index')->name('index');
                     Route::post('/', 'send')->name('send');
-                    Route::get('/form', 'form')->name('form');
+                    Route::get('form', 'form')->name('form');
                 });
         });
 

@@ -21,37 +21,39 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MessagesController extends Controller
 {
-    public function index(?Inbox $inbox = null)
+    public function index(?Inbox $inbox, #[CurrentUser] Teacher $user)
     {
+        if ($inbox !== null) {
+            Gate::allowIf(
+                $inbox->sender()->is($user)
+                || $inbox->teachers()->where('receiver_id', $user->id)
+                    ->exists()
+            );
 
+        }
         $type = request()->query('type', 'inbox');
 
         if (! in_array($type, ['inbox', 'sent', 'trash'])) {
             $type = 'inbox';
         }
 
-        /**
-         * @var \App\Models\Teacher $teacher
-         */
-        $teacher = auth()->user();
-
         if ($type === 'inbox') {
-            $mails = $teacher->receivedMessages()
+            $mails = $user->receivedMessages()
                 ->whereNull('parent_id')
                 ->wherePivot('is_deleted', false)
                 ->get();
         } elseif ($type === 'sent') {
-            $mails = $teacher->sentMessages()
+            $mails = $user->sentMessages()
                 ->whereNull('parent_id')
                 ->where('is_deleted', false)
                 ->get();
         } else {
 
-            $mails = $teacher->receivedMessages()
+            $mails = $user->receivedMessages()
                 ->whereNull('parent_id')
                 ->wherePivot('is_deleted', true)
                 ->get()->merge(
-                    $teacher->sentMessages()
+                    $user->sentMessages()
                         ->whereNull('parent_id')
                         ->where('is_deleted', true)
                         ->get()
@@ -63,8 +65,8 @@ class MessagesController extends Controller
         $mail = $inbox ? new InboxResource($inbox) : null;
 
         if ($mail) {
-            if ($inbox->sender_id !== $teacher->id) {
-                $teacher->receivedMessages()
+            if ($inbox->sender_id !== $user->id) {
+                $user->receivedMessages()
                     ->updateExistingPivot($inbox->id, ['is_read' => true]);
             }
         }
