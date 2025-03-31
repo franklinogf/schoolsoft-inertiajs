@@ -10,12 +10,11 @@ class TenantAwareUrlGenerator extends DefaultUrlGenerator
     /*
      * Get the path for the given media, relative to the root storage path.
      */
+    #[\Override]
     public function getUrl(): string
     {
         $url = tenant_file_url($this->getPathRelativeToRoot());
 
-        $url = $this->versionUrl($url);
-
-        return $url;
+        return $this->versionUrl($url);
     }
 }

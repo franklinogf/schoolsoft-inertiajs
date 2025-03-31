@@ -8,7 +8,7 @@ trait HtmlPDF
 
     private $ALIGN = '';
 
-    public function WriteHTML($html)
+    public function WriteHTML($html): void
     {
         // HTML parser
         $html = str_replace("\n", ' ', $html);
@@ -24,28 +24,26 @@ trait HtmlPDF
                 } else {
                     $this->Write(5, $e);
                 }
-            } else {
+            } elseif ($e[0] === '/') {
                 // Tag
-                if ($e[0] == '/') {
-                    $this->CloseTag(strtoupper(substr($e, 1)));
-                } else {
-                    // Extract properties
-                    $a2 = explode(' ', $e);
-                    $tag = strtoupper(array_shift($a2));
-                    $prop = [];
+                $this->CloseTag(strtoupper(substr($e, 1)));
+            } else {
+                // Extract properties
+                $a2 = explode(' ', $e);
+                $tag = strtoupper(array_shift($a2));
+                $prop = [];
 
-                    foreach ($a2 as $v) {
-                        if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $a3)) {
-                            $prop[strtoupper($a3[1])] = $a3[2];
-                        }
+                foreach ($a2 as $v) {
+                    if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $a3)) {
+                        $prop[strtoupper($a3[1])] = $a3[2];
                     }
-                    $this->OpenTag($tag, $prop);
                 }
+                $this->OpenTag($tag, $prop);
             }
         }
     }
 
-    public function OpenTag($tag, $prop)
+    public function OpenTag($tag, $prop): void
     {
         // Opening tag
         if ($tag == 'B' || $tag == 'I' || $tag == 'U') {
@@ -65,11 +63,7 @@ trait HtmlPDF
         }
 
         if ($tag == 'HR') {
-            if (! empty($prop['WIDTH'])) {
-                $Width = $prop['WIDTH'];
-            } else {
-                $Width = $this->w - $this->lMargin - $this->rMargin;
-            }
+            $Width = empty($prop['WIDTH']) ? $this->w - $this->lMargin - $this->rMargin : $prop['WIDTH'];
             $this->Ln(2);
             $x = $this->GetX();
             $y = $this->GetY();
@@ -80,7 +74,7 @@ trait HtmlPDF
         }
     }
 
-    public function CloseTag($tag)
+    public function CloseTag($tag): void
     {
         // Closing tag
         if ($tag == 'B' || $tag == 'I' || $tag == 'U') {
@@ -96,7 +90,7 @@ trait HtmlPDF
         }
     }
 
-    public function SetStyle($tag, $enable)
+    public function SetStyle($tag, $enable): void
     {
         // Modify style and select corresponding font
         $this->{$tag} += ($enable ? 1 : -1);
@@ -110,7 +104,7 @@ trait HtmlPDF
         $this->SetFont('', $style);
     }
 
-    public function PutLink($URL, $txt)
+    public function PutLink($URL, $txt): void
     {
         // Put a hyperlink
         $this->SetTextColor(0, 0, 255);

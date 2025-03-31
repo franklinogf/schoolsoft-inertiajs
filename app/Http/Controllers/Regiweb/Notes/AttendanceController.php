@@ -54,15 +54,11 @@ class AttendanceController extends Controller
             ])->get();
         }
 
-        $studentsAttendances = $students->map(function (Student $student) use ($initialDate, $initialSubject, $initialGrade) {
+        $studentsAttendances = $students->map(function (Student $student) use ($initialDate, $initialSubject, $initialGrade): array {
             $attendance = $student->attendances()
                 ->whereDate('fecha', $initialDate)
-                ->when($initialGrade !== null, function ($query) use ($initialGrade) {
-                    return $query->where('grado', $initialGrade);
-                })
-                ->when($initialSubject !== null, function ($query) use ($initialSubject) {
-                    return $query->where('curso', $initialSubject);
-                })
+                ->when($initialGrade !== null, fn($query) => $query->where('grado', $initialGrade))
+                ->when($initialSubject !== null, fn($query) => $query->where('curso', $initialSubject))
                 ->first();
 
             return [
@@ -74,15 +70,7 @@ class AttendanceController extends Controller
         });
 
         return inertia('Regiweb/Notes/AttendanceEntry',
-            compact(
-                'attendanceOption',
-                'initialDate',
-                'studentsAttendances',
-                'grades',
-                'subjects',
-                'initialGrade',
-                'initialSubject'
-            )
+            ['attendanceOption' => $attendanceOption, 'initialDate' => $initialDate, 'studentsAttendances' => $studentsAttendances, 'grades' => $grades, 'subjects' => $subjects, 'initialGrade' => $initialGrade, 'initialSubject' => $initialSubject]
         );
     }
 

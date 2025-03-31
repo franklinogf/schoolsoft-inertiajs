@@ -138,15 +138,13 @@ class RegiwebNotesController extends Controller
     //     return 0;
     // }
 
-    private function findValueFor($table, $course, $ss): ?object
+    private function findValueFor(string $table, string $course, $ss): ?object
     {
-        $data = DB::table($table)->where([
+        return DB::table($table)->where([
             ['curso', $course],
             ['ss', $ss],
             ['year', $this->year],
         ])->first();
-
-        return $data;
     }
 
     // private function findValue($table, $course, $ss, $column): string
@@ -177,16 +175,14 @@ class RegiwebNotesController extends Controller
     {
         $year = app('year');
         $table = $page->table();
-
         if ($page === PagesEnum::CONDUCT_ATTENDANCE) {
             $trimesterInfo = $page->trimesterInfo($trimester);
-
             return StudentGrade::fromTable($table)
                 ->where([
                     ['curso', $course],
                     ['year', $year],
                 ])->orderBy('apellidos')
-                ->get()->map(fn (StudentGrade $student) => [
+                ->get()->map(fn (StudentGrade $student): array => [
                     'id' => $student->aa,
                     'nombre' => $student->nombre,
                     'apellidos' => $student->apellidos,
@@ -196,16 +192,16 @@ class RegiwebNotesController extends Controller
                     'demerits' => ['value' => $student->{$trimesterInfo[3]}, 'column' => $trimesterInfo[3]],
                     'changed' => false,
                 ]);
+        }
 
-        } elseif ($page === PagesEnum::FINAL_EXAM) {
+        if ($page === PagesEnum::FINAL_EXAM) {
             $trimesterInfo = $page->trimesterInfo($trimester);
-
             return StudentGrade::fromTable($table)
                 ->where([
                     ['curso', $course],
                     ['year', $year],
                 ])->orderBy('apellidos')
-                ->get()->map(fn (StudentGrade $student) => [
+                ->get()->map(fn (StudentGrade $student): array => [
                     'id' => $student->aa,
                     'nombre' => $student->nombre,
                     'apellidos' => $student->apellidos,
@@ -218,17 +214,17 @@ class RegiwebNotesController extends Controller
             ->where([
                 ['curso', $course],
                 ['year', $year],
-            ])->when($page === PagesEnum::SUMMER_GRADES, function ($query) {
+            ])->when($page === PagesEnum::SUMMER_GRADES, function ($query): void {
                 $query->where('verano', 2);
             })->orderBy('apellidos')
-            ->get()->map(function (StudentGrade $student) use ($trimester, $course, $page) {
+            ->get()->map(function (StudentGrade $student) use ($trimester, $course, $page): array {
                 $grades = [];
                 $index = 1;
                 $gradesNumbers = $page->gradesRange($trimester);
 
                 if ($gradesNumbers !== null) {
                     for ($i = $gradesNumbers[0]; $i <= $gradesNumbers[1]; $i++) {
-                        $grades["nota{$index}"]['value'] = trim($student->{"not{$i}"});
+                        $grades["nota{$index}"]['value'] = trim((string) $student->{"not{$i}"});
                         $grades["nota{$index}"]['column'] = "not{$i}";
                         $index++;
                     }
@@ -254,7 +250,7 @@ class RegiwebNotesController extends Controller
                     'nombre' => $student->nombre,
                     'apellidos' => $student->apellidos,
                     'notas' => $grades,
-                    'total' => trim($student->{$page->totalGradeColumn($trimester)}),
+                    'total' => trim((string) $student->{$page->totalGradeColumn($trimester)}),
                     'tdia' => $tdia,
                     'tlib' => $tlib,
                     'pcor' => $pcor,

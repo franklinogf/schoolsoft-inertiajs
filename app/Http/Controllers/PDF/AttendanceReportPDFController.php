@@ -25,14 +25,14 @@ class AttendanceReportPDFController extends Controller
         $this->year = app('year');
     }
 
-    public function report(Request $request)
+    public function report(Request $request): void
     {
         $validated = $request->validate([
             'course' => ['required', 'string'],
             'trimester' => ['required', Rule::enum(TrimesterEnum::class)],
         ]);
 
-        [$year1,$year2] = explode('-', $this->year);
+        [$year1,$year2] = explode('-', (string) $this->year);
 
         $trimesterValue = [
             TrimesterEnum::FIRST_TRIMESTER->value => ['1', '2', '10'],
@@ -118,7 +118,7 @@ class AttendanceReportPDFController extends Controller
 
     }
 
-    public function dailyReport(Request $request)
+    public function dailyReport(Request $request): void
     {
         $validated = $request->validate([
             'initialDate' => ['required', 'date:Y-m-d'],

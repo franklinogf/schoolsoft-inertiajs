@@ -16,6 +16,7 @@ class ConfigurationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -24,6 +25,7 @@ class ConfigurationResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -44,6 +46,7 @@ class ConfigurationResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

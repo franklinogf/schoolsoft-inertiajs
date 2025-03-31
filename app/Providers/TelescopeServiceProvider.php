@@ -13,25 +13,48 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         Telescope::night();
 
         $this->hideSensitiveRequestDetails();
 
-        Telescope::filter(function (IncomingEntry $entry) {
-            return app()->isLocal() ||
-                $entry->isReportableException() ||
-                $entry->isFailedRequest() ||
-                $entry->isFailedJob() ||
-                $entry->isScheduledTask() ||
-                $entry->isSlowQuery() ||
-                $entry->isEvent() ||
-                $entry->isDump() ||
-                $entry->isLog() ||
-                $entry->type === EntryType::JOB ||
-                $entry->type === EntryType::MAIL ||
-                $entry->hasMonitoredTag();
+        Telescope::filter(function (IncomingEntry $entry): bool {
+            if (app()->isLocal()) {
+                return true;
+            }
+            if ($entry->isReportableException()) {
+                return true;
+            }
+            if ($entry->isFailedRequest()) {
+                return true;
+            }
+            if ($entry->isFailedJob()) {
+                return true;
+            }
+            if ($entry->isScheduledTask()) {
+                return true;
+            }
+            if ($entry->isSlowQuery()) {
+                return true;
+            }
+            if ($entry->isEvent()) {
+                return true;
+            }
+            if ($entry->isDump()) {
+                return true;
+            }
+            if ($entry->isLog()) {
+                return true;
+            }
+            if ($entry->type === EntryType::JOB) {
+                return true;
+            }
+            if ($entry->type === EntryType::MAIL) {
+                return true;
+            }
+            return $entry->hasMonitoredTag();
         });
     }
 
@@ -58,12 +81,9 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      *
      * This gate determines who can access Telescope in non-local environments.
      */
+    #[\Override]
     protected function gate(): void
     {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                'franklinomarflores@gmail.com',
-            ]);
-        });
+        Gate::define('viewTelescope', fn($user): bool => $user->email == 'franklinomarflores@gmail.com');
     }
 }

@@ -65,8 +65,6 @@ use Illuminate\Support\Facades\Gate;
 
     protected function gate(): void
     {
-        Gate::define('viewTelescope', function () {
-            return true;
-        });
+        Gate::define('viewTelescope', fn(): true => true);
     }
 }

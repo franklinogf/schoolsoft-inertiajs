@@ -8,6 +8,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class SchoolCount extends BaseWidget
 {
+    #[\Override]
     protected function getStats(): array
     {
         $schoolCount = School::count();

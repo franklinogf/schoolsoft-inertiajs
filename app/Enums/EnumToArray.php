@@ -17,11 +17,11 @@ trait EnumToArray
 
     public static function asArray(): array
     {
-        if (empty(self::values())) {
+        if (self::values() === []) {
             return self::names();
         }
 
-        if (empty(self::names())) {
+        if (self::names() === []) {
             return self::values();
         }
 

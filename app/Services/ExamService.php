@@ -44,22 +44,22 @@ class ExamService
 
         $newExam->save();
 
-        $exam->questions->each(function ($question) use ($newExam) {
+        $exam->questions->each(function ($question) use ($newExam): void {
             $newExam->questions()->save($question->replicate());
         });
-        $exam->truesOrFalses->each(function ($question) use ($newExam) {
+        $exam->truesOrFalses->each(function ($question) use ($newExam): void {
             $newExam->truesOrFalses()->save($question->replicate());
         });
-        $exam->selects->each(function ($question) use ($newExam) {
+        $exam->selects->each(function ($question) use ($newExam): void {
             $newExam->selects()->save($question->replicate());
         });
-        $exam->pairs->each(function ($question) use ($newExam) {
+        $exam->pairs->each(function ($question) use ($newExam): void {
             $newExam->pairs()->save($question->replicate());
         });
-        $exam->pairsCodes->each(function ($question) use ($newExam) {
+        $exam->pairsCodes->each(function ($question) use ($newExam): void {
             $newExam->pairsCodes()->save($question->replicate());
         });
-        $exam->blankLines->each(function ($question) use ($newExam) {
+        $exam->blankLines->each(function ($question) use ($newExam): void {
             $newExam->blankLines()->save($question->replicate());
         });
 

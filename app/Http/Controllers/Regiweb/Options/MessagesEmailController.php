@@ -24,7 +24,7 @@ class MessagesEmailController extends Controller
         $selected = request()->query('selected', 'students');
 
         return inertia('Regiweb/Options/Messages/Email/Index',
-            compact('students', 'selected', 'courses', 'admins')
+            ['students' => $students, 'selected' => $selected, 'courses' => $courses, 'admins' => $admins]
         );
     }
 
@@ -52,7 +52,7 @@ class MessagesEmailController extends Controller
         $courses = $selected === 'courses' ? CoursesResource::collection(auth()->user()->courses()->whereIn('curso', $data)->get()) : null;
 
         return inertia('Regiweb/Options/Messages/Email/Form',
-            compact('students', 'selected', 'data', 'admins', 'courses')
+            ['students' => $students, 'selected' => $selected, 'data' => $data, 'admins' => $admins, 'courses' => $courses]
         );
     }
 
@@ -76,13 +76,9 @@ class MessagesEmailController extends Controller
 
         if ($selected === 'students') {
             // TODO
-            $tos = Student::whereIn('ss', $to)->get()->map(function ($student) {
-                return ['email' => $student->email, 'name' => "{$student->nombre} {$student->apellidos}"];
-            });
+            $tos = Student::whereIn('ss', $to)->get()->map(fn($student): array => ['email' => $student->email, 'name' => "{$student->nombre} {$student->apellidos}"]);
         } elseif ($selected === 'admin') {
-            $tos = Admin::whereIn('usuario', $to)->get()->map(function ($admin) {
-                return ['email' => $admin->correo, 'name' => $admin->director];
-            });
+            $tos = Admin::whereIn('usuario', $to)->get()->map(fn($admin): array => ['email' => $admin->correo, 'name' => $admin->director]);
         } elseif ($selected === 'courses') {
             // TODO
             $tos = auth()->user()->courses()->whereIn('curso', $to)->get();

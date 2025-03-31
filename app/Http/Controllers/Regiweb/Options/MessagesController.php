@@ -23,7 +23,7 @@ class MessagesController extends Controller
 {
     public function index(?Inbox $inbox, #[CurrentUser] Teacher $user)
     {
-        if ($inbox !== null) {
+        if ($inbox instanceof \App\Models\Inbox) {
             Gate::allowIf(
                 $inbox->sender()->is($user)
                 || $inbox->teachers()->where('receiver_id', $user->id)
@@ -62,13 +62,11 @@ class MessagesController extends Controller
 
         $mails = $mails->count() > 0 ? InboxResource::collection($mails) : [];
 
-        $mail = $inbox ? new InboxResource($inbox) : null;
+        $mail = $inbox instanceof \App\Models\Inbox ? new InboxResource($inbox) : null;
 
-        if ($mail) {
-            if ($inbox->sender_id !== $user->id) {
-                $user->receivedMessages()
-                    ->updateExistingPivot($inbox->id, ['is_read' => true]);
-            }
+        if ($mail instanceof \App\Http\Resources\InboxResource && $inbox->sender_id !== $user->id) {
+            $user->receivedMessages()
+                ->updateExistingPivot($inbox->id, ['is_read' => true]);
         }
 
         return inertia('Regiweb/Options/Messages/Index',
@@ -117,14 +115,13 @@ class MessagesController extends Controller
         return to_route('regiweb.options.messages.index')->with('success', 'Message sent successfully');
     }
 
-    public function reply(Request $request, Inbox $inbox)
+    public function reply(Request $request, Inbox $inbox): void
     {
         $validated = $request->validate([
             'message' => 'required|string',
             'files' => ['array'],
             'files.*' => ['string'],
         ]);
-        $folders = $validated['files'];
 
         /**
          * @var \App\Models\Teacher $teacher
@@ -201,7 +198,7 @@ class MessagesController extends Controller
 
         $media = $inbox->getMedia(MediaCollectionEnum::INBOX_ATTACHMENT->value);
 
-        Gate::allowIf(fn (Teacher $user) => $user->id === $inbox->sender_id
+        Gate::allowIf(fn (Teacher $user): bool => $user->id === $inbox->sender_id
         || $inbox->model->teachers()->where('receiver_id', $user->id)->exists()
         );
 
@@ -210,7 +207,7 @@ class MessagesController extends Controller
 
     public function download(Inbox $inbox, Media $media): Media
     {
-        Gate::allowIf(fn (Teacher $user) => $user->id === $inbox->sender_id
+        Gate::allowIf(fn (Teacher $user): bool => $user->id === $inbox->sender_id
         || $inbox->teachers()->where('receiver_id', $user->id)->exists()
         );
 

@@ -25,9 +25,10 @@ class School extends Tenant implements TenantWithDatabase
 
     protected $table = 'schools';
 
+    #[\Override]
     protected static function booted(): void
     {
-        static::creating(function (School $school) {
+        static::creating(function (School $school): void {
             if (! $school->tenancy_db_username) {
                 $school->tenancy_db_username = config('tenancy.database.prefix').$school->id;
             }

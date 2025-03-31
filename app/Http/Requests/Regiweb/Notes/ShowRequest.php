@@ -39,7 +39,7 @@ class ShowRequest extends FormRequest
             'trimester' => [
                 'required',
                 Rule::enum(TrimesterEnum::class)->when(
-                    fn () => $this->input('page') === PagesEnum::FINAL_EXAM->value,
+                    fn (): bool => $this->input('page') === PagesEnum::FINAL_EXAM->value,
                     fn ($rule) => $rule->only([TrimesterEnum::SECOND_TRIMESTER, TrimesterEnum::FOURTH_TRIMESTER])
                 ),
             ],

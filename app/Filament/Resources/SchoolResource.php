@@ -34,17 +34,16 @@ class SchoolResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
+    #[\Override]
     public static function form(Form $form): Form
     {
         $featuresToggles = Feature::all()
-            ->map(fn (Feature $feature) => Toggle::make(name: $feature->name)->default(false))->toArray();
+            ->map(fn (Feature $feature): \Filament\Forms\Components\Toggle => Toggle::make(name: $feature->name)->default(false))->toArray();
         $enviroments = Enviroment::all()->map(
-            function (Enviroment $enviroment) {
-                return FieldSet::make($enviroment->name)
-                    ->statePath($enviroment->name)
-                    ->columnSpanFull()
-                    ->schema([TextInput::make('value'), TextInput::make('other')]);
-            }
+            fn(Enviroment $enviroment): \Filament\Forms\Components\Fieldset => FieldSet::make($enviroment->name)
+                ->statePath($enviroment->name)
+                ->columnSpanFull()
+                ->schema([TextInput::make('value'), TextInput::make('other')])
         )->toArray();
 
         return $form
@@ -56,7 +55,7 @@ class SchoolResource extends Resource
                             TextInput::make('id')->label('School ID')->unique(ignoreRecord: true)
                                 ->required()
                                 ->live(onBlur: true)
-                                ->afterStateUpdated(function ($state, Set $set, string $operation) {
+                                ->afterStateUpdated(function ($state, Set $set, string $operation): void {
                                     if ($operation === 'edit') {
                                         return;
                                     }
@@ -128,13 +127,13 @@ class SchoolResource extends Resource
                                 TextInput::make('smtp_password')->label('Password')->required(),
                                 TextInput::make('smtp_encryption')->label('Encryption')->required(),
                             ]
-                        )->visible(fn ($state) => $state['default_mailer'] === 'smtp'),
+                        )->visible(fn ($state): bool => $state['default_mailer'] === 'smtp'),
 
                         Section::make('Resend')->schema(
                             [
                                 TextInput::make('resend_key')->label('Key')->required(),
                             ]
-                        )->visible(fn ($state) => $state['default_mailer'] === 'resend'),
+                        )->visible(fn ($state): bool => $state['default_mailer'] === 'resend'),
                     ]),
                     Tab::make('Theme')
                         ->statePath('theme')
@@ -165,9 +164,9 @@ class SchoolResource extends Resource
                                 ->schema(function () {
                                     $theme = collect(config('theme.themes'));
 
-                                    return $theme->map(function ($items, $mode) use ($theme) {
+                                    return $theme->map(function ($items, $mode) use ($theme): \Filament\Forms\Components\Fieldset {
                                         $colorItems = collect($items)
-                                            ->filter(fn ($_, $key) => ! in_array($key, ['radius']));
+                                            ->filter(fn ($_, $key): bool => $key != 'radius');
 
                                         return FieldSet::make(ucfirst($mode))
                                             ->columns(2)
@@ -175,15 +174,13 @@ class SchoolResource extends Resource
                                             ->statePath($mode)
                                             ->schema(
                                                 [
-                                                    ...$colorItems->map(function ($color, $key) {
-                                                        return static::colorPicker($key, ucfirst($key), $color);
-                                                    })->toArray(),
+                                                    ...$colorItems->map(fn($color, $key): \Filament\Forms\Components\ColorPicker => static::colorPicker($key, ucfirst($key), $color))->toArray(),
                                                     TextInput::make('radius')
                                                         ->label('Radius')
                                                         ->required()
                                                         ->hint('Example: 0.5rem, 10px')
                                                         ->endsWith(['rem', 'px'])
-                                                        ->afterStateHydrated(function (TextInput $component, $state) use ($theme, $mode) {
+                                                        ->afterStateHydrated(function (TextInput $component, $state) use ($theme, $mode): void {
                                                             if ($state === null) {
                                                                 $component->state($theme->get($mode)['radius']);
                                                             }
@@ -235,14 +232,14 @@ class SchoolResource extends Resource
 
         return Action::make('importTheme')
             ->slideOver()
-            ->fillForm(function (School $record) {
+            ->fillForm(function (School $record): array {
                 $themes = '';
                 collect(json_decode(json_encode($record->theme['themes'])))
-                    ->each(function ($items, string $mode) use (&$themes) {
+                    ->each(function ($items, string $mode) use (&$themes): void {
                         $head = $mode === 'light' ? ':root' : ".{$mode}";
                         $themes .= "{$head} { \r\n";
                         collect($items)
-                            ->each(function ($color, string $key) use (&$themes) {
+                            ->each(function ($color, string $key) use (&$themes): void {
                                 $formattedKey = static::formatThemeKeyToCSS($key);
                                 $themes .= "\t {$formattedKey}: ".static::formatThemeValueToCSS($color)."; \r\n";
                             });
@@ -261,12 +258,12 @@ class SchoolResource extends Resource
                     ->autosize(),
             ])
             ->modalSubmitActionLabel('Import Theme')
-            ->action(function (array $data, School $record, Livewire $livewire) {
+            ->action(function (array $data, School $record, Livewire $livewire): void {
 
                 $theme = $data['theme'];
                 $json = [];
 
-                collect(config('theme.themes'))->keys()->each(function ($mode) use ($theme, &$json) {
+                collect(config('theme.themes'))->keys()->each(function ($mode) use ($theme, &$json): void {
 
                     $replaceHead = $mode === 'light' ? ':root' : ".{$mode}";
 
@@ -277,7 +274,7 @@ class SchoolResource extends Resource
                     $eachCssVariable = explode(';', $cssVariables);
                     $css = [];
 
-                    foreach ($eachCssVariable as $key => $value) {
+                    foreach ($eachCssVariable as $value) {
                         if ($value === '') {
                             continue;
                         }
@@ -305,7 +302,7 @@ class SchoolResource extends Resource
             ->live(onBlur: true)
             ->label(Str::ucfirst(Str::lower(Str::headline($label))))
             ->hsl()
-            ->afterStateHydrated(function (ColorPicker $component, $state) use ($default) {
+            ->afterStateHydrated(function (ColorPicker $component, $state) use ($default): void {
                 if ($state === null) {
                     $component->state($default);
                 }
@@ -316,7 +313,7 @@ class SchoolResource extends Resource
                     ->label('')
                     ->icon('heroicon-o-clipboard')
                     ->tooltip('Paste default color')
-                    ->action(function (ColorPicker $component) use ($default) {
+                    ->action(function (ColorPicker $component) use ($default): void {
                         $component->state($default);
                     }))
 
@@ -324,6 +321,7 @@ class SchoolResource extends Resource
             ->required();
     }
 
+    #[\Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -361,6 +359,7 @@ class SchoolResource extends Resource
             ]);
     }
 
+    #[\Override]
     public static function getRelations(): array
     {
         return [
@@ -368,6 +367,7 @@ class SchoolResource extends Resource
         ];
     }
 
+    #[\Override]
     public static function getPages(): array
     {
         return [

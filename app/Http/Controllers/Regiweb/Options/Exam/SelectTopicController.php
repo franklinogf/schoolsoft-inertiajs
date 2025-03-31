@@ -29,7 +29,7 @@ class SelectTopicController extends Controller
         ]);
 
         $answers = collect($validated['respuestas'])
-            ->map(fn ($answer) => $answer)
+            ->map(fn ($answer): mixed => $answer)
             ->toArray();
 
         $exam->selects()->create([
@@ -79,7 +79,7 @@ class SelectTopicController extends Controller
         ]);
 
         $answers = collect($validated['respuestas'])
-            ->map(fn ($answer) => $answer)
+            ->map(fn ($answer): mixed => $answer)
             ->toArray();
 
         $question->update([

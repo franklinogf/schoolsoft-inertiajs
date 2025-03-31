@@ -24,6 +24,6 @@ class Date implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value === null ? '0000-00-00' : $value;
+        return $value ?? '0000-00-00';
     }
 }

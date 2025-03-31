@@ -26,10 +26,10 @@ class DeleteTempUploadedFiles extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('Deleting temporary uploaded files older than 24 hours.');
-        TemporaryFile::whereDate('created_at', '<', now()->subDay())->get()->each(function (TemporaryFile $temporaryFile) {
+        TemporaryFile::whereDate('created_at', '<', now()->subDay())->get()->each(function (TemporaryFile $temporaryFile): void {
             $this->line("Deleting temporary file folder {$temporaryFile->folder}");
             $temporaryFile->delete();
         });

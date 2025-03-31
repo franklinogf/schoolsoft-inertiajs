@@ -26,7 +26,7 @@ class BlankLineTopicController extends Controller
         ]);
 
         $answers = collect($validated['respuestas'])
-            ->map(fn ($answer) => $answer ?? '')
+            ->map(fn ($answer): mixed => $answer ?? '')
             ->toArray();
 
         $exam->blankLines()->create([
@@ -72,7 +72,7 @@ class BlankLineTopicController extends Controller
         ]);
 
         $answers = collect($validated['respuestas'])
-            ->map(fn ($answer) => $answer ?? '')
+            ->map(fn ($answer): mixed => $answer ?? '')
             ->toArray();
 
         $question->update([

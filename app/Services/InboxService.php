@@ -17,7 +17,7 @@ class InboxService
      */
     public function addAttachments(Inbox $inbox, array $folders): void
     {
-        if (empty($folders)) {
+        if ($folders === []) {
             return;
         }
 

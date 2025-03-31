@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inboxes', function (Blueprint $table) {
+        Schema::create('inboxes', function (Blueprint $table): void {
             $table->id();
             $table->morphs('sender');
             $table->string('subject');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('inboxebles', function (Blueprint $table) {
+        Schema::create('inboxebles', function (Blueprint $table): void {
             $table->foreignId('inbox_id')->constrained('inboxes')->onDelete('cascade');
             $table->morphs('receiver');
             $table->boolean('is_read')->default(false);

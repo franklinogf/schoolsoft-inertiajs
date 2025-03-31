@@ -19,6 +19,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      */
+    #[\Override]
     public function version(Request $request): ?string
     {
         return parent::version($request);
@@ -29,6 +30,7 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
+    #[\Override]
     public function share(Request $request): array
     {
         $subPath = $request->segment(2);
@@ -61,7 +63,7 @@ class HandleInertiaRequests extends Middleware
 
     private function getUser(Request $request, ?string $guard)
     {
-        if ($guard) {
+        if ($guard !== null && $guard !== '' && $guard !== '0') {
             if ($guard === 'teacher' && $request->user($guard)) {
                 return new TeacherResource($request->user($guard));
             }

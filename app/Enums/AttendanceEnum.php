@@ -17,7 +17,7 @@ enum AttendanceEnum: string
     case TARDINESS_SICK = '11';
     case TARDINESS_APPOINTMENT = '12';
 
-    public function label()
+    public function label(): string
     {
         return match ($this->value) {
             self::ABSENCE_HOME->value => 'Situación  en el hogar',
@@ -35,7 +35,7 @@ enum AttendanceEnum: string
         };
     }
 
-    public function type()
+    public function type(): string
     {
         return match ($this->value) {
             self::ABSENCE_HOME->value => 'absence',
@@ -54,7 +54,7 @@ enum AttendanceEnum: string
 
     }
 
-    public static function get($enumValue)
+    public static function get($enumValue): ?\App\Enums\AttendanceEnum
     {
         return match ($enumValue) {
             self::ABSENCE_HOME->value => self::ABSENCE_HOME,
@@ -73,7 +73,7 @@ enum AttendanceEnum: string
         };
     }
 
-    public function labelWithType()
+    public function labelWithType(): string
     {
         return $this->label().' ('.$this->type().')';
 

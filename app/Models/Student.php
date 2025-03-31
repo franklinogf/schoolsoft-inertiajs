@@ -206,6 +206,7 @@ class Student extends Model
 
     protected $guarded = [];
 
+    #[\Override]
     protected static function booted(): void
     {
         // //Siempre utilizar el year del colegio
@@ -217,7 +218,7 @@ class Student extends Model
         //     $builder->where('year.fecha_baja', '0000-00-00');
         // });
         // Siempre ordernar por apellidos
-        static::addGlobalScope('orderByLastname', function (Builder $builder) {
+        static::addGlobalScope('orderByLastname', function (Builder $builder): void {
             $builder->orderBy('year.apellidos')->orderBy('year.nombre');
         });
     }

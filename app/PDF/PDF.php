@@ -6,7 +6,7 @@ use App\Models\Admin;
 
 class PDF extends BasePDF
 {
-    private Admin $school;
+    private readonly Admin $school;
 
     public bool $header = true;
 
@@ -26,7 +26,8 @@ class PDF extends BasePDF
         $this->SetCreator(config('app.name'), true);
     }
 
-    public function header()
+    #[\Override]
+    public function header(): void
     {
         if (! $this->header) {
             return;
@@ -55,7 +56,8 @@ class PDF extends BasePDF
         }
     }
 
-    public function Footer()
+    #[\Override]
+    public function Footer(): void
     {
         if ($this->footer === false) {
             return;
@@ -68,12 +70,12 @@ class PDF extends BasePDF
 
     }
 
-    public function useHeader(bool $bool)
+    public function useHeader(bool $bool): void
     {
         $this->header = $bool;
     }
 
-    public function useFooter(bool|int $bool)
+    public function useFooter(bool|int $bool): void
     {
         $this->footer = $bool;
     }

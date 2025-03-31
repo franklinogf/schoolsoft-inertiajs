@@ -59,7 +59,7 @@ class PersonalEmail extends Mailable
 
         $attachments = [];
 
-        tenancy()->central(function () use (&$attachments) {
+        tenancy()->central(function () use (&$attachments): void {
 
             foreach ($this->files as $folder) {
 

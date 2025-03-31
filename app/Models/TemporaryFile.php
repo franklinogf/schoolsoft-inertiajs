@@ -20,9 +20,10 @@ class TemporaryFile extends Model
         'filename',
     ];
 
+    #[\Override]
     protected static function booted()
     {
-        static::deleting(function (TemporaryFile $temporaryFile) {
+        static::deleting(function (TemporaryFile $temporaryFile): void {
             Log::info("Deleting temporary file folder {$temporaryFile->folder}");
             Storage::disk('local')->deleteDirectory("tmp/{$temporaryFile->folder}");
         });

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -7,27 +9,15 @@ use Stancl\Tenancy;
 use Stancl\Tenancy\Resolvers\PathTenantResolver;
 use Symfony\Component\HttpFoundation\Response;
 
-class TenantProvider extends ServiceProvider
+final class TenantProvider extends ServiceProvider
 {
     /**
      * Register services.
      */
+    #[\Override]
     public function register(): void
     {
         //
-    }
-
-    private function theme(): array
-    {
-        $theme = [];
-
-        foreach (config('theme.themes') as $mode => $variables) {
-            foreach ($variables as $variable => $_) {
-                $theme["theme.themes.{$mode}.{$variable}"] = "theme.themes.{$mode}.{$variable}";
-            }
-        }
-
-        return $theme;
     }
 
     /**
@@ -57,13 +47,11 @@ class TenantProvider extends ServiceProvider
 
         Tenancy\Features\TenantConfig::$storageToConfigMap = $configs;
 
-        Tenancy\Middleware\InitializeTenancyByPath::$onFail = function () {
-            return abort(Response::HTTP_NOT_FOUND);
-        };
+        Tenancy\Middleware\InitializeTenancyByPath::$onFail = (fn() => abort(Response::HTTP_NOT_FOUND));
 
         Tenancy\Controllers\TenantAssetsController::$tenancyMiddleware = Tenancy\Middleware\InitializeTenancyByPath::class;
 
-        Tenancy\Resolvers\PathTenantResolver::$tenantParameterName = 'school';
+        PathTenantResolver::$tenantParameterName = 'school';
 
         // enable cache
         PathTenantResolver::$shouldCache = true;
@@ -73,5 +61,25 @@ class TenantProvider extends ServiceProvider
 
         // use the file cache store
         PathTenantResolver::$cacheStore = 'file';
+    }
+
+    /**
+     * Get the theme configuration.
+     *
+     * @return array<string, string>
+     *
+     * @psalm-return array{theme.themes.light: string, theme.themes.dark: string}
+     */
+    private function theme(): array
+    {
+        $theme = [];
+
+        foreach (config('theme.themes') as $mode => $variables) {
+            foreach ($variables as $variable => $_) {
+                $theme["theme.themes.{$mode}.{$variable}"] = "theme.themes.{$mode}.{$variable}";
+            }
+        }
+
+        return $theme;
     }
 }

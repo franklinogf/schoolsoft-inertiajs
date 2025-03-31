@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@test.com',
         ]);
 
-        $school->run(function () {
+        $school->run(function (): void {
             User::factory()->create([
                 'name' => 'Test School Admin',
                 'email' => 'test@test.com',

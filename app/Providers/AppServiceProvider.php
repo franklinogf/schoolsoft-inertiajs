@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         //
@@ -35,19 +36,17 @@ class AppServiceProvider extends ServiceProvider
 
         JsonResource::withoutWrapping();
 
-        App::singleton('year', fn () => (new AdminService)->getYear());
+        App::singleton('year', fn (): string => (new AdminService)->getYear());
 
-        Password::defaults(function () {
-            return Password::min(8)->letters()
-                ->mixedCase()
-                ->numbers();
-        });
+        Password::defaults(fn() => Password::min(8)->letters()
+            ->mixedCase()
+            ->numbers());
 
         Relation::enforceMorphMap([
-            'teacher' => 'App\Models\Teacher',
-            'student' => 'App\Models\Student',
-            'admin' => 'App\Models\Admin',
-            'inbox' => 'App\Models\Inbox',
+            'teacher' => \App\Models\Teacher::class,
+            'student' => \App\Models\Student::class,
+            'admin' => \App\Models\Admin::class,
+            'inbox' => \App\Models\Inbox::class,
         ]);
 
     }
