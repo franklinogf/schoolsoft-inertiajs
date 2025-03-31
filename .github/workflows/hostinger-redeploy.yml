@@ -1,11 +1,16 @@
 name: HostingerDeploy
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Tests"]
+    types:
+      - completed
     branches: [main]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: shivammathur/setup-php@v2
         with:
@@ -18,7 +23,7 @@ jobs:
         run: cp .env.example .env
 
       - name: Install composer Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: composer install --no-interaction --no-progress --ansi
 
       - name: Install node dependencies
         run: npm ci
