@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Services\AdminService;
+use Carbon\CarbonInterface;
+use Date;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -28,27 +30,47 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->configureModels();
+        $this->configureDates();
+        $this->configureValidations();
+        $this->configureJsonResources();
+
         if (app()->isLocal()) {
             Mail::alwaysTo('franklinomarflores@gmail.com');
             Mail::alwaysFrom('onboarding@resend.dev', 'Franklin Omar Flores');
         }
 
-        Model::unguard();
-
-        JsonResource::withoutWrapping();
-
         App::singleton('year', fn (): string => (new AdminService)->getYear());
 
-        Password::defaults(fn () => Password::min(8)->letters()
-            ->mixedCase()
-            ->numbers());
+    }
 
+    private function configureDates(): void
+    {
+        Date::use(CarbonInterface::class);
+    }
+
+    private function configureModels(): void
+    {
+
+        Model::unguard();
         Relation::enforceMorphMap([
             'teacher' => \App\Models\Teacher::class,
             'student' => \App\Models\Student::class,
             'admin' => \App\Models\Admin::class,
             'inbox' => \App\Models\Inbox::class,
         ]);
+    }
 
+    private function configureValidations(): void
+    {
+        Password::defaults(fn () => Password::min(8)->letters()
+            ->mixedCase()
+            ->numbers());
+
+    }
+
+    private function configureJsonResources(): void
+    {
+        JsonResource::withoutWrapping();
     }
 }
