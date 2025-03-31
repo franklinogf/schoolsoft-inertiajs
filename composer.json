@@ -76,7 +76,7 @@
         "refactor": "rector",
         "test:refactor": "rector --dry-run",
         "test:lint": "pint --test",
-        "test:unit": "pest --testsuite Unit --parallel",
+        "test:unit": "pest --testsuite Unit --parallel --coverage",
         "test:types": "phpstan",
         "test": [
             "@test:unit",
