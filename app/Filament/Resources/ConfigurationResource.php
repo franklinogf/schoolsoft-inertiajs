@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ConfigurationResource\Pages;
@@ -9,14 +11,15 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Override;
 
-class ConfigurationResource extends Resource
+final class ConfigurationResource extends Resource
 {
     protected static ?string $model = Enviroment::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    #[\Override]
+    #[Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -25,7 +28,7 @@ class ConfigurationResource extends Resource
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -46,7 +49,7 @@ class ConfigurationResource extends Resource
             ]);
     }
 
-    #[\Override]
+    #[Override]
     public static function getPages(): array
     {
         return [

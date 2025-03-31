@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Exams;
 
 use App\Casts\Date;
@@ -7,11 +9,11 @@ use App\Casts\YesNo;
 use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Model;
 
-class Exam extends Model
+final class Exam extends Model
 {
-    protected $table = 'T_examenes';
-
     public $timestamps = false;
+
+    protected $table = 'T_examenes';
 
     protected $casts = [
         'fecha' => Date::class,

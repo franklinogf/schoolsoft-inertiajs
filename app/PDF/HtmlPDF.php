@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\PDF;
 
 trait HtmlPDF
@@ -15,27 +17,27 @@ trait HtmlPDF
         $a = preg_split('/<(.*)>/U', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
 
         foreach ($a as $i => $e) {
-            if ($i % 2 == 0) {
+            if ($i % 2 === 0) {
                 // Text
                 if ($this->HREF) {
                     $this->PutLink($this->HREF, $e);
-                } elseif ($this->ALIGN == 'center') {
+                } elseif ($this->ALIGN === 'center') {
                     $this->Cell(0, 5, $e, 0, 1, 'C');
                 } else {
                     $this->Write(5, $e);
                 }
             } elseif ($e[0] === '/') {
                 // Tag
-                $this->CloseTag(strtoupper(substr($e, 1)));
+                $this->CloseTag(mb_strtoupper(mb_substr($e, 1)));
             } else {
                 // Extract properties
                 $a2 = explode(' ', $e);
-                $tag = strtoupper(array_shift($a2));
+                $tag = mb_strtoupper(array_shift($a2));
                 $prop = [];
 
                 foreach ($a2 as $v) {
                     if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $a3)) {
-                        $prop[strtoupper($a3[1])] = $a3[2];
+                        $prop[mb_strtoupper($a3[1])] = $a3[2];
                     }
                 }
                 $this->OpenTag($tag, $prop);
@@ -46,23 +48,23 @@ trait HtmlPDF
     public function OpenTag($tag, $prop): void
     {
         // Opening tag
-        if ($tag == 'B' || $tag == 'I' || $tag == 'U') {
+        if ($tag === 'B' || $tag === 'I' || $tag === 'U') {
             $this->SetStyle($tag, true);
         }
 
-        if ($tag == 'A') {
+        if ($tag === 'A') {
             $this->HREF = $prop['HREF'];
         }
 
-        if ($tag == 'BR') {
+        if ($tag === 'BR') {
             $this->Ln(5);
         }
 
-        if ($tag == 'P') {
+        if ($tag === 'P') {
             $this->ALIGN = $prop['ALIGN'];
         }
 
-        if ($tag == 'HR') {
+        if ($tag === 'HR') {
             $Width = empty($prop['WIDTH']) ? $this->w - $this->lMargin - $this->rMargin : $prop['WIDTH'];
             $this->Ln(2);
             $x = $this->GetX();
@@ -77,15 +79,15 @@ trait HtmlPDF
     public function CloseTag($tag): void
     {
         // Closing tag
-        if ($tag == 'B' || $tag == 'I' || $tag == 'U') {
+        if ($tag === 'B' || $tag === 'I' || $tag === 'U') {
             $this->SetStyle($tag, false);
         }
 
-        if ($tag == 'A') {
+        if ($tag === 'A') {
             $this->HREF = '';
         }
 
-        if ($tag == 'P') {
+        if ($tag === 'P') {
             $this->ALIGN = '';
         }
     }

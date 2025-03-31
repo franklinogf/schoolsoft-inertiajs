@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Services\AdminService;
@@ -10,13 +12,14 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Override;
 
-class AppServiceProvider extends ServiceProvider
+final class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    #[\Override]
+    #[Override]
     public function register(): void
     {
         //
@@ -38,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
 
         App::singleton('year', fn (): string => (new AdminService)->getYear());
 
-        Password::defaults(fn() => Password::min(8)->letters()
+        Password::defaults(fn () => Password::min(8)->letters()
             ->mixedCase()
             ->numbers());
 

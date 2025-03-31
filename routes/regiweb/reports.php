@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Regiweb\RegiwebReportsIndexController;
 use Illuminate\Support\Facades\Route;
 

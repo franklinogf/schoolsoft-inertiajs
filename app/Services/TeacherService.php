@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Enums\MediaCollectionEnum;
 use App\Models\Teacher;
 use App\Models\TemporaryFile;
 
-class TeacherService
+final class TeacherService
 {
     public function create(array $data): Teacher
     {

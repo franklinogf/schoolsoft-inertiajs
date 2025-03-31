@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -216,7 +218,7 @@ use Illuminate\Foundation\Auth\User as Model;
  * @property string $cta_camisa
  * @property string $es_ac
  */
-class Admin extends Model
+final class Admin extends Model
 {
     /**
      * Indicates if the model should be timestamped.

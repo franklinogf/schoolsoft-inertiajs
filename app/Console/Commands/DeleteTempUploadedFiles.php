@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\TemporaryFile;
@@ -7,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
-class DeleteTempUploadedFiles extends Command
+final class DeleteTempUploadedFiles extends Command
 {
     /**
      * The name and signature of the console command.

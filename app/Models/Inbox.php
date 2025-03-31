@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Scopes\DescendingScope;
@@ -16,7 +18,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 #[ObservedBy([InboxObserver::class])]
 #[ScopedBy([DescendingScope::class])]
-class Inbox extends Model implements HasMedia
+final class Inbox extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
@@ -36,7 +38,7 @@ class Inbox extends Model implements HasMedia
      */
     public function replies(): HasMany
     {
-        return $this->hasMany(Inbox::class, 'parent_id');
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     public function teachers(): MorphToMany

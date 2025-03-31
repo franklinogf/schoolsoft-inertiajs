@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Exams;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BlankLine extends Model
+final class BlankLine extends Model
 {
-    protected $table = 'T_examen_linea';
-
     public $timestamps = false;
+
+    protected $table = 'T_examen_linea';
 
     public function exam()
     {

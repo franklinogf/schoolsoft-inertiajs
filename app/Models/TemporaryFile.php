@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Override;
 
 /**
  * @property int $id
@@ -13,21 +16,12 @@ use Illuminate\Support\Facades\Storage;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  */
-class TemporaryFile extends Model
+final class TemporaryFile extends Model
 {
     protected $fillable = [
         'folder',
         'filename',
     ];
-
-    #[\Override]
-    protected static function booted()
-    {
-        static::deleting(function (TemporaryFile $temporaryFile): void {
-            Log::info("Deleting temporary file folder {$temporaryFile->folder}");
-            Storage::disk('local')->deleteDirectory("tmp/{$temporaryFile->folder}");
-        });
-    }
 
     public function moveTo(string $path): bool
     {
@@ -40,5 +34,14 @@ class TemporaryFile extends Model
         $this->delete();
 
         return $moved;
+    }
+
+    #[Override]
+    protected static function booted()
+    {
+        self::deleting(function (TemporaryFile $temporaryFile): void {
+            Log::info("Deleting temporary file folder {$temporaryFile->folder}");
+            Storage::disk('local')->deleteDirectory("tmp/{$temporaryFile->folder}");
+        });
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enums\PhoneCompanyEnum;
 use Illuminate\Support\Facades\Storage;
 
@@ -9,7 +11,7 @@ if (! function_exists('tenant_file_url')) {
         if (tenant() === null) {
             abort(500, 'No tenant set');
         }
-        $cleanPath = ltrim((string) $path, '/');
+        $cleanPath = mb_ltrim((string) $path, '/');
 
         return Storage::url(tenant('id').'/'.$cleanPath);
     }
@@ -29,11 +31,11 @@ if (! function_exists('tmp_path')) {
         $path = 'tmp';
 
         if ($folder !== null) {
-            $folder = ltrim($folder, '/');
+            $folder = mb_ltrim($folder, '/');
             $path .= "/{$folder}";
 
             if ($filename !== null) {
-                $filename = ltrim($filename, '/');
+                $filename = mb_ltrim($filename, '/');
                 $path .= "/{$filename}";
             }
         }
@@ -48,7 +50,7 @@ if (! function_exists('public_tenant_path')) {
         if (tenant() === null) {
             abort(500, 'No tenant set');
         }
-        $cleanPath = ltrim((string) $path, '/');
+        $cleanPath = mb_ltrim((string) $path, '/');
 
         return 'public/'.(tenant('id').'/'.$cleanPath);
     }

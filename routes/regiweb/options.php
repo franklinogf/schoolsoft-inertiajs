@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Regiweb\Options\Exam\BlankLineTopicController;
 use App\Http\Controllers\Regiweb\Options\Exam\ExamController;
 use App\Http\Controllers\Regiweb\Options\Exam\PairTopicController;

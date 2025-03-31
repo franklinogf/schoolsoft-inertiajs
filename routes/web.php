@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Root\ContactController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;

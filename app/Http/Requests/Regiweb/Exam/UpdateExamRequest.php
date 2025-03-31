@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Regiweb\Exam;
 
 use App\Rules\TeacherCourse;
 use App\Rules\YesNo;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateExamRequest extends FormRequest
+final class UpdateExamRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

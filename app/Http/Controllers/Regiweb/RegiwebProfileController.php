@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb;
 
 use App\Http\Controllers\Controller;
@@ -8,7 +10,7 @@ use App\Services\TeacherService;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-class RegiwebProfileController extends Controller
+final class RegiwebProfileController extends Controller
 {
     /**
      * Display the resource.

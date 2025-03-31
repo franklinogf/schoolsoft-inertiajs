@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Exams;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+final class Question extends Model
 {
-    protected $table = 'T_examen_pregunta';
-
     public $timestamps = false;
+
+    protected $table = 'T_examen_pregunta';
 
     public function exam()
     {

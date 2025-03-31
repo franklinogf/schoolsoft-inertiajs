@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Options;
 
 use App\Enums\FlashMessageKey;
@@ -12,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class MessagesSmscontroller extends Controller
+final class MessagesSmscontroller extends Controller
 {
     public function index()
     {

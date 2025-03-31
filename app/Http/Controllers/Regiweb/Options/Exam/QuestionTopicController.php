@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Options\Exam;
 
 use App\Enums\FlashMessageKey;
@@ -10,7 +12,7 @@ use App\Models\Exams\Question;
 use App\Services\ExamService;
 use Illuminate\Http\Request;
 
-class QuestionTopicController extends Controller
+final class QuestionTopicController extends Controller
 {
     public function __construct(
         protected ExamService $examService
@@ -30,7 +32,7 @@ class QuestionTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Pregunta :action', ['action' => strtolower(__('Creada'))])
+                __('Pregunta :action', ['action' => mb_strtolower(__('Creada'))])
             );
     }
 
@@ -48,7 +50,7 @@ class QuestionTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Título :action', ['action' => strtolower(__('Actualizado'))])
+                __('Título :action', ['action' => mb_strtolower(__('Actualizado'))])
             );
     }
 
@@ -67,7 +69,7 @@ class QuestionTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Pregunta :action', ['action' => strtolower(__('Actualizada'))])
+                __('Pregunta :action', ['action' => mb_strtolower(__('Actualizada'))])
             );
     }
 
@@ -80,7 +82,7 @@ class QuestionTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Pregunta :action', ['action' => strtolower(__('Eliminada'))])
+                __('Pregunta :action', ['action' => mb_strtolower(__('Eliminada'))])
             );
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Override;
 use Stancl\Tenancy;
 use Stancl\Tenancy\Resolvers\PathTenantResolver;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ final class TenantProvider extends ServiceProvider
     /**
      * Register services.
      */
-    #[\Override]
+    #[Override]
     public function register(): void
     {
         //
@@ -47,7 +48,7 @@ final class TenantProvider extends ServiceProvider
 
         Tenancy\Features\TenantConfig::$storageToConfigMap = $configs;
 
-        Tenancy\Middleware\InitializeTenancyByPath::$onFail = (fn() => abort(Response::HTTP_NOT_FOUND));
+        Tenancy\Middleware\InitializeTenancyByPath::$onFail = (fn () => abort(Response::HTTP_NOT_FOUND));
 
         Tenancy\Controllers\TenantAssetsController::$tenancyMiddleware = Tenancy\Middleware\InitializeTenancyByPath::class;
 

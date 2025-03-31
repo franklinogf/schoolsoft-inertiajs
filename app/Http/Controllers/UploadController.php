@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class UploadController extends Controller
+final class UploadController extends Controller
 {
     public function store(Request $request): Response
     {

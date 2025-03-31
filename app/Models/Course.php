@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Scopes\SchoolYear;
@@ -28,13 +30,18 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $verano
  * @property int $mt
  */ #[ScopedBy(SchoolYear::class)]
-class Course extends Model
+final class Course extends Model
 {
     public $timestamps = false;
 
     protected $table = 'cursos';
 
     protected $primaryKey = 'mt';
+
+    public function teacher(): HasOne
+    {
+        return $this->hasOne(Teacher::class, 'id', 'id');
+    }
 
     protected function descripcion(): Attribute
     {
@@ -43,10 +50,5 @@ class Course extends Model
             ? $attributes['desc1']
             : ($attributes['desc2'] === '' ? $attributes['desc1'] : $attributes['desc2']),
         );
-    }
-
-    public function teacher(): HasOne
-    {
-        return $this->hasOne(Teacher::class, 'id', 'id');
     }
 }

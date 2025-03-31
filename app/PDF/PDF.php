@@ -1,20 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\PDF;
 
 use App\Models\Admin;
+use Override;
 
-class PDF extends BasePDF
+final class PDF extends BasePDF
 {
-    private readonly Admin $school;
-
     public bool $header = true;
 
     public bool|int $footer = 15;
 
-    private $leftMargin = 10;
-
     public $headerFirstPage = false;
+
+    private readonly Admin $school;
+
+    private $leftMargin = 10;
 
     public function __construct(string $title, $orientation = 'P', $unit = 'mm', $size = 'A4')
     {
@@ -26,7 +29,7 @@ class PDF extends BasePDF
         $this->SetCreator(config('app.name'), true);
     }
 
-    #[\Override]
+    #[Override]
     public function header(): void
     {
         if (! $this->header) {
@@ -56,7 +59,7 @@ class PDF extends BasePDF
         }
     }
 
-    #[\Override]
+    #[Override]
     public function Footer(): void
     {
         if ($this->footer === false) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Enums\MediaCollectionEnum;
@@ -10,7 +12,7 @@ use App\Models\Teacher;
 use App\Models\TemporaryFile;
 use Illuminate\Database\Eloquent\Collection;
 
-class InboxService
+final class InboxService
 {
     /**
      * @param  array<string>  $folders
@@ -31,22 +33,7 @@ class InboxService
     }
 
     /**
-     * @param  array<string>  $attachments
-     */
-    private function send(Teacher|Student|Admin $sender, string $subject, string $message, array $attachments = []): Inbox
-    {
-        $inbox = $sender->sentMessages()->create([
-            'subject' => $subject,
-            'message' => $message,
-        ]);
-
-        $this->addAttachments($inbox, $attachments);
-
-        return $inbox;
-    }
-
-    /**
-     * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Student>  $to.
+     * @param  Collection<int,Student>  $to.
      * @param  array<string>  $attachments
      */
     public function sendToStudents(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message, array $attachments = []): Inbox
@@ -59,7 +46,7 @@ class InboxService
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Teacher>  $to
+     * @param  Collection<int,Teacher>  $to
      * @param  array<string>  $attachments
      */
     public function sendToTeachers(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message, array $attachments = []): Inbox
@@ -71,13 +58,28 @@ class InboxService
     }
 
     /**
-     * @param  \Illuminate\Database\Eloquent\Collection<int,\App\Models\Admin>  $to
+     * @param  Collection<int,Admin>  $to
      * @param  array<string>  $attachments
      */
     public function sendToAdmins(Teacher|Student|Admin $sender, Collection $to, string $subject, string $message, array $attachments = []): Inbox
     {
         $inbox = $this->send($sender, $subject, $message, $attachments);
         $inbox->admins()->attach($to);
+
+        return $inbox;
+    }
+
+    /**
+     * @param  array<string>  $attachments
+     */
+    private function send(Teacher|Student|Admin $sender, string $subject, string $message, array $attachments = []): Inbox
+    {
+        $inbox = $sender->sentMessages()->create([
+            'subject' => $subject,
+            'message' => $message,
+        ]);
+
+        $this->addAttachments($inbox, $attachments);
 
         return $inbox;
     }

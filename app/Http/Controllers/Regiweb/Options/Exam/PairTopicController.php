@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Options\Exam;
 
 use App\Enums\FlashMessageKey;
@@ -11,7 +13,7 @@ use App\Models\Exams\PairCode;
 use App\Services\ExamService;
 use Illuminate\Http\Request;
 
-class PairTopicController extends Controller
+final class PairTopicController extends Controller
 {
     public function __construct(
         protected ExamService $examService
@@ -31,7 +33,7 @@ class PairTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Pregunta :action', ['action' => strtolower(__('Creada'))])
+                __('Pregunta :action', ['action' => mb_strtolower(__('Creada'))])
             );
     }
 
@@ -49,7 +51,7 @@ class PairTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Título :action', ['action' => strtolower(__('Actualizado'))])
+                __('Título :action', ['action' => mb_strtolower(__('Actualizado'))])
             );
     }
 
@@ -68,7 +70,7 @@ class PairTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Pregunta :action', ['action' => strtolower(__('Actualizada'))])
+                __('Pregunta :action', ['action' => mb_strtolower(__('Actualizada'))])
             );
     }
 
@@ -81,7 +83,7 @@ class PairTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Pregunta :action', ['action' => strtolower(__('Eliminada'))])
+                __('Pregunta :action', ['action' => mb_strtolower(__('Eliminada'))])
             );
     }
 
@@ -96,7 +98,7 @@ class PairTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Respuesta :action', ['action' => strtolower(__('Creada'))])
+                __('Respuesta :action', ['action' => mb_strtolower(__('Creada'))])
             );
     }
 
@@ -111,7 +113,7 @@ class PairTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Respuesta :action', ['action' => strtolower(__('Actualizada'))])
+                __('Respuesta :action', ['action' => mb_strtolower(__('Actualizada'))])
             );
     }
 
@@ -131,7 +133,7 @@ class PairTopicController extends Controller
         return back()
             ->with(
                 FlashMessageKey::SUCCESS->value,
-                __('Respuesta :action', ['action' => strtolower(__('Eliminada'))])
+                __('Respuesta :action', ['action' => mb_strtolower(__('Eliminada'))])
             );
     }
 }

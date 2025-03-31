@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb;
 
 use App\Enums\FlashMessageKey;
@@ -10,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class RegiwebLoginController extends Controller
+final class RegiwebLoginController extends Controller
 {
     public function create()
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Options\Exam;
 
 use App\Enums\FlashMessageKey;
@@ -16,7 +18,7 @@ use App\Services\ExamService;
 use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Request;
 
-class ExamController extends Controller
+final class ExamController extends Controller
 {
     public function index(#[CurrentUser] Teacher $user)
     {
@@ -79,7 +81,7 @@ class ExamController extends Controller
         $exam->update($request->validated());
 
         return back()
-            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => strtolower(__('Actualizado'))]));
+            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => mb_strtolower(__('Actualizado'))]));
     }
 
     /**
@@ -90,7 +92,7 @@ class ExamController extends Controller
         $exam->delete();
 
         return back()
-            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => strtolower(__('Eliminado'))]));
+            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => mb_strtolower(__('Eliminado'))]));
     }
 
     public function toggle(Exam $exam, ExamService $examService)
@@ -99,7 +101,7 @@ class ExamController extends Controller
 
         return back()
             ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', [
-                'action' => $exam->activo === YesNoEnum::YES->value ? strtolower(__('Activado')) : strtolower(__('Desactivado')),
+                'action' => $exam->activo === YesNoEnum::YES->value ? mb_strtolower(__('Activado')) : mb_strtolower(__('Desactivado')),
             ]));
     }
 
@@ -113,6 +115,6 @@ class ExamController extends Controller
         $examService->duplicate($exam, $validated['titulo'], $validated['curso']);
 
         return back()
-            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => strtolower(__('Duplicado'))]));
+            ->with(FlashMessageKey::SUCCESS->value, __('Examen :action', ['action' => mb_strtolower(__('Duplicado'))]));
     }
 }

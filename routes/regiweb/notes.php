@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\PDF\AttendanceReportPDFController;
 use App\Http\Controllers\Regiweb\Notes\AttendanceController;
 use App\Http\Controllers\Regiweb\Notes\RegiwebNotesController;

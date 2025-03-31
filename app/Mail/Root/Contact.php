@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail\Root;
 
 use Illuminate\Bus\Queueable;
@@ -8,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Contact extends Mailable
+final class Contact extends Mailable
 {
     use Queueable, SerializesModels;
 

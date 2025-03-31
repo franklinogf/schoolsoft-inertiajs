@@ -1,22 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\MediaLibrary;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 
-class CustomPathGenerator implements PathGenerator
+final class CustomPathGenerator implements PathGenerator
 {
-    /*
-     * Get the path for the given media, relative to the root storage path.
-     */
-    private function getBasePath(Media $media): string
-    {
-        $id = md5($media->id.config('app.key'));
-
-        return "{$media->collection_name}/{$id}/";
-    }
-
     public function getPath(Media $media): string
     {
         return $this->getBasePath($media);
@@ -36,5 +28,15 @@ class CustomPathGenerator implements PathGenerator
     public function getPathForResponsiveImages(Media $media): string
     {
         return $this->getBasePath($media).'/responsive-images/';
+    }
+
+    /*
+     * Get the path for the given media, relative to the root storage path.
+     */
+    private function getBasePath(Media $media): string
+    {
+        $id = md5($media->id.config('app.key'));
+
+        return "{$media->collection_name}/{$id}/";
     }
 }

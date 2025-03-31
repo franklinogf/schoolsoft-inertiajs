@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Widgets;
 
 use App\Models\School;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Override;
 
-class SchoolCount extends BaseWidget
+final class SchoolCount extends BaseWidget
 {
-    #[\Override]
+    #[Override]
     protected function getStats(): array
     {
         $schoolCount = School::count();

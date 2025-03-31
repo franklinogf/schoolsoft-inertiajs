@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Enums\YesNoEnum;
 use App\Models\Exams\Exam;
 
-class ExamService
+final class ExamService
 {
     public function updateTotal(Exam $exam): int
     {

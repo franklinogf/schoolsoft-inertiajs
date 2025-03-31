@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Regiweb\Notes;
 
 use App\Enums\PagesEnum;
@@ -7,7 +9,7 @@ use App\Enums\TrimesterEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ShowRequest extends FormRequest
+final class ShowRequest extends FormRequest
 {
     protected $redirectRoute = 'regiweb.notes.index';
 

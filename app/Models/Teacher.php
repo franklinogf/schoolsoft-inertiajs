@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Casts\Date;
@@ -122,7 +124,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string $pe16
  * @property string $cbarra
  */
-class Teacher extends Model implements HasMedia
+final class Teacher extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
@@ -165,6 +167,15 @@ class Teacher extends Model implements HasMedia
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class, 'id', 'id');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(MediaCollectionEnum::PROFILE_PICTURE->value)
+            ->useFallbackUrl(asset('assets/no-picture-teacher.png'))
+            ->useFallbackPath(public_path('assets/no-picture-teacher.png'))
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
+            ->singleFile();
     }
 
     protected function casts(): array
@@ -226,14 +237,5 @@ class Teacher extends Model implements HasMedia
         }
 
         return $array;
-    }
-
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection(MediaCollectionEnum::PROFILE_PICTURE->value)
-            ->useFallbackUrl(asset('assets/no-picture-teacher.png'))
-            ->useFallbackPath(public_path('assets/no-picture-teacher.png'))
-            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-            ->singleFile();
     }
 }

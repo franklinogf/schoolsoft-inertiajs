@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Models\Inbox;
 
-class InboxObserver
+final class InboxObserver
 {
     /**
      * Handle the Inbox "created" event.

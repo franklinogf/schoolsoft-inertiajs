@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Notes;
 
 use App\Http\Controllers\Controller;
@@ -8,7 +10,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AttendanceController extends Controller
+final class AttendanceController extends Controller
 {
     public function entry(Request $request)
     {
@@ -57,8 +59,8 @@ class AttendanceController extends Controller
         $studentsAttendances = $students->map(function (Student $student) use ($initialDate, $initialSubject, $initialGrade): array {
             $attendance = $student->attendances()
                 ->whereDate('fecha', $initialDate)
-                ->when($initialGrade !== null, fn($query) => $query->where('grado', $initialGrade))
-                ->when($initialSubject !== null, fn($query) => $query->where('curso', $initialSubject))
+                ->when($initialGrade !== null, fn ($query) => $query->where('grado', $initialGrade))
+                ->when($initialSubject !== null, fn ($query) => $query->where('curso', $initialSubject))
                 ->first();
 
             return [

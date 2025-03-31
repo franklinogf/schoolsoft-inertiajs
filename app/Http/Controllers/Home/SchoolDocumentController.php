@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Home;
 
 use App\Enums\FlashMessageKey;
@@ -9,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
-class SchoolDocumentController extends Controller
+final class SchoolDocumentController extends Controller
 {
     public function index()
     {

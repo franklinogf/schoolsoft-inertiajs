@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 test('Can access Home page', function () {
     $response = $this->get(route('home'));
 

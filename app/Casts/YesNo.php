@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class YesNo implements CastsAttributes
+final class YesNo implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -14,7 +16,7 @@ class YesNo implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value ? strtoupper((string) $value) : 'NO';
+        return $value ? mb_strtoupper((string) $value) : 'NO';
     }
 
     /**
@@ -24,6 +26,6 @@ class YesNo implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value ? strtoupper((string) $value) : 'NO';
+        return $value ? mb_strtoupper((string) $value) : 'NO';
     }
 }

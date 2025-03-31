@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Options;
 
 use App\Enums\FlashMessageKey;
@@ -13,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class MessagesEmailController extends Controller
+final class MessagesEmailController extends Controller
 {
     public function index()
     {
@@ -76,9 +78,9 @@ class MessagesEmailController extends Controller
 
         if ($selected === 'students') {
             // TODO
-            $tos = Student::whereIn('ss', $to)->get()->map(fn($student): array => ['email' => $student->email, 'name' => "{$student->nombre} {$student->apellidos}"]);
+            $tos = Student::whereIn('ss', $to)->get()->map(fn ($student): array => ['email' => $student->email, 'name' => "{$student->nombre} {$student->apellidos}"]);
         } elseif ($selected === 'admin') {
-            $tos = Admin::whereIn('usuario', $to)->get()->map(fn($admin): array => ['email' => $admin->correo, 'name' => $admin->director]);
+            $tos = Admin::whereIn('usuario', $to)->get()->map(fn ($admin): array => ['email' => $admin->correo, 'name' => $admin->director]);
         } elseif ($selected === 'courses') {
             // TODO
             $tos = auth()->user()->courses()->whereIn('curso', $to)->get();

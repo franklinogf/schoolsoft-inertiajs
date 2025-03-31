@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Regiweb\RegiwebHomeController;
 use App\Http\Controllers\Regiweb\RegiwebLoginController;
 use App\Http\Controllers\Regiweb\RegiwebProfileController;

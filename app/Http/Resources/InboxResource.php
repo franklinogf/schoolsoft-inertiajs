@@ -1,20 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use App\Enums\MediaCollectionEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Override;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class InboxResource extends JsonResource
+final class InboxResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
      */
-    #[\Override]
+    #[Override]
     public function toArray(Request $request): array
     {
         return [
@@ -28,8 +31,8 @@ class InboxResource extends JsonResource
             'message' => $this->message,
             'replies' => $this->collection($this->replies),
             'preview' => strip_tags((string) $this->message->limit(20)),
-            'is_deleted' => boolval($this->pivot?->is_deleted ?? $this->is_deleted),
-            'is_read' => boolval($this->pivot?->is_read ?? true),
+            'is_deleted' => (bool) ($this->pivot?->is_deleted ?? $this->is_deleted),
+            'is_read' => (bool) ($this->pivot?->is_read ?? true),
             'datetime' => $this->created_at->format('Y-m-d H:i:s'),
             'datetime_human_readeable' => $this->created_at->diffForHumans(),
             'date' => $this->created_at->format('Y-m-d'),

@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use Carbon\Carbon;
 
-class Utils
+final class Utils
 {
     public static function getMonthName(int $monthNumber): string
     {
         $month = Carbon::create()->month($monthNumber)->translatedFormat('F');
 
-        return strtolower($month);
+        return mb_strtolower($month);
     }
 }

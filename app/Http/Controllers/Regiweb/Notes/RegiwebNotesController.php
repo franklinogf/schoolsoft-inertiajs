@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Notes;
 
 use App\Enums\FlashMessageKey;
@@ -19,7 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
-class RegiwebNotesController extends Controller
+final class RegiwebNotesController extends Controller
 {
     public function __construct(
         #[CurrentUser()] protected Teacher $user,
@@ -126,6 +128,25 @@ class RegiwebNotesController extends Controller
     }
 
     public function saveExam() {}
+
+    public function saveValues(Request $request, int $id)
+    {
+        $valuesValidation = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $valuesValidation["tema{$i}"] = ['nullable', "required_with:val{$i},fec{$i}", 'string'];
+            $valuesValidation["val{$i}"] = ['nullable', "required_with:tema{$i},fec{$i}", 'numeric'];
+            $valuesValidation["fec{$i}"] = ['nullable', "required_with:tema{$i},val{$i}", 'date'];
+        }
+        $validated = $request->validate([
+            ...$valuesValidation,
+        ]);
+
+        DB::table('valores')->where('id', $id)->update($validated);
+
+        return redirect()->back()->with(FlashMessageKey::SUCCESS->value, __('Values saved successfully'));
+
+    }
     // private function findTotal($info, $type, $trimesterNumber, $page, $student)
     // {
     //     if ($trimesterNumber === 2 || $trimesterNumber === 4) {
@@ -166,7 +187,7 @@ class RegiwebNotesController extends Controller
             'isLetter' => $gradeInfo?->letra === 'ON',
             'isPercent' => $gradeInfo?->nota_por === '1',
             'hasEnded' => $gradeInfo?->{$end} === 'X',
-            'canEnd' => $this->admin->sie === YesNoEnum::YES->value && intval($this->admin->sieab) === 4,
+            'canEnd' => $this->admin->sie === YesNoEnum::YES->value && (int) ($this->admin->sieab) === 4,
             'isSumTrimester' => $this->admin->sutri === YesNoEnum::YES->value,
         ];
     }
@@ -177,6 +198,7 @@ class RegiwebNotesController extends Controller
         $table = $page->table();
         if ($page === PagesEnum::CONDUCT_ATTENDANCE) {
             $trimesterInfo = $page->trimesterInfo($trimester);
+
             return StudentGrade::fromTable($table)
                 ->where([
                     ['curso', $course],
@@ -196,6 +218,7 @@ class RegiwebNotesController extends Controller
 
         if ($page === PagesEnum::FINAL_EXAM) {
             $trimesterInfo = $page->trimesterInfo($trimester);
+
             return StudentGrade::fromTable($table)
                 ->where([
                     ['curso', $course],
@@ -224,7 +247,7 @@ class RegiwebNotesController extends Controller
 
                 if ($gradesNumbers !== null) {
                     for ($i = $gradesNumbers[0]; $i <= $gradesNumbers[1]; $i++) {
-                        $grades["nota{$index}"]['value'] = trim((string) $student->{"not{$i}"});
+                        $grades["nota{$index}"]['value'] = mb_trim((string) $student->{"not{$i}"});
                         $grades["nota{$index}"]['column'] = "not{$i}";
                         $index++;
                     }
@@ -250,7 +273,7 @@ class RegiwebNotesController extends Controller
                     'nombre' => $student->nombre,
                     'apellidos' => $student->apellidos,
                     'notas' => $grades,
-                    'total' => trim((string) $student->{$page->totalGradeColumn($trimester)}),
+                    'total' => mb_trim((string) $student->{$page->totalGradeColumn($trimester)}),
                     'tdia' => $tdia,
                     'tlib' => $tlib,
                     'pcor' => $pcor,
@@ -295,24 +318,5 @@ class RegiwebNotesController extends Controller
         }
 
         return [count($gradesValues) > 0 ? $gradesValues : null, $gradesValuesId];
-    }
-
-    public function saveValues(Request $request, int $id)
-    {
-        $valuesValidation = [];
-
-        for ($i = 1; $i <= 12; $i++) {
-            $valuesValidation["tema{$i}"] = ['nullable', "required_with:val{$i},fec{$i}", 'string'];
-            $valuesValidation["val{$i}"] = ['nullable', "required_with:tema{$i},fec{$i}", 'numeric'];
-            $valuesValidation["fec{$i}"] = ['nullable', "required_with:tema{$i},val{$i}", 'date'];
-        }
-        $validated = $request->validate([
-            ...$valuesValidation,
-        ]);
-
-        DB::table('valores')->where('id', $id)->update($validated);
-
-        return redirect()->back()->with(FlashMessageKey::SUCCESS->value, __('Values saved successfully'));
-
     }
 }

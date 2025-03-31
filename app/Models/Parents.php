@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Model;
@@ -110,7 +112,7 @@ use Illuminate\Foundation\Auth\User as Model;
  * @property string $cel6
  * @property string $id2
  */
-class Parents extends Model
+final class Parents extends Model
 {
     /**
      * Indicates if the model should be timestamped.

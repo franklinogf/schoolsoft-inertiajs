@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum AttendanceEnum: string
@@ -16,6 +18,25 @@ enum AttendanceEnum: string
     case TARDINESS_TRANSPORTATION = '10';
     case TARDINESS_SICK = '11';
     case TARDINESS_APPOINTMENT = '12';
+
+    public static function get($enumValue): ?AttendanceEnum
+    {
+        return match ($enumValue) {
+            self::ABSENCE_HOME->value => self::ABSENCE_HOME,
+            self::ABSENCE_VACATION->value => self::ABSENCE_VACATION,
+            self::ABSENCE_PARENTS_ACTIVITY->value => self::ABSENCE_PARENTS_ACTIVITY,
+            self::ABSENCE_SICK->value => self::ABSENCE_SICK,
+            self::ABSENCE_APPOINTMENT->value => self::ABSENCE_APPOINTMENT,
+            self::ABSENCE_SCHOOL_ACTIVITY->value => self::ABSENCE_SCHOOL_ACTIVITY,
+            self::ABSENCE_NO_EXCUSE->value => self::ABSENCE_NO_EXCUSE,
+            self::TARDINESS_NO_EXCUSE->value => self::TARDINESS_NO_EXCUSE,
+            self::TARDINESS_HOME->value => self::TARDINESS_HOME,
+            self::TARDINESS_TRANSPORTATION->value => self::TARDINESS_TRANSPORTATION,
+            self::TARDINESS_SICK->value => self::TARDINESS_SICK,
+            self::TARDINESS_APPOINTMENT->value => self::TARDINESS_APPOINTMENT,
+            default => null
+        };
+    }
 
     public function label(): string
     {
@@ -52,25 +73,6 @@ enum AttendanceEnum: string
             self::TARDINESS_APPOINTMENT->value => 'tardiness'
         };
 
-    }
-
-    public static function get($enumValue): ?\App\Enums\AttendanceEnum
-    {
-        return match ($enumValue) {
-            self::ABSENCE_HOME->value => self::ABSENCE_HOME,
-            self::ABSENCE_VACATION->value => self::ABSENCE_VACATION,
-            self::ABSENCE_PARENTS_ACTIVITY->value => self::ABSENCE_PARENTS_ACTIVITY,
-            self::ABSENCE_SICK->value => self::ABSENCE_SICK,
-            self::ABSENCE_APPOINTMENT->value => self::ABSENCE_APPOINTMENT,
-            self::ABSENCE_SCHOOL_ACTIVITY->value => self::ABSENCE_SCHOOL_ACTIVITY,
-            self::ABSENCE_NO_EXCUSE->value => self::ABSENCE_NO_EXCUSE,
-            self::TARDINESS_NO_EXCUSE->value => self::TARDINESS_NO_EXCUSE,
-            self::TARDINESS_HOME->value => self::TARDINESS_HOME,
-            self::TARDINESS_TRANSPORTATION->value => self::TARDINESS_TRANSPORTATION,
-            self::TARDINESS_SICK->value => self::TARDINESS_SICK,
-            self::TARDINESS_APPOINTMENT->value => self::TARDINESS_APPOINTMENT,
-            default => null
-        };
     }
 
     public function labelWithType(): string

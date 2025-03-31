@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\PDF;
 
 use App\Enums\AttendanceEnum;
@@ -16,7 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class AttendanceReportPDFController extends Controller
+final class AttendanceReportPDFController extends Controller
 {
     private $year;
 
@@ -64,7 +66,7 @@ class AttendanceReportPDFController extends Controller
         $pdf->SetFont('Times', 'B', 12);
         $pdf->Cell(0, 5, __('pdf.attendanceReport.schoolYear'), 0, 1, 'C');
         $pdf->Cell(0, 5, "20{$year1}-20{$year2}", 0, 1, 'C');
-        $date = intval($selectedTrimesterValue[2]) < 6 ? "20{$year1}-{$selectedTrimesterValue[2]}-31" : "20{$year2}-{$selectedTrimesterValue[2]}-31";
+        $date = (int) ($selectedTrimesterValue[2]) < 6 ? "20{$year1}-{$selectedTrimesterValue[2]}-31" : "20{$year2}-{$selectedTrimesterValue[2]}-31";
         $pdf->Cell(0, 5, "{$month} {$date}", 0, 1, 'C');
         $pdf->Cell(0, 5, __('pdf.attendanceReport.title'), 0, 1, 'C');
         $pdf->Ln();
@@ -190,8 +192,8 @@ class AttendanceReportPDFController extends Controller
                     $absences = $tardiness = 0;
 
                     foreach ($attendances as $attendance) {
-                        $absences += intval($attendance->codigo) <= 7 ? 1 : 0;
-                        $tardiness += intval($attendance->codigo) >= 8 ? 1 : 0;
+                        $absences += (int) ($attendance->codigo) <= 7 ? 1 : 0;
+                        $tardiness += (int) ($attendance->codigo) >= 8 ? 1 : 0;
 
                     }
                     $student = Student::where('ss', $ss)->select(['nombre', 'apellidos'])->first();

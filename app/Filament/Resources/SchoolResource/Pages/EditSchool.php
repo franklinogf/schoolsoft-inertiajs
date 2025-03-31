@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\SchoolResource\Pages;
 
 use App\Filament\Resources\SchoolResource;
@@ -9,7 +11,7 @@ use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Colors\Color;
 use Illuminate\Support\Facades\Artisan;
 
-class EditSchool extends EditRecord
+final class EditSchool extends EditRecord
 {
     protected static string $resource = SchoolResource::class;
 

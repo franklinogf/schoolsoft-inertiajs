@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Mail\Root\Contact;
 
 test('Can access Contact page', function () {
@@ -9,7 +11,7 @@ test('Can access Contact page', function () {
 });
 
 test('Contact page can submit a form', function () {
-    /** @var \Tests\TenantCase $this */
+    /** @var Tests\TenantCase $this */
     Mail::fake();
 
     $emailData = [

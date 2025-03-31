@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Admin;
 use Illuminate\Support\Facades\Cache;
 
-class AdminService
+final class AdminService
 {
     public function getYear(): string
     {

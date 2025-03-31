@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SchoolResource\Pages;
@@ -27,20 +29,21 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Livewire\Component as Livewire;
+use Override;
 
-class SchoolResource extends Resource
+final class SchoolResource extends Resource
 {
     protected static ?string $model = School::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    #[\Override]
+    #[Override]
     public static function form(Form $form): Form
     {
         $featuresToggles = Feature::all()
-            ->map(fn (Feature $feature): \Filament\Forms\Components\Toggle => Toggle::make(name: $feature->name)->default(false))->toArray();
+            ->map(fn (Feature $feature): Toggle => Toggle::make(name: $feature->name)->default(false))->toArray();
         $enviroments = Enviroment::all()->map(
-            fn(Enviroment $enviroment): \Filament\Forms\Components\Fieldset => FieldSet::make($enviroment->name)
+            fn (Enviroment $enviroment): Fieldset => Fieldset::make($enviroment->name)
                 ->statePath($enviroment->name)
                 ->columnSpanFull()
                 ->schema([TextInput::make('value'), TextInput::make('other')])
@@ -59,7 +62,7 @@ class SchoolResource extends Resource
                                     if ($operation === 'edit') {
                                         return;
                                     }
-                                    $newState = strtolower($state);
+                                    $newState = mb_strtolower($state);
                                     $set('tenancy_db_username', $newState);
                                     $set('tenancy_db_name', $newState);
                                     $set('id', $newState);
@@ -83,13 +86,13 @@ class SchoolResource extends Resource
                                     ->label('Database name (auto filled)')
                                     ->prefix(env('TENANT_DB_PREFIX'))
                                     ->formatStateUsing(fn (?string $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX').$state))
-                                    ->dehydrateStateUsing(fn (string $state): string => env('TENANT_DB_PREFIX').strtolower($state))
+                                    ->dehydrateStateUsing(fn (string $state): string => env('TENANT_DB_PREFIX').mb_strtolower($state))
                                     ->required(),
                                 TextInput::make('tenancy_db_username')
                                     ->label('Database user (auto filled)')
                                     ->prefix(env('TENANT_DB_PREFIX'))
                                     ->formatStateUsing(fn (?string $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX').$state))
-                                    ->dehydrateStateUsing(fn (string $state): string => env('TENANT_DB_PREFIX').strtolower($state))
+                                    ->dehydrateStateUsing(fn (string $state): string => env('TENANT_DB_PREFIX').mb_strtolower($state))
                                     ->required(),
                                 TextInput::make('tenancy_db_password')->label('Database password (auto filled)')->default(env('TENANT_DB_PASSWORD'))->required(),
 
@@ -159,22 +162,22 @@ class SchoolResource extends Resource
                                     'sm' => 2,
                                 ])
                                 ->headerActions([
-                                    static::importAction(),
+                                    self::importAction(),
                                 ])
                                 ->schema(function () {
                                     $theme = collect(config('theme.themes'));
 
-                                    return $theme->map(function ($items, $mode) use ($theme): \Filament\Forms\Components\Fieldset {
+                                    return $theme->map(function ($items, $mode) use ($theme): Fieldset {
                                         $colorItems = collect($items)
-                                            ->filter(fn ($_, $key): bool => $key != 'radius');
+                                            ->filter(fn ($_, $key): bool => $key !== 'radius');
 
-                                        return FieldSet::make(ucfirst($mode))
+                                        return Fieldset::make(ucfirst($mode))
                                             ->columns(2)
                                             ->columnSpan(1)
                                             ->statePath($mode)
                                             ->schema(
                                                 [
-                                                    ...$colorItems->map(fn($color, $key): \Filament\Forms\Components\ColorPicker => static::colorPicker($key, ucfirst($key), $color))->toArray(),
+                                                    ...$colorItems->map(fn ($color, $key): ColorPicker => static::colorPicker($key, ucfirst($key), $color))->toArray(),
                                                     TextInput::make('radius')
                                                         ->label('Radius')
                                                         ->required()
@@ -199,6 +202,62 @@ class SchoolResource extends Resource
 
     }
 
+    #[Override]
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('ID')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\Action::make('school_website')
+                    ->label('Go to school')
+                    ->color(Color::Emerald)
+                    ->url(fn (School $record): string => route('home.index', ['school' => $record->id]))
+                    ->openUrlInNewTab(),
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
+            ]);
+    }
+
+    #[Override]
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    #[Override]
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListSchools::route('/'),
+            'create' => Pages\CreateSchool::route('/create'),
+            'edit' => Pages\EditSchool::route('/{record}/edit'),
+        ];
+    }
+
     private static function formatThemeKeyToCSS(string $key): string
     {
         return '--'.Str::slug(Str::headline($key));
@@ -219,7 +278,7 @@ class SchoolResource extends Resource
         $isHsl = preg_match('/(\d+(\.\d+)?)\s+(\d+(\.\d+)?)%\s+(\d+(\.\d+)?)%/', $value);
 
         if ($isHsl) {
-            $value = static::formatThemeValueToCSS($value);
+            $value = self::formatThemeValueToCSS($value);
 
             return 'hsl('.str_replace(' ', ', ', $value).')';
         }
@@ -270,7 +329,7 @@ class SchoolResource extends Resource
                     $cssVariables = Str::betweenFirst($theme, $replaceHead, '}');
                     $cssVariables = Str::betweenFirst($cssVariables, '{', '}');
                     $cssVariables = Str::replaceMatches('/\t/', '', $cssVariables);
-                    $cssVariables = trim(Str::replaceMatches('/\r\n/', '', $cssVariables));
+                    $cssVariables = mb_trim(Str::replaceMatches('/\r\n/', '', $cssVariables));
                     $eachCssVariable = explode(';', $cssVariables);
                     $css = [];
 
@@ -278,9 +337,9 @@ class SchoolResource extends Resource
                         if ($value === '') {
                             continue;
                         }
-                        $exploded = explode(':', trim($value));
+                        $exploded = explode(':', mb_trim($value));
 
-                        $css[static::formatThemeKey(trim($exploded[0]))] = static::formatThemeValue(trim($exploded[1]));
+                        $css[static::formatThemeKey(mb_trim($exploded[0]))] = static::formatThemeValue(mb_trim($exploded[1]));
                     }
 
                     $json[$mode] = $css;
@@ -319,61 +378,5 @@ class SchoolResource extends Resource
 
             ->regex('/hsl\(\s*(?:\d{1,3}(?:\.\d+)?)\s*,\s*(?:\d{1,2}(?:\.\d+)?|100(?:\.0+)?)%\s*,\s*(?:\d{1,2}(?:\.\d+)?|100(?:\.0+)?)%\s*\)/')
             ->required();
-    }
-
-    #[\Override]
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\Action::make('school_website')
-                    ->label('Go to school')
-                    ->color(Color::Emerald)
-                    ->url(fn (School $record): string => route('home.index', ['school' => $record->id]))
-                    ->openUrlInNewTab(),
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
-            ]);
-    }
-
-    #[\Override]
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    #[\Override]
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListSchools::route('/'),
-            'create' => Pages\CreateSchool::route('/create'),
-            'edit' => Pages\EditSchool::route('/{record}/edit'),
-        ];
     }
 }

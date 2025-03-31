@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Options;
 
 use App\Enums\MediaCollectionEnum;
@@ -19,11 +21,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\MediaStream;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class MessagesController extends Controller
+final class MessagesController extends Controller
 {
     public function index(?Inbox $inbox, #[CurrentUser] Teacher $user)
     {
-        if ($inbox instanceof \App\Models\Inbox) {
+        if ($inbox instanceof Inbox) {
             Gate::allowIf(
                 $inbox->sender()->is($user)
                 || $inbox->teachers()->where('receiver_id', $user->id)
@@ -62,9 +64,9 @@ class MessagesController extends Controller
 
         $mails = $mails->count() > 0 ? InboxResource::collection($mails) : [];
 
-        $mail = $inbox instanceof \App\Models\Inbox ? new InboxResource($inbox) : null;
+        $mail = $inbox instanceof Inbox ? new InboxResource($inbox) : null;
 
-        if ($mail instanceof \App\Http\Resources\InboxResource && $inbox->sender_id !== $user->id) {
+        if ($mail instanceof InboxResource && $inbox->sender_id !== $user->id) {
             $user->receivedMessages()
                 ->updateExistingPivot($inbox->id, ['is_read' => true]);
         }
@@ -124,7 +126,7 @@ class MessagesController extends Controller
         ]);
 
         /**
-         * @var \App\Models\Teacher $teacher
+         * @var Teacher $teacher
          */
         $teacher = auth()->user();
 
@@ -160,7 +162,7 @@ class MessagesController extends Controller
         $type = $request->query('type', 'inbox');
 
         /**
-         * @var \App\Models\Teacher $teacher
+         * @var Teacher $teacher
          */
         $teacher = auth()->user();
 
@@ -179,7 +181,7 @@ class MessagesController extends Controller
         $type = $request->query('type', 'inbox');
 
         /**
-         * @var \App\Models\Teacher $teacher
+         * @var Teacher $teacher
          */
         $teacher = auth()->user();
 

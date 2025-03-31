@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'phone' => 'The :attribute field must be a valid number.',
     'accepted' => 'The :attribute field must be accepted.',
