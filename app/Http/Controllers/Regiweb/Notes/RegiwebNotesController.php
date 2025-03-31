@@ -25,7 +25,7 @@ final class RegiwebNotesController extends Controller
 {
     public function __construct(
         #[CurrentUser()]
- private readonly Teacher $user,
+        private readonly Teacher $user,
         private ?string $year,
         private ?Admin $admin,
         private readonly AdminService $adminService,
