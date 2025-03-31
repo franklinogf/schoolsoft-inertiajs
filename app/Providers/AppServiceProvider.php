@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -30,6 +31,7 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->configureCommands();
         $this->configureModels();
         $this->configureDates();
         $this->configureValidations();
@@ -42,6 +44,11 @@ final class AppServiceProvider extends ServiceProvider
 
         App::singleton('year', fn (): string => (new AdminService)->getYear());
 
+    }
+
+    private function configureCommands(): void
+    {
+        DB::prohibitDestructiveCommands(app()->isProduction());
     }
 
     private function configureDates(): void
