@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\PDF;
 
 use Codedge\Fpdf\Fpdf\Fpdf;
-use Override;
 
 final class BasePDF extends Fpdf
 {
@@ -23,7 +22,6 @@ final class BasePDF extends Fpdf
         $this->Cell(0, 5, $value2, 0, 1, 'R');
     }
 
-    #[Override]
     public function Cell($w, $h = 0, $txt = '', $border = 0, $ln = 0, $align = '', $fill = false, $link = ''): void
     {
         parent::Cell($w, $h, mb_convert_encoding($txt, 'windows-1252', 'UTF-8'), $border, $ln, $align, $fill, $link);

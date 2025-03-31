@@ -65,7 +65,7 @@ use Illuminate\Support\Facades\Gate;
         ];
     }
 
-    protected function gate(): void
+    private function gate(): void
     {
         Gate::define('viewTelescope', fn (): true => true);
     }

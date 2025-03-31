@@ -23,7 +23,7 @@ final class Enviroment extends Model
 
     protected $keyType = 'string';
 
-    protected function name(): Attribute
+    private function name(): Attribute
     {
         return Attribute::make(
             set: fn (string $value) => mb_strtolower($value),

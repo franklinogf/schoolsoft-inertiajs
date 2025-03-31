@@ -91,7 +91,7 @@ final class MessagesSmscontroller extends Controller
         }
 
         foreach ($tos as $to) {
-            $personalEmail = (new PersonalEmail($message))->subject($subject);
+            $personalEmail = new PersonalEmail($message)->subject($subject);
 
             if ($to['email'] === null) {
                 continue;

@@ -29,7 +29,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Livewire\Component as Livewire;
-use Override;
 
 final class SchoolResource extends Resource
 {
@@ -37,7 +36,6 @@ final class SchoolResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    #[Override]
     public static function form(Form $form): Form
     {
         $featuresToggles = Feature::all()
@@ -177,7 +175,7 @@ final class SchoolResource extends Resource
                                             ->statePath($mode)
                                             ->schema(
                                                 [
-                                                    ...$colorItems->map(fn ($color, $key): ColorPicker => static::colorPicker($key, ucfirst($key), $color))->toArray(),
+                                                    ...$colorItems->map(fn ($color, $key): ColorPicker => self::colorPicker($key, ucfirst($key), $color))->toArray(),
                                                     TextInput::make('radius')
                                                         ->label('Radius')
                                                         ->required()
@@ -202,7 +200,6 @@ final class SchoolResource extends Resource
 
     }
 
-    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -240,7 +237,6 @@ final class SchoolResource extends Resource
             ]);
     }
 
-    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -248,7 +244,6 @@ final class SchoolResource extends Resource
         ];
     }
 
-    #[Override]
     public static function getPages(): array
     {
         return [
@@ -299,8 +294,8 @@ final class SchoolResource extends Resource
                         $themes .= "{$head} { \r\n";
                         collect($items)
                             ->each(function ($color, string $key) use (&$themes): void {
-                                $formattedKey = static::formatThemeKeyToCSS($key);
-                                $themes .= "\t {$formattedKey}: ".static::formatThemeValueToCSS($color)."; \r\n";
+                                $formattedKey = self::formatThemeKeyToCSS($key);
+                                $themes .= "\t {$formattedKey}: ".self::formatThemeValueToCSS($color)."; \r\n";
                             });
                         $themes .= "} \r\n";
                     });
@@ -339,7 +334,7 @@ final class SchoolResource extends Resource
                         }
                         $exploded = explode(':', mb_trim($value));
 
-                        $css[static::formatThemeKey(mb_trim($exploded[0]))] = static::formatThemeValue(mb_trim($exploded[1]));
+                        $css[self::formatThemeKey(mb_trim($exploded[0]))] = self::formatThemeValue(mb_trim($exploded[1]));
                     }
 
                     $json[$mode] = $css;

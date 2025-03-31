@@ -37,10 +37,10 @@ final class AttendanceReportPDFController extends Controller
         [$year1,$year2] = explode('-', (string) $this->year);
 
         $trimesterValue = [
-            TrimesterEnum::FIRST_TRIMESTER->value => ['1', '2', '10'],
-            TrimesterEnum::SECOND_TRIMESTER->value => ['3', '4', '12'],
-            TrimesterEnum::THIRD_TRIMESTER->value => ['5', '6', '03'],
-            TrimesterEnum::FOURTH_TRIMESTER->value => ['7', '8', '05'],
+            TrimesterEnum::FIRST_TRIMESTER->value => [1, 2, 10],
+            TrimesterEnum::SECOND_TRIMESTER->value => [3, 4, 12],
+            TrimesterEnum::THIRD_TRIMESTER->value => [5, 6, 3],
+            TrimesterEnum::FOURTH_TRIMESTER->value => [7, 8, 5],
         ];
         $selectedTrimesterValue = $trimesterValue[$validated['trimester']];
         $isHomeCourse = $validated['course'] === 'home';

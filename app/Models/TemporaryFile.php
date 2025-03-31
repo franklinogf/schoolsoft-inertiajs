@@ -7,7 +7,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Override;
 
 /**
  * @property int $id
@@ -36,8 +35,7 @@ final class TemporaryFile extends Model
         return $moved;
     }
 
-    #[Override]
-    protected static function booted()
+    protected static function booted(): void
     {
         self::deleting(function (TemporaryFile $temporaryFile): void {
             Log::info("Deleting temporary file folder {$temporaryFile->folder}");

@@ -11,7 +11,7 @@ final class InboxObserver
     /**
      * Handle the Inbox "created" event.
      */
-    public function created(Inbox $inbox): void
+    public function created(): void
     {
         //
     }
@@ -24,7 +24,7 @@ final class InboxObserver
     /**
      * Handle the Inbox "updated" event.
      */
-    public function updated(Inbox $inbox): void
+    public function updated(): void
     {
         //
     }
@@ -32,7 +32,7 @@ final class InboxObserver
     /**
      * Handle the Inbox "deleted" event.
      */
-    public function deleted(Inbox $inbox): void
+    public function deleted(): void
     {
         //
     }
@@ -40,7 +40,7 @@ final class InboxObserver
     /**
      * Handle the Inbox "restored" event.
      */
-    public function restored(Inbox $inbox): void
+    public function restored(): void
     {
         //
     }
@@ -48,7 +48,7 @@ final class InboxObserver
     /**
      * Handle the Inbox "force deleted" event.
      */
-    public function forceDeleted(Inbox $inbox): void
+    public function forceDeleted(): void
     {
         //
     }

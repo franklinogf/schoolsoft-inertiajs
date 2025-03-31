@@ -8,7 +8,6 @@ use App\Enums\MediaCollectionEnum;
 use App\Http\Resources\CoursesResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Override;
 
 final class TeacherResource extends JsonResource
 {
@@ -17,7 +16,6 @@ final class TeacherResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    #[Override]
     public function toArray(Request $request): array
     {
         return [

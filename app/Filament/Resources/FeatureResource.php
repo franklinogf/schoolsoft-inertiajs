@@ -11,7 +11,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Override;
 
 final class FeatureResource extends Resource
 {
@@ -19,7 +18,6 @@ final class FeatureResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    #[Override]
     public static function form(Form $form): Form
     {
         return $form
@@ -28,7 +26,6 @@ final class FeatureResource extends Resource
             ]);
     }
 
-    #[Override]
     public static function table(Table $table): Table
     {
         return $table
@@ -50,7 +47,6 @@ final class FeatureResource extends Resource
             ]);
     }
 
-    #[Override]
     public static function getPages(): array
     {
         return [

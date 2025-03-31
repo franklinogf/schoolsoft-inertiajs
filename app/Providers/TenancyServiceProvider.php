@@ -7,7 +7,6 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Override;
 use Stancl\JobPipeline\JobPipeline;
 use Stancl\Tenancy\Events;
 use Stancl\Tenancy\Jobs;
@@ -89,7 +88,6 @@ final class TenancyServiceProvider extends ServiceProvider
         ];
     }
 
-    #[Override]
     public function register(): void
     {
         //
@@ -104,7 +102,7 @@ final class TenancyServiceProvider extends ServiceProvider
 
     }
 
-    protected function bootEvents()
+    private function bootEvents(): void
     {
         foreach ($this->events() as $event => $listeners) {
             foreach ($listeners as $listener) {
@@ -117,7 +115,7 @@ final class TenancyServiceProvider extends ServiceProvider
         }
     }
 
-    protected function mapRoutes()
+    private function mapRoutes(): void
     {
         $this->app->booted(function (): void {
             if (file_exists(base_path('routes/tenant.php'))) {
@@ -127,7 +125,7 @@ final class TenancyServiceProvider extends ServiceProvider
         });
     }
 
-    protected function makeTenancyMiddlewareHighestPriority()
+    private function makeTenancyMiddlewareHighestPriority(): void
     {
         $tenancyMiddleware = [
             // Even higher priority than the initialization middleware

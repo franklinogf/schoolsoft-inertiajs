@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 final class BlankLineTopicController extends Controller
 {
     public function __construct(
-        protected ExamService $examService
+        private readonly ExamService $examService
     ) {}
 
     public function store(Request $request, Exam $exam)

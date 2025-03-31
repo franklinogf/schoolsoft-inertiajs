@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\PDF;
 
 use App\Models\Admin;
-use Override;
 
 final class PDF extends BasePDF
 {
@@ -29,7 +28,6 @@ final class PDF extends BasePDF
         $this->SetCreator(config('app.name'), true);
     }
 
-    #[Override]
     public function header(): void
     {
         if (! $this->header) {
@@ -59,7 +57,6 @@ final class PDF extends BasePDF
         }
     }
 
-    #[Override]
     public function Footer(): void
     {
         if ($this->footer === false) {

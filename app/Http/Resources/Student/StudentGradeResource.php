@@ -6,7 +6,6 @@ namespace App\Http\Resources\Student;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Override;
 
 final class StudentGradeResource extends JsonResource
 {
@@ -15,7 +14,6 @@ final class StudentGradeResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    #[Override]
     public function toArray(Request $request): array
     {
         return [

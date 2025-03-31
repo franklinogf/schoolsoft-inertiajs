@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 final class PairTopicController extends Controller
 {
     public function __construct(
-        protected ExamService $examService
+        private readonly ExamService $examService
     ) {}
 
     public function store(Request $request, Exam $exam)

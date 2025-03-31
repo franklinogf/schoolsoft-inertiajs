@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Override;
 use Stancl\Tenancy;
 use Stancl\Tenancy\Resolvers\PathTenantResolver;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +14,6 @@ final class TenantProvider extends ServiceProvider
     /**
      * Register services.
      */
-    #[Override]
     public function register(): void
     {
         //

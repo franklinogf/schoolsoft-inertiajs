@@ -90,7 +90,7 @@ final class MessagesEmailController extends Controller
             if ($to['email'] === null) {
                 continue;
             }
-            $personalEmail = (new PersonalEmail($message, $validated['files']))->subject($subject);
+            $personalEmail = new PersonalEmail($message, $validated['files'])->subject($subject);
             Mail::to($to['email'], $to['name'])->queue($personalEmail);
         }
 

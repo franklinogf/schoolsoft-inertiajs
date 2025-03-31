@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Model;
-use Override;
 
 /**
  * @property string $ss
@@ -262,7 +261,6 @@ final class Student extends Model
             ->withPivot('is_read', 'is_deleted');
     }
 
-    #[Override]
     protected static function booted(): void
     {
         // //Siempre utilizar el year del colegio

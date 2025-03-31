@@ -43,7 +43,7 @@ final class Course extends Model
         return $this->hasOne(Teacher::class, 'id', 'id');
     }
 
-    protected function descripcion(): Attribute
+    private function descripcion(): Attribute
     {
         return Attribute::make(
             get: fn (mixed $value, array $attributes) => app()->getLocale() === 'es'

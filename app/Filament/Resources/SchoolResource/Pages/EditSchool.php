@@ -27,7 +27,7 @@ final class EditSchool extends EditRecord
         ];
     }
 
-    protected function afterSave()
+    private function afterSave(): void
     {
         Artisan::call('tenants:run',
             [

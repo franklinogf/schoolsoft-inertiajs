@@ -7,7 +7,6 @@ namespace App\Http\Resources;
 use App\Enums\MediaCollectionEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Override;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 final class InboxResource extends JsonResource
@@ -17,7 +16,6 @@ final class InboxResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    #[Override]
     public function toArray(Request $request): array
     {
         return [

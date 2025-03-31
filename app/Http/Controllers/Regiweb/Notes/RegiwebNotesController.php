@@ -24,10 +24,11 @@ use Inertia\Inertia;
 final class RegiwebNotesController extends Controller
 {
     public function __construct(
-        #[CurrentUser()] protected Teacher $user,
-        protected ?string $year,
-        protected ?Admin $admin,
-        protected AdminService $adminService,
+        #[CurrentUser()]
+ private readonly Teacher $user,
+        private ?string $year,
+        private ?Admin $admin,
+        private readonly AdminService $adminService,
 
     ) {
         $this->admin = $this->adminService->getPrimaryAdmin();
@@ -126,8 +127,6 @@ final class RegiwebNotesController extends Controller
 
         return redirect()->back()->with(FlashMessageKey::SUCCESS->value, __('Attendance saved successfully'));
     }
-
-    public function saveExam() {}
 
     public function saveValues(Request $request, int $id)
     {
