@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Scopes\SchoolYear;
@@ -187,7 +189,7 @@ use Illuminate\Foundation\Auth\User as Model;
  * @property string $pm3_hora
  */
 #[ScopedBy([Active::class, SchoolYear::class])]
-class Student extends Model
+final class Student extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -206,35 +208,20 @@ class Student extends Model
 
     protected $guarded = [];
 
-    protected static function booted(): void
-    {
-        // //Siempre utilizar el year del colegio
-        // static::addGlobalScope('year', function (Builder $builder) {
-        //     $builder->where("year.year", Admin::admin()->year);
-        // });
-        // Siempre buscar los que estan activos
-        // static::addGlobalScope('active', function (Builder $builder) {
-        //     $builder->where('year.fecha_baja', '0000-00-00');
-        // });
-        // Siempre ordernar por apellidos
-        static::addGlobalScope('orderByLastname', function (Builder $builder) {
-            $builder->orderBy('year.apellidos')->orderBy('year.nombre');
-        });
-    }
-
     public function scopeOfCourse(Builder $query, string $class, string $table = 'padres', $summer = false): void
     {
         $where = [
-            ["$table.curso", $class],
-            ["$table.baja", ''],
-            ["$table.year", app('year')],
+            ["{$table}.curso", $class],
+            ["{$table}.baja", ''],
+            ["{$table}.year", app('year')],
             ["{$this->table}.year", app('year')],
         ];
+
         if ($summer) {
-            $where[] = ["$table.verano", '2'];
+            $where[] = ["{$table}.verano", '2'];
         }
         $query->addSelect("{$this->table}.*")
-            ->join($table, "{$this->table}.ss", '=', "$table.ss")
+            ->join($table, "{$this->table}.ss", '=', "{$table}.ss")
             ->where($where);
     }
 
@@ -272,5 +259,21 @@ class Student extends Model
     {
         return $this->morphToMany(Inbox::class, 'receiver', 'inboxebles')
             ->withPivot('is_read', 'is_deleted');
+    }
+
+    protected static function booted(): void
+    {
+        // //Siempre utilizar el year del colegio
+        // static::addGlobalScope('year', function (Builder $builder) {
+        //     $builder->where("year.year", Admin::admin()->year);
+        // });
+        // Siempre buscar los que estan activos
+        // static::addGlobalScope('active', function (Builder $builder) {
+        //     $builder->where('year.fecha_baja', '0000-00-00');
+        // });
+        // Siempre ordernar por apellidos
+        self::addGlobalScope('orderByLastname', function (Builder $builder): void {
+            $builder->orderBy('year.apellidos')->orderBy('year.nombre');
+        });
     }
 }

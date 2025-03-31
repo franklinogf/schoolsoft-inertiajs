@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail;
 
 use App\Models\Admin;
@@ -11,7 +13,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class PersonalEmail extends Mailable
+final class PersonalEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -59,7 +61,7 @@ class PersonalEmail extends Mailable
 
         $attachments = [];
 
-        tenancy()->central(function () use (&$attachments) {
+        tenancy()->central(function () use (&$attachments): void {
 
             foreach ($this->files as $folder) {
 

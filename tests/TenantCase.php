@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use App\Models\Admin;
@@ -29,12 +31,12 @@ abstract class TenantCase extends BaseTestCase
         parent::tearDown();
     }
 
-    public function getPrimaryAdmin()
+    final public function getPrimaryAdmin()
     {
         return Admin::getPrimaryAdmin()->first();
     }
 
-    public function getRegiwebUser()
+    final public function getRegiwebUser()
     {
         return Teacher::where('usuario', 'rvelez')->first();
     }

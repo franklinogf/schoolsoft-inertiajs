@@ -4,21 +4,21 @@ export enum GenderEnum {
 }
 
 export enum PhoneCompaniesEnum {
-  "AT&T" = "@txt.att.net",
-  "T-Movil" = "@tmomail.net",
-  Sprint = "@messaging.sprintpcs.com",
-  "Open M." = "@email.openmobilepr.com",
-  Claro = "@mms.claropr.com",
-  Verizon = "@vtext.com",
-  Suncom = "@tms.suncom.com",
-  Boost = "@myboostmobile.com",
+  ATT = "AT&T",
+  TMOBILE = "T-Movil",
+  SPRINT = "Sprint",
+  OPENM = "Open M.",
+  CLARO = "Claro",
+  VERIZON = "Verizon",
+  SUNCOM = "Suncom",
+  BOOST = "Boost",
 }
 
 export enum TeacherLevelEnum {
-  Elemental = "Elemental",
-  "Pre-escolar" = "Pre escolar",
-  Intermedia = "Intermedia",
-  Superior = "Superior",
+  ELEMENTAL = "Elemental",
+  PRE_SCHOOL = "Pre-escolar",
+  INTERMEDIATE = "Intermedia",
+  SUPERIOR = "Superior",
 }
 
 export enum YesNoEnum {

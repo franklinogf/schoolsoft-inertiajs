@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Root;
 
 use App\Enums\FlashMessageKey;
@@ -7,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class ContactController extends Controller
+final class ContactController extends Controller
 {
     public function index()
     {
@@ -21,7 +23,7 @@ class ContactController extends Controller
             'lastname' => ['required'],
             'email' => ['required', 'email'],
             'message' => ['required'],
-            'phone' => ['phone'],
+            'phone' => ['phone:INTERNATIONAL'],
         ]);
 
         Mail::send(new \App\Mail\Root\Contact(

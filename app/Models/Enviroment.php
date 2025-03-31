@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -9,22 +11,22 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property string $name
  */
-class Enviroment extends Model
+final class Enviroment extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'name';
-
     public $incrementing = false;
-
-    protected $keyType = 'string';
 
     public $timestamps = false;
 
-    protected function name(): Attribute
+    protected $primaryKey = 'name';
+
+    protected $keyType = 'string';
+
+    private function name(): Attribute
     {
         return Attribute::make(
-            set: fn (string $value) => strtolower($value),
+            set: fn (string $value) => mb_strtolower($value),
         );
     }
 }

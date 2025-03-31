@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use App\Enums\FlashMessageKey;
@@ -7,7 +9,7 @@ use App\Http\Resources\Teacher\TeacherResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
-class HandleInertiaRequests extends Middleware
+final class HandleInertiaRequests extends Middleware
 {
     /**
      * The root template that is loaded on the first page visit.
@@ -61,7 +63,7 @@ class HandleInertiaRequests extends Middleware
 
     private function getUser(Request $request, ?string $guard)
     {
-        if ($guard) {
+        if ($guard !== null && $guard !== '' && $guard !== '0') {
             if ($guard === 'teacher' && $request->user($guard)) {
                 return new TeacherResource($request->user($guard));
             }

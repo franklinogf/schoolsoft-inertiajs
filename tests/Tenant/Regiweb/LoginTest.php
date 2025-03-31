@@ -1,16 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enums\FlashMessageKey;
 
 test('renders regiweb login page', function () {
-    /** @var \Tests\TenantCase $this */
-    $response = $this->get(route('regiweb.login.index'));
+    /** @var Tests\TenantCase $this */
+    $response = $this
+        ->get(route('regiweb.login.index'));
+
+    $response->assertSuccessful();
+
     $this->assertGuest();
-    $response->assertStatus(200);
+
+    $response->assertInertia(fn ($page) => $page->component('Regiweb/Login'));
+
 });
 
 it('redirects to index page if user is already logged in', function () {
-    /** @var \Tests\TenantCase $this */
+    /** @var Tests\TenantCase $this */
     $user = $this->getRegiwebUser();
     $response = $this
         ->actingAs($user)
@@ -19,8 +27,18 @@ it('redirects to index page if user is already logged in', function () {
     $response->assertRedirect(route('regiweb.index'));
 });
 
+test('not redirects when another user that is not a teacher is logged in', function () {
+    /** @var Tests\TenantCase $this */
+    $user = $this->getPrimaryAdmin();
+    $response = $this
+        ->actingAs($user, 'admin')
+        ->get(route('regiweb.login.index'));
+    $this->assertAuthenticatedAs($user);
+    $response->assertSuccessful();
+});
+
 it('can login with valid credentials', function () {
-    /** @var \Tests\TenantCase $this */
+    /** @var Tests\TenantCase $this */
     $user = $this->getRegiwebUser();
     $response = $this->post(route('regiweb.login'), [
         'usuario' => $user->usuario,
@@ -31,7 +49,7 @@ it('can login with valid credentials', function () {
 });
 
 it('cannot login with invalid credentials', function () {
-    /** @var \Tests\TenantCase $this */
+    /** @var Tests\TenantCase $this */
     $user = $this->getRegiwebUser();
     $response = $this->post(route('regiweb.login'), [
         'usuario' => $user->usuario,
@@ -42,7 +60,7 @@ it('cannot login with invalid credentials', function () {
 });
 
 it('can logout', function () {
-    /** @var \Tests\TenantCase $this */
+    /** @var Tests\TenantCase $this */
     $user = $this->getRegiwebUser();
     $response = $this
         ->actingAs($user)

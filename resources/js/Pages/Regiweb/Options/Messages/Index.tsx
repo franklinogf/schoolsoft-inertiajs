@@ -1,5 +1,14 @@
+import { MessageForm } from "@/Components/forms/MessageForm";
 import { InboxSideBar } from "@/Components/InboxSideBar";
 import { Button } from "@/Components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/Components/ui/dialog";
 import { Separator } from "@/Components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/Components/ui/sidebar";
 import { Skeleton } from "@/Components/ui/skeleton";
@@ -7,16 +16,12 @@ import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
 import { formatDate, formatTime, isAdmin, isImage } from "@/lib/utils";
 import useConfirmationStore from "@/stores/confirmationStore";
-import type {
-  InboxSideBarMenu,
-  InboxType,
-  PageProps,
-  PagePropsWithUser,
-  TeacherInbox,
-} from "@/types";
+import type { PageProps, PagePropsWithUser } from "@/types";
+import type { InboxSideBarMenu, InboxType, TeacherInbox } from "@/types/inbox";
 import { Teacher } from "@/types/teacher";
 import { Deferred, router, usePage } from "@inertiajs/react";
 import { FileIcon, InboxIcon, PlusCircleIcon, ReplyIcon, SendIcon, Trash2Icon } from "lucide-react";
+
 export default function Page({
   mails,
   mail,
@@ -26,14 +31,34 @@ export default function Page({
   mail: TeacherInbox | null;
   type: InboxType;
 }>) {
+  const { t } = useTranslations();
+  const { openConfirmation } = useConfirmationStore();
+
   function handleDeleteMail(id: number) {
-    router.delete(route("regiweb.options.messages.destroy", { type }), {
-      data: { id },
+    openConfirmation({
+      title: t("Eliminar mensaje"),
+      description: t("¿Está seguro de que desea eliminar este mensaje?"),
+      actionLabel: t("Eliminar"),
+      cancelLabel: t("Cancelar"),
+      actionVariant: "destructive",
+      onAction: () => {
+        router.delete(route("regiweb.options.messages.destroy", { inbox: id, type }));
+      },
     });
   }
+
   function handleRestoreMail(id: number) {
-    router.post(route("regiweb.options.messages.restore", { type }), { id });
+    openConfirmation({
+      title: t("Restaurar mensaje"),
+      description: t("¿Está seguro de que desea restaurar este mensaje?"),
+      actionLabel: t("Restaurar"),
+      cancelLabel: t("Cancelar"),
+      onAction: () => {
+        router.post(route("regiweb.options.messages.restore", { inbox: id, type }));
+      },
+    });
   }
+
   const sideBarNav: InboxSideBarMenu = {
     header: {
       title: "Nuevo",
@@ -86,10 +111,7 @@ export default function Page({
                 <MailHeader mail={mail} onDeleteMail={handleDeleteMail} />
               </Deferred>
             </header>
-
-            <Deferred data="mail" fallback={<MailBodyFallback />}>
-              <MailBody mail={mail} />
-            </Deferred>
+            <MailBody mail={mail} />
           </SidebarInset>
         </SidebarProvider>
       </div>
@@ -143,6 +165,7 @@ function MailBody({ mail }: { mail: TeacherInbox | null }) {
                   <li key={attachment.id} className="bg-muted/50 hover:bg-muted/80">
                     <a
                       href={route("regiweb.options.messages.download", {
+                        inbox: mail.id,
                         media: attachment.id,
                       })}
                     >
@@ -183,10 +206,29 @@ function MailBody({ mail }: { mail: TeacherInbox | null }) {
 
       <Separator />
 
-      <div
-        className="prose lg:prose-2xl mx-auto w-full max-w-4xl"
-        dangerouslySetInnerHTML={{ __html: mail.message }}
-      />
+      <div className="prose lg:prose-2xl" dangerouslySetInnerHTML={{ __html: mail.message }} />
+      <div>
+        {mail.replies.length > 0 && (
+          <div className="flex flex-col gap-2">
+            <ul className="space-y-2">
+              {mail.replies.map((reply) => (
+                <li key={reply.id} className="bg-muted/20 flex flex-col gap-2 border-t p-5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium">
+                      {isAdmin(reply.sender)
+                        ? reply.sender.usuario
+                        : `${reply.sender.nombre} ${reply.sender.apellidos}`}
+                    </span>
+                    <span className="text-xs font-medium">{formatDate(reply.date)}</span>
+                    <span className="text-xs font-medium">{formatTime(reply.time)}</span>
+                  </div>
+                  <div className="prose-sm" dangerouslySetInnerHTML={{ __html: reply.message }} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -208,24 +250,37 @@ function MailHeader({
 
       <div className="ml-auto flex items-center gap-2">
         {mail.sender.id !== auth.user.id && (
-          <Button className="size-8" size="icon">
-            <ReplyIcon />
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="size-8" size="icon">
+                <ReplyIcon />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-h-dvh overflow-y-auto sm:max-w-3xl">
+              <DialogHeader>
+                <DialogTitle>{t("Responder mensaje")}</DialogTitle>
+                <DialogDescription></DialogDescription>
+              </DialogHeader>
+
+              <MessageForm
+                isReplying
+                onSubmit={(post) => {
+                  post(
+                    route("regiweb.options.messages.reply", {
+                      inbox: mail.id,
+                    }),
+                  );
+                }}
+              />
+            </DialogContent>
+          </Dialog>
         )}
         <Button
           variant="destructive"
           size="icon"
           className="size-8"
           onClick={() => {
-            openConfirmation({
-              title: t("Eliminar mensaje"),
-              description: t("¿Está seguro de que desea eliminar este mensaje?"),
-              actionLabel: t("Eliminar"),
-              cancelLabel: t("Cancelar"),
-              onAction: () => {
-                onDeleteMail(mail.id);
-              },
-            });
+            onDeleteMail(mail.id);
           }}
         >
           <Trash2Icon />
@@ -245,19 +300,6 @@ function MailHeaderFallback() {
         <Skeleton className="h-8 w-8" />
         <Skeleton className="h-8 w-8" />
       </div>
-    </div>
-  );
-}
-
-function MailBodyFallback() {
-  return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
-      <Skeleton className="h-6 w-1/3" />
-      <Skeleton className="h-6 w-1/4" />
-      <Skeleton className="h-6 w-1/2" />
-      <Skeleton className="h-6 w-full" />
-      <Skeleton className="h-6 w-full" />
-      <Skeleton className="h-6 w-full" />
     </div>
   );
 }

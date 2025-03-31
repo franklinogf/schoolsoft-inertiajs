@@ -30,7 +30,7 @@ export function OptionsForm({
         >
           {children}
           <div className="flex items-center justify-center">
-            <SubmitButton disabled={submitting}>{submitLabel}</SubmitButton>
+            <SubmitButton isSubmitting={submitting}>{submitLabel}</SubmitButton>
           </div>
         </form>
       </CardContent>

@@ -108,7 +108,7 @@ export function ValuesForm({ values, id, amoutOfGrades, onValueChange }: ValuesF
           </div>
         </CardContent>
         <CardFooter className="justify-center">
-          <SubmitButton size="lg" disabled={processing}>
+          <SubmitButton size="lg" isSubmitting={processing}>
             {t("Guardar")}
           </SubmitButton>
         </CardFooter>

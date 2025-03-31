@@ -11,9 +11,9 @@ use Stancl\Tenancy\Resolvers\PathTenantResolver;
 
 Route::middleware(
     [
+        SetDefaultTenant::class,
         'web',
         InitializeTenancyByPath::class,
-        SetDefaultTenant::class,
     ])
     ->prefix('{'.PathTenantResolver::$tenantParameterName.'}')
     ->group(function () {
@@ -24,8 +24,11 @@ Route::middleware(
         });
 
         require __DIR__.'/admin.php';
+
         require __DIR__.'/regiweb/index.php';
+
         require __DIR__.'/parents.php';
+
         require __DIR__.'/foro.php';
 
     });

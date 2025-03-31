@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Models\Inbox;
 
-class InboxObserver
+final class InboxObserver
 {
     /**
      * Handle the Inbox "created" event.
      */
-    public function created(Inbox $inbox): void
+    public function created(): void
     {
         //
     }
@@ -22,7 +24,7 @@ class InboxObserver
     /**
      * Handle the Inbox "updated" event.
      */
-    public function updated(Inbox $inbox): void
+    public function updated(): void
     {
         //
     }
@@ -30,7 +32,7 @@ class InboxObserver
     /**
      * Handle the Inbox "deleted" event.
      */
-    public function deleted(Inbox $inbox): void
+    public function deleted(): void
     {
         //
     }
@@ -38,7 +40,7 @@ class InboxObserver
     /**
      * Handle the Inbox "restored" event.
      */
-    public function restored(Inbox $inbox): void
+    public function restored(): void
     {
         //
     }
@@ -46,7 +48,7 @@ class InboxObserver
     /**
      * Handle the Inbox "force deleted" event.
      */
-    public function forceDeleted(Inbox $inbox): void
+    public function forceDeleted(): void
     {
         //
     }

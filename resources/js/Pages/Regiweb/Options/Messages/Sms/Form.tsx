@@ -1,7 +1,7 @@
 import { InputField } from "@/Components/forms/inputs/InputField";
 import { TextareaField } from "@/Components/forms/inputs/TextareaField";
 import SubmitButton from "@/Components/forms/SubmitButton";
-import { Button } from "@/Components/ui/button";
+import { PageTitle } from "@/Components/PageTitle";
 import { Card, CardContent } from "@/Components/ui/card";
 import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
@@ -9,7 +9,7 @@ import { createPhoneEmail } from "@/lib/utils";
 import { PhoneCompany } from "@/types";
 import { Student } from "@/types/student";
 import { Course } from "@/types/teacher";
-import { Link, useForm } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import { PhoneIcon } from "lucide-react";
 import { FormEvent } from "react";
 import { SmsSelectedEnum } from "./Index";
@@ -62,14 +62,9 @@ export default function Page({
   return (
     <RegiwebLayout title={t("Enviar SMS")}>
       <div className="mx-auto w-full max-w-2xl">
-        <h1 className="mb-2 text-center text-2xl font-semibold">{t("Enviar SMS")}</h1>
-        <div className="flex justify-end">
-          <Button asChild variant="outline" className="mb-4">
-            <Link href={route("regiweb.options.messages.sms.index", { selected })}>
-              {t("Ir atrás")}
-            </Link>
-          </Button>
-        </div>
+        <PageTitle backLink={route("regiweb.options.messages.sms.index", { selected })}>
+          {t("Enviar SMS")}
+        </PageTitle>
         <form onSubmit={onSubmit}>
           <Card>
             <CardContent className="space-y-2">
@@ -98,7 +93,7 @@ export default function Page({
           <div className="mt-4 flex justify-center">
             <SubmitButton
               loadingIcon={<PhoneIcon className="animate-bounce" />}
-              disabled={processing}
+              isSubmitting={processing}
             >
               {t("Enviar")}
             </SubmitButton>

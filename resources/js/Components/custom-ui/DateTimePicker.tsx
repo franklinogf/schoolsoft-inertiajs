@@ -557,16 +557,17 @@ const TimePicker = React.forwardRef<TimePickerRef, TimePickerProps>(
       }),
       [minuteRef, hourRef, secondRef],
     );
+    const hourId = React.useId();
 
     return (
       <div className="flex items-center justify-center gap-2">
-        <label htmlFor="datetime-picker-hour-input" className="cursor-pointer">
+        <label htmlFor={hourId} className="cursor-pointer">
           <Clock className="mr-2 h-4 w-4" />
         </label>
         <TimePickerInput
           picker={hourCycle === 24 ? "hours" : "12hours"}
           date={date}
-          id="datetime-picker-hour-input"
+          id={hourId}
           onDateChange={onChange}
           ref={hourRef}
           period={period}

@@ -32,6 +32,7 @@ interface DataTableProps<TData, TValue> {
   filter?: boolean;
   selectOne?: boolean;
   rowId: keyof TData;
+  createButton?: React.ReactNode;
 }
 
 export function DataTable<TData, TValue>({
@@ -42,6 +43,7 @@ export function DataTable<TData, TValue>({
   filter = true,
   selectOne = false,
   rowId,
+  createButton,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState<string>("");
@@ -64,9 +66,10 @@ export function DataTable<TData, TValue>({
   const { t } = useTranslations();
   return (
     <div>
-      {filter && (
-        <div className="flex items-center justify-end py-4">
-          <div className="relative">
+      <div className="flex items-center justify-between py-2">
+        {createButton}
+        {filter && (
+          <div className="relative ml-auto">
             <InputField
               placeholder="Filter"
               value={globalFilter}
@@ -88,8 +91,8 @@ export function DataTable<TData, TValue>({
               </Button>
             )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -103,9 +106,7 @@ export function DataTable<TData, TValue>({
                   >
                     {header.isPlaceholder
                       ? null
-                      : header.id === "select" && selectOne
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
+                      : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
               </TableRow>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
@@ -8,7 +10,7 @@ use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
-class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
+final class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
     /**
      * Register any application services.
@@ -19,26 +21,59 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
         $this->hideSensitiveRequestDetails();
 
-        Telescope::filter(function (IncomingEntry $entry) {
-            return app()->isLocal() ||
-                $entry->isReportableException() ||
-                $entry->isFailedRequest() ||
-                $entry->isFailedJob() ||
-                $entry->isScheduledTask() ||
-                $entry->isSlowQuery() ||
-                $entry->isEvent() ||
-                $entry->isDump() ||
-                $entry->isLog() ||
-                $entry->type === EntryType::JOB ||
-                $entry->type === EntryType::MAIL ||
-                $entry->hasMonitoredTag();
+        Telescope::filter(function (IncomingEntry $entry): bool {
+            if (app()->isLocal()) {
+                return true;
+            }
+            if ($entry->isReportableException()) {
+                return true;
+            }
+            if ($entry->isFailedRequest()) {
+                return true;
+            }
+            if ($entry->isFailedJob()) {
+                return true;
+            }
+            if ($entry->isScheduledTask()) {
+                return true;
+            }
+            if ($entry->isSlowQuery()) {
+                return true;
+            }
+            if ($entry->isEvent()) {
+                return true;
+            }
+            if ($entry->isDump()) {
+                return true;
+            }
+            if ($entry->isLog()) {
+                return true;
+            }
+            if ($entry->type === EntryType::JOB) {
+                return true;
+            }
+            if ($entry->type === EntryType::MAIL) {
+                return true;
+            }
+
+            return $entry->hasMonitoredTag();
         });
+    }
+
+    /**
+     * Register the Telescope gate.
+     *
+     * This gate determines who can access Telescope in non-local environments.
+     */
+    protected function gate(): void
+    {
+        Gate::define('viewTelescope', fn ($user): bool => $user->email === 'franklinomarflores@gmail.com');
     }
 
     /**
      * Prevent sensitive request details from being logged by Telescope.
      */
-    protected function hideSensitiveRequestDetails(): void
+    private function hideSensitiveRequestDetails(): void
     {
         if ($this->app->environment('local')) {
             return;
@@ -51,19 +86,5 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
             'x-csrf-token',
             'x-xsrf-token',
         ]);
-    }
-
-    /**
-     * Register the Telescope gate.
-     *
-     * This gate determines who can access Telescope in non-local environments.
-     */
-    protected function gate(): void
-    {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                'franklinomarflores@gmail.com',
-            ]);
-        });
     }
 }

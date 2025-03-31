@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Options;
 
 use App\Enums\FlashMessageKey;
@@ -12,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class MessagesSmscontroller extends Controller
+final class MessagesSmscontroller extends Controller
 {
     public function index()
     {
@@ -22,7 +24,7 @@ class MessagesSmscontroller extends Controller
         $selected = request()->query('selected', 'students');
 
         return inertia('Regiweb/Options/Messages/Sms/Index',
-            compact('students', 'selected', 'courses')
+            ['students' => $students, 'selected' => $selected, 'courses' => $courses]
         );
     }
 
@@ -56,7 +58,7 @@ class MessagesSmscontroller extends Controller
         $company = $selected === 'individual' ? $validated['company'] : null;
 
         return inertia('Regiweb/Options/Messages/Sms/Form',
-            compact('students', 'selected', 'data', 'courses', 'phone', 'company')
+            ['students' => $students, 'selected' => $selected, 'data' => $data, 'courses' => $courses, 'phone' => $phone, 'company' => $company]
         );
     }
 
@@ -75,20 +77,22 @@ class MessagesSmscontroller extends Controller
         $message = $validated['message'];
         $selected = $validated['selected'];
         $tos = [];
+
         if ($selected === 'students') {
             // TODO
             $tos = Student::whereIn('ss', $to)->get()
-                ->map(fn ($student) => ['email' => create_phone_email($student->cel, $student->cel), 'name' => "$student->nombre $student->apellidos"]
+                ->map(fn ($student): array => ['email' => create_phone_email($student->cel, $student->cel), 'name' => "{$student->nombre} {$student->apellidos}"]
                 );
         } elseif ($selected === 'courses') {
             // TODO
             $tos = auth()->user()->courses()->whereIn('curso', $to)->get();
         } elseif ($selected === 'individual') {
-            $tos = collect($to)->map(fn ($phoneEmail) => ['email' => $phoneEmail]);
+            $tos = collect($to)->map(fn ($phoneEmail): array => ['email' => $phoneEmail]);
         }
 
         foreach ($tos as $to) {
-            $personalEmail = (new PersonalEmail($message))->subject($subject);
+            $personalEmail = new PersonalEmail($message)->subject($subject);
+
             if ($to['email'] === null) {
                 continue;
             }

@@ -13,9 +13,10 @@ import {
 import { Translations, useTranslations } from "@/hooks/translations";
 import { cn } from "@/lib/utils";
 import React, { useId } from "react";
-export type SelectItemType = { key: string; value: string };
+export type SelectItemType = { value: string; label: string };
 
-type DefaultSelectFieldProps = {
+interface DefaultSelectFieldProps {
+  required?: boolean;
   error?: string;
   label?: string;
   disabled?: boolean;
@@ -24,7 +25,7 @@ type DefaultSelectFieldProps = {
   clearable?: boolean;
   value?: string;
   onChange?: (value: string) => void;
-};
+}
 
 type SelectFieldPropsWithItems = DefaultSelectFieldProps & {
   items: SelectItemType[];
@@ -47,13 +48,20 @@ export function SelectField({
   value,
   clearable = false,
   onChange,
+  required,
 }: SelectFieldProps) {
   const { t } = useTranslations();
   const id = useId();
   return (
     <FieldContainer className={className}>
       <FieldLabel disabled={disabled} error={error} id={id} label={label} />
-      <Select name={id} disabled={disabled} defaultValue={value} onValueChange={onChange}>
+      <Select
+        required={required}
+        name={id}
+        disabled={disabled}
+        value={value}
+        onValueChange={onChange}
+      >
         <SelectTrigger
           id={id}
           className={cn("bg-input w-full", {
@@ -65,8 +73,8 @@ export function SelectField({
         <SelectContent>
           {items
             ? items.map((item) => (
-                <SelectItem key={item.key} value={item.key}>
-                  {t(item.value as Translations)}
+                <SelectItem key={item.value} value={item.value.toString()}>
+                  {t(item.label as Translations)}
                 </SelectItem>
               ))
             : children}

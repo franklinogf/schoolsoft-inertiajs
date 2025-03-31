@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
@@ -11,7 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Validation\Rule;
 
-class UserResource extends Resource
+final class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
@@ -30,10 +32,10 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Fieldset::make('Password')
-                    ->hidden(fn (string $context) => $context === 'edit')->schema([
+                    ->hidden(fn (string $context): bool => $context === 'edit')->schema([
                         Forms\Components\TextInput::make('password')
                             ->password()
-                            ->required(fn (string $context) => $context === 'create')
+                            ->required(fn (string $context): bool => $context === 'create')
                             ->requiredWith('password_confirm')
                             ->revealable()
                             ->rules([Rule::excludeIf(true)])
@@ -43,7 +45,7 @@ class UserResource extends Resource
                         Forms\Components\TextInput::make('password_confirmation')
                             ->label('Confirm password')
                             ->password()
-                            ->required(fn (string $context) => $context === 'create')
+                            ->required(fn (string $context): bool => $context === 'create')
                             ->requiredWith('password')
                             ->revealable()
                             ->dehydrated(false)

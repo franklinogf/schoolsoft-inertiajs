@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Casts\Date;
@@ -8,6 +10,7 @@ use App\Casts\NullToEmptyString;
 use App\Casts\ProfilePicture;
 use App\Casts\YesNo;
 use App\Enums\MediaCollectionEnum;
+use App\Models\Exams\Exam;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -121,7 +124,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string $pe16
  * @property string $cbarra
  */
-class Teacher extends Model implements HasMedia
+final class Teacher extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
@@ -134,6 +137,16 @@ class Teacher extends Model implements HasMedia
     ];
 
     protected $guarded = [];
+
+    public function exams(): HasMany
+    {
+        return $this->hasMany(Exam::class, 'id_maestro', 'id');
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->nombre.' '.$this->apellidos;
+    }
 
     public function sentMessages(): MorphMany
     {
@@ -154,6 +167,15 @@ class Teacher extends Model implements HasMedia
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class, 'id', 'id');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(MediaCollectionEnum::PROFILE_PICTURE->value)
+            ->useFallbackUrl(asset('assets/no-picture-teacher.png'))
+            ->useFallbackPath(public_path('assets/no-picture-teacher.png'))
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
+            ->singleFile();
     }
 
     protected function casts(): array
@@ -205,22 +227,15 @@ class Teacher extends Model implements HasMedia
             'lp3' => YesNo::class,
             'lp4' => YesNo::class,
         ];
+
         foreach ($datesColumns as $column) {
             $array[$column] = Date::class;
         }
+
         foreach ($nullToEmptyStringColumns as $column) {
             $array[$column] = NullToEmptyString::class;
         }
 
         return $array;
-    }
-
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection(MediaCollectionEnum::PROFILE_PICTURE->value)
-            ->useFallbackUrl(asset('assets/no-picture-teacher.png'))
-            ->useFallbackPath(public_path('assets/no-picture-teacher.png'))
-            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-            ->singleFile();
     }
 }

@@ -11,7 +11,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option allows you to enable or disable mailbook.
-    */
+     */
     'enabled' => env('APP_ENV') === 'local',
 
     /*
@@ -22,7 +22,7 @@ return [
     | This option allows you to enable or disable database rollback.
     | When enabled any changes to the database during the rendering
     | of a mail will be rolled back.
-    */
+     */
     'database_rollback' => true,
 
     /*
@@ -31,7 +31,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option allows you to enable or disable the screen size preview button.
-    */
+     */
     'display_preview' => true,
 
     /*
@@ -41,7 +41,7 @@ return [
     |
     | This option allows you to define which languages you want
     | to preview in mailbook.
-    */
+     */
     'locales' => [
         'en' => 'English',
         'es' => 'Spanish',
@@ -53,7 +53,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option allows you to enable the send mail button.
-    */
+     */
     'send' => true,
 
     /*
@@ -63,7 +63,7 @@ return [
     |
     | This option allows you to specify where the send mail button should be
     | sending to.
-    */
+     */
     'send_to' => 'franklinomarflores@gmail.com',
 
     /*
@@ -73,7 +73,7 @@ return [
     |
     | This option allows you to define the route prefix that will be used on
     | every route defined by mailbook.
-    */
+     */
     'route_prefix' => '{school}/mailbook',
 
     /*
@@ -83,7 +83,7 @@ return [
     |
     | This option allows you to define which middlewares will be used on
     | every route defined by mailbook.
-    */
+     */
     'middlewares' => [
         Xammie\Mailbook\Http\Middlewares\RollbackDatabase::class,
         InitializeTenancyByPath::class,
@@ -96,6 +96,6 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option allows you to disable the text "Created with mailbook"
-    */
+     */
     'show_credits' => false,
 ];

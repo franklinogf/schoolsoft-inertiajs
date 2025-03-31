@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Scopes\SchoolYear;
@@ -161,7 +163,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $nta70
  * @property string $nta30
  */ #[ScopedBy([SchoolYear::class])]
-class StudentGrade extends Model
+final class StudentGrade extends Model
 {
     public $timestamps = false;
 
@@ -174,17 +176,6 @@ class StudentGrade extends Model
     protected $primaryKey = 'id2';
 
     protected $guarded = [];
-
-    public function scopeFromTable(Builder $builder, string $tableName): void
-    {
-        $builder->from($tableName);
-        $this->table = $tableName;
-    }
-
-    public function scopeOfTeacher(Builder $builder, string $teacherId): void
-    {
-        $builder->where('id', $teacherId);
-    }
 
     public static function studentsDataTable(array|string|null $ss = null)
     {
@@ -200,6 +191,17 @@ class StudentGrade extends Model
             })
             ->orderBy('apellidos')
             ->get();
+    }
+
+    public function scopeFromTable(Builder $builder, string $tableName): void
+    {
+        $builder->from($tableName);
+        $this->table = $tableName;
+    }
+
+    public function scopeOfTeacher(Builder $builder, string $teacherId): void
+    {
+        $builder->where('id', $teacherId);
     }
 
     public function student(): BelongsTo

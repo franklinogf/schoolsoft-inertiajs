@@ -35,6 +35,7 @@ import { useState } from "react";
 export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
   const [sameAddress, setSameAddress] = useState(false);
   const { t } = useTranslations();
+
   const { data, setData, post, errors, processing } = useForm({
     picture: "",
     fecha_nac: user.fecha_nac,
@@ -190,6 +191,8 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
                       value={data.fecha_nac}
                       onChange={(value) => setData("fecha_nac", value)}
                       error={errors.fecha_nac}
+                      endYear={0}
+                      startYear={80}
                     />
                   </FieldsGrid>
                   <InputField
@@ -489,7 +492,7 @@ export default function Page({ auth: { user } }: PagePropsWithUser<Teacher>) {
               </AccordionItem>
             </Accordion>
           </section>
-          <SubmitButton disabled={processing} size="lg">
+          <SubmitButton isSubmitting={processing} size="lg">
             {t("Guardar")}
           </SubmitButton>
         </div>

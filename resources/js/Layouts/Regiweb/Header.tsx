@@ -58,7 +58,7 @@ export default function Header() {
                 asChild
                 className={navigationMenuTriggerStyle({
                   className: cn("bg-transparent text-xl", {
-                    "bg-primary/80": route().current(item.current),
+                    "bg-primary/80 text-primary-foreground": route().current(item.current),
                   }),
                 })}
               >
@@ -107,12 +107,12 @@ export default function Header() {
                 <img className="h-auto max-w-[100px]" src={LOGO_REGIWEB} alt="Logo regiweb" />
               </SheetTitle>
             </SheetHeader>
-            <nav className="mt-4 flex flex-1 flex-col justify-start">
+            <nav className="mt-4 flex flex-1 flex-col justify-start p-2">
               <div className="flex flex-col space-y-2">
                 {menuItems.map((item) => (
                   <Button
                     className={cn("text-lg font-bold", {
-                      "bg-accent/80": route().current(item.current),
+                      "bg-primary/80 text-primary-foreground": route().current(item.current),
                     })}
                     variant="ghost"
                     key={item.label}
@@ -122,7 +122,7 @@ export default function Header() {
                   </Button>
                 ))}
               </div>
-              <div className="mt-auto flex flex-col items-end">
+              <div className="mt-auto mb-2 flex flex-col items-end">
                 <UserProfileDropdownButton
                   avatar={user.tipo}
                   avatarFallback={`${user.nombre[0]}${user.apellidos[0]}`}

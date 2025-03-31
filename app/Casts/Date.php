@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class Date implements CastsAttributes
+final class Date implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -24,6 +26,6 @@ class Date implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value === null ? '0000-00-00' : $value;
+        return $value ?? '0000-00-00';
     }
 }

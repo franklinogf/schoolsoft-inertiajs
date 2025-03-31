@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Regiweb\Notes;
 
 use App\Enums\PagesEnum;
@@ -7,7 +9,7 @@ use App\Enums\TrimesterEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class SaveAttendanceRequest extends FormRequest
+final class SaveAttendanceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

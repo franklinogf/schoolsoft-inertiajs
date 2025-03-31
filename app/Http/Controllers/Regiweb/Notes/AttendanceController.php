@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Notes;
 
 use App\Http\Controllers\Controller;
@@ -8,7 +10,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class AttendanceController extends Controller
+final class AttendanceController extends Controller
 {
     public function entry(Request $request)
     {
@@ -26,6 +28,7 @@ class AttendanceController extends Controller
         $subjects = null;
 
         $attendanceOption = Admin::getPrimaryAdmin()->asist;
+
         if ($attendanceOption === '3') {
             $subjects = DB::table('cursos')->where('id', auth()->id())->orderBy('curso')->pluck('curso');
 
@@ -53,35 +56,23 @@ class AttendanceController extends Controller
             ])->get();
         }
 
-        $studentsAttendances = $students->map(function (Student $student) use ($initialDate, $initialSubject, $initialGrade) {
+        $studentsAttendances = $students->map(function (Student $student) use ($initialDate, $initialSubject, $initialGrade): array {
             $attendance = $student->attendances()
                 ->whereDate('fecha', $initialDate)
-                ->when($initialGrade !== null, function ($query) use ($initialGrade) {
-                    return $query->where('grado', $initialGrade);
-                })
-                ->when($initialSubject !== null, function ($query) use ($initialSubject) {
-                    return $query->where('curso', $initialSubject);
-                })
+                ->when($initialGrade !== null, fn ($query) => $query->where('grado', $initialGrade))
+                ->when($initialSubject !== null, fn ($query) => $query->where('curso', $initialSubject))
                 ->first();
 
             return [
                 'id' => $attendance->id ?? null,
                 'studentId' => $student->mt,
-                'name' => "$student->nombre $student->apellidos",
+                'name' => "{$student->nombre} {$student->apellidos}",
                 'attendance' => $attendance->codigo ?? '',
             ];
         });
 
         return inertia('Regiweb/Notes/AttendanceEntry',
-            compact(
-                'attendanceOption',
-                'initialDate',
-                'studentsAttendances',
-                'grades',
-                'subjects',
-                'initialGrade',
-                'initialSubject'
-            )
+            ['attendanceOption' => $attendanceOption, 'initialDate' => $initialDate, 'studentsAttendances' => $studentsAttendances, 'grades' => $grades, 'subjects' => $subjects, 'initialGrade' => $initialGrade, 'initialSubject' => $initialSubject]
         );
     }
 
@@ -96,6 +87,7 @@ class AttendanceController extends Controller
 
         ]);
         $student = Student::find($validated['studentId']);
+
         if ($validated['id'] === null) {
             $student->attendances()->create([
                 'nombre' => $student->nombre,

@@ -70,7 +70,7 @@ export function ContactForm() {
               error={errors.message}
             />
             <div className="grid w-full">
-              <SubmitButton disabled={processing}>{t("Enviar mensaje")}</SubmitButton>
+              <SubmitButton isSubmitting={processing}>{t("Enviar mensaje")}</SubmitButton>
             </div>
           </form>
         </CardContent>

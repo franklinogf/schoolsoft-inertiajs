@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Foro\Teacher;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class ForoTeacherLoginController extends Controller
+final class ForoTeacherLoginController extends Controller
 {
     /**
      * Show the form for creating a new resource.
@@ -26,6 +28,7 @@ class ForoTeacherLoginController extends Controller
             'username' => ['required', 'min:2'],
             'password' => ['required', 'min:6'],
         ]);
+
         if (Auth::guard('teacher')->attempt(['usuario' => $validated['username'], 'clave' => $validated['password']])) {
             $request->session()->regenerate();
 

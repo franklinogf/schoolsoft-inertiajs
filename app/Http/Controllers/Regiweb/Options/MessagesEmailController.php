@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Options;
 
 use App\Enums\FlashMessageKey;
@@ -13,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class MessagesEmailController extends Controller
+final class MessagesEmailController extends Controller
 {
     public function index()
     {
@@ -24,7 +26,7 @@ class MessagesEmailController extends Controller
         $selected = request()->query('selected', 'students');
 
         return inertia('Regiweb/Options/Messages/Email/Index',
-            compact('students', 'selected', 'courses', 'admins')
+            ['students' => $students, 'selected' => $selected, 'courses' => $courses, 'admins' => $admins]
         );
     }
 
@@ -35,6 +37,7 @@ class MessagesEmailController extends Controller
             'data.*' => ['string'],
             'selected' => ['required', 'string', 'in:students,admin,courses'],
         ]);
+
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
 
@@ -51,7 +54,7 @@ class MessagesEmailController extends Controller
         $courses = $selected === 'courses' ? CoursesResource::collection(auth()->user()->courses()->whereIn('curso', $data)->get()) : null;
 
         return inertia('Regiweb/Options/Messages/Email/Form',
-            compact('students', 'selected', 'data', 'admins', 'courses')
+            ['students' => $students, 'selected' => $selected, 'data' => $data, 'admins' => $admins, 'courses' => $courses]
         );
     }
 
@@ -72,15 +75,12 @@ class MessagesEmailController extends Controller
         $message = $validated['message'];
         $selected = $validated['selected'];
         $tos = [];
+
         if ($selected === 'students') {
             // TODO
-            $tos = Student::whereIn('ss', $to)->get()->map(function ($student) {
-                return ['email' => $student->email, 'name' => "$student->nombre $student->apellidos"];
-            });
+            $tos = Student::whereIn('ss', $to)->get()->map(fn ($student): array => ['email' => $student->email, 'name' => "{$student->nombre} {$student->apellidos}"]);
         } elseif ($selected === 'admin') {
-            $tos = Admin::whereIn('usuario', $to)->get()->map(function ($admin) {
-                return ['email' => $admin->correo, 'name' => $admin->director];
-            });
+            $tos = Admin::whereIn('usuario', $to)->get()->map(fn ($admin): array => ['email' => $admin->correo, 'name' => $admin->director]);
         } elseif ($selected === 'courses') {
             // TODO
             $tos = auth()->user()->courses()->whereIn('curso', $to)->get();
@@ -90,7 +90,7 @@ class MessagesEmailController extends Controller
             if ($to['email'] === null) {
                 continue;
             }
-            $personalEmail = (new PersonalEmail($message, $validated['files']))->subject($subject);
+            $personalEmail = new PersonalEmail($message, $validated['files'])->subject($subject);
             Mail::to($to['email'], $to['name'])->queue($personalEmail);
         }
 

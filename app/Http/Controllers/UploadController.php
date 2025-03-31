@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class UploadController extends Controller
+final class UploadController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request): Response
     {
         if ($request->hasFile('filepond')) {
             $file = $request->file('filepond');
@@ -21,23 +24,24 @@ class UploadController extends Controller
                 'filename' => $filename,
             ]);
 
-            return $folder;
+            return response($folder, 200);
 
         }
 
-        return '';
+        return response('', 200);
 
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request): Response
     {
         $folder = $request->getContent();
         $temporaryFile = TemporaryFile::where('folder', $folder)->first();
+
         if ($temporaryFile) {
             $temporaryFile->delete();
         }
 
-        return '';
+        return response('', 200);
 
     }
 }

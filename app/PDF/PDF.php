@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\PDF;
 
 use App\Models\Admin;
 
-class PDF extends BasePDF
+final class PDF extends BasePDF
 {
-    private Admin $school;
-
     public bool $header = true;
 
     public bool|int $footer = 15;
 
-    private $leftMargin = 10;
-
     public $headerFirstPage = false;
+
+    private readonly Admin $school;
+
+    private $leftMargin = 10;
 
     public function __construct(string $title, $orientation = 'P', $unit = 'mm', $size = 'A4')
     {
@@ -26,7 +28,7 @@ class PDF extends BasePDF
         $this->SetCreator(config('app.name'), true);
     }
 
-    public function header()
+    public function header(): void
     {
         if (! $this->header) {
             return;
@@ -35,12 +37,15 @@ class PDF extends BasePDF
         $this->SetXY($this->leftMargin, 10);
         $this->SetMargins($this->leftMargin, 10);
         $this->SetFont('Times', 'B', 15);
+
         if (($this->headerFirstPage && $this->PageNo() === 1) || ! $this->headerFirstPage) {
             $this->Cell(0, 5, $this->school->colegio, 0, 1, 'C');
             $this->SetFont('Times', '', 9);
+
             if ($this->school->dir1 !== '') {
                 $this->Cell(0, 4, $this->school->dir1, 0, 1, 'C');
             }
+
             if ($this->school->dir2 !== '') {
                 $this->Cell(0, 4, $this->school->dir2, 0, 1, 'C');
             }
@@ -52,7 +57,7 @@ class PDF extends BasePDF
         }
     }
 
-    public function Footer()
+    public function Footer(): void
     {
         if ($this->footer === false) {
             return;
@@ -65,12 +70,12 @@ class PDF extends BasePDF
 
     }
 
-    public function useHeader(bool $bool)
+    public function useHeader(bool $bool): void
     {
         $this->header = $bool;
     }
 
-    public function useFooter(bool|int $bool)
+    public function useFooter(bool|int $bool): void
     {
         $this->footer = $bool;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb\Options;
 
 use App\Enums\MediaCollectionEnum;
@@ -10,40 +12,51 @@ use App\Models\Inbox;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\TemporaryFile;
+use App\Services\InboxService;
+use Illuminate\Container\Attributes\CurrentUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\MediaStream;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class MessagesController extends Controller
+final class MessagesController extends Controller
 {
-    public function index(?Inbox $inbox = null)
+    public function index(?Inbox $inbox, #[CurrentUser] Teacher $user)
     {
+        if ($inbox instanceof Inbox) {
+            Gate::allowIf(
+                $inbox->sender()->is($user)
+                || $inbox->teachers()->where('receiver_id', $user->id)
+                    ->exists()
+            );
 
+        }
         $type = request()->query('type', 'inbox');
+
         if (! in_array($type, ['inbox', 'sent', 'trash'])) {
             $type = 'inbox';
         }
-        /**
-         * @var \App\Models\Teacher $teacher
-         */
-        $teacher = auth()->user();
 
         if ($type === 'inbox') {
-            $mails = $teacher->receivedMessages()
+            $mails = $user->receivedMessages()
+                ->whereNull('parent_id')
                 ->wherePivot('is_deleted', false)
                 ->get();
         } elseif ($type === 'sent') {
-            $mails = $teacher->sentMessages()
+            $mails = $user->sentMessages()
+                ->whereNull('parent_id')
                 ->where('is_deleted', false)
                 ->get();
         } else {
 
-            $mails = $teacher->receivedMessages()
+            $mails = $user->receivedMessages()
+                ->whereNull('parent_id')
                 ->wherePivot('is_deleted', true)
                 ->get()->merge(
-                    $teacher->sentMessages()
+                    $user->sentMessages()
+                        ->whereNull('parent_id')
                         ->where('is_deleted', true)
                         ->get()
                 );
@@ -51,18 +64,17 @@ class MessagesController extends Controller
 
         $mails = $mails->count() > 0 ? InboxResource::collection($mails) : [];
 
-        $mail = $inbox ? new InboxResource($inbox) : null;
-        if ($mail) {
-            if ($inbox->sender_id !== $teacher->id) {
-                $teacher->receivedMessages()
-                    ->updateExistingPivot($inbox->id, ['is_read' => true]);
-            }
+        $mail = $inbox instanceof Inbox ? new InboxResource($inbox) : null;
+
+        if ($mail instanceof InboxResource && $inbox->sender_id !== $user->id) {
+            $user->receivedMessages()
+                ->updateExistingPivot($inbox->id, ['is_read' => true]);
         }
 
         return inertia('Regiweb/Options/Messages/Index',
             [
                 'mails' => Inertia::defer(fn () => $mails),
-                'mail' => Inertia::defer(fn () => $mail),
+                'mail' => $mail,
                 'type' => $type,
             ]);
     }
@@ -80,7 +92,7 @@ class MessagesController extends Controller
             ]);
     }
 
-    public function store(Request $request, string $course)
+    public function store(Request $request, string $course, #[CurrentUser] Teacher $user, InboxService $inboxService)
     {
         $validated = $request->validate([
             'subject' => 'required|string',
@@ -89,47 +101,71 @@ class MessagesController extends Controller
             'files' => ['array'],
             'files.*' => ['string'],
         ]);
-        $folders = $validated['files'];
-
-        /**
-         * @var \App\Models\Teacher $teacher         *
-         */
-        $teacher = auth()->user();
-        /**
-         * @var \App\Models\Inbox $inbox
-         */
-        $inbox = $teacher->sentMessages()->create([
-            'subject' => $validated['subject'],
-            'message' => $validated['message'],
-        ]);
-        $temporaryFiles = tenancy()->central(function () use ($folders) {
-            return TemporaryFile::whereIn('folder', $folders)->get();
-        });
-
-        foreach ($temporaryFiles as $temporaryFile) {
-            $inbox->addMediaFromDisk(tmp_path($temporaryFile->folder, $temporaryFile->filename), 'local')
-                ->toMediaCollection(MediaCollectionEnum::INBOX_ATTACHMENT->value);
-            $temporaryFile->delete();
-        }
 
         $students = Student::ofCourse($course)
             ->whereIn('year.ss', $validated['students'])
             ->get();
 
-        $inbox->students()->attach($students);
+        $inboxService->sendToStudents(
+            $user,
+            $students,
+            $validated['subject'],
+            $validated['message'],
+            $validated['files']
+        );
 
         return to_route('regiweb.options.messages.index')->with('success', 'Message sent successfully');
     }
 
-    public function destroy(Request $request)
+    public function reply(Request $request, Inbox $inbox): void
     {
-        $id = $request->input('id');
-        $type = $request->query('type', 'inbox');
-        $inbox = Inbox::findOrFail($id);
+        $validated = $request->validate([
+            'message' => 'required|string',
+            'files' => ['array'],
+            'files.*' => ['string'],
+        ]);
+
         /**
-         * @var \App\Models\Teacher $teacher
+         * @var Teacher $teacher
          */
         $teacher = auth()->user();
+
+        $reply = $teacher->sentMessages()->create([
+            'subject' => "Re: {$inbox->subject}",
+            'message' => $validated['message'],
+            'parent_id' => $inbox->id,
+        ]);
+        $sender_type = str($inbox->sender_type)->plural()->toString();
+        $reply->{$sender_type}()->attach($inbox->sender_id);
+
+        // $inbox = $teacher->sentMessages()->create([
+        //     'subject' => 'Re: '.$inbox->subject,
+        //     'message' => $validated['message'],
+        // ]);
+        // $temporaryFiles = tenancy()->central(function () use ($folders) {
+        //     return TemporaryFile::whereIn('folder', $folders)->get();
+        // });
+
+        // foreach ($temporaryFiles as $temporaryFile) {
+        //     $inbox->addMediaFromDisk(tmp_path($temporaryFile->folder, $temporaryFile->filename), 'local')
+        //         ->toMediaCollection(MediaCollectionEnum::INBOX_ATTACHMENT->value);
+        //     $temporaryFile->delete();
+        // }
+
+        // $inbox->students()->attach($inbox->sender_id);
+
+        // return to_route('regiweb.options.messages.index')->with('success', 'Message sent successfully');
+    }
+
+    public function destroy(Request $request, Inbox $inbox): RedirectResponse
+    {
+        $type = $request->query('type', 'inbox');
+
+        /**
+         * @var Teacher $teacher
+         */
+        $teacher = auth()->user();
+
         if ($inbox->sender_id === $teacher->id) {
             $inbox->update(['is_deleted' => true]);
         } else {
@@ -140,15 +176,15 @@ class MessagesController extends Controller
         return to_route('regiweb.options.messages.index', ['type' => $type])->with('success', 'Message deleted successfully');
     }
 
-    public function restore(Request $request)
+    public function restore(Request $request, Inbox $inbox): RedirectResponse
     {
-        $id = $request->input('id');
         $type = $request->query('type', 'inbox');
-        $inbox = Inbox::findOrFail($id);
+
         /**
-         * @var \App\Models\Teacher $teacher
+         * @var Teacher $teacher
          */
         $teacher = auth()->user();
+
         if ($inbox->sender_id === $teacher->id) {
             $inbox->update(['is_deleted' => false]);
         } else {
@@ -156,25 +192,25 @@ class MessagesController extends Controller
                 ->updateExistingPivot($inbox->id, ['is_deleted' => false]);
         }
 
-        return to_route('regiweb.options.messages.index', ['type' => $type])->with('success', 'Message deleted successfully');
+        return to_route('regiweb.options.messages.index', ['type' => $type])->with('success', 'Message restored successfully');
     }
 
-    public function downloadAll(Inbox $inbox)
+    public function downloadAll(Inbox $inbox): MediaStream
     {
 
         $media = $inbox->getMedia(MediaCollectionEnum::INBOX_ATTACHMENT->value);
 
-        Gate::allowIf(fn (Teacher $user) => $user->id === $inbox->sender_id
+        Gate::allowIf(fn (Teacher $user): bool => $user->id === $inbox->sender_id
         || $inbox->model->teachers()->where('receiver_id', $user->id)->exists()
         );
 
         return MediaStream::create($inbox->subject->lower()->snake().'.zip')->addMedia($media);
     }
 
-    public function download(Media $media)
+    public function download(Inbox $inbox, Media $media): Media
     {
-        Gate::allowIf(fn (Teacher $user) => $user->id === $media->model->sender_id
-        || $media->model->teachers()->where('receiver_id', $user->id)->exists()
+        Gate::allowIf(fn (Teacher $user): bool => $user->id === $inbox->sender_id
+        || $inbox->teachers()->where('receiver_id', $user->id)->exists()
         );
 
         return $media;

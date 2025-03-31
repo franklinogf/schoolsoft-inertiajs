@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Mail\PersonalEmail;
 use App\Mail\Root\Contact;
 use Xammie\Mailbook\Facades\Mailbook;

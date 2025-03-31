@@ -19,7 +19,7 @@ import { FormSubmit } from "./FormSubmit";
 interface AttendanceTableFormProps {
   students: StudentsAttendanceGrades[];
 }
-export function AttendaceTableForm({ students }: AttendanceTableFormProps) {
+export function AttendanceTableForm({ students }: AttendanceTableFormProps) {
   const [studentsGrades, setStudentsGrades] = useState(students);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslations();

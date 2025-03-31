@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class RegiwebHomeController extends Controller
+final class RegiwebHomeController extends Controller
 {
     public function index(Request $request)
     {

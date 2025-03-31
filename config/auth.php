@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -11,7 +13,7 @@ return [
     | reset "broker" for your application. You may change these values
     | as required, but they're a perfect start for most applications.
     |
-    */
+     */
 
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'admin'),
@@ -33,7 +35,7 @@ return [
     |
     | Supported: "session"
     |
-    */
+     */
 
     'guards' => [
         'web' => [
@@ -73,7 +75,7 @@ return [
     |
     | Supported: "database", "eloquent"
     |
-    */
+     */
 
     'providers' => [
         'admin' => [
@@ -115,7 +117,7 @@ return [
     | generating more password reset tokens. This prevents the user from
     | quickly generating a very large amount of password reset tokens.
     |
-    */
+     */
 
     'passwords' => [
         'users' => [
@@ -135,7 +137,7 @@ return [
     | window expires and users are asked to re-enter their password via the
     | confirmation screen. By default, the timeout lasts for three hours.
     |
-    */
+     */
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 

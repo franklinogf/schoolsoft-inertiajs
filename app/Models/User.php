@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -20,7 +22,7 @@ use Illuminate\Support\Facades\Gate;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property string $lang
- */ class User extends Authenticatable implements FilamentUser
+ */ final class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
 
@@ -45,6 +47,11 @@ use Illuminate\Support\Facades\Gate;
         'remember_token',
     ];
 
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -58,15 +65,8 @@ use Illuminate\Support\Facades\Gate;
         ];
     }
 
-    public function canAccessPanel(Panel $panel): bool
+    private function gate(): void
     {
-        return true;
-    }
-
-    protected function gate(): void
-    {
-        Gate::define('viewTelescope', function () {
-            return true;
-        });
+        Gate::define('viewTelescope', fn (): true => true);
     }
 }

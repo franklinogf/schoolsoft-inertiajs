@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\PDF;
 
 trait HtmlPDF
@@ -8,62 +10,62 @@ trait HtmlPDF
 
     private $ALIGN = '';
 
-    public function WriteHTML($html)
+    public function WriteHTML($html): void
     {
         // HTML parser
         $html = str_replace("\n", ' ', $html);
         $a = preg_split('/<(.*)>/U', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
+
         foreach ($a as $i => $e) {
-            if ($i % 2 == 0) {
+            if ($i % 2 === 0) {
                 // Text
                 if ($this->HREF) {
                     $this->PutLink($this->HREF, $e);
-                } elseif ($this->ALIGN == 'center') {
+                } elseif ($this->ALIGN === 'center') {
                     $this->Cell(0, 5, $e, 0, 1, 'C');
                 } else {
                     $this->Write(5, $e);
                 }
-            } else {
+            } elseif ($e[0] === '/') {
                 // Tag
-                if ($e[0] == '/') {
-                    $this->CloseTag(strtoupper(substr($e, 1)));
-                } else {
-                    // Extract properties
-                    $a2 = explode(' ', $e);
-                    $tag = strtoupper(array_shift($a2));
-                    $prop = [];
-                    foreach ($a2 as $v) {
-                        if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $a3)) {
-                            $prop[strtoupper($a3[1])] = $a3[2];
-                        }
+                $this->CloseTag(mb_strtoupper(mb_substr($e, 1)));
+            } else {
+                // Extract properties
+                $a2 = explode(' ', $e);
+                $tag = mb_strtoupper(array_shift($a2));
+                $prop = [];
+
+                foreach ($a2 as $v) {
+                    if (preg_match('/([^=]*)=["\']?([^"\']*)/', $v, $a3)) {
+                        $prop[mb_strtoupper($a3[1])] = $a3[2];
                     }
-                    $this->OpenTag($tag, $prop);
                 }
+                $this->OpenTag($tag, $prop);
             }
         }
     }
 
-    public function OpenTag($tag, $prop)
+    public function OpenTag($tag, $prop): void
     {
         // Opening tag
-        if ($tag == 'B' || $tag == 'I' || $tag == 'U') {
+        if ($tag === 'B' || $tag === 'I' || $tag === 'U') {
             $this->SetStyle($tag, true);
         }
-        if ($tag == 'A') {
+
+        if ($tag === 'A') {
             $this->HREF = $prop['HREF'];
         }
-        if ($tag == 'BR') {
+
+        if ($tag === 'BR') {
             $this->Ln(5);
         }
-        if ($tag == 'P') {
+
+        if ($tag === 'P') {
             $this->ALIGN = $prop['ALIGN'];
         }
-        if ($tag == 'HR') {
-            if (! empty($prop['WIDTH'])) {
-                $Width = $prop['WIDTH'];
-            } else {
-                $Width = $this->w - $this->lMargin - $this->rMargin;
-            }
+
+        if ($tag === 'HR') {
+            $Width = empty($prop['WIDTH']) ? $this->w - $this->lMargin - $this->rMargin : $prop['WIDTH'];
             $this->Ln(2);
             $x = $this->GetX();
             $y = $this->GetY();
@@ -74,34 +76,37 @@ trait HtmlPDF
         }
     }
 
-    public function CloseTag($tag)
+    public function CloseTag($tag): void
     {
         // Closing tag
-        if ($tag == 'B' || $tag == 'I' || $tag == 'U') {
+        if ($tag === 'B' || $tag === 'I' || $tag === 'U') {
             $this->SetStyle($tag, false);
         }
-        if ($tag == 'A') {
+
+        if ($tag === 'A') {
             $this->HREF = '';
         }
-        if ($tag == 'P') {
+
+        if ($tag === 'P') {
             $this->ALIGN = '';
         }
     }
 
-    public function SetStyle($tag, $enable)
+    public function SetStyle($tag, $enable): void
     {
         // Modify style and select corresponding font
-        $this->$tag += ($enable ? 1 : -1);
+        $this->{$tag} += ($enable ? 1 : -1);
         $style = '';
+
         foreach (['B', 'I', 'U'] as $s) {
-            if ($this->$s > 0) {
+            if ($this->{$s} > 0) {
                 $style .= $s;
             }
         }
         $this->SetFont('', $style);
     }
 
-    public function PutLink($URL, $txt)
+    public function PutLink($URL, $txt): void
     {
         // Put a hyperlink
         $this->SetTextColor(0, 0, 255);

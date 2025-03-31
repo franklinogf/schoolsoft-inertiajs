@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use App\Enums\MediaCollectionEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class InboxResource extends JsonResource
+final class InboxResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,14 +27,15 @@ class InboxResource extends JsonResource
                 ->merge($this->admins),
             'subject' => $this->subject,
             'message' => $this->message,
-            'preview' => strip_tags(Str::limit($this->message, 20)),
-            'is_deleted' => boolval($this->pivot?->is_deleted ?? $this->is_deleted),
-            'is_read' => boolval($this->pivot?->is_read ?? true),
+            'replies' => $this->collection($this->replies),
+            'preview' => strip_tags((string) $this->message->limit(20)),
+            'is_deleted' => (bool) ($this->pivot?->is_deleted ?? $this->is_deleted),
+            'is_read' => (bool) ($this->pivot?->is_read ?? true),
             'datetime' => $this->created_at->format('Y-m-d H:i:s'),
             'datetime_human_readeable' => $this->created_at->diffForHumans(),
             'date' => $this->created_at->format('Y-m-d'),
             'time' => $this->created_at->format('H:i:s'),
-            'attachments' => $this->getMedia(MediaCollectionEnum::INBOX_ATTACHMENT->value)->map(fn ($media) => [
+            'attachments' => $this->getMedia(MediaCollectionEnum::INBOX_ATTACHMENT->value)->map(fn (Media $media): array => [
                 'id' => $media->id,
                 'name' => $media->name,
                 'url' => $media->getUrl(),

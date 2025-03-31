@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Scopes\SchoolYear;
@@ -28,11 +30,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $p8
  * @property string $curso
  */ #[ScopedBy(SchoolYear::class)]
-class StudentAttendance extends Model
+final class StudentAttendance extends Model
 {
-    protected $table = 'asispp';
-
     public $timestamps = false;
+
+    protected $table = 'asispp';
 
     public function scopeWhereDatesBetween(Builder $query, $date1, $date2)
     {

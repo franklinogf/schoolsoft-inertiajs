@@ -19,7 +19,7 @@ import { FormSubmit } from "./FormSubmit";
 import { GradesValues } from "./ValuesForm";
 
 interface DefaultTableFormProps {
-  columns: string[] | null;
+  columns: string[];
   amountOfGrades: number;
   convert: boolean;
   values: GradesValues;
@@ -202,7 +202,9 @@ export function DefaultTableForm({
                   {t("Nota")} {i + 1}
                 </TableHead>
               ))}
-              {columns?.map((column, i) => <TableHead key={i}>{column}</TableHead>)}
+              {columns.map((column, i) => (
+                <TableHead key={i}>{column}</TableHead>
+              ))}
               <TableHead>{t("TPA")}</TableHead>
               <TableHead>{t("TDP")}</TableHead>
               <TableHead>{t("Nota")}</TableHead>

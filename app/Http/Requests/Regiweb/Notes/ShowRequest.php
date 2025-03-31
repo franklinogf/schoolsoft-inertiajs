@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Regiweb\Notes;
 
 use App\Enums\PagesEnum;
@@ -7,7 +9,7 @@ use App\Enums\TrimesterEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ShowRequest extends FormRequest
+final class ShowRequest extends FormRequest
 {
     protected $redirectRoute = 'regiweb.notes.index';
 
@@ -39,7 +41,7 @@ class ShowRequest extends FormRequest
             'trimester' => [
                 'required',
                 Rule::enum(TrimesterEnum::class)->when(
-                    fn () => $this->input('page') === PagesEnum::FINAL_EXAM->value,
+                    fn (): bool => $this->input('page') === PagesEnum::FINAL_EXAM->value,
                     fn ($rule) => $rule->only([TrimesterEnum::SECOND_TRIMESTER, TrimesterEnum::FOURTH_TRIMESTER])
                 ),
             ],

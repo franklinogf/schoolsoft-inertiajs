@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum AttendanceEnum: string
@@ -17,44 +19,7 @@ enum AttendanceEnum: string
     case TARDINESS_SICK = '11';
     case TARDINESS_APPOINTMENT = '12';
 
-    public function label()
-    {
-        return match ($this->value) {
-            self::ABSENCE_HOME->value => 'Situación  en el hogar',
-            self::ABSENCE_VACATION->value => 'Determinación en el hogar (viaje)',
-            self::ABSENCE_PARENTS_ACTIVITY->value => 'Actividad con padres (open house)',
-            self::ABSENCE_SICK->value => 'Enfermedad',
-            self::ABSENCE_APPOINTMENT->value => 'Cita',
-            self::ABSENCE_SCHOOL_ACTIVITY->value => 'Actividad educativa del colegio',
-            self::ABSENCE_NO_EXCUSE->value => 'Sin excusa',
-            self::TARDINESS_NO_EXCUSE->value => 'Sin excusa',
-            self::TARDINESS_HOME->value => 'Situacion en el hogar',
-            self::TARDINESS_TRANSPORTATION->value => 'Problem de transporte',
-            self::TARDINESS_SICK->value => 'Enfermedad',
-            self::TARDINESS_APPOINTMENT->value => 'Cita',
-        };
-    }
-
-    public function type()
-    {
-        return match ($this->value) {
-            self::ABSENCE_HOME->value => 'absence',
-            self::ABSENCE_VACATION->value => 'absence',
-            self::ABSENCE_PARENTS_ACTIVITY->value => 'absence',
-            self::ABSENCE_SICK->value => 'absence',
-            self::ABSENCE_APPOINTMENT->value => 'absence',
-            self::ABSENCE_SCHOOL_ACTIVITY->value => 'absence',
-            self::ABSENCE_NO_EXCUSE->value => 'absence',
-            self::TARDINESS_NO_EXCUSE->value => 'tardiness',
-            self::TARDINESS_HOME->value => 'tardiness',
-            self::TARDINESS_TRANSPORTATION->value => 'tardiness',
-            self::TARDINESS_SICK->value => 'tardiness',
-            self::TARDINESS_APPOINTMENT->value => 'tardiness'
-        };
-
-    }
-
-    public static function get($enumValue)
+    public static function get($enumValue): ?AttendanceEnum
     {
         return match ($enumValue) {
             self::ABSENCE_HOME->value => self::ABSENCE_HOME,
@@ -73,7 +38,44 @@ enum AttendanceEnum: string
         };
     }
 
-    public function labelWithType()
+    public function label(): string
+    {
+        return match ($this->value) {
+            self::ABSENCE_HOME->value => 'Situación  en el hogar',
+            self::ABSENCE_VACATION->value => 'Determinación en el hogar (viaje)',
+            self::ABSENCE_PARENTS_ACTIVITY->value => 'Actividad con padres (open house)',
+            self::ABSENCE_SICK->value => 'Enfermedad',
+            self::ABSENCE_APPOINTMENT->value => 'Cita',
+            self::ABSENCE_SCHOOL_ACTIVITY->value => 'Actividad educativa del colegio',
+            self::ABSENCE_NO_EXCUSE->value => 'Sin excusa',
+            self::TARDINESS_NO_EXCUSE->value => 'Sin excusa',
+            self::TARDINESS_HOME->value => 'Situacion en el hogar',
+            self::TARDINESS_TRANSPORTATION->value => 'Problem de transporte',
+            self::TARDINESS_SICK->value => 'Enfermedad',
+            self::TARDINESS_APPOINTMENT->value => 'Cita',
+        };
+    }
+
+    public function type(): string
+    {
+        return match ($this->value) {
+            self::ABSENCE_HOME->value => 'absence',
+            self::ABSENCE_VACATION->value => 'absence',
+            self::ABSENCE_PARENTS_ACTIVITY->value => 'absence',
+            self::ABSENCE_SICK->value => 'absence',
+            self::ABSENCE_APPOINTMENT->value => 'absence',
+            self::ABSENCE_SCHOOL_ACTIVITY->value => 'absence',
+            self::ABSENCE_NO_EXCUSE->value => 'absence',
+            self::TARDINESS_NO_EXCUSE->value => 'tardiness',
+            self::TARDINESS_HOME->value => 'tardiness',
+            self::TARDINESS_TRANSPORTATION->value => 'tardiness',
+            self::TARDINESS_SICK->value => 'tardiness',
+            self::TARDINESS_APPOINTMENT->value => 'tardiness'
+        };
+
+    }
+
+    public function labelWithType(): string
     {
         return $this->label().' ('.$this->type().')';
 

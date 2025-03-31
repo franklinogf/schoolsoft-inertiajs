@@ -2,7 +2,7 @@ import { FileField } from "@/Components/forms/inputs/FileField";
 import { InputField } from "@/Components/forms/inputs/InputField";
 import { RichTextField } from "@/Components/forms/inputs/RichTextField";
 import SubmitButton from "@/Components/forms/SubmitButton";
-import { Button } from "@/Components/ui/button";
+import { PageTitle } from "@/Components/PageTitle";
 import { Card, CardContent } from "@/Components/ui/card";
 import { useTranslations } from "@/hooks/translations";
 import { RegiwebLayout } from "@/Layouts/Regiweb/RegiwebLayout";
@@ -10,7 +10,7 @@ import { EmailSelectedEnum } from "@/Pages/Regiweb/Options/Messages/Email/Index"
 import { Admin } from "@/types/auth";
 import { Student } from "@/types/student";
 import { Course } from "@/types/teacher";
-import { Link, useForm } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import { MailIcon } from "lucide-react";
 import { FormEvent } from "react";
 
@@ -58,16 +58,10 @@ export default function Page({ students, courses, admins, selected, data: rowsId
   return (
     <RegiwebLayout title={t("Enviar correo electrónico")}>
       <div className="mx-auto w-full max-w-2xl">
-        <h1 className="mb-2 text-center text-2xl font-semibold">
+        <PageTitle backLink={route("regiweb.options.messages.email.index", { selected })}>
           {t("Enviar correo electrónico")}
-        </h1>
-        <div className="flex justify-end">
-          <Button asChild variant="outline" className="mb-4">
-            <Link href={route("regiweb.options.messages.email.index", { selected })}>
-              {t("Ir atrás")}
-            </Link>
-          </Button>
-        </div>
+        </PageTitle>
+
         <form onSubmit={onSubmit}>
           <Card>
             <CardContent className="space-y-2">
@@ -102,7 +96,7 @@ export default function Page({ students, courses, admins, selected, data: rowsId
           <div className="mt-4 flex justify-center">
             <SubmitButton
               loadingIcon={<MailIcon className="animate-bounce" />}
-              disabled={processing}
+              isSubmitting={processing}
             >
               {t("Enviar")}
             </SubmitButton>

@@ -5,8 +5,9 @@ interface ConfirmationState {
   open: boolean;
   title: string | null;
   description?: string | null;
-  cancelLabel?: string | null;
+  cancelLabel: string | null;
   actionLabel: string | null;
+  actionVariant?: "default" | "destructive";
   onAction: () => void;
   onCancel?: () => void;
 }
@@ -21,6 +22,7 @@ const initialState: ConfirmationState = {
   description: null,
   cancelLabel: null,
   actionLabel: null,
+  actionVariant: "default",
   onAction: () => {},
   onCancel: () => {},
 };
@@ -34,6 +36,7 @@ const useConfirmationStore = create<ConfirmationState & ConfirmationActions>((se
       description: data.description,
       cancelLabel: data.cancelLabel ?? initialState.cancelLabel,
       actionLabel: data.actionLabel,
+      actionVariant: data.actionVariant ?? initialState.actionVariant,
       onAction: data.onAction,
       onCancel: data.onCancel,
     })),

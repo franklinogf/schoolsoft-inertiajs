@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Regiweb;
 
 use App\Enums\FlashMessageKey;
@@ -10,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class RegiwebLoginController extends Controller
+final class RegiwebLoginController extends Controller
 {
     public function create()
     {
@@ -24,6 +26,7 @@ class RegiwebLoginController extends Controller
             'clave' => ['required', 'min:6'],
         ]);
         $user = Teacher::where('usuario', $validated['usuario'])->where('clave', $validated['clave'])->first();
+
         if ($user) {
             Auth::guard('teacher')->login($user);
             $request->session()->regenerate();
