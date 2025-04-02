@@ -28,4 +28,9 @@ enum PhoneCompanyEnum: string
             self::BOOST->value => '@myboostmobile.com',
         };
     }
+
+    public function createPhoneEmail(string $phone): string
+    {
+        return $phone.$this->companyHost();
+    }
 }

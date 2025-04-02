@@ -49,11 +49,10 @@ final class DeleteTempUploadedFiles extends Command
 
         foreach ($directories as $directory) {
             $directoryLastModified = Carbon::createFromTimestamp($storage->lastModified($directory));
-
-            if (now()->diffInHours($directoryLastModified) > 24) {
+            if ($directoryLastModified->diffInHours(now()) > 24) {
                 $storage->deleteDirectory($directory);
             }
         }
-        $this->info('Temporary uploaded files that still exist older than 24 hours have been deleted.');
+        $this->info('Temporary uploaded files that still existed older than 24 hours have been deleted.');
     }
 }

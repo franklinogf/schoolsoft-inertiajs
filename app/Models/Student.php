@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\PhoneCompanyEnum;
 use App\Models\Scopes\SchoolYear;
 use App\Models\Scopes\Student\Active;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
@@ -55,7 +56,7 @@ use Illuminate\Foundation\Auth\User as Model;
  * @property string $cnf
  * @property string $cursos
  * @property string $cel
- * @property string $comp
+ * @property PhoneCompanyEnum $comp
  * @property string $nuref
  * @property string $lugar_nac
  * @property string $imp1
@@ -206,8 +207,6 @@ final class Student extends Model
 
     protected $primaryKey = 'mt';
 
-    protected $guarded = [];
-
     public function scopeOfCourse(Builder $query, string $class, string $table = 'padres', $summer = false): void
     {
         $where = [
@@ -275,5 +274,12 @@ final class Student extends Model
         self::addGlobalScope('orderByLastname', function (Builder $builder): void {
             $builder->orderBy('year.apellidos')->orderBy('year.nombre');
         });
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'comp' => PhoneCompanyEnum::class,
+        ];
     }
 }

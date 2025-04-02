@@ -37,7 +37,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureValidations();
         $this->configureJsonResources();
 
-        if (app()->isLocal()) {
+        if (! app()->isProduction()) {
             Mail::alwaysTo('franklinomarflores@gmail.com');
             Mail::alwaysFrom('onboarding@resend.dev', 'Franklin Omar Flores');
         }

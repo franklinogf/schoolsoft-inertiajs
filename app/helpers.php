@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Enums\PhoneCompanyEnum;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('tenant_file_url')) {
@@ -80,19 +79,5 @@ if (! function_exists('public_tenant_path')) {
         $cleanPath = mb_ltrim((string) $path, '/');
 
         return 'public/'.(tenant('id').'/'.$cleanPath);
-    }
-}
-
-if (! function_exists('create_phone_email')) {
-    /**
-     * Create a phone email address based on the phone number and company.
-     *
-     * @param  string  $phone  The phone number
-     * @param  string  $company  The company enum value
-     * @return string The generated email address
-     */
-    function create_phone_email(string $phone, string $company): string
-    {
-        return $phone.PhoneCompanyEnum::from($company)->companyHost();
     }
 }

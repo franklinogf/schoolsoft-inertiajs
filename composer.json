@@ -25,6 +25,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15.2",
+        "kitloong/laravel-migrations-generator": "^7.1",
         "larastan/larastan": ">=3.2",
         "laravel/breeze": "^2.3.6",
         "laravel/pint": "^1.21.2",
@@ -76,7 +77,7 @@
         "refactor": "rector",
         "test:refactor": "rector --dry-run",
         "test:lint": "pint --test",
-        "test:unit": "pest --testsuite Unit --parallel --coverage",
+        "test:unit": "pest --testsuite Unit --parallel --coverage --compact",
         "test:types": "phpstan",
         "test": [
             "@test:unit",

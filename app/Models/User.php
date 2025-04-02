@@ -10,7 +10,6 @@ use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Gate;
 
 /**
  * @property int $id
@@ -25,17 +24,6 @@ use Illuminate\Support\Facades\Gate;
  */ final class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -63,10 +51,5 @@ use Illuminate\Support\Facades\Gate;
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    private function gate(): void
-    {
-        Gate::define('viewTelescope', fn (): true => true);
     }
 }

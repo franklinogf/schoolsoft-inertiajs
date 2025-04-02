@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Utils;
 
-final class Utils
+final class DateUtils
 {
     /**
      * Get the month name in lowercase.

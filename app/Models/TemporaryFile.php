@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -17,29 +18,18 @@ use Illuminate\Support\Facades\Storage;
  */
 final class TemporaryFile extends Model
 {
-    protected $fillable = [
-        'folder',
-        'filename',
-    ];
+    use HasFactory;
 
-    public function moveTo(string $path): bool
+    public function getFullPath(): string
     {
-
-        $moved = Storage::disk('local')->move(
-            tmp_path($this->folder, $this->filename),
-            $path
-        );
-
-        $this->delete();
-
-        return $moved;
+        return tmp_path($this->folder, $this->filename);
     }
 
     protected static function booted(): void
     {
         self::deleting(function (TemporaryFile $temporaryFile): void {
             Log::info("Deleting temporary file folder {$temporaryFile->folder}");
-            Storage::disk('local')->deleteDirectory("tmp/{$temporaryFile->folder}");
+            Storage::disk('local')->deleteDirectory(tmp_path($temporaryFile->folder));
         });
     }
 }
