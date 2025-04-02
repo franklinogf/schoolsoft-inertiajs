@@ -25,39 +25,20 @@ final class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
             if (app()->isLocal()) {
                 return true;
             }
-            if ($entry->isReportableException()) {
-                return true;
-            }
-            if ($entry->isFailedRequest()) {
-                return true;
-            }
-            if ($entry->isFailedJob()) {
-                return true;
-            }
-            if ($entry->isScheduledTask()) {
-                return true;
-            }
-            if ($entry->isSlowQuery()) {
-                return true;
-            }
-            if ($entry->isEvent()) {
-                return true;
-            }
-            if ($entry->isDump()) {
-                return true;
-            }
-            if ($entry->isLog()) {
-                return true;
-            }
-            if ($entry->type === EntryType::JOB) {
-                return true;
-            }
-            if ($entry->type === EntryType::MAIL) {
-                return true;
-            }
 
-            return $entry->hasMonitoredTag();
+            return $entry->isReportableException() ||
+            $entry->isFailedRequest() ||
+            $entry->isFailedJob() ||
+            $entry->isScheduledTask() ||
+            $entry->isSlowQuery() ||
+            $entry->isEvent() ||
+            $entry->isLog() ||
+            $entry->type === EntryType::JOB ||
+            $entry->type === EntryType::MAIL ||
+            $entry->hasMonitoredTag();
+
         });
+
     }
 
     /**
