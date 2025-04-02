@@ -13,7 +13,7 @@ use App\Models\Student;
 use App\Models\StudentAttendance;
 use App\Models\Teacher;
 use App\PDF\PDF;
-use App\Utils;
+use App\Utils\DateUtils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -45,7 +45,7 @@ final class AttendanceReportPDFController extends Controller
         $selectedTrimesterValue = $trimesterValue[$validated['trimester']];
         $isHomeCourse = $validated['course'] === 'home';
 
-        $month = ucfirst(Utils::getMonthName($selectedTrimesterValue[2]));
+        $month = ucfirst(DateUtils::getMonthName($selectedTrimesterValue[2]));
 
         if ($isHomeCourse) {
             $teacher = Teacher::find(auth()->id());
