@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Models\Tenant;
@@ -21,7 +22,7 @@ use Stancl\Tenancy\Database\Models\Tenant;
  */
 final class School extends Tenant implements TenantWithDatabase
 {
-    use HasDatabase;
+    use HasDatabase, HasFactory;
 
     protected $guarded = [];
 

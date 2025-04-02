@@ -81,7 +81,7 @@ final class MessagesSmscontroller extends Controller
         if ($selected === 'students') {
             // TODO
             $tos = Student::whereIn('ss', $to)->get()
-                ->map(fn ($student): array => ['email' => create_phone_email($student->cel, $student->cel), 'name' => "{$student->nombre} {$student->apellidos}"]
+                ->map(fn ($student): array => ['email' => $student->comp->createPhoneEmail($student->cel), 'name' => "{$student->nombre} {$student->apellidos}"]
                 );
         } elseif ($selected === 'courses') {
             // TODO

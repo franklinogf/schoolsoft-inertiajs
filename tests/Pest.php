@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TenantCase;
 use Tests\TestCase;
@@ -17,7 +18,7 @@ use Tests\TestCase;
 |
  */
 
-uses(TestCase::class)->in('Feature');
+uses(TestCase::class, RefreshDatabase::class)->in('Feature', 'Unit');
 uses(TenantCase::class)->in('Tenant');
 
 pest()->beforeEach(function () {
