@@ -60,6 +60,8 @@ final class AppServiceProvider extends ServiceProvider
     {
 
         Model::unguard();
+        Model::shouldBeStrict(! app()->isProduction());
+        Model::automaticallyEagerLoadRelationships();
         Relation::enforceMorphMap([
             'teacher' => \App\Models\Teacher::class,
             'student' => \App\Models\Student::class,
