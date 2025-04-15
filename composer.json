@@ -20,6 +20,7 @@
         "propaganistas/laravel-phone": "^5.3.6",
         "resend/resend-laravel": "^0.16.1",
         "spatie/laravel-medialibrary": "^11.12.9",
+        "spatie/laravel-permission": "^6.17",
         "stancl/tenancy": "^3.9.1",
         "tightenco/ziggy": "^2.5.2"
     },
