@@ -46,6 +46,7 @@ final class SchoolResource extends Resource
                 ->columnSpanFull()
                 ->schema([TextInput::make('value'), TextInput::make('other')])
         )->toArray();
+        $tenantDBPrefix = config('tenancy.database.prefix');
 
         return $form
             ->schema([
@@ -82,15 +83,15 @@ final class SchoolResource extends Resource
                             ->schema([
                                 TextInput::make('tenancy_db_name')
                                     ->label('Database name (auto filled)')
-                                    ->prefix(env('TENANT_DB_PREFIX'))
-                                    ->formatStateUsing(fn (?string $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX').$state))
-                                    ->dehydrateStateUsing(fn (string $state): string => env('TENANT_DB_PREFIX').mb_strtolower($state))
+                                    ->prefix($tenantDBPrefix)
+                                    ->formatStateUsing(fn (?string $state): string => str_replace($tenantDBPrefix, '', $tenantDBPrefix.$state))
+                                    ->dehydrateStateUsing(fn (string $state): string => $tenantDBPrefix.mb_strtolower($state))
                                     ->required(),
                                 TextInput::make('tenancy_db_username')
                                     ->label('Database user (auto filled)')
-                                    ->prefix(env('TENANT_DB_PREFIX'))
-                                    ->formatStateUsing(fn (?string $state): string => str_replace(env('TENANT_DB_PREFIX'), '', env('TENANT_DB_PREFIX').$state))
-                                    ->dehydrateStateUsing(fn (string $state): string => env('TENANT_DB_PREFIX').mb_strtolower($state))
+                                    ->prefix($tenantDBPrefix)
+                                    ->formatStateUsing(fn (?string $state): string => str_replace($tenantDBPrefix, '', $tenantDBPrefix.$state))
+                                    ->dehydrateStateUsing(fn (string $state): string => $tenantDBPrefix.mb_strtolower($state))
                                     ->required(),
                                 TextInput::make('tenancy_db_password')->label('Database password (auto filled)')->default(env('TENANT_DB_PASSWORD'))->required(),
 

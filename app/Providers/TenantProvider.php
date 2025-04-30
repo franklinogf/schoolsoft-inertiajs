@@ -53,7 +53,7 @@ final class TenantProvider extends ServiceProvider
         PathTenantResolver::$tenantParameterName = 'school';
 
         // enable cache
-        PathTenantResolver::$shouldCache = true;
+        PathTenantResolver::$shouldCache = false;
 
         // cache for 1 hour
         PathTenantResolver::$cacheTTL = 60 * 60;
