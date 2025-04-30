@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
+use Carbon\Month;
+
 final class DateUtils
 {
     /**
@@ -11,7 +13,7 @@ final class DateUtils
      */
     public static function getMonthName(int $monthNumber): string
     {
-        $month = now()->month($monthNumber)->translatedFormat('F');
+        $month = Month::fromNumber($monthNumber)->locale(app()->getLocale())->translatedFormat('F');
 
         return mb_strtolower($month);
     }
