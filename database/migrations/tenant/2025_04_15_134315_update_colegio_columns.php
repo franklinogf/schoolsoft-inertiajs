@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -27,47 +29,54 @@ return new class extends Migration
         'fechav2',
         'fec_t',
         'fecha7',
+        'ufecha',
     ];
+
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        DB::table('colegio')->update(collect($this->datesColumns)->mapWithKeys(
-            fn($column) => [$column => now()->format('Y-m-d')]
-        )->toArray());
+        $emptyColumns = [];
+        $indexes = Schema::getIndexes('colegio');
+        foreach ($this->datesColumns as $column) {
+            if (Schema::hasColumn('colegio', $column)) {
+                $results = DB::table('colegio')->select([$column, 'usuario'])->get();
+                foreach ($results as $result) {
+                    if ($result->{$column} === '0000-00-00' || $result->{$column} === '') {
+                        $emptyColumns[$result->usuario] = $column;
+                        DB::table('colegio')->where('usuario', $result->usuario)->update([$column => now()->format('Y-m-d')]);
+                    }
+                }
 
-        Schema::table('colegio', function (Blueprint $table) {
-            $table->dropIndex('id');
+            }
+        }
+
+        Schema::table('colegio', function (Blueprint $table) use ($indexes): void {
+
+            foreach ($indexes as $index) {
+                if ($index['primary'] === true) {
+                    $table->integer($index['columns'][0])->change();
+                    $table->dropPrimary($index['name']);
+
+                    continue;
+                }
+                $table->dropIndex($index['name']);
+            }
+            $table->string('usuario')->unique()->change();
             $table->id()->primary()->change();
-
-
             foreach ($this->datesColumns as $column) {
                 if (Schema::hasColumn('colegio', $column)) {
                     $table->date($column)->nullable()->change();
+                } else {
+                    $table->date($column)->nullable();
                 }
             }
         });
 
-        DB::table('colegio')->update(collect($this->datesColumns)->mapWithKeys(
-            fn($column) => [$column => null]
-        )->toArray());
-    }
+        foreach ($emptyColumns as $user => $column) {
+            DB::table('colegio')->where('usuario', $user)->update([$column => null]);
+        }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('colegio', function (Blueprint $table) {
-            $table->char('id',7)->unique()->change();
-
-            foreach ($this->datesColumns as $column) {
-                if (Schema::hasColumn('colegio', $column)) {
-                    $table->date($column)->change();
-                }
-            }
-
-        });
     }
 };
