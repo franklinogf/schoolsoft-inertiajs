@@ -56,12 +56,12 @@ final class EditSchool extends EditRecord
         ];
     }
 
-    private function afterSave(): void
-    {
-        Artisan::call('tenants:run',
-            [
-                'commandname' => 'cache:clear',
-                '--tenants' => [$this->record->id],
-            ]);
-    }
+    // private function afterSave(): void
+    // {
+    //     Artisan::call('tenants:run',
+    //         [
+    //             'commandname' => 'cache:clear',
+    //             '--tenants' => [$this->record->id],
+    //         ]);
+    // }
 }
